@@ -1,0 +1,673 @@
+.tmhc-main-background {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  height: auto;
+  padding-bottom: 80px;
+  z-index: 5;
+  .tmhc-main-container {
+    width: 100%;
+    max-width: 1605px;
+    margin-top: 80px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    .container__texture {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .texture__main-text {
+        font-family: "mplus1p500";
+        font-size: 24px;
+        text-align: center;
+      }
+      .texture__sub-text {
+        font-family: "mplus1p400";
+        font-size: 20px;
+        color: #b3b3b3;
+        margin-top: 24px;
+        text-align: center;
+      }
+      .texture__box {
+        display: flex;
+        margin-top: 24px;
+        > a {
+          font-family: "mplus1p400";
+          font-size: 20px;
+          color: #fbca77;
+          &:nth-child(1)::after {
+            content: "·";
+            margin: 0 20px;
+          }
+        }
+      }
+      .container__btn--user-guide {
+        font-family: "mplus1p500";
+        color: #5282ff;
+        margin-top: 24px;
+      }
+    }
+
+    .current-balance {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 56px;
+      .current-balance__title {
+        font-family: "mplus1p400";
+        font-size: 30px;
+      }
+      .current-balance__mzc {
+        margin-top: 16px;
+        font-family: "mplus1p500";
+        font-size: 30px;
+        color: #a8a8a8;
+        .mzc {
+          font-family: "mplus1p500";
+          font-size: 30px;
+          color: #a8a8a8;
+        }
+      }
+      .btn-mzc {
+        margin-top: 24px;
+        font-family: "mplus1p400";
+        font-size: 20px;
+        width: 256px;
+        padding: 11.5px 0;
+        background-color: transparent;
+        border: 1px solid #b3b3b3;
+        border-radius: 8px;
+      }
+    }
+
+    .container__claim {
+      margin-top: 56px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      border: 1px solid #ffce22;
+      > .claim__title {
+        font-family: "mplus1p500";
+        font-size: 24px;
+      }
+      > .claim__coin {
+        display: flex;
+        align-items: center;
+        width: 513px;
+        margin-top: 16px;
+        div {
+          display: flex;
+          align-items: center;
+          > .coin-icon {
+            width: 40px;
+            margin-right: 16px;
+            img {
+              width: 100%;
+            }
+          }
+          > .mzc {
+            display: flex;
+            line-height: 35px;
+            font-size: 24px;
+            span {
+              font-size: 24px;
+              text-align: right;
+              margin-right: 4px;
+            }
+          }
+        }
+
+        > .btn-claim {
+          margin-left: auto;
+          background-color: #fbca77;
+          border-radius: 8px;
+          font-size: 24px;
+          color: #000;
+          padding: 16px 40px;
+        }
+      }
+    }
+
+    .input-wallet-box {
+      display: flex;
+      margin-top: 24px;
+      input {
+        width: 400px;
+        padding: 16px 8px;
+        text-align: right;
+        color: #000;
+      }
+      button {
+        width: 100px;
+        background-color: tomato;
+      }
+    }
+
+    .container__nft {
+      width: 100%;
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+
+      .nft__header {
+        display: flex;
+        align-items: center;
+        .header__title,
+        .header__text,
+        .header__text--qtt {
+          font-family: "mplus1p500";
+          font-size: 24px;
+        }
+        .header__text {
+          margin-left: 24px;
+        }
+
+        > div {
+          position: relative;
+          margin-left: auto;
+          display: flex;
+          align-items: center;
+
+          .left__menu {
+            display: flex;
+            flex-wrap: nowrap;
+
+            .state-select-box {
+              position: relative;
+
+              > .btn--state-select {
+                position: relative;
+                width: 170px;
+                background-color: transparent;
+                border: 1px solid #545454;
+                border-radius: 8px;
+                padding: 8px;
+                font-family: "500";
+                font-size: 16px;
+                text-align: left;
+              }
+              > .material-symbols-outlined {
+                position: absolute;
+                top: 6px;
+                right: 2px;
+                transition: 0.3s;
+                cursor: pointer;
+              }
+
+              > .state-select-list {
+                width: 100%;
+                position: absolute;
+                top: 45px;
+                border: 1px solid #545454;
+                border-radius: 8px;
+                overflow: hidden;
+                z-index: 2;
+                background-color: #000;
+
+                > .state-item {
+                  padding: 12px 8px;
+                  font-family: "500";
+                  cursor: pointer;
+                  &:hover {
+                    background-color: #fbca77;
+                    color: #000;
+                  }
+                  &:not(:last-child) {
+                    border-bottom: 1px solid #545454;
+                  }
+                }
+              }
+            }
+          }
+          .btn--all-staking {
+            margin-left: 24px;
+            background-color: #545454;
+            color: #b3b3b3;
+            padding: 16px 40px;
+            border-radius: 8px;
+          }
+          .checked {
+            background-color: #fbca77;
+            color: black;
+          }
+        }
+      }
+
+      .nft__main {
+        margin: 0 -10px;
+
+        margin-top: 16px;
+
+        .main__momo-list {
+          display: flex;
+          .momo-item {
+            margin: 0 10px;
+            border: 1px solid #545454;
+            border-radius: 8px;
+            overflow: hidden;
+            .momo-images {
+              width: 283px;
+            }
+
+            .momo-info {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding: 16px;
+              .momo-name {
+                font-family: "mplus1p500";
+                font-size: 20px;
+                color: #b3b3b3;
+              }
+              .momo-staking-state {
+                color: #ffb800;
+                margin-top: 16px;
+                font-family: "mplus1p400";
+              }
+            }
+
+            .btn--staking {
+              margin-top: 16px;
+              background-color: transparent;
+              padding: 16px 0;
+              width: 100%;
+              border: 1px solid #fbca77;
+              border-radius: 8px;
+              font-family: "mplus1p400";
+              &:hover {
+                background-color: #fbca77;
+                color: #000;
+              }
+            }
+          }
+        }
+
+        > .empty-nft {
+          width: 100%;
+          height: 536px;
+          text-align: center;
+          line-height: 536px;
+          font-family: "500";
+          font-size: 24px;
+          color: #b3b3b3;
+        }
+        > .pagination-box {
+          > .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-top: 40px;
+            li {
+              &:first-child a,
+              &:nth-child(2) a,
+              &:nth-last-child(2) a,
+              &:last-child a {
+                font-size: 24px;
+              }
+              > a {
+                display: block;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin: 0 10px;
+                text-align: center;
+                line-height: 30px;
+              }
+            }
+            li.active a {
+              color: black;
+              background-color: #fbca77;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// tmhc item
+.main__tmhc-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  .tmhc-item {
+    position: relative;
+    width: 100%;
+    border: 1px solid #545454;
+    border-radius: 8px;
+    overflow: hidden;
+    .tmhc-check {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      appearance: none;
+      background: #545454;
+      border: 1px solid #b3b3b3;
+      border-radius: 50%;
+      &:checked::before {
+        content: url("../assets/images/check.svg");
+        position: absolute;
+        top: 53%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      &:checked {
+        background-color: #fbca77;
+      }
+    }
+    .tmhc-images {
+      width: 100%;
+      overflow: hidden;
+      background-color: white;
+      > img {
+        width: 100%;
+      }
+    }
+    .tmhc-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      .tmhc-name {
+        font-family: "mplus1p500";
+        font-size: 20px;
+        color: #b3b3b3;
+      }
+
+      //스테이킹 상태
+      .tmhc-staking-state {
+        color: #ffb800;
+        margin-top: 16px;
+        font-family: "mplus1p400";
+      }
+      // 스케이킹중
+      .tmhc-staking-state.now-staking {
+        color: #00ff66;
+      }
+      .boost-state {
+        margin-top: 16px;
+        width: 100%;
+        padding: 16px 0;
+        border: 1px solid #fbca77;
+        border-radius: 8px;
+        background-color: transparent;
+        &:hover {
+          background-color: #fbca77;
+          color: #000;
+        }
+      }
+
+      // 싱글 스테이킹 버튼
+      .btn--staking {
+        margin-top: 16px;
+        background-color: transparent;
+        padding: 16px 0;
+        width: 100%;
+        border: 1px solid #fbca77;
+        border-radius: 8px;
+        font-family: "mplus1p400";
+        &:hover {
+          background-color: #fbca77;
+          color: #000;
+        }
+      }
+
+      // 스테이킹 해지 버튼
+      .btn--cancel-staking {
+        margin-top: 16px;
+        background-color: transparent;
+        padding: 16px 0;
+        width: 100%;
+        border: 1px solid #ff2121;
+        border-radius: 8px;
+        font-family: "mplus1p400";
+        &:hover {
+          background-color: #ff2121;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  width: 100%;
+  height: 536px;
+  text-align: center;
+  line-height: 536px;
+  font-family: "500";
+  font-size: 24px;
+  color: #b3b3b3;
+}
+
+@media (max-width: 1024px) {
+  .tmhc-main-background {
+    .tmhc-main-container {
+      padding: 0 20px;
+
+      .container__claim {
+        margin-top: 96px;
+        width: 100%;
+        .claim__coin {
+          width: 100%;
+          .btn-claim {
+          }
+        }
+      }
+
+      .container__nft {
+        padding: 0;
+        .nft__header {
+          flex-direction: column;
+          align-items: stretch;
+          > div {
+            margin-left: 0;
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            .left__menu {
+              align-items: center;
+              margin-top: 24px;
+              .state-select-box {
+                width: 100%;
+                .btn--state-select {
+                  width: 100%;
+                }
+              }
+              .header__text {
+                min-width: 84px;
+                font-size: 16px;
+                .header__text--qtt {
+                  font-size: 16px;
+                }
+              }
+            }
+            .btn--all-staking {
+              margin-left: 0;
+              margin-top: 24px;
+            }
+          }
+        }
+
+        .nft__main {
+          .main__tmhc-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            .tmhc-item {
+              width: auto;
+              gap: 10px;
+              &:nth-child(1n + 3) {
+                margin-top: 24px;
+              }
+              .tmhc-images {
+                width: 100%;
+                img {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .tmhc-main-background {
+    .tmhc-main-container {
+      padding: 0 20px;
+      .container__texture {
+        .texture__main-text {
+          font-size: 20px;
+        }
+        .texture__sub-text {
+          font-size: 20px;
+        }
+        .texture__box {
+          width: auto;
+          flex-direction: column;
+          align-items: center;
+          a {
+            font-size: 16px;
+            &:nth-child(1)::after {
+              display: none;
+            }
+            &:last-child {
+              margin-top: 24px;
+            }
+          }
+        }
+      }
+
+      .current-balance {
+        margin-top: 40px;
+        width: 100%;
+        .current-balance__title {
+          font-size: 20px;
+        }
+        .current-balance__mzc {
+          font-size: 20px;
+          .mzc {
+            font-size: 20px;
+          }
+        }
+        .btn-mzc {
+          width: 100%;
+          font-size: 16px;
+        }
+      }
+
+      .container__claim {
+        margin-top: 80px;
+        width: 100%;
+        padding: 16px;
+        .claim__title {
+          font-size: 16px;
+        }
+        .claim__coin {
+          flex-direction: column;
+          align-items: stretch;
+          width: 100%;
+          > div {
+            width: 100%;
+            .coin-icon {
+              width: 30px;
+              margin-right: 0;
+              img {
+                width: 100%;
+              }
+            }
+            .mzc {
+              margin-left: auto;
+              font-size: 16px;
+              span {
+                font-size: 16px;
+              }
+            }
+          }
+          .btn-claim {
+            margin-left: 0;
+            margin-top: 24px;
+            font-size: 16px;
+            padding: 12px;
+          }
+        }
+      }
+
+      .container__nft {
+        margin-top: 80px;
+        .nft__header {
+          .header__title {
+            font-size: 16px;
+          }
+          > div {
+            .left__menu {
+              margin-top: 16px;
+              .state-select-box {
+                .btn--state-select {
+                }
+              }
+              .header__text {
+                .header__text--qtt {
+                }
+              }
+            }
+            .btn--all-staking {
+            }
+          }
+        }
+
+        .nft__main {
+          .main__tmhc-list {
+            .tmhc-item {
+              .tmhc-check {
+                width: 30px;
+                height: 30px;
+              }
+              .tmhc-images {
+                width: 100%;
+                img {
+                  width: 100%;
+                }
+              }
+
+              .tmhc-info {
+                padding: 16px 8px;
+                .tmhc-name,
+                .tmhc-staking-state {
+                  font-size: 12px;
+                }
+                .boost-state,
+                .btn--staking,
+                .btn--cancel-staking {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+          > .empty-nft {
+            height: 440px;
+            font-size: 20px;
+            word-wrap: normal;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 스테이킹이 된 목록을 찾는다.
+// 스테이킹이 된 이름이 있으면
+// 취소로 나오게 한다.

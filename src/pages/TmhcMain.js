@@ -1,0 +1,804 @@
+import React, { useRef, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import "../styles/TmhcMain.scss";
+import coinIcon from "../assets/images/mzc-coin-icon.png";
+import ClaimModal from "../components/ClaimModal";
+import Nav from "../components/Nav";
+import Pagination from "react-js-pagination";
+import StakingModal from "../components/StakingModal";
+import CancelStakingModal from "../components/CancelStakingModal";
+import { ethers } from "ethers";
+import abi from "./newAbi";
+
+import {
+  setSelectedState,
+  setIsOpen,
+  setClaimModal,
+  setStakingModal,
+  setCancelStakingModal,
+} from "../store";
+
+import {
+  IMPORT_TMHC_CONTRACT,
+  STAKING_TMHC_CONTRACT,
+  MONGS_COIN,
+} from "../contract/contractAddress";
+
+import {
+  useContract,
+  useOwnedNFTs,
+  useAddress,
+  useContractRead,
+} from "@thirdweb-dev/react";
+import Web3 from "web3";
+import axios from "axios";
+
+const Main = ({ language }) => {
+  const dispatch = useDispatch();
+
+  // 드랍다운 보이기 / 안보이기
+  const rotateRef = useRef();
+  const isOpen = useSelector((state) => state.isOpen.isOpen);
+  const handleDropdownClick = () => {
+    dispatch(setIsOpen(!isOpen));
+    rotateRef.current.style.transform = isOpen ? "" : "rotate(-180deg)";
+  };
+
+  // 드랍다운 아이템 선택시 글자변경
+  const selectedState = useSelector((state) => state.selectedState.title);
+  const handleSelectedItem = (text) => {
+    dispatch(setSelectedState(text));
+    dispatch(setIsOpen(!isOpen));
+    rotateRef.current.style.transform = "";
+  };
+
+  // 언어 변경시 셀렉트 박스 영어 또는 일본어 변경
+  useEffect(() => {
+    if (language === "JP") {
+      dispatch(setSelectedState("すべて"));
+    } else {
+      dispatch(setSelectedState("All"));
+    }
+  }, [language, dispatch]);
+
+  // 클레임 모달
+  const claimModal = useSelector((state) => state.claimModal.showClaim);
+  const handleClaimModal = () => {
+    dispatch(setClaimModal(!claimModal));
+    document.body.style.overflow = "hidden";
+  };
+
+  // 페이지네이션
+  const [page, setPage] = useState(1);
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+  // 데이터 10개씩 보이기
+  const start = (page - 1) * 15;
+  const end = start + 15;
+
+  // 스테이킹 버튼 클릭시 데이터 저장하는 state
+  const [selectData, setSelectData] = useState([]);
+
+  // 스테이킹 모달
+  const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
+  const handleStakingModal = (image, name, id) => {
+    dispatch(setStakingModal(!stakingModal));
+    document.body.style.overflow = "hidden";
+    setSelectData([{ image: image, name: name, id: id }]);
+  };
+
+  // 스테이킹 모달 여러개
+  const handleAllStakingModal = () => {
+    dispatch(setStakingModal(!stakingModal));
+    document.body.style.overflow = "hidden";
+  };
+
+  // 스테이킹 취소 모달
+  const cancelStakingModal = useSelector(
+    (state) => state.cancelStakingModal.cancelStakingModal
+  );
+  const handleCancelStakingModal = (image, id, name) => {
+    dispatch(setCancelStakingModal(!cancelStakingModal));
+    document.body.style.overflow = "hidden";
+    setSelectData([{ image: image, name: name, id: id }]);
+  };
+
+  // 체크 확인
+  const [isChecked, setIsChecked] = useState([]);
+  // 체크박스 관리
+
+  const handleChecked = (e, id, image, name) => {
+    e.stopPropagation();
+    console.log(e);
+    const targetChecked = e.target.checked;
+    if (targetChecked && isChecked.length >= 6) {
+      e.preventDefault();
+      return;
+    }
+    if (e.target.checked) {
+      setIsChecked([...isChecked, id]);
+      const newData = selectData.filter((el) => el.id !== id);
+      setSelectData(
+        [...newData, { image: image, name: name, id: id }].sort((a, b) => {
+          return a.id - b.id;
+        })
+      );
+    } else {
+      setIsChecked(isChecked.filter((el) => el !== id));
+      setSelectData(selectData.filter((el) => el.id !== id));
+    }
+  };
+  console.log(isChecked);
+  ///////////////////////////////////////////////////////////////////////////////
+  // nft가져오기
+  const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
+  const { contract: mongzContract } = useContract(MONGS_COIN);
+
+  const walletAddress = useAddress();
+  console.log(walletAddress);
+  // const {
+  //   data: nftData,
+  //   isLoading,
+  //   error,
+  // } = useOwnedNFTs(importTmhc, walletAddress);
+  //
+  // console.log(nftData);
+
+  //
+
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider("https://eth.llamarpc.com")
+  );
+  const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력합니다.
+  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력합니다.
+  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력합니다.
+  const tokenIds = Array(10000)
+    .fill()
+    .map((v, i) => i + 1);
+
+  const contract = new web3.eth.Contract(abi, contractAddress); // ERC-1155 컨트랙트 ABI와 주소를 입력합니다.
+
+  // const nftData2 = [{}];
+
+  const [nftData, setNftData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (nftData) {
+      setIsLoading(() => {
+        return true;
+      });
+    } else {
+      setIsLoading(() => {
+        return true;
+      });
+    }
+  }, [nftData]);
+
+  async function getBalanceOfBatch() {
+    const balances = await contract.methods
+      .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+      .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
+    console.log(balances);
+    const promises = [];
+
+    for (let i = 0; i < balances.length; i++) {
+      if (balances[i] === "1") {
+        promises.push(
+          // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+          axios.get("https://dev.tokyomongzhillsclub.com/api/get_json_data", {
+            params: {
+              id: i + 1,
+            },
+          })
+        );
+      }
+      // console.log(promises);
+    }
+
+    Promise.all(promises)
+      .then((responses) => {
+        console.log(responses);
+        const newData = responses.map((res, index) => ({
+          id: parseInt(res.data.name.slice(5)),
+          name: res.data.name,
+          image: res.data.image,
+        }));
+        setNftData(newData);
+        console.log(newData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
+
+  useEffect(() => {
+    setNftData(() => {
+      return [];
+    });
+    getBalanceOfBatch();
+  }, [walletAddress]);
+
+  console.log("nftData==================", nftData);
+  console.log(nftData.length);
+
+  // 스테이킹 된 목록 확인하기
+  const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
+  const { data: stakingData, isLoading: stakingDataIsLoading } =
+    useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
+
+  console.log(stakingData);
+  // 겟 리워드
+  const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
+    stakingTmhc,
+    "calRewardAll",
+    walletAddress
+  );
+
+  const [reward, setReward] = useState(undefined);
+
+  // 스테이킹 더미 데이터 ==================================================
+  const dummyStakingData = [518, 739, 1293];
+
+  useEffect(() => {
+    if (rewardData) {
+      const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
+      setReward(newReward);
+    }
+  }, [rewardData, walletAddress]);
+
+  // add mzc
+  const addTokenToWallet = async () => {
+    try {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const tokenContract = new ethers.Contract(
+          MONGS_COIN,
+          ["function symbol() view returns (string)"],
+          signer
+        );
+        const symbol = await tokenContract.symbol();
+        await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: MONGS_COIN,
+              symbol: "MZC",
+              decimals: 18,
+              // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
+            },
+          },
+        });
+      } else {
+        console.error("MetaMask is not installed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // mongz coin balance
+  const { data: mzcBalanceData, isLoading: mczBalance } = useContractRead(
+    mongzContract,
+    "balanceOf",
+    walletAddress
+  );
+
+  const mzcBalance = mzcBalanceData
+    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
+    : undefined;
+
+  // test staking btn
+
+  const handleStaking = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+      workNFT: isChecked, // 선택한 목록
+    };
+
+    try {
+      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <>
+      <Nav />
+      <div className="tmhc-main-background">
+        <div className="tmhc-main-container">
+          <div className="container__texture">
+            {language === "EN" ? (
+              <p className="texture__main-text">
+                Stake your Tokyo Mongz Hills Club NFT to receive MZC
+              </p>
+            ) : (
+              <p className="texture__main-text">
+                TMHC NFTをStakingすることでMZCを獲得することができます
+              </p>
+            )}
+
+            {language === "EN" ? (
+              <p className="texture__sub-text">
+                MZC is a utility coin that belongs to the MUC ecosystem.
+              </p>
+            ) : (
+              <p className="texture__sub-text">
+                MZCは、MUCエコシステムに属するユーティリティコインです
+              </p>
+            )}
+
+            <div className="texture__box">
+              {language === "EN" ? (
+                <Link to="/eco-system">About MUC Ecosystem</Link>
+              ) : (
+                <Link to="/eco-system">MUCエコシステムについて</Link>
+              )}
+              {language === "EN" ? (
+                <Link to="https://multi-universe-coin.gitbook.io/muc-white-paper">
+                  MUC White Paper
+                </Link>
+              ) : (
+                <Link to="https://multi-universe-coin.gitbook.io/muc-white-paper">
+                  MUCホワイトペーパー
+                </Link>
+              )}
+            </div>
+            {language === "EN" ? (
+              <Link
+                to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
+                className="container__btn--user-guide"
+              >
+                User's Guide
+              </Link>
+            ) : (
+              <Link
+                to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
+                className="container__btn--user-guide"
+              >
+                ご利用ガイド
+              </Link>
+            )}
+          </div>
+
+          <div className="current-balance">
+            <span className="current-balance__title">Your Balance</span>
+            <span className="current-balance__mzc">
+              {mzcBalance}
+              <span className="mzc">&nbsp;MZC</span>
+            </span>
+            <button className="btn-mzc" onClick={addTokenToWallet}>
+              Add MZC MetaMask
+            </button>
+          </div>
+
+          <div className="container__claim">
+            {language === "EN" ? (
+              <span className="claim__title">Claimable MZC</span>
+            ) : (
+              <span className="claim__title">現在のClaim額</span>
+            )}
+            <div className="claim__coin">
+              <div>
+                <span className="coin-icon">
+                  <img src={coinIcon} alt="coin" />
+                </span>
+                {!walletAddress && (
+                  <div className="mzc">
+                    <span className="coin">Please Connect your Wallet</span>
+                  </div>
+                )}
+
+                {walletAddress &&
+                  (reward !== "0.0000" ? (
+                    <div className="mzc">
+                      <span className="coin">{reward}</span>
+                      MZC
+                    </div>
+                  ) : (
+                    <div className="mzc">
+                      <span className="coin"> No MZC to Claim</span>
+                    </div>
+                  ))}
+              </div>
+              <button
+                type="button"
+                className="btn-claim"
+                onClick={handleClaimModal}
+              >
+                Claim
+              </button>
+            </div>
+          </div>
+          {/* <div className="input-wallet-box">
+            <input
+              type="text"
+              className="wallet-address"
+              onChange={handleInputText}
+              value={inputText}
+            />
+            <button
+              className="wallet-address-btn"
+              onClick={handleWalletAddress}
+            >
+              출력
+            </button>
+          </div> */}
+
+          <div className="container__nft">
+            <div className="nft__header">
+              <span className="header__title">NFT List</span>
+              <div>
+                <div className="left__menu">
+                  <div className="state-select-box">
+                    <button
+                      className="btn--state-select"
+                      onClick={handleDropdownClick}
+                    >
+                      {selectedState}
+                    </button>
+                    <span
+                      className="material-symbols-outlined"
+                      ref={rotateRef}
+                      onClick={handleDropdownClick}
+                    >
+                      expand_more
+                    </span>
+                    {isOpen && language === "EN" && (
+                      <ul className="state-select-list">
+                        <li
+                          className="state-item all"
+                          onClick={() => handleSelectedItem("All")}
+                        >
+                          All
+                        </li>
+                        <li
+                          className="state-item staking"
+                          onClick={() => handleSelectedItem("Staking")}
+                        >
+                          Staking
+                        </li>
+                        <li
+                          className="state-item before-staking"
+                          onClick={() =>
+                            handleSelectedItem("Ready for staking")
+                          }
+                        >
+                          Ready for staking
+                        </li>
+                      </ul>
+                    )}
+
+                    {isOpen && language === "JP" && (
+                      <ul className="state-select-list">
+                        <li
+                          className="state-item all"
+                          onClick={() => handleSelectedItem("すべて")}
+                        >
+                          すべて
+                        </li>
+                        <li
+                          className="state-item staking"
+                          onClick={() => handleSelectedItem("Staking中")}
+                        >
+                          Staking中
+                        </li>
+                        <li
+                          className="state-item before-staking"
+                          onClick={() => handleSelectedItem("未Staking")}
+                        >
+                          未Staking
+                        </li>
+                      </ul>
+                    )}
+                  </div>
+
+                  {language === "EN" ? (
+                    <span className="header__text">
+                      Total :&nbsp;
+                      {(selectedState === "All" ||
+                        selectedState === "すべて") && (
+                        <span className="header__text--qtt">
+                          {nftData ? nftData.length : 0}
+                        </span>
+                      )}
+                      {(selectedState === "Staking" ||
+                        selectedState === "Staking中") && (
+                        <span className="header__text--qtt">
+                          {nftData
+                            ? nftData.filter((item) => {
+                                return stakingData.includes(parseInt(item.id));
+                              }).length
+                            : 0}
+                        </span>
+                      )}
+                      {(selectedState === "Ready for staking" ||
+                        selectedState === "未Staking") && (
+                        <span className="header__text--qtt">
+                          {nftData
+                            ? nftData.filter((item) => {
+                                return !stakingData.includes(parseInt(item.id));
+                              }).length
+                            : 0}
+                        </span>
+                      )}
+                      ea
+                    </span>
+                  ) : (
+                    <span className="header__text">
+                      Total :&nbsp;
+                      {(selectedState === "All" ||
+                        selectedState === "すべて") && (
+                        <span className="header__text--qtt">
+                          {nftData ? nftData.length : 0}
+                        </span>
+                      )}
+                      {(selectedState === "Staking" ||
+                        selectedState === "Staking中") && (
+                        <span className="header__text--qtt">
+                          {nftData
+                            ? nftData.filter((item) => {
+                                return stakingData.includes(parseInt(item.id));
+                              }).length
+                            : 0}
+                        </span>
+                      )}
+                      {(selectedState === "Ready for staking" ||
+                        selectedState === "未Staking") && (
+                        <span className="header__text--qtt">
+                          {nftData
+                            ? nftData.filter((item) => {
+                                return !stakingData.includes(parseInt(item.id));
+                              }).length
+                            : 0}
+                        </span>
+                      )}
+                      個
+                    </span>
+                  )}
+                </div>
+
+                {language === "EN" ? (
+                  isChecked.length <= 0 ? (
+                    <button className="btn--all-staking">
+                      Proceed to stake selected NFT
+                    </button>
+                  ) : (
+                    <button
+                      className="btn--all-staking checked"
+                      onClick={handleAllStakingModal}
+                    >
+                      Proceed to stake selected NFT
+                    </button>
+                  )
+                ) : isChecked.length <= 0 ? (
+                  <button className="btn--all-staking">
+                    選択したNFTをStaking
+                  </button>
+                ) : (
+                  <button
+                    className="btn--all-staking checked"
+                    onClick={handleAllStakingModal}
+                  >
+                    選択したNFTをStaking
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="nft__main">
+              {walletAddress === undefined ? (
+                (language === "EN" && (
+                  <div className="empty-nft">
+                    There are no NFTs in possession.
+                  </div>
+                )) ||
+                (language === "JP" && (
+                  <div className="empty-nft">
+                    There are no NFTs in possession.
+                  </div>
+                ))
+              ) : nftData.length > 0 ? ( // isLoading === false && nftData.length > 0
+                ((selectedState === "All" || selectedState === "すべて") && (
+                  <ul className="main__tmhc-list">
+                    {nftData.slice(start, end).map((item) => (
+                      <li className="tmhc-item" key={item.id}>
+                        {dummyStakingData.includes(parseInt(item.id)) ? null : (
+                          <input
+                            type="checkbox"
+                            className="tmhc-check"
+                            checked={isChecked.includes(item.id)}
+                            onClick={(e) =>
+                              handleChecked(e, item.id, item.image, item.name)
+                            }
+                          />
+                        )}
+                        <div className="tmhc-images">
+                          <img src={item.image} alt="nft" />
+                        </div>
+
+                        {dummyStakingData.includes(parseInt(item.id)) ? (
+                          <div className="tmhc-info">
+                            <span className="tmhc-name">{item.name}</span>
+                            <span className="tmhc-staking-state now-staking">
+                              Now Staking
+                            </span>
+                            <button
+                              className="btn--cancel-staking"
+                              onClick={() =>
+                                handleCancelStakingModal(
+                                  item.image,
+                                  item.id,
+                                  item.name
+                                )
+                              }
+                            >
+                              Cancel Staking
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="tmhc-info">
+                            <span className="tmhc-name">{item.name}</span>
+                            <span className="tmhc-staking-state">
+                              Ready for Staking
+                            </span>
+
+                            <button
+                              className="btn--staking"
+                              onClick={() =>
+                                handleStakingModal(
+                                  item.image,
+                                  item.name,
+                                  item.id
+                                )
+                              }
+                            >
+                              Single Staking
+                            </button>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )) ||
+                ((selectedState === "Staking" ||
+                  selectedState === "Staking中") && (
+                  <ul className="main__tmhc-list">
+                    {nftData
+
+                      .filter((item) => {
+                        return dummyStakingData.includes(parseInt(item.id));
+                      })
+                      .map((item, index) => (
+                        <li className="tmhc-item" key={index}>
+                          <div className="tmhc-images">
+                            <img src={item.image} alt="nft" />
+                          </div>
+
+                          <div className="tmhc-info">
+                            <span className="tmhc-name">{item.id}</span>
+                            <span className="tmhc-staking-state now-staking">
+                              Now Staking
+                            </span>
+                            <button
+                              className="btn--cancel-staking"
+                              onClick={() =>
+                                handleCancelStakingModal(
+                                  item.image,
+                                  item.id,
+                                  item.name
+                                )
+                              }
+                            >
+                              Cancel Staking
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                )) ||
+                ((selectedState === "Ready for staking" ||
+                  selectedState === "未Staking") && (
+                  <ul className="main__tmhc-list">
+                    {nftData
+
+                      .filter((item) => {
+                        return !stakingData.includes(parseInt(item.id));
+                      })
+                      .map((item, index) => (
+                        <li className="tmhc-item" key={index}>
+                          <input
+                            type="checkbox"
+                            className="tmhc-check"
+                            onClick={(e) =>
+                              handleChecked(e, item.id, item.image, item.name)
+                            }
+                          />
+                          <div className="tmhc-images">
+                            <img src={item.image} alt="nft" />
+                          </div>
+                          <div className="tmhc-info">
+                            <span className="tmhc-name">{item.name}</span>
+                            <span className="tmhc-staking-state">
+                              Ready for Staking
+                            </span>
+
+                            <button
+                              className="btn--staking"
+                              onClick={() =>
+                                handleStakingModal(
+                                  item.image,
+                                  item.name,
+                                  item.id
+                                )
+                              }
+                            >
+                              Single Staking
+                            </button>
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                ))
+              ) : (
+                <div className="loading">Now loading...</div>
+              )}
+
+              {nftData === undefined ? null : (
+                <div className="pagination-box">
+                  <Pagination
+                    // 현제 보고있는 페이지
+                    activePage={page}
+                    // 한페이지에 출력할 아이템수
+                    itemsCountPerPage={15}
+                    // 총 아이템수
+                    totalItemsCount={nftData ? nftData.length - 1 : 0}
+                    // 표시할 페이지수
+                    pageRangeDisplayed={10}
+                    prevPageText={"‹"}
+                    nextPageText={"›"}
+                    // 함수
+                    onChange={handlePageChange}
+                  ></Pagination>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <button className="btn-staking" onClick={handleStaking}>
+          스테이킹
+        </button>
+      </div>
+
+      {/* 스테이킹 모달 */}
+      {stakingModal && (
+        <StakingModal
+          selectData={selectData}
+          setSelectData={setSelectData}
+          language={language}
+          setIsChecked={setIsChecked}
+        />
+      )}
+      {/* 스테이킹 취소 모달 */}
+      {cancelStakingModal && (
+        <CancelStakingModal
+          selectData={selectData}
+          setSelectData={setSelectData}
+          language={language}
+        />
+      )}
+
+      {/* 클레임 모달 */}
+      {claimModal && <ClaimModal language={language} reward={reward} />}
+    </>
+  );
+};
+
+export default Main;

@@ -1,0 +1,256 @@
+.about-tmhc {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  padding-bottom: 80px;
+  .about-tmhc__video-box {
+    width: 100%;
+    .about-video {
+      height: 750px;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+  .story-background {
+    width: 100%;
+    height: 900px;
+    background-image: url("../assets/images/about-tmhc.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+
+    .story-content-container {
+      position: absolute;
+      top: 150px;
+      right: 60px;
+      z-index: 1;
+      width: 790px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      .story-header {
+        display: flex;
+        align-items: center;
+        .story-header__title-img {
+          width: 256px;
+          img {
+            width: 100%;
+          }
+        }
+        p {
+          font-family: "mplus1p400";
+          font-size: 35px;
+          margin-left: 26px;
+          margin-bottom: -30px;
+        }
+      }
+
+      .story-content-main {
+        margin-top: 40px;
+        height: 600px;
+        overflow: hidden;
+        mask-image: linear-gradient(
+          to bottom,
+          black 0%,
+          black 80%,
+          transparent 100%
+        );
+        .story-content__text {
+          font-family: "mplus1p400";
+          font-size: 20px;
+        }
+
+        .story-content__item {
+          margin-top: 40px;
+          .story-content__title {
+            font-family: "mplus1p500";
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            .story-content__title-num {
+              font-family: "mplus1p500";
+              font-size: 40px;
+              color: #fbca77;
+              display: flex;
+              align-items: center;
+              &::after {
+                content: "";
+                display: block;
+                width: 17px;
+                height: 1px;
+                background-color: #fff;
+                margin: 0 8px;
+              }
+            }
+          }
+        }
+      }
+      .main-more {
+        mask-image: none;
+        height: 100%;
+        overflow: visible;
+      }
+    }
+    .story-content__btn {
+      background: url("../assets/images/more-btn.svg") no-repeat 0 0/100%;
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      font-size: 0;
+      height: 50px;
+      width: 80px;
+      background-color: transparent;
+      z-index: 2;
+      transition: 0.3s;
+    }
+  }
+}
+
+.more-en {
+  height: 2200px !important;
+}
+.more-jp {
+  height: 1900px !important;
+}
+
+@media (max-width: 1024px) {
+  .about-tmhc {
+    .about-tmhc__video-box {
+      .about-video {
+        height: auto;
+      }
+    }
+    .story-background {
+      height: 768px;
+      background-position: center top;
+      background-size: 100% auto;
+      .story-content-container {
+        top: 60px;
+        right: 20px;
+        width: 315px;
+        .story-header {
+          .story-header__title-img {
+            width: 77px;
+            img {
+              width: 100%;
+            }
+          }
+          p {
+            font-family: "mplus1p400";
+            font-size: 16px;
+            margin-bottom: 0px;
+          }
+        }
+
+        .story-content-main {
+          height: 600px;
+          .story-content__text {
+            font-size: 16px;
+          }
+          .story-content__item {
+            margin-top: 40px;
+            .story-content__title {
+              font-size: 16px;
+              .story-content__title-num {
+                font-size: 16px;
+                &::after {
+                  width: 16px;
+                }
+              }
+            }
+          }
+        }
+        .main-more {
+        }
+      }
+      .story-content__btn {
+        height: 30px;
+        width: 50px;
+      }
+    }
+  }
+
+  .more-en {
+    height: 2700px !important;
+  }
+  .more-jp {
+    height: 2300px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-tmhc {
+    .about-tmhc__video-box {
+      .about-video {
+        height: auto;
+      }
+    }
+    .story-background {
+      background-image: url("../assets/images/m-about-tmhc.png");
+      height: 1138px;
+      background-position: center top;
+      background-size: 100% auto;
+      .story-content-container {
+        top: 420px;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        width: 280px;
+        .story-header {
+          .story-header__title-img {
+            width: 77px;
+            img {
+              width: 100%;
+            }
+          }
+          p {
+            font-family: "mplus1p400";
+            font-size: 16px;
+            margin-bottom: 0px;
+          }
+        }
+
+        .story-content-main {
+          height: 700px;
+          .story-content__text {
+            font-size: 16px;
+          }
+          .story-content__item {
+            margin-top: 40px;
+            .story-content__title {
+              font-size: 20px;
+              .story-content__title-num {
+                font-size: 20px;
+                &::after {
+                  width: 16px;
+                }
+              }
+            }
+          }
+        }
+        .main-more {
+        }
+      }
+      .story-content__btn {
+        height: 30px;
+        width: 50px;
+        bottom: 0px;
+      }
+    }
+  }
+
+  .more-en {
+    height: 3300px !important;
+  }
+  .more-jp {
+    height: 2800px !important;
+  }
+}

@@ -1,0 +1,34 @@
+.nav-background {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  height: auto;
+  padding-top: 16px;
+  .nav-header {
+    width: 100%;
+    max-width: 1605px;
+
+    display: flex;
+    border-bottom: 1px solid #464646;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    li {
+      min-width: 285px;
+      a {
+        width: 100%;
+        display: block;
+        padding: 16px 0;
+        text-align: center;
+        font-family: "mplus1p400";
+      }
+    }
+  }
+}
+
+.clicked {
+  border-bottom: 2px solid #fbca77;
+}

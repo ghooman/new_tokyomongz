@@ -1,0 +1,66 @@
+.terms-background {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+}
+
+.terms-inner {
+  width: 100%;
+  max-width: 1605px;
+  display: flex;
+  flex-direction: column;
+}
+
+.terms-title {
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+  font-family: "mplus1p500";
+  color: #ffde3b;
+}
+
+.terms-text {
+  width: 100%;
+  margin: 16px 0;
+  font-family: "mplus1p400";
+}
+
+.terms-big-text {
+  font-family: "mplus1p400";
+  font-size: 22px;
+}
+
+.terms-head {
+  width: 100%;
+  margin: 21px 0 4px 0;
+}
+.terms-sub-title {
+  width: 100%;
+  margin: 85px 0 35px 0;
+  font-family: "mplus1p500";
+  font-size: 28px;
+  text-align: center;
+}
+
+.terms-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #fff;
+  &:not(:first-child) {
+    margin-top: 48px;
+  }
+  .box__top-text {
+    width: 100%;
+    background: #333;
+    font-weight: bold;
+    padding: 8px;
+    border-bottom: 1px solid #fff;
+  }
+  .box__bottom-text {
+    width: 100%;
+    padding: 8px;
+  }
+}

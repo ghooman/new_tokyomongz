@@ -1,0 +1,118 @@
+.news-detail {
+  width: 100%;
+  background-color: black;
+  padding: 100px 60px;
+}
+
+.news-detail__title-box {
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .category {
+    font-family: "mplus1p600";
+    font-size: 40px;
+  }
+  .title {
+    font-family: "mplus1p500";
+    font-size: 40px;
+    margin-top: 80px;
+  }
+  .date {
+    font-family: "mplus1p400";
+    font-size: 20px;
+    color: #b3b3b3;
+    margin-top: 16px;
+  }
+}
+
+.news-detail__main {
+  width: 100%;
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #545454;
+  .news-detail__img {
+    width: 1200px;
+    img {
+      width: 100%;
+    }
+  }
+
+  .news-detail__text {
+    width: 1200px;
+    font-size: 18px;
+    font-family: "mplus1p400";
+    margin-top: 20px;
+  }
+}
+
+.news-detail__bottom {
+  width: 100%;
+  padding-top: 50px;
+  border-top: 1px solid #545454;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .prev-next-btn {
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    .btn--prev {
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      img {
+        width: 40px;
+        margin-right: 8px;
+      }
+      .btn-text-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        .prev-text {
+          font-family: "mplus1p500";
+          font-size: 18px;
+        }
+        .btn-text {
+          font-family: "mplus1p400";
+          font-size: 18px;
+        }
+      }
+    }
+    .btn--next {
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      .btn-text-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        .next-text {
+          font-family: "mplus1p500";
+          font-size: 18px;
+        }
+        .btn-text {
+          font-family: "mplus1p400";
+          font-size: 18px;
+        }
+      }
+      img {
+        width: 40px;
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .btn--list {
+    width: 200px;
+    background-color: #fbca77;
+    padding: 16px 0;
+    border-radius: 8px;
+    font-family: "mplus1p400";
+    font-size: 24px;
+    margin-top: 50px;
+    color: black;
+  }
+}

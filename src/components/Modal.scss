@@ -1,0 +1,378 @@
+.modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+// 클레임 모달
+.claim {
+  background-color: #000;
+  border: 1px solid #545454;
+  padding: 24px;
+  border-radius: 8px;
+  width: 460px;
+  .claim__header {
+    padding-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #545454;
+    .claim__header-title {
+      font-size: 20px;
+      font-family: "mplus1p400";
+    }
+    .claim__header-mzc {
+      font-family: "mplus1p500";
+      font-size: 24px;
+      .claim__header-coin {
+        font-family: "mplus1p500";
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+.claim__main {
+  margin-top: 24px;
+  ul {
+    margin-top: 16px;
+  }
+  li {
+    display: flex;
+    font-family: "mplus1p400";
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+    span {
+      margin-right: 8px;
+      font-family: "mplus1p400";
+    }
+  }
+}
+.claim__btn {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .btn--cancel {
+    width: 49%;
+    height: 50px;
+    background-color: transparent;
+    border: 1px solid #fbca77;
+    border-radius: 8px;
+    font-family: "mplus1p400";
+  }
+  .btn--claim {
+    width: 49%;
+    height: 50px;
+    color: #000;
+    background-color: #fbca77;
+    border-radius: 8px;
+    font-family: "mplus1p400";
+  }
+}
+
+// web3 버튼
+.btn-web3 {
+  border: 1px solid #fbca77 !important;
+}
+
+// 클레임 확정 모달
+.claim-confirm {
+  width: 460px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  border: 1px solid #545454;
+  border-radius: 8px;
+}
+
+.claim-confirm__title {
+  font-size: 20px;
+}
+.claim-confirm__btn {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .btn--cancel {
+    width: 49%;
+    height: 50px;
+
+    background-color: transparent;
+    border: 1px solid #fbca77;
+    border-radius: 8px;
+    font-family: "mplus1p400";
+  }
+  .btn--claim-confirm {
+    width: 49%;
+    height: 50px;
+    color: #000;
+    background-color: #fbca77;
+    border-radius: 8px;
+    font-family: "mplus1p400";
+  }
+}
+
+// 스테이킹 모달
+.staking-modal {
+  display: flex;
+  flex-direction: column;
+  width: 330px;
+  padding: 24px;
+  background-color: #000;
+  border: 1px solid #545454;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.staking__count {
+  text-align: center;
+  font-family: "mplus1p400";
+}
+
+.staking__img-box {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  margin: 8px 0;
+  // border-bottom: 1px solid #545454;
+  &::-webkit-scrollbar-thumb {
+    background-color: #fbca77;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar {
+    background-color: #545454;
+    border-radius: 10px;
+    height: 8px;
+  }
+}
+
+.staking__img-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  &:not(:first-child) {
+    margin-left: 16px;
+  }
+  .staking__img {
+    width: 100%;
+    min-width: 280px;
+    img {
+      width: 100%;
+    }
+  }
+  .staking__img-title {
+    margin: 24px 0;
+    font-family: "mplus1p500";
+    font-size: 20px;
+  }
+}
+
+.staking__text {
+  height: 70px;
+  overflow: auto;
+  p {
+    font-size: 14px;
+    font-family: "mplus1p400";
+  }
+}
+
+.staking__btn {
+  @extend .claim__btn;
+  .btn--staking {
+    @extend .btn--claim;
+  }
+}
+
+// 스테이킹 확정 모달
+.staking-confirm {
+  @extend .claim-confirm;
+}
+.staking-confirm__btn {
+  @extend .claim-confirm__btn;
+}
+.btn--staking-confirm {
+  @extend .btn--claim-confirm;
+}
+
+// 스테이킹 해지 모달
+.cancel {
+  @extend .staking-modal;
+}
+.cancel__img-contents {
+  @extend .staking__img-contents;
+  .cancel__img {
+    @extend .staking__img;
+  }
+  .cancel__img-title {
+    @extend .staking__img-title;
+  }
+}
+.cancel__text {
+  @extend .staking__text;
+}
+
+.cancel__btn {
+  @extend .staking__btn;
+}
+.btn--cancel-staking {
+  width: 49%;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #ff2121;
+  color: #fff;
+  font-family: "mplus1p400";
+}
+
+// 스테이킹 해지 확정 모달
+.cancel-staking-confirm {
+  @extend .claim-confirm;
+}
+.cancel-staking-confirm__title {
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
+}
+.cancel-staking-confirm__btn {
+  @extend .claim-confirm__btn;
+}
+.btn--cancel-staking-confirm {
+  @extend .btn--cancel-staking;
+}
+
+// 준비중 모달
+.waiting {
+  @extend .claim;
+}
+.waiting__title {
+  width: 100%;
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
+}
+.back-btn {
+  margin-top: 40px;
+  font-family: "mplus1p400";
+  width: 100%;
+  padding: 16px 0;
+  border: 1px solid #fbca77;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+// LoadingModal
+
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-family: "mplus1p500";
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-background {
+    padding: 16px;
+  }
+  .claim {
+    width: 280px;
+    padding: 24px;
+    .claim__header {
+      .claim__header-title {
+        font-size: 16px;
+      }
+      .claim__header-mzc {
+        font-size: 20px;
+        .claim__header-coin {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .claim__main {
+    span,
+    li {
+      font-size: 12px;
+    }
+  }
+
+  .staking__btn {
+    margin-top: 16px;
+  }
+
+  .claim__btn,
+  .claim-confirm__btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .btn--cancel,
+    .btn--claim,
+    .btn--claim-confirm,
+    .btn--cancel-staking {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 14px;
+    }
+    .btn--claim,
+    .btn--claim-confirm,
+    .btn--cancel-staking {
+      margin-top: 16px;
+      padding: 12px 0;
+      font-size: 14px;
+    }
+  }
+
+  .claim-confirm {
+    width: 280px;
+  }
+  .claim-confirm__title {
+    font-size: 16px;
+    text-align: center;
+  }
+  .staking-confirm__title,
+  .cancel-staking-confirm__title {
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .staking-modal {
+    max-width: 230px;
+    .staking__img-contents {
+      min-width: 180px;
+      .staking__img {
+        min-width: auto;
+      }
+      .staking__img-title {
+        font-size: 16px;
+        margin: 16px 0;
+      }
+    }
+    .staking__text {
+      height: 80px;
+    }
+    p {
+      font-size: 12px;
+    }
+  }
+}

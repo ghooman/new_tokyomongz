@@ -306,13 +306,51 @@ const Main = ({ language }) => {
         );
         console.log("스테이킹 리스트=========", res);
       } catch (err) {
-        console.log(err);
+        console.log("스테이킹 리스트 에러 ==========", err);
       }
     };
 
     getStakingNftList();
-  }, []);
+  }, [walletAddress]);
 
+  // ==================== 스테이킹 ======================
+  const handleStaking = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+      // workNFT: isChecked,
+      workNFT: [7],
+      // 선택한 목록
+    };
+
+    try {
+      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+      console.log("스테이킹=================", res);
+      // window.location.reload();
+    } catch (err) {
+      console.log(err);
+      // setFailModalControl(true);
+    }
+  };
+
+  const handleUnStaking = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+      // workNFT: isChecked,
+      workNFT: [7],
+      // 선택한 목록
+    };
+
+    try {
+      const res = await axios.post(
+        "http://35.77.226.185/api/unStakeTMHC",
+        data
+      );
+      console.log("언스테이킹=================", res);
+      // window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <Nav />

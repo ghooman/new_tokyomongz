@@ -24,25 +24,27 @@ const News = () => {
   const [feedItems, setFeedItems] = useState([]);
 
   useEffect(() => {
-    const rssUrl = "https://medium.com/feed/@tmhcofficial";
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+    const getNewsData = async () => {
+      const rssUrl = "https://medium.com/feed/@tmhcofficial";
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
+      try {
+        const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status === "ok") {
           setFeedItems(data.items);
         }
-      })
-      .catch((error) => {
+        console.log("news", data);
+      } catch (error) {
         console.error(error);
-      });
+      }
+    };
+
+    getNewsData();
   }, []);
 
   console.log(feedItems);
 
-  axios.get();
   return (
     <>
       <div className="news">

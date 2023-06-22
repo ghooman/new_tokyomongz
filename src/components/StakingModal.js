@@ -17,6 +17,8 @@ import {
 import abi from "../pages/newAbi";
 import Web3 from "web3";
 
+import axios from "axios";
+
 const StakingModal = ({
   language,
   selectData,
@@ -216,6 +218,28 @@ const StakingConfirmModal = ({
 
     window.parent.location.reload();
   }
+
+  // ==================== 스테이킹 ======================
+  const handleStaking = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+      // workNFT: isChecked,
+      workNFT: [7, 8, 9],
+      // 선택한 목록
+    };
+
+    try {
+      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+      console.log("스테이킹=================", res);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+      setFailModalControl(true);
+    }
+  };
+
+  // =========== 스테이킹 실패 모달 컨트롤 =============
+  const [failModalControl, setFailModalControl] = useState(false);
   return (
     <>
       {language === "EN" ? (
@@ -239,13 +263,9 @@ const StakingConfirmModal = ({
               >
                 Apply
               </button> */}
-              <Web3Button
-                className="btn-web3"
-                contractAddress={STAKING_TMHC_CONTRACT}
-                action={() => stakingNft()}
-              >
+              <button className="btn-staking-confirm" onClick={handleStaking}>
                 Apply
-              </Web3Button>
+              </button>
             </div>
           </div>
         </div>
@@ -264,25 +284,32 @@ const StakingConfirmModal = ({
               >
                 Back
               </button>
-              {/* <button
-                className="btn--staking-confirm"
-                onClick={handleCloseModal}
-              >
+              <button className="btn-staking-confirm" onClick={handleStaking}>
                 Apply
-              </button> */}
-              <div className="btn-apply-box">
-                <Web3Button
-                  className="btn-web3"
-                  contractAddress={STAKING_TMHC_CONTRACT}
-                  action={() => stakingNft()}
-                >
-                  Apply
-                </Web3Button>
-              </div>
+              </button>
             </div>
           </div>
         </div>
       )}
+      {failModalControl && (
+        <StakingFailModal setFailModalControl={setFailModalControl} />
+      )}
+    </>
+  );
+};
+
+const StakingFailModal = (setFailModalControl) => {
+  const modalClose = () => {
+    setFailModalControl(false);
+  };
+  return (
+    <>
+      <div className="modal-background">
+        <div className="staking-fail">
+          <span className="staking-fail__text">Staking failed</span>
+          <button className="btn-confirm">OK</button>
+        </div>
+      </div>
     </>
   );
 };

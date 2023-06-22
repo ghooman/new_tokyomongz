@@ -293,21 +293,25 @@ const Main = ({ language }) => {
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
 
-  // test staking btn
-
-  const handleStaking = async () => {
-    const data = {
-      address: walletAddress, // 현재 지갑
-      workNFT: isChecked, // 선택한 목록
+  // 현재 스트이킹 하고 있는 nft목록 불러오기 ===============
+  useEffect(() => {
+    const getStakingNftList = async () => {
+      const data = {
+        address: walletAddress, // 현재 지갑
+      };
+      try {
+        const res = await axios.post(
+          "http://35.77.226.185/api/getGStakedTMHCwithVrify",
+          data
+        );
+        console.log("스테이킹 리스트=========", res);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
-    try {
-      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    getStakingNftList();
+  }, []);
 
   return (
     <>
@@ -771,10 +775,6 @@ const Main = ({ language }) => {
             </div>
           </div>
         </div>
-
-        <button className="btn-staking" onClick={handleStaking}>
-          스테이킹
-        </button>
       </div>
 
       {/* 스테이킹 모달 */}

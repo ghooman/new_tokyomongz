@@ -3,8 +3,15 @@ import "./Modal.scss";
 import nftExample from "../assets/images/nft-image.png";
 import { useSelector, useDispatch } from "react-redux";
 import { setCancelStakingModal } from "../store";
-import { useContractWrite, useContract, Web3Button } from "@thirdweb-dev/react";
+import {
+  useContractWrite,
+  useContract,
+  Web3Button,
+  useAddress,
+} from "@thirdweb-dev/react";
 import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
+
+import axios from "axios";
 
 const CancelStakingModal = ({ selectData, setSelectData, language }) => {
   const dispatch = useDispatch();
@@ -114,6 +121,8 @@ const CancelStakingConfirmModal = ({
   setCancelStakingConfirm,
   language,
 }) => {
+  const walletAddress = useAddress();
+
   const dispatch = useDispatch();
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
@@ -145,6 +154,28 @@ const CancelStakingConfirmModal = ({
 
     window.parent.location.reload();
   }
+
+  //
+
+  const handleUnStaking = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+      // workNFT: isChecked,
+      workNFT: [7],
+      // 선택한 목록
+    };
+
+    try {
+      const res = await axios.post(
+        "http://35.77.226.185/api/unStakeTMHC",
+        data
+      );
+      console.log("언스테이킹=================", res);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div className="modal-background">
@@ -168,13 +199,12 @@ const CancelStakingConfirmModal = ({
               >
                 Cancel Staking
               </button> */}
-              <Web3Button
-                className="btn-web3"
-                contractAddress={STAKING_TMHC_CONTRACT}
-                action={() => cancelStaking()}
+              <button
+                className="btn-unstaking-confirm"
+                onClick={handleUnStaking}
               >
                 Cancel Staking
-              </Web3Button>
+              </button>
             </div>
           </div>
         ) : (
@@ -195,13 +225,12 @@ const CancelStakingConfirmModal = ({
               >
                 Cancel Staking
               </button> */}
-              <Web3Button
-                className="btn-web3"
-                contractAddress={STAKING_TMHC_CONTRACT}
-                action={() => cancelStaking()}
+              <button
+                className="btn-unstaking-confirm"
+                onClick={handleUnStaking}
               >
                 Cancel Staking
-              </Web3Button>
+              </button>
             </div>
           </div>
         )}

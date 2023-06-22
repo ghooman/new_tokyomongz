@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./Modal.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { setClaimModal } from "../store";
-import { useContract, useContractWrite, Web3Button } from "@thirdweb-dev/react";
+import {
+  useAddress,
+  useContract,
+  useContractWrite,
+  Web3Button,
+} from "@thirdweb-dev/react";
 import LoadingModal from "./LoadingModal";
 import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
+
+import axios from "axios";
 
 const ClaimModal = ({ language, reward }) => {
   const dispatch = useDispatch();
@@ -117,6 +124,8 @@ const ClaimConfirm = ({
   setClaimConfirmModal,
   language,
 }) => {
+  const walletAddress = useAddress();
+
   const { contract } = useContract(STAKING_TMHC_CONTRACT);
   const { mutateAsync: claimAll, isLoading } = useContractWrite(
     contract,
@@ -135,17 +144,31 @@ const ClaimConfirm = ({
 
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
-  const handleClaim = () => {
-    dispatch(setClaimModal(!claimModal));
-    document.body.style.overflow = "";
-    call();
-  };
 
   async function claimRewards() {
     await call();
 
     window.parent.location.reload();
   }
+
+  // claim ======================
+
+  const handleClaim = async () => {
+    const data = {
+      address: walletAddress, // 현재 지갑
+    };
+
+    try {
+      const res = await axios.post(
+        "http://35.77.226.185/api/ClaimAllTMHC",
+        data
+      );
+      console.log("클레임=================", res);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -165,13 +188,9 @@ const ClaimConfirm = ({
               {/* <button className="btn--claim-confirm" onClick={handleClaim}>
                 Apply
               </button> */}
-              <Web3Button
-                className="btn-web3"
-                contractAddress={STAKING_TMHC_CONTRACT}
-                action={() => claimRewards()}
-              >
+              <button className="btn-claim-confirm" onClick={handleClaim}>
                 Claim
-              </Web3Button>
+              </button>
             </div>
           </div>
         ) : (
@@ -189,13 +208,9 @@ const ClaimConfirm = ({
               {/* <button className="btn--claim-confirm" onClick={handleClaim}>
                 Apply
               </button> */}
-              <Web3Button
-                className="btn-web3"
-                contractAddress={STAKING_TMHC_CONTRACT}
-                action={() => claimRewards()}
-              >
+              <button className="btn-claim-confirm" onClick={handleClaim}>
                 Claim
-              </Web3Button>
+              </button>
             </div>
           </div>
         )}

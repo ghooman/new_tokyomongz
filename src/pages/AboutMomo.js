@@ -35,8 +35,8 @@ const AboutMomo = ({ language }) => {
               </h3>
               {language === "EN" ? (
                 <p className="about-momo__text">
-                  This legendary peach turned into a spirit of peach, "MOMO",
-                  and release as NFT.
+                  The legendary peach "MOMO" became a spiritual symbol and was
+                  released as NFT.
                   <br /> The first NFT collection Tokyo Mongz Hills Club, known
                   as TMHC, was inspired by the "Monkey" from the Japanese fairy
                   tale "Momotaro".
@@ -62,10 +62,11 @@ const AboutMomo = ({ language }) => {
               <h3 className="about-momo__sub-title">NFT Features</h3>
               {language === "EN" ? (
                 <p className="about-momo__text">
-                  - Full 3D X Full body Modeling for Metaverse & Game
-                  <br /> - Support with webGL : Zoom-In, Zoom-Out, Spinning
-                  <br /> - 3D PFP NFT Project
-                  <br />- 4-level rarity system: UR / SR /R / Common
+                  - 3D PFP NFT Project
+                  <br /> - Full 3D X body modeling for the metaverse & game
+                  <br /> - Supports webGL: Features camera zoom, pan, and rotate
+                  of the 3D model
+                  <br />- 4-level rarity system: UR / SR / R / COMMON
                 </p>
               ) : (
                 <p className="about-momo__text">
@@ -123,9 +124,9 @@ const AboutMomo = ({ language }) => {
 
               {language === "EN" ? (
                 <p className="about-momo__text">
-                  Up to 5 MOMO NFTs and TMHC NFTs can be Team Staking, and up to
-                  1200% of MZC can be additionally received depending on the
-                  rarity of MOMO NFTs in Team Staking.
+                  Up to 5 MOMO NFTs and TMHC NFTs can be stacked together, and
+                  up to 1200% of MZC can be additionally received depending on
+                  the rarity of the MOMO NFTs.
                   <br />
                   UR: about 30MZC/day
                   <br />
@@ -167,13 +168,11 @@ const AboutMomo = ({ language }) => {
 
               {language === "EN" ? (
                 <p className="about-momo__text">
-                  Mongs Universe has focused on developing NFT X P2E Game.
-                  <br />
-                  We are preparing to launch the game in 2023~2024 by utilizing
-                  the game development & operation capabilities of the parent
-                  company, a listed company and game
-                  <br /> specialist in Japan, and Mongs Universe's NFT will play
-                  an important role in the game.
+                  Mongs Universe focuses on developing a NFT X P2E Game.
+                  <br /> We are preparing to launch the game in 2023~2024 by
+                  utilizing game development & operation capabilities of our
+                  mother company, commseed. The Japanese game specialists, and
+                  Mongs Universe's NFTs will play an important role in the game.
                 </p>
               ) : (
                 <p className="about-momo__text">
@@ -188,9 +187,9 @@ const AboutMomo = ({ language }) => {
               <h3 className="about-momo__sub-title">004 Community Paths</h3>
               {language === "EN" ? (
                 <p className="about-momo__text">
-                  Participation in various events held by the Mongs Universe
-                  community with approximately 20K users.
-                  <br /> Distribution of AL for Mongs Universe NFT
+                  Holders are welcome to participate in various events held by
+                  the Mongs Universe community with approximately 20K users, as
+                  well as the distribution of AL for the Mongs Universe NFT.
                 </p>
               ) : (
                 <p className="about-momo__text">
@@ -245,7 +244,7 @@ const AboutMomo = ({ language }) => {
               )}
               {language === "EN" ? (
                 <p className="about-momo__sub-title">
-                  Mint Schedule : TBD(May 2023 target)
+                  Mint Schedule : TBD(August 2023)
                   <br /> Mint Price : TBD
                 </p>
               ) : (

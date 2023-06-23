@@ -17,14 +17,14 @@ const EcoSystem = ({ language }) => {
             <p className="eco-system__text">
               Mongz Universe is a complex project that connects the metaverse
               and the real world, undertaken by HashLink, a wholly-owned
-              subsidiary of a publicly traded company.The grand story that began
-              with the Tokyo Mongz Hills Club, which raised approximately 200
-              million yen through minting in November 2022, has evolved into the
-              Mongz UNIVERSE.The Mongz UNIVERSE will be a unique economic zone
-              centered on the Mongz Universe Coin (MUC), a CEX-type reserve
-              currency that is scheduled to be listed in 2023.The MUC is named
-              after the Japanese fairy tale "Momotaro.MUC will be linked to the
-              Mongz (Monkey), INU (Dog), and KIJI (Pheasant) DEX COINS.
+              subsidiary of a publicly traded company. The grand story that
+              began with the Tokyo Mongz Hills Club, which raised approximately
+              200 million yen through minting in November 2022, has evolved into
+              the Mongz UNIVERSE. The Mongz UNIVERSE will be a unique economic
+              zone centered on the Mongz Universe Coin (MUC), a CEX-type reserve
+              currency that is scheduled to be listed in 2023. The MUC is named
+              after the Japanese fairy tale “Momotaro.” MUC will be linked to
+              the Mongz (Monkey), INU (Dog), and KIJI (Pheasant) DEX COINS.
             </p>
           ) : (
             <p className="eco-system__text">

@@ -12,7 +12,7 @@ const WaitingModal = ({ setShowWaitingModal, language }) => {
       <div className="modal-background">
         <div className="waiting">
           {language === "EN" ? (
-            <h2 className="waiting__title">Prepare for Open</h2>
+            <h2 className="waiting__title">TBD</h2>
           ) : (
             <h2 className="waiting__title">準備中</h2>
           )}

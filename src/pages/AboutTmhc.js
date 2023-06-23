@@ -47,22 +47,22 @@ const AboutTmhc = ({ language }) => {
 
               <div className="story-content-main" ref={mainRef}>
                 <p className="story-content__text">
-                  Welcome to Crypto World, travelers on the blockchain sea!
+                  Welcome to the Crypto World, travelers on the blockchain sea!
                   <br />
-                  It is said that many mysterious hidden treasures lie dormant
-                  in this vast cyber world. This is the story of the adventures
-                  of some monkeys who lived peacefully in such a corner of the
-                  Crypto World. Can we turn the pages of the story now? I'm
-                  going to flip it!
+                  There are many mysterious treasures hidden in this vast cyber
+                  world. Now, I will tell you a story of the adventures of
+                  monkeys who lived peacefully in such a corner of the Crypto
+                  World. Can we turn the pages of the story now? I'm going to
+                  flip it!
                 </p>
                 <div className="story-content__item">
                   <div className="story-content__title">
                     <span className="story-content__title-num">01.</span>
-                    legendary peach tree
+                    The Legendary Peach Tree
                   </div>
                   <p className="story-content__text">
                     In a certain area of Crypto World, there was one of the
-                    legendary treasures, a peach tree that is said to bear
+                    legendary treasures, a peach tree that is told to bear
                     10,000 fruits once every 10,000 years. It is said that the
                     fruit has a fantastic taste that cannot be thought of as
                     being of this world. It's a famous local legend, but no one
@@ -72,73 +72,74 @@ const AboutTmhc = ({ language }) => {
                 <div className="story-content__item">
                   <div className="story-content__title">
                     <span className="story-content__title-num">02.</span>
-                    lucky monkeys
+                    Lucky Monkeys
                   </div>
                   <p className="story-content__text">
-                    One day, a lost monkey wandered deep into the forest and
-                    luckily found the legendary peach tree. That's not all.
-                    Surprisingly, the peach tree bore fruit only once every
-                    10,000 years! The lucky monkey, who was hungry, bit into a
-                    peach fruit that glowed with a mysterious color. Impressed
-                    by the amazing taste (this is the best word in our
-                    vocabulary!), the monkey immediately returned to town to
-                    show off to his friends.
-                    <br /> That legendary peach tree really existed! And
-                    according to legend, it had 10,000 peaches! I'll even tell
-                    you where! This shocking boast quickly spread to millions of
-                    monkeys. The monkeys in the town rush out all at once.
-                    Because there are only 10,000 peach fruits, right? The first
-                    10,000 fish are first come, first served.
-                    <br /> The monkeys who heard the information earlier than
-                    anyone else and reached the peach tree earlier than anyone
-                    else received a peach. As soon as they gulped down their
-                    saliva, exchanged glances with their friends, nodded to each
-                    other, and ate the peaches all at once...
-                    <br /> All 10,000 monkeys have evolved into "Mongz"!
+                    Once upon a time, a lost monkey wandered deep into the
+                    forest and luckily found the legendary peach tree. That's
+                    not all. Surprisingly, the peach tree was full of peaches!
+                    The hungry monkey took a bite of a peach that glowed
+                    mysteriously. Impressed by its eye-opening taste, the monkey
+                    immediately returned to town to share this experience,
+                    showing himself off.
+                    <br /> "The legendary peach tree really exists, and just
+                    like how it was told in the legend, it was fully bore with
+                    lots of peaches! I'll even take you guys to the tree!" said
+                    the proud monkey. The shocking news quickly spread to
+                    millions of monkeys, as the monkeys in the town rushed out
+                    all at once, each of them in a hurry. The 10,000 peaches
+                    were ripe and ready to be consumed by whoever arrived first.
+                    <br />
+                    Each of the monkeys who were the first to arrive at the tree
+                    finally got their hands on the legendary peach. They
+                    exchanged glances and nodded their heads as they devoured
+                    the peaches. The 10,000 peaches were all consumed... Just
+                    like that, 10,000 monkeys have evolved into "Mongz"!
                   </p>
                 </div>
                 <div className="story-content__item">
                   <div className="story-content__title">
                     <span className="story-content__title-num">03.</span>
-                    Birth of Mongz
+                    The Birth of The Mongz
                   </div>
                   <p className="story-content__text">
-                    What is Mongz? Good question.
-                    <br /> Like a monkey but not a monkey, a new human being
-                    with a brave heart and the power of justice, or should I say
-                    a new monkey? Mongz is still a mystery, but I'm sure it will
-                    be revealed in the future. (By the way, in our language,
-                    it's pronounced "mons". It's not mongs!)
-                    <br /> Mongz and his friends will never forget the
-                    excitement they felt when they ate the legendary peach
-                    fruit, so they rush around the Crypto World in search of
-                    more hidden treasures. Crossing the seven seas, crossing a
-                    number of unexplored regions, sometimes defeating bad guys,
-                    and getting mysterious treasures such as "ERC721" and
-                    "Alternative Coin" one after another.
-                    <br /> picture? Curious about what kind of big adventure
-                    you've had? We will have the opportunity to talk again
-                    someday!
+                    Who are the Mongz? Now that’s a good question.
+                    <br /> A Mongz can be mistaken as a monkey because it looks
+                    like one, but it is not really a monkey. It's a whole new
+                    type of human species. A Mongz is also known to have a brave
+                    heart, full of justice. While the existence of the Mongz
+                    remains mysterious, I'm sure it will reveal sometime in the
+                    future. Oh, and in 'human words,' they are supposed to be
+                    pronounced "Mons," not “Mongs”. Please make sure to call
+                    them correctly. Otherwise, you might offend them!
+                    <br /> The Mongz will never forget the excitement of when
+                    they first had the legendary peach, so they rush around the
+                    Crypto World in search of more hidden treasures. Crossing
+                    the seven seas, numbers of unexplored regions, and sometimes
+                    even defeating the ‘bad guys,’ the Mongz has been collecting
+                    mysterious treasures such as "ERC721" and "Alternative
+                    Coin," one after another.
+                    <br /> Wanna know more about Mongz? I will be back again to
+                    talk to you again, so stay tuned!
                   </p>
                 </div>
                 <div className="story-content__item">
                   <div className="story-content__title">
                     <span className="story-content__title-num">04.</span>
-                    Mongz's new adventure
+                    Mongz’s New Adventure
                   </div>
                   <p className="story-content__text">
-                    This is the story of Mongz and others in the Crypto World.
-                    <br />
-                    Where are the Mongz and what are they doing now that they
-                    are becoming legends in their own right? According to the
-                    secret information we got, they are now in Tokyo, the
-                    world's largest cyber city. It seems that there is a secret
-                    club only for them on the top floor of the tallest building
-                    "Hills Tower" in the middle of the mega city. Tokyo Mongz
-                    Hills Club, the best club in Tokyo, where you can't enter
-                    without a secret invitation that only the chosen ones can
-                    get. what are they planning to do next...
-                    <br /> A new legend of Mongz is about to begin!
+                    This is the story of Mongz and the others in the Crypto
+                    World.
+                    <br /> Where are the Mongz, and what are they up to at the
+                    moment? Are they becoming legends themselves? According to
+                    the most recent information we have, they are secretly in
+                    Tokyo, the world's largest cyber city. There is a special
+                    club built for them on the top floor of the tallest building
+                    in the city, "Hills Tower," located in the center of Tokyo.
+                    It is called "The Tokyo Mongz Hills Club." Only the selected
+                    few are invited to enter the club. What are they planning to
+                    do next? The legend of Mongz is about to begin!
                   </p>
                 </div>
               </div>

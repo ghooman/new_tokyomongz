@@ -152,7 +152,8 @@ const ClaimConfirm = ({
   }
 
   // claim ======================
-
+  // ================ 실패 메시지 ==============
+  const [errMsg, setErrMsg] = useState("");
   const handleClaim = async () => {
     const data = {
       address: walletAddress, // 현재 지갑
@@ -163,12 +164,18 @@ const ClaimConfirm = ({
         "http://35.77.226.185/api/ClaimAllTMHC",
         data
       );
-      console.log("클레임=================", res);
-      window.location.reload();
+      console.log("클레임=================", res.data.msg);
+      setErrMsg(res.data.msg);
+      setFailModalControl(true);
+      // window.location.reload();
     } catch (err) {
-      console.log(err);
+      console.log("클레임 에러===========", err);
     }
   };
+
+  // =========== 클레임 실패 모달 컨트롤 =============
+  const [failModalControl, setFailModalControl] = useState(false);
+  console.log(failModalControl);
 
   return (
     <>
@@ -215,7 +222,59 @@ const ClaimConfirm = ({
           </div>
         )}
       </div>
-      {isLoading && <LoadingModal />}
+      {/* {isLoading && <LoadingModal />} */}
+      {failModalControl && (
+        <ClaimFailModal
+          setFailModalControl={setFailModalControl}
+          errMsg={errMsg}
+        />
+      )}
+    </>
+  );
+};
+
+const ClaimFailModal = ({ setFailModalControl, errMsg }) => {
+  if (errMsg.includes("트렌젝션 등록")) {
+    errMsg = errMsg
+      .replace(
+        "의 Claim 트렌젝션 등록 완료",
+        "のClaimリクエストを受け付けました。"
+      )
+      .replace(".", "");
+  }
+  if (errMsg.includes("Claim 트렌젝션 등록 완료")) {
+    errMsg = errMsg
+      .replace("스테이킹중인 ", "ステーキング中の")
+      .replace(
+        "의 모든 Claim 트렌젝션 등록 완료",
+        "のすべてのClaimリクエストが完了しました。"
+      )
+      .replace(".", "");
+  }
+  if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
+    errMsg = "現在、受領可能なリワードがありません。";
+  }
+  const modalClose = () => {
+    setFailModalControl(false);
+    if (
+      errMsg.includes("のすべてのClaimリクエストが完了しました。") ||
+      errMsg.includes("のClaimリクエストを受け付けました。")
+    ) {
+      window.location.reload();
+    }
+  };
+  console.log(errMsg);
+
+  return (
+    <>
+      <div className="modal-background">
+        <div className="staking-fail">
+          <span className="staking-fail__text">{errMsg}</span>
+          <button className="btn-confirm" onClick={modalClose}>
+            OK
+          </button>
+        </div>
+      </div>
     </>
   );
 };

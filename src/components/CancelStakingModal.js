@@ -156,26 +156,33 @@ const CancelStakingConfirmModal = ({
   }
 
   //
-
+  // ================ 실패 메시지 ==============
+  const [errMsg, setErrMsg] = useState("");
   const handleUnStaking = async () => {
     const data = {
       address: walletAddress, // 현재 지갑
       // workNFT: isChecked,
-      workNFT: [7],
+      workNFT: [selectData[0].id],
       // 선택한 목록
     };
 
+    console.log(data);
     try {
       const res = await axios.post(
         "http://35.77.226.185/api/unStakeTMHC",
         data
       );
-      console.log("언스테이킹=================", res);
-      window.location.reload();
+      console.log("언스테이킹=================", res.data.msg);
+      setErrMsg(res.data.msg);
+      setFailModalControl(true);
     } catch (err) {
       console.log(err);
     }
   };
+
+  // =========== 언스테이킹 실패 모달 컨트롤 =============
+  const [failModalControl, setFailModalControl] = useState(false);
+  console.log(failModalControl);
   return (
     <>
       <div className="modal-background">
@@ -234,6 +241,54 @@ const CancelStakingConfirmModal = ({
             </div>
           </div>
         )}
+      </div>
+      {failModalControl && (
+        <UnStakingFailModal
+          setFailModalControl={setFailModalControl}
+          errMsg={errMsg}
+        />
+      )}
+    </>
+  );
+};
+
+const UnStakingFailModal = ({ setFailModalControl, errMsg }) => {
+  if (errMsg.includes("너무 적습니다")) {
+    errMsg = errMsg
+      .replace(
+        "의 리워드가 너무 적습니다. 현재 리워드 : ",
+        "でもらえるリワードが少なすぎます。 現在のリワード : "
+      )
+      .replace("최소 리워드 : ", "最小申請可能リワード : ");
+  }
+  if (errMsg.includes("언스테이킹 실패")) {
+    errMsg =
+      "ステーキングの解除が失敗しました。保有していない、またはステーキング中でないNFTが含まれています。";
+  }
+
+  if (errMsg.includes("언스테이킹 완료")) {
+    errMsg = errMsg
+      .replace("언스테이킹 완료", "のステーキングの解除処理が完了しました。")
+      .replace(".", "");
+  }
+
+  const modalClose = () => {
+    setFailModalControl(false);
+    if (errMsg.includes("のステーキングの解除処理が完了しました。")) {
+      window.location.reload();
+    }
+  };
+  console.log(errMsg);
+
+  return (
+    <>
+      <div className="modal-background">
+        <div className="staking-fail">
+          <span className="staking-fail__text">{errMsg}</span>
+          <button className="btn-confirm" onClick={modalClose}>
+            OK
+          </button>
+        </div>
       </div>
     </>
   );

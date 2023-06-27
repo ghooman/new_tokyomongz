@@ -105,9 +105,9 @@ const Main = ({ language }) => {
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
-  // 체크 확인
+  // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
-  // 체크박스 관리
+  // =============== 체크박스 관리
 
   const handleChecked = (e, id, image, name) => {
     e.stopPropagation();
@@ -130,14 +130,13 @@ const Main = ({ language }) => {
       setSelectData(selectData.filter((el) => el.id !== id));
     }
   };
-  console.log(isChecked);
+  console.log("체크된 nft===========", isChecked);
   ///////////////////////////////////////////////////////////////////////////////
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
   const { contract: mongzContract } = useContract(MONGS_COIN);
 
   const walletAddress = useAddress();
-  console.log(walletAddress);
   // const {
   //   data: nftData,
   //   isLoading,
@@ -176,61 +175,82 @@ const Main = ({ language }) => {
       });
     }
   }, [nftData]);
+  // ================== 스테이킹 리스트 ===============
+  const [stakingData, setStakingData] = useState([]);
+  console.log("스테이킹 nft 목록 ==========", stakingData);
+  // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
-  async function getBalanceOfBatch() {
-    const balances = await contract.methods
-      .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-      .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
-    console.log(balances);
-    const promises = [];
-
-    for (let i = 0; i < balances.length; i++) {
-      if (balances[i] === "1") {
-        promises.push(
-          // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-          axios.get("https://dev.tokyomongzhillsclub.com/api/get_json_data", {
-            params: {
-              id: i + 1,
-            },
-          })
-        );
-      }
-      // console.log(promises);
-    }
-
-    Promise.all(promises)
-      .then((responses) => {
-        console.log(responses);
-        const newData = responses.map((res, index) => ({
-          id: parseInt(res.data.name.slice(5)),
-          name: res.data.name,
-          image: res.data.image,
-        }));
-        setNftData(newData);
-        console.log(newData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
 
   useEffect(() => {
     setNftData(() => {
       return [];
     });
+
+    async function getBalanceOfBatch() {
+      const balances = await contract.methods
+        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
+      // console.log(balances);
+      const promises = [];
+
+      for (let i = 0; i < balances.length; i++) {
+        if (balances[i] === "1") {
+          promises.push(
+            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+            axios.get("https://dev.tokyomongzhillsclub.com/api/get_json_data", {
+              params: {
+                id: i + 1,
+              },
+            })
+          );
+        }
+        // console.log(promises);
+      }
+
+      Promise.all(promises)
+        .then((responses) => {
+          console.log(responses);
+          const newData = responses.map((res, index) => ({
+            id: parseInt(res.data.name.slice(5)),
+            name: res.data.name,
+            image: res.data.image,
+          }));
+          setNftData(newData);
+          console.log(newData);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    const getStakingNftList = async () => {
+      const data = {
+        address: walletAddress, // 현재 지갑
+      };
+      try {
+        const res = await axios.post(
+          "http://35.77.226.185/api/getGStakedTMHCwithVrify",
+          data
+        );
+        // console.log("스테이킹 리스트=========", res);
+        setStakingData(res.data);
+      } catch (err) {
+        console.log("스테이킹 리스트 에러 ==========", err);
+      }
+    };
+
+    getStakingNftList();
     getBalanceOfBatch();
   }, [walletAddress]);
 
   console.log("nftData==================", nftData);
-  console.log(nftData.length);
+  console.log("소유한 nft 개수 =============", nftData.length);
 
   // 스테이킹 된 목록 확인하기
   const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
-  const { data: stakingData, isLoading: stakingDataIsLoading } =
-    useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
+  // const { data: stakingData, isLoading: stakingDataIsLoading } =
+  //   useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
 
-  console.log(stakingData);
   // 겟 리워드
   const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
     stakingTmhc,
@@ -239,9 +259,6 @@ const Main = ({ language }) => {
   );
 
   const [reward, setReward] = useState(undefined);
-
-  // 스테이킹 더미 데이터 ==================================================
-  const dummyStakingData = [518, 739, 1293];
 
   useEffect(() => {
     if (rewardData) {
@@ -293,64 +310,44 @@ const Main = ({ language }) => {
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
 
-  // 현재 스트이킹 하고 있는 nft목록 불러오기 ===============
-  useEffect(() => {
-    const getStakingNftList = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
-      try {
-        const res = await axios.post(
-          "http://35.77.226.185/api/getGStakedTMHCwithVrify",
-          data
-        );
-        console.log("스테이킹 리스트=========", res);
-      } catch (err) {
-        console.log("스테이킹 리스트 에러 ==========", err);
-      }
-    };
-
-    getStakingNftList();
-  }, [walletAddress]);
-
   // ==================== 스테이킹 ======================
-  const handleStaking = async () => {
-    const data = {
-      address: walletAddress, // 현재 지갑
-      // workNFT: isChecked,
-      workNFT: [7],
-      // 선택한 목록
-    };
+  // const handleStaking = async () => {
+  //   const data = {
+  //     address: walletAddress, // 현재 지갑
+  //     // workNFT: isChecked,
+  //     workNFT: [7],
+  //     // 선택한 목록
+  //   };
 
-    try {
-      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
-      console.log("스테이킹=================", res);
-      // window.location.reload();
-    } catch (err) {
-      console.log(err);
-      // setFailModalControl(true);
-    }
-  };
+  //   try {
+  //     const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+  //     console.log("스테이킹=================", res);
+  //     // window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //     // setFailModalControl(true);
+  //   }
+  // };
+  // ================= 언스테이킹 ===============
+  // const handleUnStaking = async () => {
+  //   const data = {
+  //     address: walletAddress, // 현재 지갑
+  //     // workNFT: isChecked,
+  //     workNFT: [7],
+  //     // 선택한 목록
+  //   };
 
-  const handleUnStaking = async () => {
-    const data = {
-      address: walletAddress, // 현재 지갑
-      // workNFT: isChecked,
-      workNFT: [7],
-      // 선택한 목록
-    };
-
-    try {
-      const res = await axios.post(
-        "http://35.77.226.185/api/unStakeTMHC",
-        data
-      );
-      console.log("언스테이킹=================", res);
-      // window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     const res = await axios.post(
+  //       "http://35.77.226.185/api/unStakeTMHC",
+  //       data
+  //     );
+  //     console.log("언스테이킹=================", res);
+  //     // window.location.reload();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   return (
     <>
       <Nav />
@@ -651,7 +648,7 @@ const Main = ({ language }) => {
                   <ul className="main__tmhc-list">
                     {nftData.slice(start, end).map((item) => (
                       <li className="tmhc-item" key={item.id}>
-                        {dummyStakingData.includes(parseInt(item.id)) ? null : (
+                        {stakingData.includes(parseInt(item.id)) ? null : (
                           <input
                             type="checkbox"
                             className="tmhc-check"
@@ -665,14 +662,14 @@ const Main = ({ language }) => {
                           <img src={item.image} alt="nft" />
                         </div>
 
-                        {dummyStakingData.includes(parseInt(item.id)) ? (
+                        {stakingData.includes(parseInt(item.id)) ? (
                           <div className="tmhc-info">
                             <span className="tmhc-name">{item.name}</span>
                             <span className="tmhc-staking-state now-staking">
                               Now Staking
                             </span>
                             <button
-                              className="btn--cancel-staking"
+                              className="btn-cancel-staking"
                               onClick={() =>
                                 handleCancelStakingModal(
                                   item.image,
@@ -715,7 +712,7 @@ const Main = ({ language }) => {
                     {nftData
 
                       .filter((item) => {
-                        return dummyStakingData.includes(parseInt(item.id));
+                        return stakingData.includes(parseInt(item.id));
                       })
                       .map((item, index) => (
                         <li className="tmhc-item" key={index}>
@@ -729,7 +726,7 @@ const Main = ({ language }) => {
                               Now Staking
                             </span>
                             <button
-                              className="btn--cancel-staking"
+                              className="btn-cancel-staking"
                               onClick={() =>
                                 handleCancelStakingModal(
                                   item.image,
@@ -822,6 +819,7 @@ const Main = ({ language }) => {
           setSelectData={setSelectData}
           language={language}
           setIsChecked={setIsChecked}
+          isChecked={isChecked}
         />
       )}
       {/* 스테이킹 취소 모달 */}
@@ -830,6 +828,7 @@ const Main = ({ language }) => {
           selectData={selectData}
           setSelectData={setSelectData}
           language={language}
+          isChecked={isChecked}
         />
       )}
 

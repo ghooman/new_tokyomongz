@@ -24,6 +24,7 @@ const StakingModal = ({
   selectData,
   setSelectData,
   setIsChecked,
+  isChecked,
 }) => {
   const dispatch = useDispatch();
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
@@ -40,6 +41,7 @@ const StakingModal = ({
   };
 
   console.log(selectData);
+  console.log(isChecked);
 
   return (
     <>
@@ -116,6 +118,7 @@ const StakingModal = ({
           setStakingConfirm={setStakingConfirm}
           language={language}
           setIsChecked={setIsChecked}
+          isChecked={isChecked}
         />
       )}
     </>
@@ -129,6 +132,7 @@ const StakingConfirmModal = ({
   setSelectData,
   language,
   setIsChecked,
+  isChecked,
 }) => {
   // address
   const walletAddress = useAddress();
@@ -219,27 +223,38 @@ const StakingConfirmModal = ({
     window.parent.location.reload();
   }
 
+  console.log(isChecked);
+  console.log(selectData);
+
   // ==================== 스테이킹 ======================
+  console.log(walletAddress);
+
+  // ================ 실패 메시지 ==============
+  const [errMsg, setErrMsg] = useState("");
   const handleStaking = async () => {
     const data = {
       address: walletAddress, // 현재 지갑
       // workNFT: isChecked,
-      workNFT: [7, 8, 9],
+      workNFT: isChecked.length === 0 ? [selectData[0].id] : isChecked,
+      // workNFT: "Asd",
       // 선택한 목록
     };
-
+    console.log(data);
     try {
       const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
-      console.log("스테이킹=================", res);
-      window.location.reload();
+      console.log("스테이킹=================", res.data.msg);
+      setErrMsg(res.data.msg);
+      setFailModalControl(true);
     } catch (err) {
       console.log(err);
-      setFailModalControl(true);
     }
   };
 
+  console.log(errMsg);
+
   // =========== 스테이킹 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);
+  console.log(failModalControl);
   return (
     <>
       {language === "EN" ? (
@@ -292,22 +307,46 @@ const StakingConfirmModal = ({
         </div>
       )}
       {failModalControl && (
-        <StakingFailModal setFailModalControl={setFailModalControl} />
+        <StakingFailModal
+          setFailModalControl={setFailModalControl}
+          errMsg={errMsg}
+        />
       )}
     </>
   );
 };
 
-const StakingFailModal = (setFailModalControl) => {
+const StakingFailModal = ({ setFailModalControl, errMsg }) => {
+  if (errMsg === "시스템 에러") {
+    errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
+  }
+  if (errMsg === "스테이킹 처리 실패 이미 스테이킹중인 NFT가 있습니다.") {
+    errMsg =
+      "ステーキング処理に失敗しました。 すでにステーキング中のNFTが含まれています。";
+  }
+  if (errMsg.includes("처리 완료")) {
+    errMsg = errMsg.replace(
+      "스테이킹 처리 완료",
+      "のステーキング処理に成功しました。"
+    );
+  }
+
   const modalClose = () => {
     setFailModalControl(false);
+    if (errMsg.includes("のステーキング処理に成功しました。")) {
+      window.location.reload();
+    }
   };
+  console.log(errMsg);
+
   return (
     <>
       <div className="modal-background">
         <div className="staking-fail">
-          <span className="staking-fail__text">Staking failed</span>
-          <button className="btn-confirm">OK</button>
+          <span className="staking-fail__text">{errMsg}</span>
+          <button className="btn-confirm" onClick={modalClose}>
+            OK
+          </button>
         </div>
       </div>
     </>

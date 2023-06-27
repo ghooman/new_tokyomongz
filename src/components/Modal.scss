@@ -199,7 +199,12 @@
   @extend .claim-confirm__btn;
 }
 .btn-staking-confirm {
-  @extend .btn--claim-confirm;
+  width: 49%;
+  height: 50px;
+  color: #000;
+  background-color: #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
 }
 
 // 스테이킹 해지 모달
@@ -300,7 +305,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 330px;
+  max-width: 500px;
   padding: 24px;
   background-color: #000;
   border: 1px solid #545454;
@@ -309,6 +314,7 @@
   .staking-fail__text {
     font-size: 20px;
     font-family: "mplus1p400";
+    text-align: center;
   }
   .btn-confirm {
     width: 50%;

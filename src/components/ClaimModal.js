@@ -254,6 +254,14 @@ const ClaimFailModal = ({ setFailModalControl, errMsg }) => {
   if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
     errMsg = "現在、受領可能なリワードがありません。";
   }
+  if (errMsg.includes("너무 적습니다")) {
+    errMsg = errMsg
+      .replace(
+        "의 리워드가 너무 적습니다. 현재 리워드 : ",
+        "でもらえるリワードが少なすぎます。 現在のリワード : "
+      )
+      .replace("최소 리워드 : ", "最小申請可能リワード : ");
+  }
   const modalClose = () => {
     setFailModalControl(false);
     if (

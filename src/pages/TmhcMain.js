@@ -234,7 +234,7 @@ const Main = ({ language }) => {
           "http://35.77.226.185/api/getGStakedTMHCwithVrify",
           data
         );
-        // console.log("스테이킹 리스트=========", res);
+        console.log("스테이킹 리스트=========", res);
         setStakingData(res);
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);

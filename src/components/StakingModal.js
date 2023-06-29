@@ -231,14 +231,21 @@ const StakingConfirmModal = ({
 
   // ================ 실패 메시지 ==============
   const [errMsg, setErrMsg] = useState("");
+
+  // ============== 로딩중 ==============
+  const [stakingIsLoading, setStakingIsLoading] = useState(false);
+
+  // ========= api data ===========
+  const data = {
+    address: walletAddress, // 현재 지갑
+    // workNFT: isChecked,
+    workNFT: isChecked.length === 0 ? [selectData[0].id] : isChecked,
+    // workNFT: "Asd",
+    // 선택한 목록
+  };
   const handleStaking = async () => {
-    const data = {
-      address: walletAddress, // 현재 지갑
-      // workNFT: isChecked,
-      workNFT: isChecked.length === 0 ? [selectData[0].id] : isChecked,
-      // workNFT: "Asd",
-      // 선택한 목록
-    };
+    setStakingIsLoading(true);
+
     console.log(data);
     try {
       const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
@@ -247,6 +254,8 @@ const StakingConfirmModal = ({
       setFailModalControl(true);
     } catch (err) {
       console.log(err);
+    } finally {
+      setStakingIsLoading(false);
     }
   };
 
@@ -269,6 +278,7 @@ const StakingConfirmModal = ({
                 onClick={() => {
                   setStakingConfirm(!stakingConfirm);
                 }}
+                disabled={stakingIsLoading}
               >
                 Back
               </button>
@@ -278,8 +288,12 @@ const StakingConfirmModal = ({
               >
                 Apply
               </button> */}
-              <button className="btn-staking-confirm" onClick={handleStaking}>
-                Apply
+              <button
+                className="btn-staking-confirm"
+                onClick={handleStaking}
+                disabled={stakingIsLoading}
+              >
+                {stakingIsLoading ? "Loading..." : "Apply"}
               </button>
             </div>
           </div>
@@ -296,11 +310,16 @@ const StakingConfirmModal = ({
                 onClick={() => {
                   setStakingConfirm(!stakingConfirm);
                 }}
+                disabled={stakingIsLoading}
               >
                 Back
               </button>
-              <button className="btn-staking-confirm" onClick={handleStaking}>
-                Apply
+              <button
+                className="btn-staking-confirm"
+                onClick={handleStaking}
+                disabled={stakingIsLoading}
+              >
+                {stakingIsLoading ? "Loading..." : "Apply"}
               </button>
             </div>
           </div>
@@ -310,30 +329,53 @@ const StakingConfirmModal = ({
         <StakingFailModal
           setFailModalControl={setFailModalControl}
           errMsg={errMsg}
+          language={language}
+          data={data}
         />
       )}
     </>
   );
 };
 
-const StakingFailModal = ({ setFailModalControl, errMsg }) => {
-  if (errMsg === "시스템 에러") {
-    errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
+const StakingFailModal = ({ setFailModalControl, errMsg, language, data }) => {
+  if (language === "JP") {
+    if (errMsg === "시스템 에러") {
+      errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
+    }
+
+    if (errMsg === "스테이킹 처리 실패 이미 스테이킹중인 NFT가 있습니다.") {
+      errMsg =
+        "ステーキング処理に失敗しました。 すでにステーキング中のNFTが含まれています。";
+    }
+    if (errMsg.includes("처리 완료")) {
+      errMsg = errMsg.replace(
+        "스테이킹 처리 완료",
+        "のステーキング処理に成功しました。"
+      );
+    }
+  } else {
+    if (errMsg === "시스템 에러") {
+      errMsg = "An error has occurred. Please try again.";
+    }
+
+    if (errMsg === "스테이킹 처리 실패 이미 스테이킹중인 NFT가 있습니다.") {
+      errMsg =
+        "The Staking process failed. It contains NFTs that are already staking.";
+    }
+    if (errMsg.includes("처리 완료")) {
+      errMsg = `The staking process for ID {${data.workNFT}} was successful.`;
+    }
+    console.log(errMsg);
   }
-  if (errMsg === "스테이킹 처리 실패 이미 스테이킹중인 NFT가 있습니다.") {
-    errMsg =
-      "ステーキング処理に失敗しました。 すでにステーキング中のNFTが含まれています。";
-  }
-  if (errMsg.includes("처리 완료")) {
-    errMsg = errMsg.replace(
-      "스테이킹 처리 완료",
-      "のステーキング処理に成功しました。"
-    );
-  }
+
+  console.log(errMsg);
 
   const modalClose = () => {
     setFailModalControl(false);
-    if (errMsg.includes("のステーキング処理に成功しました。")) {
+    if (
+      errMsg.includes("のステーキング処理に成功しました。") ||
+      errMsg.includes("was successful.")
+    ) {
       window.location.reload();
     }
   };

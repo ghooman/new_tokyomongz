@@ -127,38 +127,42 @@ const CancelStakingConfirmModal = ({
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
   );
-  const handleCloseModal = () => {
-    dispatch(setCancelStakingModal(!cancelStakingModal));
-    call();
-    document.body.style.overflow = "";
-  };
+  // const handleCloseModal = () => {
+  //   dispatch(setCancelStakingModal(!cancelStakingModal));
+  //   call();
+  //   document.body.style.overflow = "";
+  // };
 
   // 언스테이킹
-  const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
-  const { mutateAsync: unStake, unstakeIsLoading } = useContractWrite(
-    stakingTmhc,
-    "unStake"
-  );
+  // const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
+  // const { mutateAsync: unStake, unstakeIsLoading } = useContractWrite(
+  //   stakingTmhc,
+  //   "unStake"
+  // );
 
-  const call = async () => {
-    try {
-      const unstakeData = await unStake([0, [selectData[0].id]]);
-      console.info("contract call successs", unstakeData);
-    } catch (err) {
-      console.error("contract call failure", err);
-    }
-  };
+  // const call = async () => {
+  //   try {
+  //     const unstakeData = await unStake([0, [selectData[0].id]]);
+  //     console.info("contract call successs", unstakeData);
+  //   } catch (err) {
+  //     console.error("contract call failure", err);
+  //   }
+  // };
 
-  async function cancelStaking() {
-    await call();
+  // async function cancelStaking() {
+  //   await call();
 
-    window.parent.location.reload();
-  }
+  //   window.parent.location.reload();
+  // }
 
   //
   // ================ 실패 메시지 ==============
   const [errMsg, setErrMsg] = useState("");
+  // ============ 로딩중 ================
+  const [UnStakingIsLoading, setUnStakingIsLoading] = useState(false);
+
   const handleUnStaking = async () => {
+    setUnStakingIsLoading(true);
     const data = {
       address: walletAddress, // 현재 지갑
       // workNFT: isChecked,
@@ -177,6 +181,8 @@ const CancelStakingConfirmModal = ({
       setFailModalControl(true);
     } catch (err) {
       console.log(err);
+    } finally {
+      setUnStakingIsLoading(false);
     }
   };
 
@@ -197,6 +203,7 @@ const CancelStakingConfirmModal = ({
               <button
                 className="btn--cancel"
                 onClick={() => setCancelStakingConfirm(!cancelStakingConfirm)}
+                disabled={UnStakingIsLoading}
               >
                 Back
               </button>
@@ -209,8 +216,9 @@ const CancelStakingConfirmModal = ({
               <button
                 className="btn-unstaking-confirm"
                 onClick={handleUnStaking}
+                disabled={UnStakingIsLoading}
               >
-                Cancel Staking
+                {UnStakingIsLoading ? "Loading..." : "Cancel Staking"}
               </button>
             </div>
           </div>
@@ -223,6 +231,7 @@ const CancelStakingConfirmModal = ({
               <button
                 className="btn--cancel"
                 onClick={() => setCancelStakingConfirm(!cancelStakingConfirm)}
+                disabled={UnStakingIsLoading}
               >
                 Back
               </button>
@@ -235,8 +244,9 @@ const CancelStakingConfirmModal = ({
               <button
                 className="btn-unstaking-confirm"
                 onClick={handleUnStaking}
+                disabled={UnStakingIsLoading}
               >
-                Cancel Staking
+                {UnStakingIsLoading ? "Loading..." : "Cancel Staking"}
               </button>
             </div>
           </div>
@@ -246,30 +256,39 @@ const CancelStakingConfirmModal = ({
         <UnStakingFailModal
           setFailModalControl={setFailModalControl}
           errMsg={errMsg}
+          language={language}
         />
       )}
     </>
   );
 };
 
-const UnStakingFailModal = ({ setFailModalControl, errMsg }) => {
-  if (errMsg.includes("너무 적습니다")) {
-    errMsg = errMsg
-      .replace(
-        "의 리워드가 너무 적습니다. 현재 리워드 : ",
-        "でもらえるリワードが少なすぎます。 現在のリワード : "
-      )
-      .replace("최소 리워드 : ", "最小申請可能リワード : ");
-  }
-  if (errMsg.includes("언스테이킹 실패")) {
-    errMsg =
-      "ステーキングの解除が失敗しました。保有していない、またはステーキング中でないNFTが含まれています。";
-  }
+const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
+  if (language === "JP") {
+    if (errMsg.includes("너무 적습니다")) {
+      errMsg = errMsg
+        .replace(
+          "의 리워드가 너무 적습니다. 현재 리워드 : ",
+          "でもらえるリワードが少なすぎます。 現在のリワード : "
+        )
+        .replace("최소 리워드 : ", "最小申請可能リワード : ");
+    }
+    if (errMsg.includes("언스테이킹 실패")) {
+      errMsg =
+        "ステーキングの解除が失敗しました。保有していない、またはステーキング中でないNFTが含まれています。";
+    }
 
-  if (errMsg.includes("언스테이킹 완료")) {
-    errMsg = errMsg
-      .replace("언스테이킹 완료", "のステーキングの解除処理が完了しました。")
-      .replace(".", "");
+    if (errMsg.includes("언스테이킹 완료")) {
+      errMsg = errMsg
+        .replace("언스테이킹 완료", "のステーキングの解除処理が完了しました。")
+        .replace(".", "");
+    }
+  } else {
+    // ===================== EN ===========================
+    if (errMsg.includes("언스테이킹 실패")) {
+      errMsg =
+        "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking.";
+    }
   }
 
   const modalClose = () => {

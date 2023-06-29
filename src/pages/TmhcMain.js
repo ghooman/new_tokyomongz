@@ -76,7 +76,7 @@ const Main = ({ language }) => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  // 데이터 10개씩 보이기
+  // 데이터 15개씩 보이기
   const start = (page - 1) * 15;
   const end = start + 15;
 
@@ -115,7 +115,8 @@ const Main = ({ language }) => {
     e.stopPropagation();
     console.log(e);
     const targetChecked = e.target.checked;
-    if (targetChecked && isChecked.length >= 6) {
+    if (targetChecked && isChecked.length >= 15) {
+      // 선택 개수 제한
       e.preventDefault();
       return;
     }

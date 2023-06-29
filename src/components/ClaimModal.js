@@ -154,7 +154,12 @@ const ClaimConfirm = ({
   // claim ======================
   // ================ 실패 메시지 ==============
   const [errMsg, setErrMsg] = useState("");
+
+  // ========== 로딩중 ============
+  const [claimIsLoading, setClaimIsLoading] = useState(false);
+
   const handleClaim = async () => {
+    setClaimIsLoading(true);
     const data = {
       address: walletAddress, // 현재 지갑
     };
@@ -164,12 +169,14 @@ const ClaimConfirm = ({
         "http://35.77.226.185/api/ClaimAllTMHC",
         data
       );
-      console.log("클레임=================", res.data.msg);
+      console.log("클레임=================", res);
       setErrMsg(res.data.msg);
       setFailModalControl(true);
       // window.location.reload();
     } catch (err) {
       console.log("클레임 에러===========", err);
+    } finally {
+      setClaimIsLoading(false);
     }
   };
 
@@ -189,14 +196,19 @@ const ClaimConfirm = ({
               <button
                 className="btn--cancel"
                 onClick={() => setClaimConfirmModal(!claimConfirmModal)}
+                disabled={claimIsLoading}
               >
                 Back
               </button>
               {/* <button className="btn--claim-confirm" onClick={handleClaim}>
                 Apply
               </button> */}
-              <button className="btn-claim-confirm" onClick={handleClaim}>
-                Claim
+              <button
+                className="btn-claim-confirm"
+                onClick={handleClaim}
+                disabled={claimIsLoading}
+              >
+                {claimIsLoading ? "Loading..." : "Claim"}
               </button>
             </div>
           </div>
@@ -209,14 +221,19 @@ const ClaimConfirm = ({
               <button
                 className="btn--cancel"
                 onClick={() => setClaimConfirmModal(!claimConfirmModal)}
+                disabled={claimIsLoading}
               >
                 Back
               </button>
               {/* <button className="btn--claim-confirm" onClick={handleClaim}>
                 Apply
               </button> */}
-              <button className="btn-claim-confirm" onClick={handleClaim}>
-                Claim
+              <button
+                className="btn-claim-confirm"
+                onClick={handleClaim}
+                disabled={claimIsLoading}
+              >
+                {claimIsLoading ? "Loading..." : "Claim"}
               </button>
             </div>
           </div>
@@ -227,40 +244,51 @@ const ClaimConfirm = ({
         <ClaimFailModal
           setFailModalControl={setFailModalControl}
           errMsg={errMsg}
+          language={language}
         />
       )}
     </>
   );
 };
 
-const ClaimFailModal = ({ setFailModalControl, errMsg }) => {
-  if (errMsg.includes("트렌젝션 등록")) {
-    errMsg = errMsg
-      .replace(
-        "의 Claim 트렌젝션 등록 완료",
-        "のClaimリクエストを受け付けました。"
-      )
-      .replace(".", "");
-  }
-  if (errMsg.includes("Claim 트렌젝션 등록 완료")) {
-    errMsg = errMsg
-      .replace("스테이킹중인 ", "ステーキング中の")
-      .replace(
-        "의 모든 Claim 트렌젝션 등록 완료",
-        "のすべてのClaimリクエストが完了しました。"
-      )
-      .replace(".", "");
-  }
-  if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
-    errMsg = "現在、受領可能なリワードがありません。";
-  }
-  if (errMsg.includes("너무 적습니다")) {
-    errMsg = errMsg
-      .replace(
-        "의 리워드가 너무 적습니다. 현재 리워드 : ",
-        "でもらえるリワードが少なすぎます。 現在のリワード : "
-      )
-      .replace("최소 리워드 : ", "最小申請可能リワード : ");
+const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
+  if (language === "JP") {
+    if (errMsg.includes("모든 Claim 트렌젝션 등록 완료")) {
+      errMsg = errMsg
+        .replace("스테이킹 중인 ", "ステーキング中の")
+        .replace(
+          "의 모든 Claim 트렌젝션 등록 완료",
+          "のすべてのClaimリクエストが完了しました。"
+        )
+        .replace(".", "");
+    }
+
+    if (errMsg.includes("트렌젝션 등록")) {
+      errMsg = errMsg
+        .replace(
+          "의 Claim 트렌젝션 등록 완료",
+          "のClaimリクエストを受け付けました。"
+        )
+        .replace(".", "");
+    }
+
+    if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
+      errMsg = "現在、受領可能なリワードがありません。";
+    }
+    if (errMsg.includes("너무 적습니다")) {
+      errMsg = errMsg
+        .replace(
+          "의 리워드가 너무 적습니다. 현재 리워드 : ",
+          "でもらえるリワードが少なすぎます。 現在のリワード : "
+        )
+        .replace("최소 리워드 : ", "最小申請可能リワード : ");
+    }
+  } else {
+    // ============================================ English ====================================
+
+    if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
+      errMsg = "There are currently no claimable rewards.";
+    }
   }
   const modalClose = () => {
     setFailModalControl(false);

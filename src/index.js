@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThirdwebProvider activeChain="mainnet">
+      <ThirdwebProvider activeChain="mumbai">
         {/* <ThirdwebProvider activeChain="goerli"> */}
         <BrowserRouter>
           <App />

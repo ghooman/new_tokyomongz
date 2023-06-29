@@ -35,8 +35,8 @@ import Web3 from "web3";
 import axios from "axios";
 
 const Main = ({ language }) => {
-  axios.defaults.xsrfCookieName = "csrftoken";
-  axios.defaults.xsrfHeaderName = "X-CSRFToken";
+  // axios.defaults.xsrfCookieName = "csrftoken";
+  // axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
 
   // 드랍다운 보이기 / 안보이기
@@ -235,7 +235,7 @@ const Main = ({ language }) => {
           data
         );
         console.log("스테이킹 리스트=========", res);
-        setStakingData(res);
+        setStakingData(res.data);
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);
       }

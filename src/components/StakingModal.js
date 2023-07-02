@@ -61,30 +61,24 @@ const StakingModal = ({
           {language === "EN" ? (
             <div className="staking__text">
               <p>
-                Would you like to apply for staking?
-                <br />
-                ETH is required for staking.
+                [Notice]
                 <br />
                 <br />
-                [Caution]
-                <br />
-                <br />
-                If the wallet of NFT changes due to sale, transfer, and etc.,
-                MZC generated from applicable NFT will not be distributed.
+                If the holder sells an NFT that is currently being staked, or
+                moves it to a different wallet, they will not receive the reward
+                MZC assigned to the NFT.
               </p>
             </div>
           ) : (
             <div className="staking__text">
               <p>
-                Stakingを申請しますか？ <br />
-                Stakingの申請にはガス代（ETH）が発生します。 <br />
-                また、Staking後にStakingをキャンセルされる場合もガス代が（ETH）が発生いたします。
+                Stakingをキャンセルしてもよろしいですか？
                 <br />
                 <br />
                 [注意]
                 <br />
                 <br />
-                売却、譲渡等によりStaking中のNFTを別のウォレットに移動させた場合、移動したNFTが生成したこれまでのMZCは消滅します。
+                Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
               </p>
             </div>
           )}

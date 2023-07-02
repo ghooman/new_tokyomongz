@@ -44,13 +44,13 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
             ))}
             <div className="cancel__text">
               <p>
-                Are you sure you want to cancel staking? <br />
-                ETH is required to cancel staking.
+                Are you sure you want to cancel Staking?
                 <br />
                 <br />
-                [Caution] <br />
-                If the wallet of NFT changes due to sale, wallet transfer, etc.,
-                MZC generated from applicable NFT will not be distributed.
+                [Notice] <br />
+                If the holder sells an NFT that is currently being staked, or
+                moves it to a different wallet, they will not receive the reward
+                MZC assigned to the NFT.
               </p>
             </div>
             <div className="cancel__btn">
@@ -79,12 +79,10 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
               <p>
                 Stakingをキャンセルしてもよろしいですか？
                 <br />
-                Stakingのキャンセルにはガス代（ETH）が発生します。
-                <br />
                 <br />
                 [注意]
                 <br />
-                売却、譲渡等によりStaking中のNFTを別のウォレットに移動させた場合、移動したNFTが生成したこれまでのMZCは消滅します。
+                Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
               </p>
             </div>
             <div className="cancel__btn">
@@ -311,7 +309,6 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
     ) {
       window.location.reload();
     }
-    
   };
   console.log(errMsg);
 

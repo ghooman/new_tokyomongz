@@ -242,8 +242,25 @@ const Main = ({ language }) => {
       }
     };
 
+    const getReward = async () => {
+      const data = {
+        address: walletAddress, // 현재 지갑
+      };
+      try {
+        const res = await axios.post(
+          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
+          data
+        );
+        setReward(res.data);
+        console.log("ㄹ리워드 ==========", res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getStakingNftList();
     getBalanceOfBatch();
+    getReward();
   }, [walletAddress]);
 
   console.log("nftData==================", nftData);
@@ -270,24 +287,6 @@ const Main = ({ language }) => {
   //   }
   // }, [rewardData, walletAddress]);
 
-  useEffect(() => {
-    const getReward = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
-      try {
-        const res = await axios.post(
-          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
-          data
-        );
-        setReward(res.data);
-        console.log("ㄹ리워드 ==========", res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getReward();
-  }, [walletAddress]);
   // add mzc
   const addTokenToWallet = async () => {
     try {
@@ -736,14 +735,15 @@ const Main = ({ language }) => {
                       .filter((item) => {
                         return stakingData.includes(parseInt(item.id));
                       })
-                      .map((item, index) => (
-                        <li className="tmhc-item" key={index}>
+                      .slice(start, end)
+                      .map((item) => (
+                        <li className="tmhc-item" key={item.id}>
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
                           </div>
 
                           <div className="tmhc-info">
-                            <span className="tmhc-name">{item.id}</span>
+                            <span className="tmhc-name">{item.name}</span>
                             <span className="tmhc-staking-state now-staking">
                               Now Staking
                             </span>
@@ -772,8 +772,9 @@ const Main = ({ language }) => {
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
                       })
-                      .map((item, index) => (
-                        <li className="tmhc-item" key={index}>
+                      .slice(start, end)
+                      .map((item) => (
+                        <li className="tmhc-item" key={item.id}>
                           <input
                             type="checkbox"
                             className="tmhc-check"
@@ -814,12 +815,26 @@ const Main = ({ language }) => {
               {nftData === undefined ? null : (
                 <div className="pagination-box">
                   <Pagination
-                    // 현제 보고있는 페이지
+                    // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
                     itemsCountPerPage={15}
                     // 총 아이템수
-                    totalItemsCount={nftData ? nftData.length - 1 : 0}
+                    totalItemsCount={
+                      selectedState === "Staking" ||
+                      selectedState === "Staking中"
+                        ? nftData.filter((item) => {
+                            return stakingData.includes(parseInt(item.id));
+                          }).length
+                        : selectedState === "Ready for staking" ||
+                          selectedState === "未Staking"
+                        ? nftData.filter((item) => {
+                            return !stakingData.includes(parseInt(item.id));
+                          }).length
+                        : nftData
+                        ? nftData.length
+                        : 0
+                    }
                     // 표시할 페이지수
                     pageRangeDisplayed={10}
                     prevPageText={"‹"}

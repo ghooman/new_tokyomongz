@@ -40,20 +40,24 @@ const ClaimModal = ({ language, reward }) => {
               </span>
             </div>
             <div className="claim__main">
-              <span> [Note] </span>
+              <span> [Notice] </span>
               <ul>
                 <li>
-                  <span>-</span> ETH is required in order to receive MZC.
+                  <span>-</span> The MZC that is currently displayed in your
+                  wallet is not confirmed. It will be recalculated during the
+                  claim process.
                 </li>
                 <li>
-                  <span>-</span> During the claim process, claimable MZC
-                  <br />
-                  will be recalculated.
+                  <span>-</span> Claimed MZC will be paid to the linked wallet.
                 </li>
                 <li>
-                  <span>-</span> MZC will be paid only for the applicable
-                  <br />
-                  NFTs from the holder's wallet.
+                  <span>-</span> If the holder sells an NFT that is currently
+                  being staked, or moves it to a different wallet, they will not
+                  receive the reward MZC assigned to the NFT.
+                </li>
+                <li>
+                  <span>-</span> Holders can only claim the reward if they have
+                  at least 1 MZC per each NFT being staked.
                 </li>
               </ul>
             </div>
@@ -79,20 +83,20 @@ const ClaimModal = ({ language, reward }) => {
               <span> [注意] </span>
               <ul>
                 <li>
-                  <span>-</span> MZCを受け取る際にガス代（ETH）が発生します。
-                </li>
-                <li>
-                  <span>-</span>実際のClaim額はClaim実施時に再計算されるため
-                  <br />
-                  上記のClaim額と異なる場合があります。
-                </li>
-                <li>
                   <span>-</span>{" "}
+                  実際のClaim額はClaim実施時に再計算されるため上記のClaim額と異なる場合があります。
+                </li>
+                <li>
+                  <span>-</span>
                   ClaimされたMZCは連携中のウォレットに支払われます。
                 </li>
                 <li>
-                  <span>-</span>{" "}
-                  Staking中のNFTを別ウォレットに移動させた場合、そのNFTが獲得したMZCは消滅します
+                  <span>-</span>
+                  Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
+                </li>
+                <li>
+                  <span>-</span>
+                  各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
                 </li>
               </ul>
             </div>

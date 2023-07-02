@@ -366,14 +366,20 @@
     .btn--cancel,
     .btn--claim,
     .btn--claim-confirm,
-    .btn--cancel-staking {
+    .btn--cancel-staking,
+    .btn-claim-confirm,
+    .btn-unstaking-confirm,
+    .btn-staking-confirm {
       width: 100%;
       padding: 12px 0;
       font-size: 14px;
     }
     .btn--claim,
     .btn--claim-confirm,
-    .btn--cancel-staking {
+    .btn--cancel-staking,
+    .btn-claim-confirm,
+    .btn-unstaking-confirm,
+    .btn-staking-confirm {
       margin-top: 16px;
       padding: 12px 0;
       font-size: 14px;

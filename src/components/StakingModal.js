@@ -248,7 +248,10 @@ const StakingConfirmModal = ({
 
     console.log(data);
     try {
-      const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+      const res = await axios.post(
+        "https://www.tokyo-test.shop/api/StakeTMHC",
+        data
+      );
       console.log("스테이킹=================", res.data.msg);
       setErrMsg(res.data.msg);
       setFailModalControl(true);

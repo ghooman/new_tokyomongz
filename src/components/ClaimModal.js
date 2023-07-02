@@ -166,7 +166,7 @@ const ClaimConfirm = ({
 
     try {
       const res = await axios.post(
-        "http://35.77.226.185/api/ClaimAllTMHC",
+        "https://www.tokyo-test.shop/api/ClaimAllTMHC",
         data
       );
       console.log("클레임=================", res);
@@ -285,16 +285,41 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     }
   } else {
     // ============================================ English ====================================
-
+    if (errMsg.includes("모든 Claim 트렌젝션 등록 완료")) {
+      errMsg = errMsg
+        .replace(
+          "스테이킹 중인 ",
+          "All claim transition registration has been completed for "
+        )
+        .replace("의 모든 Claim 트렌젝션 등록 완료", " that is being staked.");
+    }
     if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
       errMsg = "There are currently no claimable rewards.";
+    }
+    // if (errMsg === "의 Claim 트렌젝션 등록 완료") {
+    //   errMsg = errMsg.replace(
+    //     "의 Claim 트렌젝션 등록 완료",
+    //     "'s claim transaction has been registered"
+    //   );
+    // }
+
+    if (errMsg.includes("너무 적습니다")) {
+      errMsg = errMsg
+        .replace(
+          "의 리워드가 너무 적습니다. 현재 리워드 : ",
+          "'s reward is too small. Current Reward: "
+        )
+        .replace("최소 리워드 : ", "Minimum Reward Required: ");
     }
   }
   const modalClose = () => {
     setFailModalControl(false);
     if (
       errMsg.includes("のすべてのClaimリクエストが完了しました。") ||
-      errMsg.includes("のClaimリクエストを受け付けました。")
+      errMsg.includes("のClaimリクエストを受け付けました。") ||
+      errMsg.includes(
+        "All claim transition registration has been completed for"
+      )
     ) {
       window.location.reload();
     }

@@ -232,7 +232,7 @@ const Main = ({ language }) => {
       };
       try {
         const res = await axios.post(
-          "http://35.77.226.185/api/getGStakedTMHCwithVrify",
+          "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
           data
         );
         console.log("스테이킹 리스트=========", res);
@@ -255,21 +255,39 @@ const Main = ({ language }) => {
   //   useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
 
   // 겟 리워드
-  const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
-    stakingTmhc,
-    "calRewardAll",
-    walletAddress
-  );
+  // const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
+  //   stakingTmhc,
+  //   "calRewardAll",
+  //   walletAddress
+  // );
 
-  const [reward, setReward] = useState(undefined);
+  const [reward, setReward] = useState("");
+
+  // useEffect(() => {
+  //   if (rewardData) {
+  //     const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
+  //     setReward(newReward);
+  //   }
+  // }, [rewardData, walletAddress]);
 
   useEffect(() => {
-    if (rewardData) {
-      const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
-      setReward(newReward);
-    }
-  }, [rewardData, walletAddress]);
-
+    const getReward = async () => {
+      const data = {
+        address: walletAddress, // 현재 지갑
+      };
+      try {
+        const res = await axios.post(
+          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
+          data
+        );
+        setReward(res.data);
+        console.log("ㄹ리워드 ==========", res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getReward();
+  }, [walletAddress]);
   // add mzc
   const addTokenToWallet = async () => {
     try {
@@ -323,7 +341,7 @@ const Main = ({ language }) => {
   //   };
 
   //   try {
-  //     const res = await axios.post("http://35.77.226.185/api/StakeTMHC", data);
+  //     const res = await axios.post("https://www.tokyo-test.shop/api/StakeTMHC", data);
   //     console.log("스테이킹=================", res);
   //     // window.location.reload();
   //   } catch (err) {
@@ -342,7 +360,7 @@ const Main = ({ language }) => {
 
   //   try {
   //     const res = await axios.post(
-  //       "http://35.77.226.185/api/unStakeTMHC",
+  //       "https://www.tokyo-test.shop/api/unStakeTMHC",
   //       data
   //     );
   //     console.log("언스테이킹=================", res);
@@ -439,9 +457,10 @@ const Main = ({ language }) => {
                 )}
 
                 {walletAddress &&
+                  reward &&
                   (reward !== "0.0000" ? (
                     <div className="mzc">
-                      <span className="coin">{reward}</span>
+                      <span className="coin">{reward.toFixed(3)}</span>
                       MZC
                     </div>
                   ) : (

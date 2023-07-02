@@ -173,7 +173,7 @@ const CancelStakingConfirmModal = ({
     console.log(data);
     try {
       const res = await axios.post(
-        "http://35.77.226.185/api/unStakeTMHC",
+        "https://www.tokyo-test.shop/api/unStakeTMHC",
         data
       );
       console.log("언스테이킹=================", res.data.msg);
@@ -289,13 +289,29 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
       errMsg =
         "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking.";
     }
+    if (errMsg.includes("너무 적습니다")) {
+      errMsg = errMsg
+        .replace(
+          "의 리워드가 너무 적습니다. 현재 리워드 : ",
+          "'s reward is too small. Current Reward: "
+        )
+        .replace("최소 리워드 : ", "Minimum Reward Required: ");
+    }
+
+    if (errMsg.includes("언스테이킹 완료")) {
+      errMsg = errMsg.replace("언스테이킹 완료", " has been unstaked");
+    }
   }
 
   const modalClose = () => {
     setFailModalControl(false);
-    if (errMsg.includes("のステーキングの解除処理が完了しました。")) {
+    if (
+      errMsg.includes("のステーキングの解除処理が完了しました。") ||
+      errMsg.includes("has been unstaked")
+    ) {
       window.location.reload();
     }
+    
   };
   console.log(errMsg);
 

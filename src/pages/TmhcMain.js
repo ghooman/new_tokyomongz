@@ -110,7 +110,6 @@ const Main = ({ language }) => {
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
-
   const handleChecked = (e, id, image, name) => {
     e.stopPropagation();
     console.log(e);
@@ -134,12 +133,20 @@ const Main = ({ language }) => {
     }
   };
   console.log("체크된 nft===========", isChecked);
+
+  // =============== 전체 선택 ====================
+  const [selectAll, setSelectAll] = useState(false);
+
+  const handleAllChecked = () => {
+    // setIsChecked
+  };
   ///////////////////////////////////////////////////////////////////////////////
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
   const { contract: mongzContract } = useContract(MONGS_COIN);
 
   const walletAddress = useAddress();
+  console.log(walletAddress);
   // const {
   //   data: nftData,
   //   isLoading,
@@ -187,6 +194,8 @@ const Main = ({ language }) => {
 
   // ========== 값을 가져왔나 확인 =============
   const [dataStatus, setDataStatus] = useState(false);
+
+  console.log(dataStatus);
   useEffect(() => {
     setNftData(() => {
       return [];
@@ -232,6 +241,7 @@ const Main = ({ language }) => {
       const data = {
         address: walletAddress, // 현재 지갑
       };
+      setDataStatus(false);
       try {
         const res = await axios.post(
           "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
@@ -282,7 +292,7 @@ const Main = ({ language }) => {
   // );
 
   const [reward, setReward] = useState("");
-
+  console.log(reward);
   // useEffect(() => {
   //   if (rewardData) {
   //     const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
@@ -458,18 +468,17 @@ const Main = ({ language }) => {
                   </div>
                 )}
 
-                {walletAddress &&
-                  reward &&
-                  (reward !== "0" ? (
-                    <div className="mzc">
-                      <span className="coin">{reward.toFixed(3)}</span>
-                      MZC
-                    </div>
-                  ) : (
-                    <div className="mzc">
-                      <span className="coin"> No MZC to Claim</span>
-                    </div>
-                  ))}
+                {walletAddress && reward !== "" && reward !== 0 && (
+                  <div className="mzc">
+                    <span className="coin">{reward.toFixed(3)}</span>
+                    MZC
+                  </div>
+                )}
+                {walletAddress && reward !== "" && reward === 0 && (
+                  <div className="mzc">
+                    <span className="coin"> No MZC to Claim</span>
+                  </div>
+                )}
               </div>
               <button
                 type="button"
@@ -628,7 +637,7 @@ const Main = ({ language }) => {
                   )}
                 </div>
                 <div className="right-menu">
-                  {language === "EN" ? (
+                  {/* {language === "EN" ? (
                     <label className="btn-all-select-label">
                       <input type="checkbox" className="btn-all-select" />
                       Select all
@@ -638,7 +647,7 @@ const Main = ({ language }) => {
                       <input type="checkbox" className="btn-all-select" />
                       全選択
                     </label>
-                  )}
+                  )} */}
                   {language === "EN" ? (
                     isChecked.length <= 0 ? (
                       <button className="btn--all-staking">

@@ -52,6 +52,7 @@ const Main = ({ language }) => {
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
     dispatch(setIsOpen(!isOpen));
+    setPage(1);
     rotateRef.current.style.transform = "";
   };
 
@@ -140,13 +141,22 @@ const Main = ({ language }) => {
   const handleAllChecked = () => {
     // setIsChecked
     if (isChecked.length === 0) {
-      let allIds = nftData.map((item) => item.id);
+      let allIds = nftData
+        .filter((item) => {
+          return !stakingData.includes(item.id);
+        })
+        .map((item) => item.id);
       setIsChecked(allIds);
+
+      // let allDatas = nftData
+      //   .filter((item) => {
+      //     return !stakingData.includes(item.id);
+      //   })
+      //   .map((item) => {return item.});
     } else {
       setIsChecked([]);
     }
   };
-  console.log(isChecked);
   ///////////////////////////////////////////////////////////////////////////////
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);

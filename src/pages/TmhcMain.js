@@ -139,7 +139,14 @@ const Main = ({ language }) => {
 
   const handleAllChecked = () => {
     // setIsChecked
+    if (isChecked.length === 0) {
+      let allIds = nftData.map((item) => item.id);
+      setIsChecked(allIds);
+    } else {
+      setIsChecked([]);
+    }
   };
+  console.log(isChecked);
   ///////////////////////////////////////////////////////////////////////////////
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
@@ -249,9 +256,10 @@ const Main = ({ language }) => {
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
-        setDataStatus(true);
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);
+      } finally {
+        setDataStatus(true);
       }
     };
 
@@ -639,7 +647,11 @@ const Main = ({ language }) => {
                 <div className="right-menu">
                   {/* {language === "EN" ? (
                     <label className="btn-all-select-label">
-                      <input type="checkbox" className="btn-all-select" />
+                      <input
+                        type="checkbox"
+                        className="btn-all-select"
+                        onClick={handleAllChecked}
+                      />
                       Select all
                     </label>
                   ) : (

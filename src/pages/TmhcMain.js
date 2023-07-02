@@ -185,6 +185,8 @@ const Main = ({ language }) => {
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
 
+  // ========== 값을 가져왔나 확인 =============
+  const [dataStatus, setDataStatus] = useState(false);
   useEffect(() => {
     setNftData(() => {
       return [];
@@ -237,6 +239,7 @@ const Main = ({ language }) => {
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
+        setDataStatus(true);
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);
       }
@@ -457,7 +460,7 @@ const Main = ({ language }) => {
 
                 {walletAddress &&
                   reward &&
-                  (reward !== "0.0000" ? (
+                  (reward !== "0" ? (
                     <div className="mzc">
                       <span className="coin">{reward.toFixed(3)}</span>
                       MZC
@@ -624,32 +627,44 @@ const Main = ({ language }) => {
                     </span>
                   )}
                 </div>
-
-                {language === "EN" ? (
-                  isChecked.length <= 0 ? (
+                <div className="right-menu">
+                  {language === "EN" ? (
+                    <label className="btn-all-select-label">
+                      <input type="checkbox" className="btn-all-select" />
+                      Select all
+                    </label>
+                  ) : (
+                    <label className="btn-all-select-label">
+                      <input type="checkbox" className="btn-all-select" />
+                      全選択
+                    </label>
+                  )}
+                  {language === "EN" ? (
+                    isChecked.length <= 0 ? (
+                      <button className="btn--all-staking">
+                        Proceed to stake selected NFT
+                      </button>
+                    ) : (
+                      <button
+                        className="btn--all-staking checked"
+                        onClick={handleAllStakingModal}
+                      >
+                        Proceed to stake selected NFT
+                      </button>
+                    )
+                  ) : isChecked.length <= 0 ? (
                     <button className="btn--all-staking">
-                      Proceed to stake selected NFT
+                      選択したNFTをStaking
                     </button>
                   ) : (
                     <button
                       className="btn--all-staking checked"
                       onClick={handleAllStakingModal}
                     >
-                      Proceed to stake selected NFT
+                      選択したNFTをStaking
                     </button>
-                  )
-                ) : isChecked.length <= 0 ? (
-                  <button className="btn--all-staking">
-                    選択したNFTをStaking
-                  </button>
-                ) : (
-                  <button
-                    className="btn--all-staking checked"
-                    onClick={handleAllStakingModal}
-                  >
-                    選択したNFTをStaking
-                  </button>
-                )}
+                  )}
+                </div>
               </div>
             </div>
             <div className="nft__main">
@@ -664,7 +679,7 @@ const Main = ({ language }) => {
                     There are no NFTs in possession.
                   </div>
                 ))
-              ) : nftData.length > 0 ? ( // isLoading === false && nftData.length > 0
+              ) : nftData.length > 0 && dataStatus ? ( // isLoading === false && nftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">
                     {nftData.slice(start, end).map((item) => (

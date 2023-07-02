@@ -164,7 +164,8 @@
         .header__text,
         .header__text--qtt {
           font-family: "mplus1p500";
-          font-size: 24px;
+          font-size: 20px;
+          white-space: nowrap;
         }
         .header__text {
           margin-left: 24px;
@@ -178,6 +179,7 @@
 
           .left__menu {
             display: flex;
+            align-items: center;
             flex-wrap: nowrap;
 
             .state-select-box {
@@ -227,16 +229,45 @@
               }
             }
           }
-          .btn--all-staking {
-            margin-left: 24px;
-            background-color: #545454;
-            color: #b3b3b3;
-            padding: 16px 40px;
-            border-radius: 8px;
-          }
-          .checked {
-            background-color: #fbca77;
-            color: black;
+          .right-menu {
+            display: flex;
+            .btn-all-select-label {
+              display: flex;
+              align-items: center;
+              margin-left: 24px;
+              font-family: "mplus1p500";
+              font-size: 20px;
+              white-space: nowrap;
+              .btn-all-select {
+                margin-right: 4px;
+                width: 40px;
+                height: 40px;
+                appearance: none;
+                background: #545454;
+                border: 1px solid #b3b3b3;
+                border-radius: 50%;
+                &:checked::before {
+                  content: url("../assets/images/check.svg");
+                  position: relative;
+                  top: 20%;
+                  left: 20%;
+                }
+                &:checked {
+                  background-color: #fbca77;
+                }
+              }
+            }
+            .btn--all-staking {
+              margin-left: 24px;
+              background-color: #545454;
+              color: #b3b3b3;
+              padding: 16px 20px;
+              border-radius: 8px;
+            }
+            .checked {
+              background-color: #fbca77;
+              color: black;
+            }
           }
         }
       }
@@ -493,9 +524,15 @@
                 }
               }
             }
-            .btn--all-staking {
-              margin-left: 0;
+            .right-menu {
               margin-top: 24px;
+              .btn-all-select-label {
+                margin-left: 0;
+                font-size: 16px;
+              }
+              .btn--all-staking {
+                width: 100%;
+              }
             }
           }
         }

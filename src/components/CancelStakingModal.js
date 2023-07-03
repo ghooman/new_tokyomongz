@@ -283,13 +283,14 @@ const CancelStakingConfirmModal = ({
 
 const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
   if (language === "JP") {
-    if (errMsg.includes("너무 적습니다")) {
+    if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg
+        .replace("가 획득한 청구금액은 ", "が獲得したClaim額が:")
         .replace(
-          "의 리워드가 너무 적습니다. 현재 리워드 : ",
-          "でもらえるリワードが少なすぎます。 現在のリワード : "
+          " 미만이므로 청구 할 수 없습니다. ",
+          "に満たないためClaimすることができません。"
         )
-        .replace("최소 리워드 : ", "最小申請可能リワード : ");
+        .replace("현재 MZC : ", "現在のリワード:");
     }
     if (errMsg.includes("언스테이킹 실패")) {
       errMsg =
@@ -307,13 +308,11 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
       errMsg =
         "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking.";
     }
-    if (errMsg.includes("너무 적습니다")) {
+    if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg
-        .replace(
-          "의 리워드가 너무 적습니다. 현재 리워드 : ",
-          "'s reward is too small. Current Reward: "
-        )
-        .replace("최소 리워드 : ", "Minimum Reward Required: ");
+        .replace("가 획득한 청구금액은 ", "'s reward is under ")
+        .replace(" 미만이므로 청구 할 수 없습니다. ", ". ")
+        .replace("현재 MZC : ", "Current Reward: ");
     }
 
     if (errMsg.includes("언스테이킹 완료")) {

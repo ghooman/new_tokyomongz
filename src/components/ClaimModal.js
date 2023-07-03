@@ -279,13 +279,15 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
       errMsg = "現在、受領可能なリワードがありません。";
     }
-    if (errMsg.includes("너무 적습니다")) {
+    // ID {tokenid}가 획득한 청구금액은 {self.MinimumReward}MZC 미만이므로 청구 할 수 없습니다. 현재 MZC : {rewardEth}
+    if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg
+        .replace("가 획득한 청구금액은 ", "が獲得したClaim額が:")
         .replace(
-          "의 리워드가 너무 적습니다. 현재 리워드 : ",
-          "でもらえるリワードが少なすぎます。 現在のリワード : "
+          " 미만이므로 청구 할 수 없습니다. ",
+          "に満たないためClaimすることができません。"
         )
-        .replace("최소 리워드 : ", "最小申請可能リワード : ");
+        .replace("현재 MZC : ", "現在のリワード:");
     }
   } else {
     // ============================================ English ====================================
@@ -307,13 +309,11 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     //   );
     // }
 
-    if (errMsg.includes("너무 적습니다")) {
+    if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg
-        .replace(
-          "의 리워드가 너무 적습니다. 현재 리워드 : ",
-          "'s reward is too small. Current Reward: "
-        )
-        .replace("최소 리워드 : ", "Minimum Reward Required: ");
+        .replace("가 획득한 청구금액은 ", "'s reward is under ")
+        .replace(" 미만이므로 청구 할 수 없습니다. ", ". ")
+        .replace("현재 MZC : ", "Current Reward: ");
     }
   }
   const modalClose = () => {

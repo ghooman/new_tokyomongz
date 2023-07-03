@@ -405,7 +405,7 @@ const Header = () => {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Main language={language}/>} />
         <Route path="/roadmap" element={<Roadmap language={language} />} />
         <Route path="/about-tmhc" element={<AboutTmhc language={language} />} />
         <Route path="/about-momo" element={<AboutMomo language={language} />} />

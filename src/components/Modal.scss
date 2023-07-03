@@ -45,7 +45,12 @@
   ul {
     margin-top: 16px;
   }
+  span {
+    font-size: 14px;
+    font-family: "mplus1p400";
+  }
   li {
+    font-size: 14px;
     display: flex;
     font-family: "mplus1p400";
     &:not(:last-child) {
@@ -94,6 +99,7 @@
 
 .claim-confirm__title {
   font-size: 20px;
+  font-family: "mplus1p400";
 }
 .claim-confirm__btn {
   margin-top: 40px;
@@ -194,6 +200,11 @@
 // 스테이킹 확정 모달
 .staking-confirm {
   @extend .claim-confirm;
+}
+.staking-confirm__title {
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
 }
 .staking-confirm__btn {
   @extend .claim-confirm__btn;
@@ -418,6 +429,16 @@
       font-size: 12px;
     }
   }
+  .text-red {
+    color: red;
+    font-size: 12px;
+    font-family: "mplus1p400";
+  }
+  .text-red20 {
+    color: red;
+    font-size: 20px;
+    font-family: "mplus1p400";
+  }
 }
 
 .text-red {
@@ -427,6 +448,6 @@
 }
 .text-red20 {
   color: red;
-  font-size: 20px;
+  font-size: 16px;
   font-family: "mplus1p400";
 }

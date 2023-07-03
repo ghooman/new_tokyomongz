@@ -370,12 +370,16 @@ const StakingFailModal = ({ setFailModalControl, errMsg, language, data }) => {
 
   console.log(errMsg);
 
+  const dispatch = useDispatch();
+  const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
+
   const modalClose = () => {
     setFailModalControl(false);
     if (
       errMsg.includes("のステーキング処理に成功しました。") ||
       errMsg.includes("was successful.")
     ) {
+      dispatch(setStakingModal(!stakingModal));
       window.location.reload();
     }
   };

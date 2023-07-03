@@ -283,6 +283,10 @@ const CancelStakingConfirmModal = ({
 
 const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
   if (language === "JP") {
+    if (errMsg === "시스템 에러") {
+      errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
+    }
+
     if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg
         .replace("가 획득한 청구금액은 ", "が獲得したClaim額が:")
@@ -304,6 +308,9 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
     }
   } else {
     // ===================== EN ===========================
+    if (errMsg === "시스템 에러") {
+      errMsg = "An error has occurred. Please try again.";
+    }
     if (errMsg.includes("언스테이킹 실패")) {
       errMsg =
         "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking.";
@@ -320,12 +327,18 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
     }
   }
 
+  const dispatch = useDispatch();
+  const cancelStakingModal = useSelector(
+    (state) => state.cancelStakingModal.cancelStakingModal
+  );
+
   const modalClose = () => {
     setFailModalControl(false);
     if (
       errMsg.includes("のステーキングの解除処理が完了しました。") ||
       errMsg.includes("has been unstaked")
     ) {
+      dispatch(setCancelStakingModal(!cancelStakingModal));
       window.location.reload();
     }
   };

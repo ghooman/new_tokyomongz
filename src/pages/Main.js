@@ -6,7 +6,7 @@ import mainLinkImg from "../assets/images/main-link-img.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ language }) => {
   const navigate = useNavigate();
   const handlePage = () => {
     navigate("");
@@ -18,7 +18,7 @@ const Main = () => {
         <div className="main-video">
           <video src={mainVdieo} autoPlay muted loop></video>
         </div>
-        <Footer />
+        <Footer language={language} />
       </div>
       <Link to="/about-momo" className="main-link" onClick={handlePage}>
         <div className="main-link__img">

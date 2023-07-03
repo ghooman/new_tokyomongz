@@ -146,9 +146,6 @@ const ClaimConfirm = ({
     }
   };
 
-  const dispatch = useDispatch();
-  const claimModal = useSelector((state) => state.claimModal.showClaim);
-
   async function claimRewards() {
     await call();
 
@@ -267,6 +264,10 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
         .replace(".", "");
     }
 
+    if (errMsg === "시스템 에러") {
+      errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
+    }
+
     if (errMsg.includes("트렌젝션 등록")) {
       errMsg = errMsg
         .replace(
@@ -291,6 +292,9 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     }
   } else {
     // ============================================ English ====================================
+    if (errMsg === "시스템 에러") {
+      errMsg = "An error has occurred. Please try again.";
+    }
     if (errMsg.includes("모든 Claim 트렌젝션 등록 완료")) {
       errMsg = errMsg
         .replace(
@@ -316,6 +320,10 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
         .replace("현재 MZC : ", "Current Reward: ");
     }
   }
+
+  const dispatch = useDispatch();
+  const claimModal = useSelector((state) => state.claimModal.showClaim);
+
   const modalClose = () => {
     setFailModalControl(false);
     if (
@@ -325,6 +333,7 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
         "All claim transition registration has been completed for"
       )
     ) {
+      dispatch(setClaimModal(!claimModal));
       window.location.reload();
     }
   };

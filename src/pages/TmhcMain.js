@@ -53,6 +53,8 @@ const Main = ({ language }) => {
     dispatch(setSelectedState(text));
     dispatch(setIsOpen(!isOpen));
     setPage(1);
+    setIsChecked([]);
+    setSelectData([]);
     rotateRef.current.style.transform = "";
   };
 
@@ -118,6 +120,11 @@ const Main = ({ language }) => {
     if (targetChecked && isChecked.length >= 15) {
       // 선택 개수 제한
       e.preventDefault();
+      if (language === "EN") {
+        alert("You can only select up to 15.");
+      } else {
+        alert("最大15個まで選択できます。");
+      }
       return;
     }
     if (e.target.checked) {
@@ -142,17 +149,23 @@ const Main = ({ language }) => {
     // setIsChecked
     if (isChecked.length === 0) {
       let allIds = nftData
+        .slice(start, end)
         .filter((item) => {
           return !stakingData.includes(item.id);
         })
         .map((item) => item.id);
       setIsChecked(allIds);
 
-      // let allDatas = nftData
-      //   .filter((item) => {
-      //     return !stakingData.includes(item.id);
-      //   })
-      //   .map((item) => {return item.});
+      let allDatas = nftData
+        .slice(start, end)
+        .filter((item) => {
+          return !stakingData.includes(item.id);
+        })
+        .map((item) => {
+          return { image: item.image, name: item.name, id: item.id };
+        });
+
+      setSelectData(allDatas);
     } else {
       setIsChecked([]);
     }
@@ -218,6 +231,9 @@ const Main = ({ language }) => {
       return [];
     });
 
+    setIsChecked([]);
+    setSelectData([]);
+
     async function getBalanceOfBatch() {
       const balances = await contract.methods
         .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
@@ -229,7 +245,7 @@ const Main = ({ language }) => {
         if (balances[i] === "1") {
           promises.push(
             // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            axios.get("https://dev.tokyomongzhillsclub.com/api/get_json_data", {
+            axios.get("https://www.tokyo-test.shop/api/get_json_data", {
               params: {
                 id: i + 1,
               },
@@ -427,31 +443,43 @@ const Main = ({ language }) => {
 
             <div className="texture__box">
               {language === "EN" ? (
-                <Link to="/eco-system">About MUC Ecosystem</Link>
+                <Link to="https://multiuniversecentral.io/" target="_blank">
+                  About MUC Ecosystem
+                </Link>
               ) : (
-                <Link to="/eco-system">MUCエコシステムについて</Link>
+                <Link to="https://multiuniversecentral.io/" target="_blank">
+                  MUCエコシステムについて
+                </Link>
               )}
               {language === "EN" ? (
-                <Link to="https://multi-universe-coin.gitbook.io/muc-white-paper">
+                <Link
+                  to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                  target="_blank"
+                >
                   MUC White Paper
                 </Link>
               ) : (
-                <Link to="https://multi-universe-coin.gitbook.io/muc-white-paper">
+                <Link
+                  to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                  target="_blank"
+                >
                   MUCホワイトペーパー
                 </Link>
               )}
             </div>
             {language === "EN" ? (
               <Link
-                to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
+                to="https://tmhc-support.notion.site/USERS-GUIDE-51271f936b7b4833b73abe573f37acc7"
                 className="container__btn--user-guide"
+                target="_blank"
               >
                 User's Guide
               </Link>
             ) : (
               <Link
-                to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
+                to="https://tmhc-support.notion.site/9322957c94ae499c8adc56298832e2f1"
                 className="container__btn--user-guide"
+                target="_blank"
               >
                 ご利用ガイド
               </Link>

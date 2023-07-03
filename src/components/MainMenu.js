@@ -81,10 +81,15 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">Eco-System</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="/eco-system">Eco-System</Link>
+              <Link to="https://multiuniversecentral.io/" target="_blank">
+                Eco-System
+              </Link>
             </li>
             <li>
-              <Link to="" onClick={handleWaitingModal}>
+              <Link
+                to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                target="_blank"
+              >
                 MUC Whitepaper
               </Link>
             </li>

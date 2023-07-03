@@ -46,11 +46,21 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
               <p>
                 Are you sure you want to cancel Staking?
                 <br />
+                <span className="text-red">
+                  You will automatically receive the MZC acquired by NFT when
+                  you cancel
+                </span>
                 <br />
-                [Notice] <br />
-                If the holder sells an NFT that is currently being staked, or
-                moves it to a different wallet, they will not receive the reward
-                MZC assigned to the NFT.
+                <br />
+                [Note] <br />
+                If the NFT in Staking is moved to another wallet by selling,
+                transferring, etc. before claiming, the MZC that the NFT has
+                acquired so far will disappear.
+                <br />
+                <span className="text-red">
+                  If the claim amount is less than 1 MZC for each NFT, MZC
+                  cannot be claimed.
+                </span>
               </p>
             </div>
             <div className="cancel__btn">
@@ -77,12 +87,21 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
             ))}
             <div className="cancel__text">
               <p>
-                Stakingをキャンセルしてもよろしいですか？
+                Stakingを<span className="text-red">解除</span>
+                してもよろしいですか？
+                <br />
+                <span className="text-red">
+                  解除時にNFTが獲得したMZCを自動で受け取ります。
+                </span>
                 <br />
                 <br />
                 [注意]
                 <br />
-                Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
+                Staking中のNFTを、Claimする前に売却・譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
+                <br />
+                <span className="text-red">
+                  各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
+                </span>
               </p>
             </div>
             <div className="cancel__btn">
@@ -223,7 +242,8 @@ const CancelStakingConfirmModal = ({
         ) : (
           <div className="cancel-staking-confirm">
             <span className="cancel-staking-confirm__title">
-              ステーキングをキャンセルしてもよろしいですか？
+              Stakingを<span className="text-red20">解除</span>
+              してもよろしいですか？
             </span>
             <div className="cancel-staking-confirm__btn">
               <button

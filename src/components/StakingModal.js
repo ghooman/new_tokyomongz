@@ -61,6 +61,9 @@ const StakingModal = ({
           {language === "EN" ? (
             <div className="staking__text">
               <p>
+                Apply for Staking?
+                <br />
+                <br />
                 [Notice]
                 <br />
                 <br />
@@ -72,7 +75,7 @@ const StakingModal = ({
           ) : (
             <div className="staking__text">
               <p>
-                Stakingをキャンセルしてもよろしいですか？
+                Stakingを申請しますか？
                 <br />
                 <br />
                 [注意]
@@ -360,7 +363,7 @@ const StakingFailModal = ({ setFailModalControl, errMsg, language, data }) => {
         "The Staking process failed. It contains NFTs that are already staking.";
     }
     if (errMsg.includes("처리 완료")) {
-      errMsg = `The staking process for ID {${data.workNFT}} was successful.`;
+      errMsg = `The staking process for ID ${data.workNFT} was successful.`;
     }
     console.log(errMsg);
   }

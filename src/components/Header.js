@@ -325,7 +325,7 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Eco-System</span>
-                  <Link to="/eco-system" onClick={handleMenuClicked}>
+                  <Link to="https://multiuniversecentral.io/" target="_blank">
                     Eco System
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>

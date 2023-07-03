@@ -312,6 +312,7 @@
   padding: 24px;
   border-radius: 8px;
   .staking-fail__text {
+    width: 100%;
     font-size: 20px;
     font-family: "mplus1p400";
     text-align: center;
@@ -418,4 +419,15 @@
       font-size: 12px;
     }
   }
+}
+
+.text-red {
+  color: red;
+  font-size: 14px;
+  font-family: "mplus1p400";
+}
+.text-red20 {
+  color: red;
+  font-size: 20px;
+  font-family: "mplus1p400";
 }

@@ -336,7 +336,7 @@ const UnStakingFailModal = ({ setFailModalControl, errMsg, language }) => {
     <>
       <div className="modal-background">
         <div className="staking-fail">
-          <span className="staking-fail__text">{errMsg}</span>
+          <p className="staking-fail__text">{errMsg}</p>
           <button className="btn-confirm" onClick={modalClose}>
             OK
           </button>

@@ -1,16 +1,3 @@
-// common
-.about-momo__title {
-  font-family: "mplus1p600";
-  font-size: 30px;
-}
-.about-momo__sub-title {
-  font-family: "mplus1p500";
-  font-size: 24px;
-}
-.about-momo__text {
-  font-family: "mplus1p400";
-  font-size: 18px;
-}
 ///////////////////////////////////////
 
 .about-momo {
@@ -27,245 +14,42 @@
     object-fit: cover;
   }
 }
-
-.about-momo__main {
-  background-color: black;
-  padding: 100px 120px;
-}
-
-.about-momo__main-header-img {
-  width: 501px;
-  margin: 0 auto;
+.about-momo__img1 {
+  width: 100%;
   img {
     width: 100%;
   }
 }
 
-.about-momo__item1 {
+.about-momo__img2 {
   width: 100%;
-  padding: 60px;
-  background-image: url(../assets/images/about-momo-background1.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 100px;
-  div {
-    margin-top: 40px;
-    .about-momo__text {
-      margin-top: 8px;
-    }
-  }
-}
-
-.about-momo__item2 {
-  width: 100%;
-  padding: 60px;
-  background-image: url(../assets/images/about-momo-background2.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 100px;
-  .item2__box {
-    margin-top: 40px;
-    .tmhc-coin-img {
-      max-width: 200px;
-      margin-top: 20px;
-      img {
-        width: 100%;
-      }
-    }
-    .tmhc-momo-img {
-      max-width: 362px;
-      margin-top: 8px;
-      img {
-        width: 100%;
-      }
-    }
-    .momo-inu-img {
-      max-width: 550px;
-      margin-top: 20px;
-      img {
-        width: 100%;
-      }
-    }
-
-    .about-momo__text {
-      margin-top: 20px;
-    }
-  }
-}
-
-.about-momo__item3 {
-  width: 100%;
-  padding: 60px;
-  background-image: url(../assets/images/about-momo-background3.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 100px;
-  div {
-    margin-top: 40px;
-    .about-momo__sub-title {
-      .yellow-text {
-        color: #ffd966;
-        font-family: "mplus1p500";
-        font-size: 24px;
-      }
-      &:nth-child(3) {
-        margin-top: 16px;
-      }
-    }
-    .about-momo__small-text {
-      margin-top: 16px;
-      display: flex;
-      flex-direction: column;
-      font-family: "mplus1p400";
-      font-size: 20px;
-      span {
-        font-family: "mplus1p400";
-        font-size: 20px;
-      }
-      .small-yellow1 {
-        color: #ffd966;
-      }
-      .small-yellow2 {
-        color: #ffe699;
-      }
-      .small-yellow3 {
-        color: #fff2cc;
-      }
-    }
-  }
-}
-
-.about-momo__item4 {
-  width: 100%;
-  padding: 60px;
-  background-image: url(../assets/images/about-momo-background4.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 100px;
-  .momo-img-list {
-    margin-top: 40px;
-    display: flex;
+  img {
     width: 100%;
-    justify-content: space-between;
-    li {
-      width: 380px;
-      img {
-        width: 100%;
-      }
-    }
   }
 }
 
-@media (max-width: 1024px) {
-  .about-momo {
-    .about-momo__video-box {
-      .about-momo__video {
-        height: auto;
-      }
-    }
-  }
-  .about-momo__main {
-    padding: 100px 0;
-  }
-
-  .about-momo__item1,
-  .about-momo__item2,
-  .about-momo__item3 {
-    padding: 40px;
-  }
-
-  .about-momo__item4 {
-    padding: 40px;
-    .momo-img-list {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      li {
-        width: 100%;
-      }
-    }
+.about-momo__img1-m,
+.about-momo__img2-m {
+  width: 100%;
+  display: none;
+  img {
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
-  .about-momo__title {
-    font-size: 30px;
-  }
-  .about-momo__sub-title {
-    font-size: 16px;
-  }
-  .about-momo__text {
-    font-size: 14px;
-  }
+  .about-momo__video-box {
+    .about-momo__video {
+      height: auto;
+    }
+    .about-momo__img1,
+    .about-momo__img2 {
+      display: none;
+    }
 
-  /////////////////////
-  .about-momo__main {
-    padding: 40px 0;
-  }
-
-  .about-momo__main-header-img {
-    width: 280px;
-  }
-  .about-momo__item1 {
-    margin-top: 40px;
-    padding: 20px;
-    .about-momo__title {
-      font-size: 30px;
-    }
-    .about-momo__sub-title {
-      font-size: 16px;
-    }
-    .about-momo__text {
-      font-size: 14px;
-    }
-  }
-
-  .about-momo__item2 {
-    margin-top: 40px;
-    padding: 20px;
-    .tmhc-coin-img {
-      max-width: 200px;
-      margin: 0 auto;
-    }
-    .item2__box {
-      margin-top: 20px;
-    }
-    .about-momo__text {
-      margin-top: 8px;
-    }
-  }
-
-  .about-momo__item3 {
-    margin-top: 40px;
-    padding: 20px;
-    div {
-      .about-momo__sub-title {
-        .yellow-text {
-          font-size: 16px;
-        }
-      }
-      .about-momo__small-text {
-        font-size: 14px;
-        .small-yellow1,
-        .small-yellow2,
-        .small-yellow3 {
-          font-size: 14px;
-        }
-      }
-    }
-  }
-
-  .about-momo__item4 {
-    margin-top: 40px;
-    padding: 20px;
-    .momo-img-list {
-      display: flex;
-      flex-direction: column;
+    .about-momo__img1-m,
+    .about-momo__img2-m {
+      display: block;
     }
   }
 }

@@ -316,6 +316,7 @@ const Header = () => {
                   <Link
                     to="https://bridge.tokyomongzhillsclub.com/"
                     target="_blank"
+                    onClick={handleMenuClicked}
                   >
                     Bridge (PLT TO ETH)
                   </Link>
@@ -325,10 +326,18 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Eco-System</span>
-                  <Link to="https://multiuniversecentral.io/" target="_blank">
+                  <Link
+                    to="https://multiuniversecentral.io/"
+                    target="_blank"
+                    onClick={handleMenuClicked}
+                  >
                     Eco System
                   </Link>
-                  <Link to="" onClick={handleMWaitingModal}>
+                  <Link
+                    to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                    target="_blank"
+                    onClick={handleMenuClicked}
+                  >
                     MUC Whitepaper
                   </Link>
                 </li>
@@ -340,6 +349,7 @@ const Header = () => {
                   <Link
                     to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                     target="_blank"
+                    onClick={handleMenuClicked}
                   >
                     How to
                   </Link>
@@ -347,6 +357,7 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                       target="_blank"
+                      onClick={handleMenuClicked}
                     >
                       Help
                     </Link>
@@ -354,11 +365,18 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/tmhc-7eb0250de5f14d408bdadf7a0ea921c3"
                       target="_blank"
+                      onClick={handleMenuClicked}
                     >
                       Help
                     </Link>
                   )}
-                  <Link to="https://www.hashlink.jp/">About Us</Link>
+                  <Link
+                    to="https://www.hashlink.jp/"
+                    target="_blank"
+                    onClick={handleMenuClicked}
+                  >
+                    About Us
+                  </Link>
                   <Link to="/partners" onClick={handleMenuClicked}>
                     Partners
                   </Link>
@@ -368,10 +386,11 @@ const Header = () => {
                   <Link
                     to="https://opensea.io/ja/collection/tmhc"
                     target="_blank"
+                    onClick={handleMenuClicked}
                   >
                     Tokyo Mongs Hills Club
                   </Link>
-                  <Link to="" onClick={handleMenuClicked}>
+                  <Link to="/about-momo" onClick={handleMenuClicked}>
                     Peachz.MOMO
                   </Link>
                 </li>
@@ -405,7 +424,7 @@ const Header = () => {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Main language={language}/>} />
+        <Route path="/" element={<Main language={language} />} />
         <Route path="/roadmap" element={<Roadmap language={language} />} />
         <Route path="/about-tmhc" element={<AboutTmhc language={language} />} />
         <Route path="/about-momo" element={<AboutMomo language={language} />} />

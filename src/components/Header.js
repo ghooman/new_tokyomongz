@@ -328,7 +328,10 @@ const Header = () => {
                   <Link to="https://multiuniversecentral.io/" target="_blank">
                     Eco System
                   </Link>
-                  <Link to="" onClick={handleMWaitingModal}>
+                  <Link
+                    to="https://commseed.gitbook.io/multi-universe-central-muc/"
+                    target="_blank"
+                  >
                     MUC Whitepaper
                   </Link>
                 </li>
@@ -405,7 +408,7 @@ const Header = () => {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Main language={language}/>} />
+        <Route path="/" element={<Main language={language} />} />
         <Route path="/roadmap" element={<Roadmap language={language} />} />
         <Route path="/about-tmhc" element={<AboutTmhc language={language} />} />
         <Route path="/about-momo" element={<AboutMomo language={language} />} />

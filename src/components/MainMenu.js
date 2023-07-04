@@ -87,7 +87,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
             </li>
             <li>
               <Link
-                to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                to="https://commseed.gitbook.io/multi-universe-central-muc/"
                 target="_blank"
               >
                 MUC Whitepaper

@@ -453,14 +453,14 @@ const Main = ({ language }) => {
               )}
               {language === "EN" ? (
                 <Link
-                  to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                  to="https://commseed.gitbook.io/multi-universe-central-muc/"
                   target="_blank"
                 >
                   MUC White Paper
                 </Link>
               ) : (
                 <Link
-                  to="https://multi-universe-coin.gitbook.io/muc-white-paper"
+                  to="https://commseed.gitbook.io/multi-universe-central-muc/"
                   target="_blank"
                 >
                   MUCホワイトペーパー

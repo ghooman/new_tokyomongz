@@ -10,6 +10,7 @@ import StakingModal from "../components/StakingModal";
 import CancelStakingModal from "../components/CancelStakingModal";
 import { ethers } from "ethers";
 import abi from "./newAbi";
+import MzcAbi from "./MzcAbi";
 
 import {
   setSelectedState,
@@ -171,9 +172,10 @@ const Main = ({ language }) => {
     }
   };
   ///////////////////////////////////////////////////////////////////////////////
+
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
-  const { contract: mongzContract } = useContract(MONGS_COIN);
+  const { contract: mongzContract } = useContract(MONGS_COIN, MzcAbi);
 
   const walletAddress = useAddress();
   console.log(walletAddress);

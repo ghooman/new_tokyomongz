@@ -14,12 +14,9 @@ const Roadmap = ({ language }) => {
           </div>
         </div>
         <div className="roadmap-bottom">
-
           <div className="roadmap-img2-box">
             <div className="roadmap-img2">
-
-                <img src={roadmapImg2} alt="roadmap-img" />
-
+              <img src={roadmapImg2} alt="roadmap-img" />
             </div>
           </div>
         </div>

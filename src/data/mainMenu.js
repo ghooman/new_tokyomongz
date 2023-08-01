@@ -5,7 +5,7 @@ const mainMenu = [
     li1: "Mongz Universe Roadmap",
     li2: "#001 Tokyo Mongz Hills Club",
     li3: "#002 PEATCHzMOMO",
-    li4: "#003 INU PROJECT",
+    li4: "#003 Universal Stallion",
     li5: "#004 KIJI PROJECT",
     link1: "",
     link2: "",

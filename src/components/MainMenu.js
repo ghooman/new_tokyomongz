@@ -38,8 +38,8 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               <Link to="/about-momo">#002 PEATCHz.MOMO</Link>
             </li>
             <li>
-              <Link to="" onClick={handleWaitingModal}>
-                #003 INU PROJECT
+              <Link to="https://universalstallion.io/" target="_blank">
+                #003 Universal Stallion
               </Link>
             </li>
             <li>

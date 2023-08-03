@@ -1,0 +1,12 @@
+.tbd-background {
+  width: 100%;
+  height: calc(100vh - 256px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  > h1 {
+    font-family: "mplus1p500";
+    font-size: 48px;
+  }
+}

@@ -26,6 +26,7 @@ import Terms from "../pages/Terms";
 import Policy from "../pages/Policy";
 import Copyright from "../pages/Copyright";
 import Transaction from "../pages/Transaction";
+import Tbd from "../pages/Tbd";
 
 const Header = () => {
   const socialMenu = [
@@ -153,6 +154,35 @@ const Header = () => {
       return !prev;
     });
   };
+
+  // =============== 시간에 따라서 보여지는거 다르게
+
+  const [currentComponent, setCurrentComponent] = useState("TmhcMain");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const date = new Date();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      if (
+        (month === 7 && day === 4 && hours === 23 && minutes >= 30) ||
+        (month === 7 && day === 5 && hours < 2)
+      ) {
+        setCurrentComponent("Tbd");
+      } else {
+        setCurrentComponent("TmhcMain");
+      }
+      console.log("1초");
+      console.log(currentComponent);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  console.log(currentComponent);
 
   return (
     <>
@@ -428,7 +458,12 @@ const Header = () => {
         <Route path="/roadmap" element={<Roadmap language={language} />} />
         <Route path="/about-tmhc" element={<AboutTmhc language={language} />} />
         <Route path="/about-momo" element={<AboutMomo language={language} />} />
-        <Route path="/tmhc" element={<TmhcMain language={language} />} />
+        {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
+        <Route path="/tmhc" element={<Tbd />} /> */}
+        <Route
+          path="/tmhc"
+          element={currentComponent === "Tbd" ? <Tbd /> : <TmhcMain />}
+        />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />
         <Route path="/partners" element={<Partners />} />

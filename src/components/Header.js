@@ -168,8 +168,8 @@ const Header = () => {
       const minutes = date.getMinutes();
 
       if (
-        (month === 7 && day === 4 && hours === 23 && minutes >= 30) ||
-        (month === 7 && day === 5 && hours < 2)
+        (month === 7 && day === 5 && hours === 23 && minutes >= 45) ||
+        (month === 7 && day === 6 && hours < 2)
       ) {
         setCurrentComponent("Tbd");
       } else {

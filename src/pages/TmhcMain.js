@@ -417,6 +417,8 @@ const Main = ({ language }) => {
   //     console.log(err);
   //   }
   // };
+
+  console.log(language);
   return (
     <>
       <Nav />

@@ -1,5 +1,5 @@
 import React from "react";
-import mainVdieo from "../assets/hashlink-main-video.mp4";
+import mainVdieo from "../assets/new_hashlink_main_video.mp4";
 import "../styles/Main.scss";
 import Footer from "../components/Footer";
 import mainLinkImg from "../assets/images/main-link-img.png";

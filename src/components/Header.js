@@ -157,33 +157,33 @@ const Header = () => {
 
   // =============== 시간에 따라서 보여지는거 다르게
 
-  const [currentComponent, setCurrentComponent] = useState("TmhcMain");
+  // const [currentComponent, setCurrentComponent] = useState("TmhcMain");
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const date = new Date();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const date = new Date();
+  //     const month = date.getMonth();
+  //     const day = date.getDate();
+  //     const hours = date.getHours();
+  //     const minutes = date.getMinutes();
 
-      if (
-        (month === 7 && day === 5 && hours === 23 && minutes >= 45) ||
-        (month === 7 && day === 6 && hours < 2)
-      ) {
-        setCurrentComponent("Tbd");
-      } else {
-        setCurrentComponent("TmhcMain");
-      }
-      console.log("1초");
-      console.log(currentComponent);
-    }, 1000);
+  //     if (
+  //       (month === 7 && day === 5 && hours === 23 && minutes >= 45) ||
+  //       (month === 7 && day === 6 && hours < 2)
+  //     ) {
+  //       setCurrentComponent("Tbd");
+  //     } else {
+  //       setCurrentComponent("TmhcMain");
+  //     }
+  //     console.log("1초");
+  //     console.log(currentComponent);
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  console.log(currentComponent);
-
+  // console.log(currentComponent);
+  console.log(language);
   return (
     <>
       <div className={`header ${mainPage ? "transparent" : ""}`}>
@@ -460,10 +460,7 @@ const Header = () => {
         <Route path="/about-momo" element={<AboutMomo language={language} />} />
         {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/tmhc" element={<Tbd />} /> */}
-        <Route
-          path="/tmhc"
-          element={currentComponent === "Tbd" ? <Tbd /> : <TmhcMain />}
-        />
+        <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />
         <Route path="/partners" element={<Partners />} />

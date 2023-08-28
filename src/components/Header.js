@@ -361,7 +361,7 @@ const Header = () => {
                     target="_blank"
                     onClick={handleMenuClicked}
                   >
-                    Eco System
+                    MUC Eco System
                   </Link>
                   <Link
                     to="https://multi-universe-coin.gitbook.io/muc-white-paper"

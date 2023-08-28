@@ -82,7 +82,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <ul className="main-menu__sub">
             <li>
               <Link to="https://multiuniversecentral.io/" target="_blank">
-                Eco-System
+                MUC Eco-System
               </Link>
             </li>
             <li>

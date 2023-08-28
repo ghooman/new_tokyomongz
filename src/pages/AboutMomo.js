@@ -11,9 +11,7 @@ import aboutMomo2enM from "../assets/images/about-momo-img2-en-m.png";
 import aboutMomo1jpM from "../assets/images/about-momo-img1-jp-m.png";
 import aboutMomo2jpM from "../assets/images/about-momo-img2-jp-m.png";
 
-import momoTopImg from "../assets/images/about-momo-temporary-img.jpeg";
-
-import momoVid from "../assets/about-momo-vid.mp4";
+import momoVid from "../assets/new_hashlink_main_video.mp4";
 
 import "../styles/AboutMomo.scss";
 
@@ -22,14 +20,13 @@ const AboutMomo = ({ language }) => {
     <>
       <div className="about-momo">
         <div className="about-momo__video-box">
-          {/* <video
+          <video
             src={momoVid}
             autoPlay
             muted
             loop
             className="about-momo__video"
-          ></video> */}
-          <img src={momoTopImg} alt="img" />
+          ></video>
         </div>
         {/* ======================= pc img ====================== */}
         <div className="about-momo__img1">

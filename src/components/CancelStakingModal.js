@@ -46,10 +46,8 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
               <p>
                 Are you sure you want to cancel Staking?
                 <br />
-                <span className="text-red">
-                  You will automatically receive the MZC acquired by NFT when
-                  you cancel
-                </span>
+                You will automatically receive the MZC acquired by NFT when you
+                cancel
                 <br />
                 <br />
                 [Note] <br />
@@ -57,10 +55,8 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
                 transferring, etc. before claiming, the MZC that the NFT has
                 acquired so far will disappear.
                 <br />
-                <span className="text-red">
-                  If the claim amount is less than 1 MZC for each NFT, MZC
-                  cannot be claimed.
-                </span>
+                If the claim amount is less than 1 MZC for each NFT, MZC cannot
+                be claimed.
               </p>
             </div>
             <div className="cancel__btn">
@@ -87,21 +83,16 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
             ))}
             <div className="cancel__text">
               <p>
-                Stakingを<span className="text-red">解除</span>
-                してもよろしいですか？
+                Stakingを解除してもよろしいですか？
                 <br />
-                <span className="text-red">
-                  解除時にNFTが獲得したMZCを自動で受け取ります。
-                </span>
+                解除時にNFTが獲得したMZCを自動で受け取ります。
                 <br />
                 <br />
                 [注意]
                 <br />
                 Staking中のNFTを、Claimする前に売却・譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
                 <br />
-                <span className="text-red">
-                  各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
-                </span>
+                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
               </p>
             </div>
             <div className="cancel__btn">

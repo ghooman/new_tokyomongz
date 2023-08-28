@@ -318,7 +318,7 @@ const Header = () => {
                   <ConnectWallet />
                 </li>
                 <li className="m-main-menu__items">
-                  <span className="m-main-menu__sub-title">Mongz Univers</span>
+                  <span className="m-main-menu__sub-title">Mongz Universe</span>
                   <Link to="/roadmap" onClick={handleMenuClicked}>
                     Universe Roadmap
                   </Link>

@@ -14,7 +14,7 @@ import {
   IMPORT_TMHC_CONTRACT,
 } from "../contract/contractAddress";
 
-import abi from "../pages/newAbi";
+import abi from "../contract/newAbi";
 import Web3 from "web3";
 
 import axios from "axios";

@@ -9,8 +9,8 @@ import Pagination from "react-js-pagination";
 import StakingModal from "../components/StakingModal";
 import CancelStakingModal from "../components/CancelStakingModal";
 import { ethers } from "ethers";
-import abi from "./newAbi";
-import MzcAbi from "./MzcAbi";
+import abi from "../contract/newAbi";
+import MzcAbi from "../contract/MzcAbi";
 
 import {
   setSelectedState,

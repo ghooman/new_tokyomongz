@@ -1,0 +1,229 @@
+.mint-main-background {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  height: auto;
+  padding-bottom: 80px;
+  z-index: 5;
+  .mint-main-container {
+    width: 100%;
+    max-width: 1605px;
+    margin-top: 80px;
+    // padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    .mint-main-release-date {
+      width: 100%;
+      // margin-bottom: 110px;
+      clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% 100%,
+        1% 100%
+      ); //사다리꼴 만들기 익스플로에는 안됨
+      .release-date-top-cotent {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .mint-logo {
+          width: 213px;
+          img {
+            width: 100%;
+            object-fit: cover;
+          }
+        }
+        .mint-wallet-btn {
+          width: 305px;
+          height: 65px;
+          flex-shrink: 0;
+          text-align: center;
+          border-radius: 50px;
+          background: linear-gradient(
+            90deg,
+            #d463fc 4.86%,
+            #b2a1ed 24.16%,
+            #80fcd7 51.93%,
+            #29caeb 95.25%
+          );
+        }
+      }
+      .release-date-content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        .release-date-character-box {
+          width: 810px;
+          height: 898px;
+          position: relative;
+          img {
+            width: 100%;
+            object-fit: cover;
+          }
+          .release-date-character {
+            position: absolute;
+            z-index: 1;
+            right: 0;
+          }
+          .release-date-character-background {
+            position: absolute;
+            z-index: 2;
+            right: 0;
+          }
+        }
+        .release-date-content-text-box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .release-date-title {
+            width: 666px;
+            height: 262px;
+            color: #f085f2;
+            font-size: 100px;
+          }
+          .release-date-sub-title-box {
+            margin-bottom: 138px;
+            .release-date-line {
+              display: inline-block;
+              vertical-align: middle;
+              width: 50px;
+              height: 1px;
+              margin: 0 31px;
+              background-color: #f085f2;
+            }
+            .release-date-sub-title {
+              // font-family: M + 1p;
+              color: #f085f2;
+              font-size: 24px;
+              font-weight: 500; // 사용하는지 찾아보기
+              letter-spacing: 7.44px;
+            }
+          }
+          .release-date-gal-button {
+            // height: 48px;
+            color: #f085f2;
+            border: 2px solid #f085f2;
+            background-color: transparent;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 32px;
+            padding: 0 30px;
+            margin-bottom: 47px;
+            font-style: normal; // 이아래 어떻게 해야될지 질문
+            font-family: M + 1p;
+            font-weight: 500;
+            line-height: normal;
+          }
+          .releaset-date-open-date {
+            background-color: pink;
+            margin-bottom: 11px;
+          }
+          .release-date-caution {
+            color: #fff;
+            font-family: M + 1p;
+            font-style: normal;
+            font-weight: "500";
+            line-height: normal;
+          }
+        }
+      }
+    }
+    .mint-main__product-info {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      background: #1e1e1e;
+      background-image: url("../assets/images/mint/bg_pattern.png");
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+      margin-bottom: 100px;
+      .product-info__left-box,
+      .product-info__right-box {
+        width: 603px;
+        height: 597px;
+        margin-right: 31px;
+        img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    // .mint-main__product-info::before {
+    // 사다리꼴 만드는 다른 방법
+    //   content: "";
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   background-color: white;
+    //   transform: skewY(-10deg);
+    //   z-index: -1;
+    // }
+  }
+  .mint-main__purchase {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 200px;
+    .purchase__title {
+      font-size: 46px;
+      text-align: center;
+      font-style: normal;
+      font-weight: 700;
+      font-family: M + 1p;
+      letter-spacing: 3.68px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .purchase__sub-title {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 15px;
+      font-family: M + 1p;
+      font-style: normal;
+      font-weight: 400;
+    }
+    .purchase-type {
+      display: flex;
+      justify-content: center;
+      .purchase__left-box,
+      .purchase__right-box {
+        width: 407.5px;
+        height: 398.5px;
+        border: 1px solid purple;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        .purchase__text-number {
+          display: flex;
+          transform: rotate(-90deg);
+          transform-origin: top left;
+          flex-direction: column;
+          align-self: flex-start;
+          flex-shrink: 0;
+          color: #a04ad9;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 500;
+          //   line-height: 167px; /* 1192.857% */
+          letter-spacing: 1.12px;
+          text-transform: uppercase;
+        }
+      }
+      .purchase__left-box {
+        margin-right: 53.5px;
+        .purchase_ETH {
+          width: 200px;
+          height: 190px;
+        }
+      }
+    }
+  }
+}

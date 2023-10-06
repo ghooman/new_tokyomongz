@@ -34,7 +34,8 @@ import {
 } from "@thirdweb-dev/react";
 import Web3 from "web3";
 import axios from "axios";
-
+// 더미
+import mongsDummyData from "../data/tmhcDummyData";
 const Main = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -265,6 +266,7 @@ const Main = ({ language }) => {
             name: res.data.name,
             image: res.data.image,
           }));
+          // 임시주석
           setNftData(newData);
           console.log(newData);
         })
@@ -307,6 +309,8 @@ const Main = ({ language }) => {
       }
     };
 
+    // 임시 추가 코드
+    // setNftData(mongsDummyData);
     getStakingNftList();
     getBalanceOfBatch();
     getReward();
@@ -809,7 +813,6 @@ const Main = ({ language }) => {
                   selectedState === "Staking中") && (
                   <ul className="main__tmhc-list">
                     {nftData
-
                       .filter((item) => {
                         return stakingData.includes(parseInt(item.id));
                       })
@@ -846,7 +849,6 @@ const Main = ({ language }) => {
                   selectedState === "未Staking") && (
                   <ul className="main__tmhc-list">
                     {nftData
-
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
                       })
@@ -896,7 +898,7 @@ const Main = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={15}
+                    itemsCountPerPage={5}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||
@@ -914,7 +916,7 @@ const Main = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

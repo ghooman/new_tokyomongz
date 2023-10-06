@@ -27,7 +27,7 @@ import Policy from "../pages/Policy";
 import Copyright from "../pages/Copyright";
 import Transaction from "../pages/Transaction";
 import Tbd from "../pages/Tbd";
-import Mint from "../pages/Mint";
+import Team from "../pages/Team";
 
 const Header = () => {
   const socialMenu = [
@@ -338,7 +338,7 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Utility</span>
-                  <Link to="/mint" onClick={handleMenuClicked}>
+                  <Link to="" onClick={handleMWaitingModal}>
                     Mint
                   </Link>
                   <Link to="/tmhc" onClick={handleMenuClicked}>
@@ -461,7 +461,6 @@ const Header = () => {
         <Route path="/about-momo" element={<AboutMomo language={language} />} />
         {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/tmhc" element={<Tbd />} /> */}
-        <Route path="/mint" element={<Mint language={language} />} />
         <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />
@@ -469,6 +468,7 @@ const Header = () => {
         <Route path="/news" element={<News />} />
         <Route path="/eco-system" element={<EcoSystem language={language} />} />
         <Route path="/terms" element={<Terms language={language} />} />
+        <Route path="/team" element={<Team language={language} />} />
         <Route
           path="/privacy-policy"
           element={<Policy language={language} />}

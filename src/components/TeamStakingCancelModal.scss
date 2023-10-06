@@ -1,0 +1,121 @@
+.team-staking-cancel__background {
+  position: fixed;
+  width: 460px;
+  top: 50%;
+  left: 50%;
+  height: 900px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;s
+  border-radius: 8px;
+  border: 1px solid #545454;
+  background: #000;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  .team-staking-cancel__mongz-info-box {
+    display: flex;
+    flex-direction: column;
+    // height: 100px;
+    .team-staking-cancel__mongz-img {
+      width: 412px;
+      height: 398px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .team-staking-cancel__mongz-name {
+      margin-top: 24px;
+      color: #fff;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+  .team-staking-cancel__momo-box {
+    margin-top: 40px;
+    display: flex;
+    border-bottom: 1px solid #545454;
+    padding-bottom: 24px;
+    overflow: auto;
+    .team-staking-cancel__momo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .team-staking-cancel__momo-img {
+        width: 100px;
+        height: 100px;
+        border: 1px solid white;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .team-staking-cancel__momo-name {
+        margin-top: 8px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 100%; /* 12px */
+      }
+    }
+  }
+  .team-staking-cancel__text {
+    margin-top: 24px;
+    margin-bottom: 30px;
+  }
+  .team-staking-cancel__btn-box {
+    display: flex;
+    justify-content: space-between;
+    .team-staking-cancel__back-btn {
+      width: 194px;
+      display: flex;
+      padding: 16px 40px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      border: 1px solid #fbca77;
+      background-color: transparent;
+    }
+    .team-staking-cancel__cancel-btn {
+      width: 194px;
+      display: flex;
+      padding: 16px 40px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background-color: #fbca77;
+      color: black;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .team-staking-cancel__background {
+    width: 320px;
+    height: 800px;
+    .team-staking-cancel__mongz-info-box {
+      margin: 0;
+      .team-staking-cancel__mongz-img {
+        width: 272px;
+        height: 262px;
+      }
+    }
+    .team-staking-cancel__text {
+      font-size: 12px;
+      // margin: 0;
+    }
+    .team-staking-cancel__btn-box {
+      flex-direction: column;
+      .team-staking-cancel__back-btn {
+        width: 100%;
+        height: 48px;
+        margin-bottom: 16px;
+      }
+      .team-staking-cancel__cancel-btn {
+        width: 100%;
+        height: 48px;
+      }
+    }
+  }
+}

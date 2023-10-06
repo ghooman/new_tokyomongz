@@ -47,7 +47,7 @@ const StakingModal = ({
     <>
       <div className="modal-background">
         <div className="staking-modal">
-          <div className="staking__count">Total: {selectData.length}</div>
+          {/* <div className="staking__count">Total: {selectData.length}</div> */}
           <div className="staking__img-box">
             {selectData.map((item) => (
               <div className="staking__img-contents" key={item.id}>
@@ -61,15 +61,15 @@ const StakingModal = ({
           {language === "EN" ? (
             <div className="staking__text">
               <p>
-                Apply for Staking?
+                Would you like to apply the staking?
                 <br />
                 <br />
-                [Notice]
+                - Holders can only claim the reward if they have at least 1 MZC
+                per each NFT being staked.
                 <br />
-                <br />
-                If the holder sells an NFT that is currently being staked, or
-                moves it to a different wallet, they will not receive the reward
-                MZC assigned to the NFT.
+                <br />- If the holder sells an NFT that is currently being
+                staked, or moves it to a different wallet, they will not receive
+                the reward MZC assigned to the NFT.
               </p>
             </div>
           ) : (
@@ -81,6 +81,9 @@ const StakingModal = ({
                 [注意]
                 <br />
                 <br />
+                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
+                <br />
+                <br />.
                 Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
               </p>
             </div>
@@ -270,7 +273,7 @@ const StakingConfirmModal = ({
         <div className="modal-background">
           <div className="staking-confirm">
             <span className="staking-confirm__title">
-              Would you like to apply for a single Staking?
+              Would you like to apply the claim?
             </span>
             <div className="staking-confirm__btn">
               <button

@@ -44,8 +44,14 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
             ))}
             <div className="cancel__text">
               <p>
-                Are you sure you want to cancel Staking?
+                Would you like to apply for staking?
                 <br />
+                <br />
+                [Caution]
+                <br />
+                If the wallet of NFT changes due to sale, transfer, and etc.,
+                MZC generated from applicable NFT will not be distributed.
+                {/* <br />
                 You will automatically receive the MZC acquired by NFT when you
                 cancel
                 <br />
@@ -56,7 +62,7 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
                 acquired so far will disappear.
                 <br />
                 If the claim amount is less than 1 MZC for each NFT, MZC cannot
-                be claimed.
+                be claimed. */}
               </p>
             </div>
             <div className="cancel__btn">
@@ -84,7 +90,7 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
             <div className="cancel__text">
               <p>
                 Stakingを解除してもよろしいですか？
-                <br />
+                {/* <br />
                 解除時にNFTが獲得したMZCを自動で受け取ります。
                 <br />
                 <br />
@@ -92,7 +98,7 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
                 <br />
                 Staking中のNFTを、Claimする前に売却・譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
                 <br />
-                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
+                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。 */}
               </p>
             </div>
             <div className="cancel__btn">

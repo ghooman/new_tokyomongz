@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "../styles/Momo.scss";
+import "../styles/Team.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
 import Nav from "../components/Nav";
@@ -34,9 +34,11 @@ import {
 } from "@thirdweb-dev/react";
 import Web3 from "web3";
 import axios from "axios";
+import mongzDummyData from "../data/tmhcDummyData";
 import momoDummyData from "../data/momoDummyData";
+import AndIcon from "../assets/images/and-icon.svg";
 
-const Momo = ({ language }) => {
+const Team = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
@@ -150,7 +152,7 @@ const Momo = ({ language }) => {
   const handleAllChecked = () => {
     // setIsChecked
     if (isChecked.length === 0) {
-      let allIds = momoNftData
+      let allIds = nftData
         .slice(start, end)
         .filter((item) => {
           return !stakingData.includes(item.id);
@@ -158,7 +160,7 @@ const Momo = ({ language }) => {
         .map((item) => item.id);
       setIsChecked(allIds);
 
-      let allDatas = momoNftData
+      let allDatas = nftData
         .slice(start, end)
         .filter((item) => {
           return !stakingData.includes(item.id);
@@ -204,11 +206,11 @@ const Momo = ({ language }) => {
 
   // const nftData2 = [{}];
 
-  const [momoNftData, setMomoNftData] = useState(momoDummyData);
+  const [nftData, setNftData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (momoNftData) {
+    if (nftData) {
       setIsLoading(() => {
         return true;
       });
@@ -217,7 +219,7 @@ const Momo = ({ language }) => {
         return true;
       });
     }
-  }, [momoNftData]);
+  }, [nftData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -230,7 +232,7 @@ const Momo = ({ language }) => {
 
   console.log(dataStatus);
   useEffect(() => {
-    setMomoNftData(() => {
+    setNftData(() => {
       return [];
     });
 
@@ -266,9 +268,7 @@ const Momo = ({ language }) => {
             name: res.data.name,
             image: res.data.image,
           }));
-          // 임의로 dummydata받기
-          // setMomoNftData(newData);
-          setMomoNftData(momoDummyData);
+          setNftData(newData);
           console.log(newData);
         })
         .catch((error) => {
@@ -315,8 +315,8 @@ const Momo = ({ language }) => {
     getReward();
   }, [walletAddress]);
 
-  console.log("nftData==================", momoNftData);
-  console.log("소유한 nft 개수 =============", momoNftData.length);
+  console.log("nftData==================", nftData);
+  console.log("소유한 nft 개수 =============", nftData.length);
 
   // 스테이킹 된 목록 확인하기
   const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
@@ -425,31 +425,31 @@ const Momo = ({ language }) => {
   return (
     <>
       <Nav />
-      <div className="momo-main-background">
-        <div className="momo-main-container">
-          <div className="momo-container__texture">
+      <div className="team-main-background">
+        <div className="team-main-container">
+          <div className="team-main__container-texture">
             {language === "EN" ? (
-              <p className="momo-texture__main-text">
-                Stake your PEACHz. MOMO NFT to receive MZC
+              <p className="container-texture__main-text">
+                Team up TMHC & MOMO NFT together to stake and receive MZC
               </p>
             ) : (
-              <p className="momo-texture__main-text">
-                PEACHz. MOMO NFTをStakingすることでMZCを獲得することができます
-                Staking中のMOMO NFTはTEAM Staikingに使用することはできません
+              <p className="container-texture__main-text">
+                TMHC NFTとPEACHz. MOMO NFTをセットでTeam
+                StakingすることでMZCを獲得できます
               </p>
             )}
 
             {language === "EN" ? (
-              <p className="momo-texture__sub-text">
+              <p className="container-texture__sub-text">
                 MZC is a utility coin that belongs to the MUC ecosystem.
               </p>
             ) : (
-              <p className="momo-texture__sub-text">
+              <p className="container-texture__sub-text">
                 MZCは、MUC エコシステムに属するユーティリティコインです
               </p>
             )}
 
-            <div className="momo-texture__box">
+            <div className="container-texture__box">
               {language === "EN" ? (
                 <Link to="https://multiuniversecentral.io/" target="_blank">
                   About MUC Ecosystem
@@ -478,7 +478,7 @@ const Momo = ({ language }) => {
             {language === "EN" ? (
               <Link
                 to="https://tmhc-support.notion.site/USERS-GUIDE-51271f936b7b4833b73abe573f37acc7"
-                className="momo-container__btn--user-guide"
+                className="container-texture__btn--user-guide"
                 target="_blank"
               >
                 User's Guide
@@ -486,7 +486,7 @@ const Momo = ({ language }) => {
             ) : (
               <Link
                 to="https://tmhc-support.notion.site/9322957c94ae499c8adc56298832e2f1"
-                className="momo-container__btn--user-guide"
+                className="container-texture__btn--user-guide"
                 target="_blank"
               >
                 ご利用ガイド
@@ -494,285 +494,140 @@ const Momo = ({ language }) => {
             )}
           </div>
 
-          {/* <div className="current-balance">
-            <span className="current-balance__title">Your Balance</span>
-            <span className="current-balance__mzc">
-              {mzcBalance}
-              <span className="mzc">&nbsp;MZC</span>
-            </span>
-            <button className="btn-mzc" onClick={addTokenToWallet}>
-              Add MZC MetaMask
-            </button>
-          </div> */}
-
-          <div className="momo-container__claim">
+          <div className="container__claim">
             {language === "EN" ? (
-              <span className="momo-claim__title">Claimable MZC</span>
+              <span className="claim__title">Claimable MZC</span>
             ) : (
-              <span className="momo-claim__title">現在のClaim額</span>
+              <span className="claim__title">現在のClaim額</span>
             )}
-            <div className="momo-claim__coin">
+            <div className="claim__coin">
               <div>
-                <span className="momo-coin-icon">
-                  <img src={coinIcon} alt="momo-coin" />
+                <span className="coin-icon">
+                  <img src={coinIcon} alt="coin" />
                 </span>
                 {walletAddress ? (
                   reward !== "" ? (
                     reward !== 0 ? (
-                      <div className="momo-mzc">
-                        <span className="momo-coin">{reward.toFixed(3)}</span>
+                      <div className="mzc">
+                        <span className="coin">{reward.toFixed(3)}</span>
                         MZC
                       </div>
                     ) : (
-                      <div className="momo-mzc">
-                        <span className="momo-coin"> No MZC to Claim</span>
+                      <div className="mzc">
+                        <span className="coin"> No MZC to Claim</span>
                       </div>
                     )
                   ) : null
                 ) : (
-                  <div className="momo-mzc">
-                    <span className="momo-coin">
-                      Please Connect your Wallet
-                    </span>
+                  <div className="mzc">
+                    <span className="coin">Please Connect your Wallet</span>
                   </div>
                 )}
               </div>
               <button
                 type="button"
-                className="momo-btn-claim"
+                className="btn-claim"
                 onClick={handleClaimModal}
               >
                 Claim
               </button>
             </div>
           </div>
-          {/* <div className="input-wallet-box">
-            <input
-              type="text"
-              className="wallet-address"
-              onChange={handleInputText}
-              value={inputText}
-            />
-            <button
-              className="wallet-address-btn"
-              onClick={handleWalletAddress}
-            >
-              출력
-            </button>
-          </div> */}
 
-          <div className="momo-container__nft">
-            <div className="momo-nft__header">
-              <span className="momo-header__title">NFT List</span>
-              <div>
-                <div className="momo-left__menu">
-                  <div className="momo-state-select-box">
-                    <button
-                      className="momo-btn--state-select"
-                      onClick={handleDropdownClick}
-                    >
-                      {selectedState}
-                    </button>
-                    <span
-                      className="material-symbols-outlined"
-                      ref={rotateRef}
-                      onClick={handleDropdownClick}
-                    >
-                      expand_more
-                    </span>
-                    {isOpen ? (
-                      language === "EN" ? (
-                        <ul className="momo-state-select-list">
-                          <li
-                            className="momo-state-item all"
-                            onClick={() => handleSelectedItem("All")}
-                          >
-                            All
-                          </li>
-                          <li
-                            className="momo-state-item staking"
-                            onClick={() => handleSelectedItem("Staking")}
-                          >
-                            Staking
-                          </li>
-                          <li
-                            className="momo-state-item before-staking"
-                            onClick={() =>
-                              handleSelectedItem("Ready for staking")
-                            }
-                          >
-                            Ready for staking
-                          </li>
-                        </ul>
-                      ) : (
-                        <ul className="momo-state-select-list">
-                          <li
-                            className="momo-state-item all"
-                            onClick={() => handleSelectedItem("すべて")}
-                          >
-                            すべて
-                          </li>
-                          <li
-                            className="momo-state-item staking"
-                            onClick={() => handleSelectedItem("Staking中")}
-                          >
-                            Staking中
-                          </li>
-                          <li
-                            className="momo-state-item before-staking"
-                            onClick={() => handleSelectedItem("未Staking")}
-                          >
-                            未Staking
-                          </li>
-                        </ul>
-                      )
-                    ) : null}
-                  </div>
+          <div className="container__nft">
+            <div className="nft__header">
+              <span className="header__title">
+                Tokyo Mongz Hills Club X MOMO Team Boosting
+              </span>
 
-                  <span className="momo-header__text">
-                    Total :&nbsp;
-                    {(selectedState === "All" ||
-                      selectedState === "すべて") && (
-                      <span className="momo-header__text--qtt">
-                        {momoNftData ? momoNftData.length : 0}
-                      </span>
-                    )}
-                    {(selectedState === "Staking" ||
-                      selectedState === "Staking中") && (
-                      <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
-                              return stakingData.includes(parseInt(item.id));
-                            }).length
-                          : 0}
-                      </span>
-                    )}
-                    {(selectedState === "Ready for staking" ||
-                      selectedState === "未Staking") && (
-                      <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
-                              return !stakingData.includes(parseInt(item.id));
-                            }).length
-                          : 0}
-                      </span>
-                    )}
-                    {language === "EN" ? "ea" : "個"}
+              <span className="header__text">
+                Total :&nbsp;
+                {(selectedState === "All" || selectedState === "すべて") && (
+                  <span className="header__text--qtt">
+                    {nftData ? nftData.length : 0}
                   </span>
-                </div>
-                <div className="momo-right-menu">
-                  {/* {language === "EN" ? (
-                    <label className="btn-all-select-label">
-                      <input
-                        type="checkbox"
-                        className="btn-all-select"
-                        onClick={handleAllChecked}
-                      />
-                      Select all
-                    </label>
-                  ) : (
-                    <label className="btn-all-select-label">
-                      <input type="checkbox" className="btn-all-select" />
-                      全選択
-                    </label>
-                  )} */}
-
-                  {isChecked.length <= 0 ? (
-                    <button className="momo-btn--all-staking">
-                      {language === "EN"
-                        ? "Proceed to the stake selected NFT"
-                        : "選択したNFTをStaking"}
-                    </button>
-                  ) : (
-                    <button
-                      className="momo-btn--all-staking momo-checked"
-                      onClick={handleAllStakingModal}
-                    >
-                      {language === "EN"
-                        ? "Proceed to the stake selected NFT"
-                        : "選択したNFTをStaking"}
-                      {/* Proceed to stake selected NFT */}
-                    </button>
-                  )}
-                </div>
-              </div>
+                )}
+                {(selectedState === "Staking" ||
+                  selectedState === "Staking中") && (
+                  <span className="header__text--qtt">
+                    {nftData
+                      ? nftData.filter((item) => {
+                          return stakingData.includes(parseInt(item.id));
+                        }).length
+                      : 0}
+                  </span>
+                )}
+                {(selectedState === "Ready for staking" ||
+                  selectedState === "未Staking") && (
+                  <span className="header__text--qtt">
+                    {nftData
+                      ? nftData.filter((item) => {
+                          return !stakingData.includes(parseInt(item.id));
+                        }).length
+                      : 0}
+                  </span>
+                )}
+                {language === "EN" ? "ea" : "個"}
+              </span>
             </div>
-            <div className="momo-nft__main">
-              {walletAddress === undefined || momoNftData.length === 0 ? (
-                <div className="momo-empty-nft">
+            <div className="nft__main">
+              {walletAddress === undefined ? (
+                <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
-              ) : momoNftData.length > 0 && dataStatus ? (
+              ) : momoDummyData.length > 0 && dataStatus ? (
                 ((selectedState === "All" || selectedState === "すべて") && (
-                  <ul className="main__momo-list">
-                    {momoNftData.map((item) => (
-                      <li className="momo-item" key={item.id}>
-                        {stakingData.includes(parseInt(item.id)) ? null : (
-                          <input
-                            type="checkbox"
-                            className="momo-check"
-                            checked={isChecked.includes(item.id)}
-                            onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.momoImg,
-                                item.momoName
-                              )
-                            }
-                          />
-                        )}
-                        <div className="momo-images">
-                          <img src={item.momoImg} alt="nft" />
+                  <div className="main__team-item-box">
+                    <div className="main__team-item-top">
+                      <div className="main__team-item-text">
+                        <span className="main__team-item-title">TEAM#1234</span>
+                        <span>
+                          BOOST <span>560%</span>
+                        </span>
+                        <span>
+                          Default 8.92MZC/Day + BOOST 41.032MZC/Day =
+                          <span>49.952 MZC / DAY</span>
+                        </span>
+                      </div>
+                      <div className="main__team-item-btn-box">
+                        <button className="main__team-item-cancel-btn">
+                          Cancel Team Staking
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="main__team-item-bottom">
+                      <div className="main__team-item-mongz-box">
+                        <div className="main__team-item-mongz-img">
+                          <img src={mongzDummyData[0].tmhcImg} alt="mongzImg" />
                         </div>
-                        {/* stakingData.includes(parseInt(item.id)) */}
-                        {true ? (
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state now-staking">
-                              Now Staking
-                            </span>
-                            <button
-                              className="momo-btn-cancel-staking"
-                              onClick={() =>
-                                handleCancelStakingModal(
-                                  item.momoImg,
-                                  item.id,
-                                  item.momoName
-                                )
-                              }
-                            >
-                              Cancel Staking
-                            </button>
+                        <span className="main__team-item-mongz-title">
+                          {mongzDummyData[0].tmhcName}
+                        </span>
+                        <span>100%</span>
+                      </div>
+                      <div className="main__team-item-and-icon">
+                        <img src={AndIcon} alt="andIcon" />
+                      </div>
+                      {momoDummyData.slice(0, 4).map((item) => (
+                        <div className="main__team-item-momo-box">
+                          <div className="main__team-item-momo-img">
+                            <img src={item.momoImg} alt="momoImg" />
                           </div>
-                        ) : (
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state">
-                              Ready for Staking
-                            </span>
-                            <button
-                              className="momo-btn--staking"
-                              onClick={() =>
-                                handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
-                                  item.id
-                                )
-                              }
-                            >
-                              Single Staking
-                            </button>
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
+                          <span className="main__team-item-momo-title">
+                            {item.momoName}
+                          </span>
+                          <span>300%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )) ||
                 ((selectedState === "Staking" ||
                   selectedState === "Staking中") && (
                   <ul className="main__momo-list">
-                    {momoNftData
+                    {momoDummyData
+
                       .filter((item) => {
                         return stakingData.includes(parseInt(item.id));
                       })
@@ -789,14 +644,14 @@ const Momo = ({ language }) => {
                               Now Staking
                             </span>
                             <button
-                              className="momo-btn-cancel-staking"
-                              // onClick={() =>
-                              //   handleCancelStakingModal(
-                              //     item.image,
-                              //     item.id,
-                              //     item.name
-                              //   )
-                              // }
+                              className="btn-cancel-staking"
+                              onClick={() =>
+                                handleCancelStakingModal(
+                                  item.image,
+                                  item.id,
+                                  item.name
+                                )
+                              }
                             >
                               Cancel Staking
                             </button>
@@ -808,7 +663,7 @@ const Momo = ({ language }) => {
                 ((selectedState === "Ready for staking" ||
                   selectedState === "未Staking") && (
                   <ul className="main__momo-list">
-                    {momoNftData
+                    {momoDummyData
 
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
@@ -838,7 +693,7 @@ const Momo = ({ language }) => {
                             </span>
 
                             <button
-                              className="momo-btn--staking"
+                              className="btn--staking"
                               onClick={() =>
                                 handleStakingModal(
                                   item.momoImg,
@@ -855,10 +710,10 @@ const Momo = ({ language }) => {
                   </ul>
                 ))
               ) : (
-                <div className="momo-loading">Now loading...</div>
+                <div className="loading">Now loading...</div>
               )}
 
-              {momoNftData === undefined ? null : (
+              {nftData === undefined ? null : (
                 <div className="pagination-box">
                   <Pagination
                     // 현재 보고있는 페이지
@@ -869,16 +724,16 @@ const Momo = ({ language }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? momoNftData.filter((item) => {
+                        ? nftData.filter((item) => {
                             return stakingData.includes(parseInt(item.id));
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? momoNftData.filter((item) => {
+                        ? nftData.filter((item) => {
                             return !stakingData.includes(parseInt(item.id));
                           }).length
-                        : momoNftData
-                        ? momoNftData.length
+                        : nftData
+                        ? nftData.length
                         : 0
                     }
                     // 표시할 페이지수
@@ -917,8 +772,12 @@ const Momo = ({ language }) => {
 
       {/* 클레임 모달 */}
       {claimModal && <ClaimModal language={language} reward={reward} />}
+      {/* 팀 스테이킹 취소 모달 */}
+      {/* {true && <TeamStakingCancelModal />} */}
+      {/* 팀 스테이킹 취소 확정 모달 */}
+      {/* {true && <TeamStakingCancelConfirmModal language={language} />} */}
     </>
   );
 };
 
-export default Momo;
+export default Team;

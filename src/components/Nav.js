@@ -14,16 +14,16 @@ const Nav = () => {
       title: "Tokyo Mongz Hills Club",
       link: "/tmhc",
     },
-    // {
-    //   id: 1,
-    //   title: "MUC - MOMO",
-    //   link: "/muc-momo",
-    // },
-    // {
-    //   id: 2,
-    //   title: "Tokyo Mongz Hills Club X MOMO",
-    //   link: "",
-    // },
+    {
+      id: 1,
+      title: "MUC - MOMO",
+      link: "/muc-momo",
+    },
+    {
+      id: 2,
+      title: "Mongz X MOMO",
+      link: "/team",
+    },
     // {
     //   id: 3,
     //   title: "BlockChain Test",

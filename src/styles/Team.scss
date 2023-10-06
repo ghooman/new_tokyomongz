@@ -1,0 +1,608 @@
+.team-main-background {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  height: auto;
+  padding-bottom: 80px;
+  z-index: 5;
+  .team-main-container {
+    width: 100%;
+    max-width: 1605px;
+    margin-top: 80px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    .team-main__container-texture {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .container-texture__main-text {
+        font-family: "mplus1p500";
+        font-size: 24px;
+        text-align: center;
+        width: 100%;
+        max-width: 816px;
+      }
+      .container-texture__sub-text {
+        font-family: "mplus1p400";
+        font-size: 20px;
+        color: #b3b3b3;
+        margin-top: 24px;
+        text-align: center;
+      }
+      .container-texture__box {
+        display: flex;
+        margin-top: 24px;
+        > a {
+          font-family: "mplus1p400";
+          font-size: 20px;
+          color: #fbca77;
+          white-space: nowrap;
+          &:nth-child(1)::after {
+            content: "·";
+            margin: 0 20px;
+          }
+        }
+      }
+      .container-texture__btn--user-guide {
+        font-family: "mplus1p500";
+        color: #5282ff;
+        margin-top: 24px;
+      }
+    }
+
+    .container__claim {
+      margin-top: 56px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      border: 1px solid #ffce22;
+      > .claim__title {
+        font-family: "mplus1p500";
+        font-size: 24px;
+      }
+      > .claim__coin {
+        display: flex;
+        align-items: center;
+        width: 513px;
+        margin-top: 16px;
+        div {
+          display: flex;
+          align-items: center;
+          > .coin-icon {
+            width: 40px;
+            margin-right: 16px;
+            img {
+              width: 100%;
+            }
+          }
+          > .mzc {
+            display: flex;
+            line-height: 35px;
+            font-size: 24px;
+            span {
+              font-size: 24px;
+              text-align: right;
+              margin-right: 4px;
+            }
+          }
+        }
+
+        > .btn-claim {
+          margin-left: auto;
+          background-color: #fbca77;
+          border-radius: 8px;
+          font-size: 24px;
+          color: #000;
+          padding: 16px 40px;
+        }
+      }
+    }
+
+    .container__nft {
+      width: 100%;
+      max-width: 1496px;
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+
+      .nft__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .header__title,
+        .header__text,
+        .header__text--qtt {
+          font-family: "mplus1p500";
+          font-size: 24px;
+          white-space: nowrap;
+        }
+      }
+
+      .nft__main {
+        position: relative;
+        margin: 0 -10px;
+        margin-top: 16px;
+        .main__team-item-box {
+          width: 100%;
+          max-width: 1496px;
+          // height: 526px;
+          display: flex;
+          padding: 40px;
+          flex-direction: column;
+          align-items: flex-start;
+          border-radius: 8px;
+          border: 1px solid #545454;
+          background: #000;
+
+          .main__team-item-top {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .main__team-item-text {
+              display: flex;
+              flex-direction: column;
+              .main__team-item-title {
+                color: #b3b3b3;
+                font-size: 24px;
+                font-weight: 500;
+                margin-bottom: 16px;
+              }
+              span {
+                &:nth-child(2) {
+                  color: #fff;
+                  font-size: 24px;
+                  font-weight: 500;
+                  margin-bottom: 16px;
+                  span {
+                    font-size: 24px;
+                    font-weight: 500;
+                    background: linear-gradient(
+                      180deg,
+                      #ffe68c 0%,
+                      #c5a844 31.25%,
+                      #ffe68c 66.67%,
+                      #c5a844 100%
+                    );
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  }
+                }
+                &:nth-child(3) {
+                  color: #fff;
+                  font-size: 16px;
+                  font-weight: 400;
+                  span {
+                    font-size: 16px;
+                    font-weight: 400;
+                    background: linear-gradient(
+                      180deg,
+                      #ffe68c 0%,
+                      #c5a844 31.25%,
+                      #ffe68c 66.67%,
+                      #c5a844 100%
+                    );
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  }
+                }
+              }
+            }
+            .main__team-item-btn-box {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              .main__team-item-cancel-btn {
+                padding: 16px 40px;
+                border-radius: 8px;
+                background-color: #ff2121;
+              }
+            }
+          }
+          .main__team-item-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            // height: 238px;
+            margin-top: 24px;
+            overflow: auto;
+            padding: 10px 0;
+
+            &::-webkit-scrollbar {
+              width: 10px;
+              height: 10px;
+              border-radius: 20px;
+              // background-color: #545454;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: #545454;
+              border-radius: 10px;
+            }
+
+            .main__team-item-mongz-box {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              border-radius: 8px;
+              border: 1px solid #545454;
+              background-color: #000;
+              width: 258px;
+              .main__team-item-mongz-img {
+                width: 258px;
+                height: 238px;
+                object-fit: cover;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  border-radius: 8px 8px 0 0;
+                  object-fit: cover;
+                }
+              }
+              .main__team-item-mongz-title {
+                margin-top: 16px;
+                font-size: 18px;
+                font-weight: 400;
+                color: #b3b3b3;
+              }
+              span {
+                &:nth-child(3) {
+                  margin: 16px 0;
+                  font-size: 22px;
+                  background: linear-gradient(
+                    180deg,
+                    #ffe68c 0%,
+                    #c5a844 31.25%,
+                    #ffe68c 66.67%,
+                    #c5a844 100%
+                  );
+                  background-clip: text;
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+            }
+
+            .main__team-item-and-icon {
+              min-width: 55px;
+              height: 55px;
+              // margin: 0 20px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .main__team-item-momo-box {
+              border: 1px solid #545454;
+              width: 258px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-right: 20px;
+              border-radius: 8px;
+              &:nth-child(6) {
+                margin-right: 0;
+              }
+              .main__team-item-momo-img {
+                width: 256px;
+                height: 238px;
+                img {
+                  border-radius: 8px 8px 0 0;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
+              }
+              .main__team-item-momo-title {
+                font-size: 18px;
+                font-weight: 400;
+                color: #b3b3b3;
+                margin-top: 16px;
+              }
+              span {
+                &:nth-child(3) {
+                  font-size: 22px;
+                  margin: 16px 0;
+                  font-weight: 500;
+                  background: linear-gradient(
+                    180deg,
+                    #ffe68c 0%,
+                    #c5a844 31.25%,
+                    #ffe68c 66.67%,
+                    #c5a844 100%
+                  );
+
+                  background-clip: text;
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+            }
+          }
+        }
+        > .empty-nft {
+          width: 100%;
+          height: 536px;
+          text-align: center;
+          line-height: 536px;
+          font-family: "500";
+          font-size: 24px;
+          color: #b3b3b3;
+        }
+        > .pagination-box {
+          > .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-top: 40px;
+            li {
+              &:first-child a,
+              &:nth-child(2) a,
+              &:nth-last-child(2) a,
+              &:last-child a {
+                font-size: 24px;
+              }
+              > a {
+                display: block;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin: 0 10px;
+                text-align: center;
+                line-height: 30px;
+              }
+            }
+            li.active a {
+              color: black;
+              background-color: #fbca77;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  width: 100%;
+  height: 536px;
+  text-align: center;
+  line-height: 536px;
+  font-family: "500";
+  font-size: 24px;
+  color: #b3b3b3;
+}
+
+@media (max-width: 1024px) {
+  .team-main-background {
+    .team-main-container {
+      padding: 0 20px;
+
+      .container__claim {
+        margin-top: 96px;
+        width: 100%;
+        .claim__coin {
+          width: 100%;
+        }
+      }
+
+      .container__nft {
+        padding: 0;
+        .nft__header {
+          flex-direction: column;
+          align-items: stretch;
+          .header__title {
+            white-space: wrap;
+          }
+          .header__text {
+            margin-top: 16px;
+            min-width: 84px;
+            font-size: 16px;
+            .header__text--qtt {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .nft__main {
+          .main__team-item-box {
+            padding: 16px;
+            .main__team-item-top {
+              flex-direction: column;
+              align-items: flex-start;
+              .main__team-item-text {
+                margin-bottom: 24px;
+              }
+              .main__team-item-btn-box {
+                width: 100%;
+                .main__team-item-cancel-btn {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+        .nft__main {
+          .main__momo-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            .momo-item {
+              width: auto;
+              // gap: 10px;
+              &:nth-child(1n + 3) {
+                margin-top: 24px;
+              }
+              .momo-images {
+                width: 100%;
+                img {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .team-main-background {
+    .team-main-container {
+      padding: 0 20px;
+      .team-main__container-texture {
+        .container-texture__main-text {
+          font-size: 20px;
+        }
+        .container-texture__sub-text {
+          font-size: 20px;
+        }
+        .container-texture__box {
+          width: auto;
+          flex-direction: column;
+          align-items: center;
+          a {
+            font-size: 16px;
+            &:nth-child(1)::after {
+              display: none;
+            }
+            &:last-child {
+              margin-top: 24px;
+            }
+          }
+        }
+      }
+
+      .current-balance {
+        margin-top: 40px;
+        width: 100%;
+        .current-balance__title {
+          font-size: 20px;
+        }
+        .current-balance__mzc {
+          font-size: 20px;
+          .mzc {
+            font-size: 20px;
+          }
+        }
+        .btn-mzc {
+          width: 100%;
+          font-size: 16px;
+        }
+      }
+
+      .container__claim {
+        margin-top: 80px;
+        width: 100%;
+        padding: 16px;
+        .claim__title {
+          font-size: 16px;
+        }
+        .claim__coin {
+          flex-direction: column;
+          align-items: stretch;
+          width: 100%;
+          > div {
+            width: 100%;
+            .coin-icon {
+              width: 30px;
+              margin-right: 0;
+              img {
+                width: 100%;
+              }
+            }
+            .mzc {
+              margin-left: auto;
+              font-size: 16px;
+              span {
+                font-size: 16px;
+              }
+            }
+          }
+          .btn-claim {
+            margin-left: 0;
+            margin-top: 24px;
+            font-size: 16px;
+            padding: 12px;
+          }
+        }
+      }
+
+      .container__nft {
+        margin-top: 80px;
+        .nft__header {
+          .header__title {
+            font-size: 16px;
+          }
+          > div {
+            .left__menu {
+              margin-top: 16px;
+            }
+          }
+        }
+
+        .nft__main {
+          > .empty-nft {
+            height: 440px;
+            font-size: 20px;
+            word-wrap: normal;
+          }
+        }
+        .nft__main {
+          .main__momo-list {
+            .momo-item {
+              .momo-check {
+                right: 8px;
+                top: 8px;
+                width: 20px;
+                height: 20px;
+              }
+              .momo-images {
+                width: 100%;
+                img {
+                  width: 100%;
+                }
+              }
+
+              .momo-info {
+                padding: 16px 8px;
+                .momo-name,
+                .momo-staking-state {
+                  font-size: 12px;
+                }
+                .boost-state,
+                .btn--staking,
+                .btn-cancel-staking {
+                  font-size: 10px;
+                }
+                .btn--staking {
+                  padding: 8px;
+                }
+              }
+            }
+          }
+          > .empty-nft {
+            height: 440px;
+            font-size: 20px;
+            word-wrap: normal;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 스테이킹이 된 목록을 찾는다.
+// 스테이킹이 된 이름이 있으면
+// 취소로 나오게 한다.

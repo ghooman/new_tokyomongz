@@ -43,12 +43,8 @@ const ClaimModal = ({ language, reward }) => {
               <span> [Notice] </span>
               <ul>
                 <li>
-                  <span>-</span> The MZC that is currently displayed in your
-                  wallet is not confirmed. It will be recalculated during the
-                  claim process.
-                </li>
-                <li>
-                  <span>-</span> Claimed MZC will be paid to the linked wallet.
+                  <span>-</span> Holders can only claim the reward if they have
+                  at least 1 MZC per each NFT being staked.
                 </li>
                 <li>
                   <span>-</span> If the holder sells an NFT that is currently
@@ -56,8 +52,9 @@ const ClaimModal = ({ language, reward }) => {
                   receive the reward MZC assigned to the NFT.
                 </li>
                 <li>
-                  <span>-</span> Holders can only claim the reward if they have
-                  at least 1 MZC per each NFT being staked.
+                  <span>-</span> IThe MZC that is currently displayed in your
+                  wallet is not confirmed. It will be recalculated during the
+                  claim process.
                 </li>
               </ul>
             </div>
@@ -215,9 +212,7 @@ const ClaimConfirm = ({
           </div>
         ) : (
           <div className="claim-confirm">
-            <span className="claim-confirm__title">
-              クレームを申請しますか？
-            </span>
+            <span className="claim-confirm__title">Claimを申請しますか？</span>
             <div className="claim-confirm__btn">
               <button
                 className="btn--cancel"

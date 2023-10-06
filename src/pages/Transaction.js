@@ -13,8 +13,7 @@ const Transaction = () => {
           <div className="terms-box">
             <span className="box__top-text">所在地</span>
             <span className="box__bottom-text">
-              東京都千代田区神田駿河台三丁目2番地
-              新御茶ノ水アーバントリニティビル7階
+              東京都新宿区若葉2丁目7番地 ビデオフォーカスビル2階
             </span>
           </div>
           <div className="terms-box">
@@ -52,7 +51,7 @@ const Transaction = () => {
           <div className="terms-box">
             <span className="box__top-text">支払い時期および方法</span>
             <span className="box__bottom-text">
-              ETH（イーサ）でのお支払いとなります。購入と同時にお支払いとなります。
+              MATIC（Polygon）またはクレジットカードでのお支払いが可能です。購入と同時にお支払いとなります
             </span>
           </div>
           <div className="terms-box">

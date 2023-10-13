@@ -321,7 +321,7 @@ const Header = () => {
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Mongz Universe</span>
                   <Link to="/roadmap" onClick={handleMenuClicked}>
-                    Universe Roadmap
+                    Mongz Universe Roadmap
                   </Link>
                   <Link to="/about-tmhc" onClick={handleMenuClicked}>
                     #001 Tokyo Mongz Hills Club
@@ -330,7 +330,7 @@ const Header = () => {
                     #002 PEATCHz.MOMO
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
-                    #003 INU PROJECT
+                    #003 Universal Stallion
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
                     #004 KIJI PROJECT

@@ -21,6 +21,10 @@ const Transaction = () => {
             <span className="box__bottom-text">代表取締役 李 炫雨</span>
           </div>
           <div className="terms-box">
+            <span className="box__top-text">電話番号</span>
+            <span className="box__bottom-text">03-6822-0301</span>
+          </div>
+          <div className="terms-box">
             <span className="box__top-text">お問い合わせ先</span>
             <span className="box__bottom-text">
               <a href="mailto:tmhc_support@hashlink.jp">
@@ -45,7 +49,7 @@ const Transaction = () => {
           <div className="terms-box">
             <span className="box__top-text">販売価格以外の必要料金</span>
             <span className="box__bottom-text">
-              インターネット接続には別途、ご契約の通信事業者への通信料が発生します。携帯電話からのご利用には、携帯通信料又はパケット通信料が発生します。また、購入時にはイーサリアムブロックチェーンのネットワーク手数料（ガス代）がかかります。
+              インターネット接続には別途、ご契約の通信事業者への通信料が発生します。携帯電話からのご利用には、携帯通信料又はパケット通信料が発生します。また、購入時にはブロックチェーン上でのネットワーク手数料（ガス代）がかかります。
             </span>
           </div>
           <div className="terms-box">

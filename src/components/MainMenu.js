@@ -143,7 +143,11 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               </Link>
             </li>
             <li>
-              <Link to="" onClick={handleWaitingModal}>
+              <Link
+                to="https://mint.tokyomongzhillsclub.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 PEACHz.MOMO
               </Link>
             </li>

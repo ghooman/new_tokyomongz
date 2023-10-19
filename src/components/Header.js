@@ -3,7 +3,8 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import "./Header.scss";
 // import headerLogo from "../assets/images/mongz-universe-logo.svg";
-import headerLogo from "../assets/images/TokyoMongzHillsClub_Logo_Gold.png";
+// import headerLogo from "../assets/images/TokyoMongzHillsClub_Logo_Gold.png";
+import headerLogo from "../assets/images/TMHC_logo.svg";
 import linkIcon from "../assets/images/link-icon.svg";
 import twitterIcon from "../assets/images/twitter-icon.svg";
 import discordIcon from "../assets/images/discord-icon.svg";
@@ -327,7 +328,7 @@ const Header = () => {
                     #001 Tokyo Mongz Hills Club
                   </Link>
                   <Link to="/about-momo" onClick={handleMenuClicked}>
-                    #002 PEATCHz.MOMO
+                    #002 PEACHz.MOMO
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
                     #003 Universal Stallion
@@ -421,8 +422,12 @@ const Header = () => {
                   >
                     Tokyo Mongs Hills Club
                   </Link>
-                  <Link to="/about-momo" onClick={handleMenuClicked}>
-                    Peachz.MOMO
+                  <Link
+                    to="https://mint.tokyomongzhillsclub.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    PEACHz.MOMO
                   </Link>
                 </li>
                 <li className="m-main-menu__items">

@@ -28,6 +28,7 @@ import Policy from "../pages/Policy";
 import Copyright from "../pages/Copyright";
 import Transaction from "../pages/Transaction";
 import Tbd from "../pages/Tbd";
+import Mint from "../pages/Mint";
 
 const Header = () => {
   const socialMenu = [
@@ -464,6 +465,7 @@ const Header = () => {
         <Route path="/about-momo" element={<AboutMomo language={language} />} />
         {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/tmhc" element={<Tbd />} /> */}
+        <Route path="/mint" element={<Mint language={language} />} />
         <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />

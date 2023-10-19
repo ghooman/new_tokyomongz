@@ -54,7 +54,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">Utility</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="" onClick={handleWaitingModal}>
+              <Link to="https://mint.tokyomongzhillsclub.com/" target="_blank">
                 Mint
               </Link>
             </li>

@@ -338,7 +338,10 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Utility</span>
-                  <Link to="" onClick={handleMWaitingModal}>
+                  <Link
+                    to="https://mint.tokyomongzhillsclub.com/"
+                    target="_blank"
+                  >
                     Mint
                   </Link>
                   <Link to="/tmhc" onClick={handleMenuClicked}>

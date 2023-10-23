@@ -705,7 +705,7 @@ const Momo = ({ language }) => {
               ) : momoNftData.length > 0 && dataStatus ? (
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__momo-list">
-                    {momoNftData.map((item) => (
+                    {momoNftData.slice(start, end).map((item) => (
                       <li className="momo-item" key={item.id}>
                         {stakingData.includes(parseInt(item.id)) ? null : (
                           <input
@@ -809,7 +809,6 @@ const Momo = ({ language }) => {
                   selectedState === "未Staking") && (
                   <ul className="main__momo-list">
                     {momoNftData
-
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
                       })
@@ -882,7 +881,7 @@ const Momo = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

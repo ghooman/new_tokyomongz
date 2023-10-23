@@ -86,9 +86,8 @@ const Main = ({ language }) => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  // 임시 5개씩 보이기
-  const start = (page - 1) * 5;
-  const end = start + 5;
+  const start = (page - 1) * 15;
+  const end = start + 15;
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(5);
@@ -914,7 +913,7 @@ const Main = ({ language }) => {
                       // 현재 보고있는 페이지
                       activePage={page}
                       // 한페이지에 출력할 아이템수
-                      itemsCountPerPage={5}
+                      itemsCountPerPage={15}
                       // 총 아이템수
                       totalItemsCount={
                         selectedState === "Staking" ||

@@ -83,7 +83,7 @@ const Team = ({ language }) => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  // 데이터 15개씩 보이기
+  // 임시 몇개씩 보여야 하나요?데이터 15개씩 보이기
   const start = (page - 1) * 15;
   const end = start + 15;
 
@@ -737,7 +737,7 @@ const Team = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

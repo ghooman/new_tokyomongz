@@ -390,17 +390,26 @@
             margin-top: 40px;
             li {
               &:first-child a,
-              &:nth-child(2) a,
-              &:nth-last-child(2) a,
+              // &:nth-child(2) a,
+              // &:nth-last-child(2) a,
               &:last-child a {
                 font-size: 24px;
+                margin: 0;
+              }
+              &:nth-child(2) a {
+                font-size: 24px;
+                margin-right: 12px;
+              }
+              &:nth-last-child(2) a {
+                font-size: 24px;
+                margin-left: 12px;
               }
               > a {
                 display: block;
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
-                margin: 0 10px;
+                // margin: 0 10px;
                 text-align: center;
                 line-height: 30px;
               }

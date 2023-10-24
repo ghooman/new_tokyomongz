@@ -36,6 +36,7 @@ import Web3 from "web3";
 import axios from "axios";
 import mongzDummyData from "../data/tmhcDummyData";
 import momoDummyData from "../data/momoDummyData";
+import teamDummyData from "../data/teamDummyData";
 import AndIcon from "../assets/images/and-icon.svg";
 
 const Team = ({ language }) => {
@@ -83,9 +84,9 @@ const Team = ({ language }) => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  // 데이터 15개씩 보이기
-  const start = (page - 1) * 15;
-  const end = start + 15;
+  // 임시 5개씩 보이기
+  const start = (page - 1) * 5;
+  const end = start + 5;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
@@ -268,8 +269,10 @@ const Team = ({ language }) => {
             name: res.data.name,
             image: res.data.image,
           }));
-          setNftData(newData);
-          console.log(newData);
+          // setNftData(newData); 기존 사용 되는 코드
+          // 임시로 더미로 바꿔주었습니다.
+          setNftData(teamDummyData);
+          console.log(newData, "뉴데이터");
         })
         .catch((error) => {
           console.error(error);
@@ -577,51 +580,57 @@ const Team = ({ language }) => {
                 </div>
               ) : momoDummyData.length > 0 && dataStatus ? (
                 ((selectedState === "All" || selectedState === "すべて") && (
-                  <div className="main__team-item-box">
-                    <div className="main__team-item-top">
-                      <div className="main__team-item-text">
-                        <span className="main__team-item-title">TEAM#1234</span>
-                        <span>
-                          BOOST <span>560%</span>
-                        </span>
-                        <span>
-                          Default 8.92MZC/Day + BOOST 41.032MZC/Day =
-                          <span>49.952 MZC / DAY</span>
-                        </span>
-                      </div>
-                      <div className="main__team-item-btn-box">
-                        <button className="main__team-item-cancel-btn">
-                          Cancel Team Staking
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="main__team-item-bottom">
-                      <div className="main__team-item-mongz-box">
-                        <div className="main__team-item-mongz-img">
-                          <img src={mongzDummyData[0].tmhcImg} alt="mongzImg" />
-                        </div>
-                        <span className="main__team-item-mongz-title">
-                          {mongzDummyData[0].tmhcName}
-                        </span>
-                        <span>100%</span>
-                      </div>
-                      <div className="main__team-item-and-icon">
-                        <img src={AndIcon} alt="andIcon" />
-                      </div>
-                      {momoDummyData.slice(0, 4).map((item) => (
-                        <div className="main__team-item-momo-box">
-                          <div className="main__team-item-momo-img">
-                            <img src={item.momoImg} alt="momoImg" />
+                  <>
+                    {teamDummyData.slice(start, end).map((team) => (
+                      <div className="main__team-item-box">
+                        <div className="main__team-item-top">
+                          <div className="main__team-item-text">
+                            <span className="main__team-item-title">
+                              {team.tmhcName}
+                            </span>
+                            <span>
+                              BOOST <span>{team.boost}%</span>
+                            </span>
+                            <span>
+                              Default {team.defaultMzcPerDay}MZC/Day + BOOST{" "}
+                              {team.boostMzcPerDay}MZC/Day =
+                              <span>{team.totalMzcPerDay} MZC / DAY</span>
+                            </span>
                           </div>
-                          <span className="main__team-item-momo-title">
-                            {item.momoName}
-                          </span>
-                          <span>300%</span>
+                          <div className="main__team-item-btn-box">
+                            <button className="main__team-item-cancel-btn">
+                              Cancel Team Staking
+                            </button>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                        <div className="main__team-item-bottom">
+                          <div className="main__team-item-mongz-box">
+                            <div className="main__team-item-mongz-img">
+                              <img src={team.mongz.tmhcImg} alt="mongzImg" />
+                            </div>
+                            <span className="main__team-item-mongz-title">
+                              {team.mongz.tmhcName}
+                            </span>
+                            <span>{team.mongz.tmhcBoost}%</span>
+                          </div>
+                          <div className="main__team-item-and-icon">
+                            <img src={AndIcon} alt="andIcon" />
+                          </div>
+                          {team.momo.slice(0, 4).map((item) => (
+                            <div className="main__team-item-momo-box">
+                              <div className="main__team-item-momo-img">
+                                <img src={item.momoImg} alt="momoImg" />
+                              </div>
+                              <span className="main__team-item-momo-title">
+                                {item.momoName}
+                              </span>
+                              <span>{item.momoBoost}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </>
                 )) ||
                 ((selectedState === "Staking" ||
                   selectedState === "Staking中") && (
@@ -719,7 +728,7 @@ const Team = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={15}
+                    itemsCountPerPage={5}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||
@@ -737,7 +746,7 @@ const Team = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

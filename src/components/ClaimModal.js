@@ -164,8 +164,12 @@ const ClaimConfirm = ({
 
     try {
       const res = await axios.post(
-        "https://www.tokyo-test.shop/api/ClaimAllTMHC",
-        data
+        `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`
+        // {
+        //   params: {
+        //     address: walletAddress,
+        //   },
+        // }
       );
       console.log("클레임=================", res);
       setErrMsg(res.data.msg);
@@ -301,6 +305,7 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {
       errMsg = "There are currently no claimable rewards.";
     }
+
     // if (errMsg === "의 Claim 트렌젝션 등록 완료") {
     //   errMsg = errMsg.replace(
     //     "의 Claim 트렌젝션 등록 완료",

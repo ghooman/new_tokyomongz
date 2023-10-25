@@ -216,16 +216,17 @@ const Main = ({ language }) => {
   //
 
   const web3 = new Web3(
-    new Web3.providers.HttpProvider("https://eth.llamarpc.com")
+    new Web3.providers.HttpProvider("https://goerli.rpc.thirdweb.com")
   );
-  const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력합니다.
-  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력합니다.
-  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력합니다.
+  // const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력. 메인넷
+  const contractAddress = "0x9b4871A3f69634d37780601BF39D24AEcAb88d63"; // 테스트넷 goerli
+  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
+  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력.
   const tokenIds = Array(10000)
     .fill()
     .map((v, i) => i + 1);
 
-  const contract = new web3.eth.Contract(abi, contractAddress); // ERC-1155 컨트랙트 ABI와 주소를 입력합니다.
+  const contract = new web3.eth.Contract(abi, contractAddress); // ERC-1155 컨트랙트 ABI와 주소를 입력.
 
   // const nftData2 = [{}];
 
@@ -266,29 +267,33 @@ const Main = ({ language }) => {
     setSelectData([]);
 
     async function getBalanceOfBatch() {
+      console.log("실행");
       const balances = await contract.methods
         .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
         .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
       // console.log(balances);
       const promises = [];
 
+      console.log("밸런스", balances);
+
       for (let i = 0; i < balances.length; i++) {
         if (balances[i] === "1") {
           promises.push(
             // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+            // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+            axios.get("https://mongz-api.sevenlinelabs.app/get_metadata_tmhc", {
               params: {
                 id: i + 1,
               },
             })
           );
         }
-        // console.log(promises);
+        console.log("프로미스배열", promises);
       }
 
       Promise.all(promises)
         .then((responses) => {
-          console.log(responses);
+          console.log("리스폰스 데이터", responses);
           const newData = responses.map((res, index) => ({
             id: parseInt(res.data.name.slice(5)),
             name: res.data.name,
@@ -298,18 +303,21 @@ const Main = ({ language }) => {
           console.log(newData);
         })
         .catch((error) => {
-          console.error(error);
+          console.error("에러", error);
         });
     }
+
+    // 스테이킹 된 nft 가져오기
     const getStakingNftList = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
       setDataStatus(false);
       try {
-        const res = await axios.post(
-          "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
-          data
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/getStakedTMHCwithVrify",
+          {
+            params: {
+              address: walletAddress,
+            },
+          }
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
@@ -320,18 +328,19 @@ const Main = ({ language }) => {
       }
     };
 
+    // 수령 가능한 리워드 수량
     const getReward = async () => {
       const data = {
         address: walletAddress, // 현재 지갑
       };
       try {
-        const res = await axios.post(
-          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
-          data
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/calRewardTMHCBatchWithAddress?address=${walletAddress}`,
+          {}
         );
         setReward(res.data);
-        setNftData(mongsDummyData);
-        setTeamStakingMomoData(momoDummyData);
+        // setNftData(mongsDummyData);
+        // setTeamStakingMomoData(momoDummyData);
         console.log("ㄹ리워드 ==========", res.data);
       } catch (err) {
         console.log(err);
@@ -339,7 +348,7 @@ const Main = ({ language }) => {
     };
 
     getStakingNftList();
-    // getBalanceOfBatch();
+    getBalanceOfBatch();
     getReward();
   }, [walletAddress]);
 
@@ -693,6 +702,7 @@ const Main = ({ language }) => {
                       className={`btn--all-staking ${
                         isChecked.length <= 0 ? "" : "checked"
                       }`}
+                      onClick={handleAllStakingModal}
                     >
                       {language === "EN"
                         ? "Proceed to stake selected NFT"
@@ -722,7 +732,7 @@ const Main = ({ language }) => {
                             />
                           )}
                           <div className="tmhc-images">
-                            <img src={item.tmhcImg} alt="nft" />
+                            <img src={item.image} alt="nft" />
                             {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
                             <div className="team-staking-momo-box">
                               {teamStakingMomoData.slice(0, 4).map((item) => {
@@ -755,9 +765,9 @@ const Main = ({ language }) => {
                                 className="btn-cancel-staking"
                                 onClick={() =>
                                   handleCancelStakingModal(
-                                    item.tmhcImg,
+                                    item.image,
                                     item.id,
-                                    item.tmhcName
+                                    item.name
                                   )
                                 }
                               >
@@ -783,8 +793,8 @@ const Main = ({ language }) => {
                                 className="btn--staking"
                                 onClick={() =>
                                   handleStakingModal(
-                                    item.tmhcImg,
-                                    item.tmhcName,
+                                    item.image,
+                                    item.name,
                                     item.id
                                   )
                                 }
@@ -870,7 +880,7 @@ const Main = ({ language }) => {
                               }
                             />
                             <div className="tmhc-images">
-                              <img src={item.tmhcImg} alt="nft" />
+                              <img src={item.image} alt="nft" />
                             </div>
                             <div className="tmhc-info">
                               <span className="tmhc-name">{item.tmhcName}</span>

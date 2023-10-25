@@ -243,14 +243,22 @@ const StakingConfirmModal = ({
     // workNFT: "Asd",
     // 선택한 목록
   };
+  console.log("포스트데이터", data);
+
+  console.log("셀렉트데이터", selectData);
   const handleStaking = async () => {
     setStakingIsLoading(true);
 
     console.log(data);
     try {
       const res = await axios.post(
-        "https://www.tokyo-test.shop/api/StakeTMHC",
-        data
+        "https://mongz-api.sevenlinelabs.app/StakeTMHC",
+        {
+          params: {
+            address: walletAddress,
+            tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
+          },
+        }
       );
       console.log("스테이킹=================", res.data.msg);
       setErrMsg(res.data.msg);
@@ -273,7 +281,7 @@ const StakingConfirmModal = ({
         <div className="modal-background">
           <div className="staking-confirm">
             <span className="staking-confirm__title">
-              Would you like to apply the claim?
+              Would you like to apply for a single Staking?
             </span>
             <div className="staking-confirm__btn">
               <button

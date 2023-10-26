@@ -187,11 +187,12 @@ const CancelStakingConfirmModal = ({
     console.log(data);
     try {
       const res = await axios.post(
-        "https://www.tokyo-test.shop/api/unStakeTMHC",
-        data
+        `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${[
+          selectData[0].id,
+        ]}`
       );
-      console.log("언스테이킹=================", res.data.msg);
-      setErrMsg(res.data.msg);
+      console.log("언스테이킹=================", res.data[1]);
+      setErrMsg(res.data[1]);
       setFailModalControl(true);
     } catch (err) {
       console.log(err);

@@ -252,16 +252,18 @@ const StakingConfirmModal = ({
     console.log(data);
     try {
       const res = await axios.post(
-        "https://mongz-api.sevenlinelabs.app/StakeTMHC",
-        {
-          params: {
-            address: walletAddress,
-            tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
-          },
-        }
+        `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
+          isChecked.length === 0 ? [selectData[0].id] : isChecked
+        }`
+        // {
+        //   params: {
+        //     address: walletAddress,
+        //     tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
+        //   },
+        // }
       );
-      console.log("스테이킹=================", res.data.msg);
-      setErrMsg(res.data.msg);
+      console.log("스테이킹=================", res.data);
+      setErrMsg(res.data[1]);
       setFailModalControl(true);
     } catch (err) {
       console.log(err);
@@ -271,6 +273,7 @@ const StakingConfirmModal = ({
   };
 
   console.log(errMsg);
+  console.log("체크드", isChecked);
 
   // =========== 스테이킹 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);

@@ -191,9 +191,9 @@ const Momo = ({ language }) => {
   //
 
   const web3 = new Web3(
-    new Web3.providers.HttpProvider("https://eth.llamarpc.com")
+    new Web3.providers.HttpProvider("https://rpc.ankr.com/polygon_mumbai")
   );
-  const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력합니다.
+  const contractAddress = "0xDFCf6a53243aA7c6F72b7a1cD126fe728D50Ef46"; // ERC-1155 컨트랙트 주소를 입력합니다.
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력합니다.
   // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력합니다.
   const tokenIds = Array(10000)
@@ -238,29 +238,30 @@ const Momo = ({ language }) => {
     setSelectData([]);
 
     async function getBalanceOfBatch() {
+      console.log("모모 불러오기 실행");
       const balances = await contract.methods
         .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
         .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
       // console.log(balances);
       const promises = [];
-
+      console.log("모모 밸런스", balances);
       for (let i = 0; i < balances.length; i++) {
         if (balances[i] === "1") {
           promises.push(
             // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+            axios.get("https://mongz-api.sevenlinelabs.app/get_metadata_momo", {
               params: {
                 id: i + 1,
               },
             })
           );
         }
-        // console.log(promises);
+        console.log("모모프로미스배열", promises);
       }
 
       Promise.all(promises)
         .then((responses) => {
-          console.log(responses);
+          console.log("모모 리스폰스 데이터", responses);
           const newData = responses.map((res, index) => ({
             id: parseInt(res.data.name.slice(5)),
             name: res.data.name,
@@ -268,7 +269,7 @@ const Momo = ({ language }) => {
           }));
           // 임의로 dummydata받기
           // setMomoNftData(newData);
-          setMomoNftData(momoDummyData);
+          setMomoNftData(newData);
           console.log(newData);
         })
         .catch((error) => {
@@ -300,8 +301,8 @@ const Momo = ({ language }) => {
       };
       try {
         const res = await axios.post(
-          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
-          data
+          `https://mongz-api.sevenlinelabs.app/calRewardMOMOBatchWithAddress?address=${walletAddress}`,
+          {}
         );
         setReward(res.data);
         console.log("ㄹ리워드 ==========", res.data);

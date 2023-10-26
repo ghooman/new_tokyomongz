@@ -313,7 +313,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           data
         );
         setReward(res.data);
-        setNftData(mongsDummyData);
+        setNftData(momoDummyData);
         setTeamStakingMomoData(momoDummyData);
         console.log("ㄹ리워드 ==========", res.data);
       } catch (err) {

@@ -299,10 +299,10 @@ const Main = ({ language }) => {
             name: res.data.name,
             image: res.data.image,
           }));
-          // setNftData(newData);
+          setNftData(newData);
           console.log(mongsDummyData, "!!!");
-          setNftData(mongsDummyData);
-          setTeamStakingMomoData(momoDummyData);
+          // setNftData(mongsDummyData);
+          // setTeamStakingMomoData(momoDummyData);
         })
         .catch((error) => {
           console.error("에러", error);
@@ -341,8 +341,8 @@ const Main = ({ language }) => {
           {}
         );
         setReward(res.data);
-        setNftData(mongsDummyData);
-        setTeamStakingMomoData(momoDummyData);
+        // setNftData(mongsDummyData);
+        // setTeamStakingMomoData(momoDummyData);
         console.log("ㄹ리워드 ==========", res.data);
       } catch (err) {
         console.log(err);
@@ -734,7 +734,7 @@ const Main = ({ language }) => {
                             />
                           )}
                           <div className="tmhc-images">
-                            <img src={item.tmhcImg} alt="nft" />
+                            <img src={item.image} alt="nft" />
                             {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
                             <div className="team-staking-momo-box">
                               {teamStakingMomoData.slice(0, 4).map((item) => {

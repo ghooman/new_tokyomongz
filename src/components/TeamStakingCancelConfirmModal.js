@@ -3,7 +3,7 @@ import "./TeamStakingCancelConfirmModal.scss";
 // import TeamStakingCancelModal from "./TeamStakingCancelModal";
 const TeamStakingCancelConfirmModal = ({
   language,
-  setTeamStakingConfirmModal,
+  setTeamStakingCancelConfirmModal,
 }) => {
   return (
     <div className="cancel-confirm-modal-background">
@@ -21,7 +21,7 @@ const TeamStakingCancelConfirmModal = ({
       <div className="cancel-confirm-modal__btn-box">
         <button
           className="cancel-confirm-modal__back-btn"
-          onClick={() => setTeamStakingConfirmModal((prev) => !prev)}
+          onClick={() => setTeamStakingCancelConfirmModal((prev) => !prev)}
         >
           Back
         </button>

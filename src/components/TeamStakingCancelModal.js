@@ -2,7 +2,12 @@ import React from "react";
 import "./TeamStakingCancelModal.scss";
 import mongzDummyData from "../data/tmhcDummyData";
 import momoDummyData from "../data/momoDummyData";
-const TeamStakingCancelModal = () => {
+const TeamStakingCancelModal = ({
+  teamStakingMongzData,
+  teamStakingMomoData,
+  setTeamStakingCancelModal,
+  setTeamStakingCancelConfirmModal,
+}) => {
   return (
     <div className="team-staking-cancel__background">
       <div className="team-staking-cancel__mongz-info-box">
@@ -37,8 +42,19 @@ const TeamStakingCancelModal = () => {
         cannot receive MZC generated from the NFT
       </div>
       <div className="team-staking-cancel__btn-box">
-        <button className="team-staking-cancel__back-btn">Back</button>
-        <button className="team-staking-cancel__cancel-btn">
+        <button
+          className="team-staking-cancel__back-btn"
+          onClick={() => {
+            setTeamStakingCancelModal((prev) => !prev);
+            document.body.style.overflow = "";
+          }}
+        >
+          Back
+        </button>
+        <button
+          className="team-staking-cancel__cancel-btn"
+          onClick={() => setTeamStakingCancelConfirmModal((prev) => !prev)}
+        >
           Cancel Staking
         </button>
       </div>

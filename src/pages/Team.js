@@ -38,6 +38,8 @@ import mongzDummyData from "../data/tmhcDummyData";
 import momoDummyData from "../data/momoDummyData";
 import teamDummyData from "../data/teamDummyData";
 import AndIcon from "../assets/images/and-icon.svg";
+import TeamStakingCancelModal from "../components/TeamStakingCancelModal";
+import TeamStakingCancelConfirmModal from "../components/TeamStakingCancelConfirmModal";
 
 const Team = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
@@ -114,6 +116,16 @@ const Team = ({ language }) => {
     document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
+
+  // 팀 스테이킹 취소 모달 리덕스
+  // const cancelTeamStakingModal = useSelector(
+  //   (state) => state.cancelTeamStakingModal.cancelTeamStakingModal
+  // );
+  // const handleCancelTeamStakingModal = (image, id, name) => {
+  //   dispatch(setCancelStakingModal(!cancelTeamStakingModal));
+  //   document.body.style.overflow = "hidden";
+  //   setSelectData([{ image: image, name: name, id: id }]);
+  // };
 
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
@@ -423,7 +435,9 @@ const Team = ({ language }) => {
   //     console.log(err);
   //   }
   // };
-
+  const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
+  const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
+    useState(false);
   console.log(language);
   return (
     <>
@@ -598,7 +612,13 @@ const Team = ({ language }) => {
                             </span>
                           </div>
                           <div className="main__team-item-btn-box">
-                            <button className="main__team-item-cancel-btn">
+                            <button
+                              className="main__team-item-cancel-btn"
+                              onClick={() => {
+                                setTeamStakingCancelModal((prev) => !prev);
+                                document.body.style.overflow = "hidden";
+                              }}
+                            >
                               Cancel Team Staking
                             </button>
                           </div>
@@ -782,9 +802,19 @@ const Team = ({ language }) => {
       {/* 클레임 모달 */}
       {claimModal && <ClaimModal language={language} reward={reward} />}
       {/* 팀 스테이킹 취소 모달 */}
-      {/* {true && <TeamStakingCancelModal />} */}
+      {teamStakingCancelModal && (
+        <TeamStakingCancelModal
+          setTeamStakingCancelModal={setTeamStakingCancelModal}
+          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+        />
+      )}
       {/* 팀 스테이킹 취소 확정 모달 */}
-      {/* {true && <TeamStakingCancelConfirmModal language={language} />} */}
+      {teamStakingCancelConfirmModal && (
+        <TeamStakingCancelConfirmModal
+          language={language}
+          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+        />
+      )}
     </>
   );
 };

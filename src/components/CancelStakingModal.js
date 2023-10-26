@@ -13,7 +13,13 @@ import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
 
 import axios from "axios";
 
-const CancelStakingModal = ({ selectData, setSelectData, language }) => {
+const CancelStakingModal = ({
+  selectData,
+  setSelectData,
+  momoSelectData,
+  setMomoSelectData,
+  language,
+}) => {
   const dispatch = useDispatch();
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
@@ -34,14 +40,30 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
       <div className="modal-background">
         {language === "EN" ? (
           <div className="cancel">
-            {selectData.map((item, i) => (
-              <div className="cancel__img-contents" key={item.id}>
-                <div className="cancel__img">
-                  <img src={item.image} alt="nft" />
-                </div>
-                <span className="cancel__img-title">{item.name}</span>
-              </div>
-            ))}
+            {selectData && selectData.length > 0 ? (
+              <>
+                {selectData.map((item, i) => (
+                  <div className="cancel__img-contents" key={item.id}>
+                    <div className="cancel__img">
+                      <img src={item.image} alt="nft" />
+                    </div>
+                    <span className="cancel__img-title">{item.name}</span>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                {momoSelectData.map((item, i) => (
+                  <div className="cancel__img-contents" key={item.id}>
+                    <div className="cancel__img">
+                      <img src={item.image} alt="nft" />
+                    </div>
+                    <span className="cancel__img-title">{item.name}</span>
+                  </div>
+                ))}
+              </>
+            )}
+
             <div className="cancel__text">
               <p>
                 Would you like to apply for staking?
@@ -79,14 +101,32 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
           </div>
         ) : (
           <div className="cancel">
-            {selectData.map((item, i) => (
-              <div className="cancel__img-contents">
-                <div className="cancel__img">
-                  <img src={item.image} alt="nft" />
-                </div>
-                <span className="cancel__img-title">{item.name}</span>
-              </div>
-            ))}
+            {selectData && selectData.length > 0 ? (
+              <>
+                {" "}
+                {selectData.map((item, i) => (
+                  <div className="cancel__img-contents">
+                    <div className="cancel__img">
+                      <img src={item.image} alt="nft" />
+                    </div>
+                    <span className="cancel__img-title">{item.name}</span>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                {" "}
+                {momoSelectData.map((item, i) => (
+                  <div className="cancel__img-contents">
+                    <div className="cancel__img">
+                      <img src={item.image} alt="nft" />
+                    </div>
+                    <span className="cancel__img-title">{item.name}</span>
+                  </div>
+                ))}
+              </>
+            )}
+
             <div className="cancel__text">
               <p>
                 Stakingを解除してもよろしいですか？
@@ -119,6 +159,8 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
         <CancelStakingConfirmModal
           selectData={selectData}
           setSelectData={setSelectData}
+          momoSelectData={momoSelectData}
+          setMomoSelectData={setMomoSelectData}
           cancelStakingConfirm={cancelStakingConfirm}
           setCancelStakingConfirm={setCancelStakingConfirm}
           language={language}
@@ -131,6 +173,8 @@ const CancelStakingModal = ({ selectData, setSelectData, language }) => {
 const CancelStakingConfirmModal = ({
   selectData,
   setSelectData,
+  momoSelectData,
+  setMomoSelectData,
   cancelStakingConfirm,
   setCancelStakingConfirm,
   language,
@@ -180,17 +224,29 @@ const CancelStakingConfirmModal = ({
     const data = {
       address: walletAddress, // 현재 지갑
       // workNFT: isChecked,
-      workNFT: [selectData[0].id],
-      // 선택한 목록
+      workNFT:
+        selectData && selectData.length > 0
+          ? [selectData[0].id]
+          : [momoSelectData[0].id],
     };
 
     console.log(data);
     try {
-      const res = await axios.post(
-        `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${[
-          selectData[0].id,
-        ]}`
-      );
+      let res;
+      if (selectData && selectData.length > 0) {
+        res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${[
+            selectData[0].id,
+          ]}`
+        );
+      } else {
+        res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/unStakeMOMO?address=${walletAddress}&tokenIds=${[
+            momoSelectData[0].id,
+          ]}`
+        );
+      }
+
       console.log("언스테이킹=================", res.data[1]);
       setErrMsg(res.data[1]);
       setFailModalControl(true);

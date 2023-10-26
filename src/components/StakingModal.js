@@ -23,6 +23,8 @@ const StakingModal = ({
   language,
   selectData,
   setSelectData,
+  momoSelectData,
+  setMomoSelectData,
   setIsChecked,
   isChecked,
 }) => {
@@ -48,16 +50,30 @@ const StakingModal = ({
       <div className="modal-background">
         <div className="staking-modal">
           {/* <div className="staking__count">Total: {selectData.length}</div> */}
-          <div className="staking__img-box">
-            {selectData.map((item) => (
-              <div className="staking__img-contents" key={item.id}>
-                <div className="staking__img">
-                  <img src={item.image} alt="nft" />
+          {selectData && selectData.length > 0 ? (
+            <div className="staking__img-box">
+              {selectData.map((item) => (
+                <div className="staking__img-contents" key={item.id}>
+                  <div className="staking__img">
+                    <img src={item.image} alt="nft" />
+                  </div>
+                  <span className="staking__img-title">{item.name}</span>
                 </div>
-                <span className="staking__img-title">{item.name}</span>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="staking__img-box">
+              {momoSelectData.map((item) => (
+                <div className="staking__img-contents" key={item.id}>
+                  <div className="staking__img">
+                    <img src={item.image} alt="nft" />
+                  </div>
+                  <span className="staking__img-title">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {language === "EN" ? (
             <div className="staking__text">
               <p>
@@ -114,6 +130,8 @@ const StakingModal = ({
         <StakingConfirmModal
           selectData={selectData}
           setSelectData={setSelectData}
+          momoSelectData={momoSelectData}
+          setMomoSelectData={setMomoSelectData}
           stakingConfirm={stakingConfirm}
           setStakingConfirm={setStakingConfirm}
           language={language}
@@ -130,6 +148,8 @@ const StakingConfirmModal = ({
   setStakingConfirm,
   selectData,
   setSelectData,
+  momoSelectData,
+  setMomoSelectData,
   language,
   setIsChecked,
   isChecked,
@@ -142,6 +162,7 @@ const StakingConfirmModal = ({
     dispatch(setStakingModal(!stakingModal));
     call();
     setSelectData((prev) => []);
+    setMomoSelectData((prev) => []);
     document.body.style.overflow = "";
     setIsChecked((prev) => []);
   };
@@ -156,7 +177,12 @@ const StakingConfirmModal = ({
 
   const call = async () => {
     try {
-      const stakeData = await stake([0, selectData.map((el) => el.id)]);
+      let stakeData;
+      if (selectData && selectData.length > 0) {
+        stakeData = await stake([0, selectData.map((el) => el.id)]);
+      } else {
+        stakeData = await stake([0, momoSelectData.map((el) => el.id)]);
+      }
       console.info("contract call successs", stakeData);
     } catch (err) {
       console.error("contract call failure", err);
@@ -236,13 +262,24 @@ const StakingConfirmModal = ({
   const [stakingIsLoading, setStakingIsLoading] = useState(false);
 
   // ========= api data ===========
+  let workNFT;
+  if (isChecked.length === 0) {
+    if (selectData && selectData.length > 0) {
+      workNFT = [selectData[0].id];
+    } else if (momoSelectData && momoSelectData.length > 0) {
+      workNFT = [momoSelectData[0].id];
+    }
+  } else {
+    workNFT = isChecked;
+  }
+
   const data = {
     address: walletAddress, // 현재 지갑
-    // workNFT: isChecked,
-    workNFT: isChecked.length === 0 ? [selectData[0].id] : isChecked,
-    // workNFT: "Asd",
-    // 선택한 목록
+    workNFT,
   };
+
+  console.log("포스트데이터", data);
+
   console.log("포스트데이터", data);
 
   console.log("셀렉트데이터", selectData);
@@ -251,17 +288,33 @@ const StakingConfirmModal = ({
 
     console.log(data);
     try {
-      const res = await axios.post(
-        `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
-          isChecked.length === 0 ? [selectData[0].id] : isChecked
-        }`
-        // {
-        //   params: {
-        //     address: walletAddress,
-        //     tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
-        //   },
-        // }
-      );
+      let res;
+      if (selectData && selectData.length > 0) {
+        res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
+            isChecked.length === 0 ? [selectData[0].id] : isChecked
+          }`
+          // {
+          //   params: {
+          //     address: walletAddress,
+          //     tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
+          //   },
+          // }
+        );
+      } else {
+        res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/StakeMOMO?address=${walletAddress}&tokenIds=${
+            isChecked.length === 0 ? [momoSelectData[0].id] : isChecked
+          }`
+          // {
+          //   params: {
+          //     address: walletAddress,
+          //     tokenIds: isChecked.length === 0 ? [momoSelectData[0].id] : isChecked,
+          //   },
+          // }
+        );
+      }
+
       console.log("스테이킹=================", res.data);
       setErrMsg(res.data[1]);
       setFailModalControl(true);

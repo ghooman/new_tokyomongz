@@ -911,7 +911,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

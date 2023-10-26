@@ -3,17 +3,17 @@ import nftSample from "../assets/images/nft-image.png";
 const dummyData = [
   {
     id: 1,
-    tmhcName: "TMHC #1234",
+    tmhcName: "TMHC #1111",
     tmhcImg: nftSample,
   },
   {
     id: 2,
-    tmhcName: "TMHC #5678",
+    tmhcName: "TMHC #2222",
     tmhcImg: nftSample,
   },
   {
     id: 3,
-    tmhcName: "TMHC #5678",
+    tmhcName: "TMHC #3333",
     tmhcImg: nftSample,
   },
   {

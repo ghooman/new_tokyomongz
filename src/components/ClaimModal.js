@@ -172,7 +172,7 @@ const ClaimConfirm = ({
         // }
       );
       console.log("클레임=================", res);
-      setErrMsg(res.data.msg);
+      setErrMsg(res.data[1]);
       setFailModalControl(true);
       // window.location.reload();
     } catch (err) {

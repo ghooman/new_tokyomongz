@@ -235,15 +235,15 @@ const CancelStakingConfirmModal = ({
       let res;
       if (selectData && selectData.length > 0) {
         res = await axios.post(
-          `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${[
-            selectData[0].id,
-          ]}`
+          `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${JSON.stringify(
+            [selectData[0].id]
+          )}`
         );
       } else {
         res = await axios.post(
-          `https://mongz-api.sevenlinelabs.app/unStakeMOMO?address=${walletAddress}&tokenIds=${[
-            momoSelectData[0].id,
-          ]}`
+          `https://mongz-api.sevenlinelabs.app/unStakeMOMO?address=${walletAddress}&tokenIds=${JSON.stringify(
+            [momoSelectData[0].id]
+          )}`
         );
       }
 

@@ -294,7 +294,9 @@ const StakingConfirmModal = ({
       if (selectData && selectData.length > 0) {
         res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
-            isChecked.length === 0 ? [selectData[0].id] : isChecked
+            isChecked.length === 0
+              ? JSON.stringify([selectData[0].id])
+              : isChecked
           }`
           // {
           //   params: {
@@ -307,7 +309,9 @@ const StakingConfirmModal = ({
       if (momoSelectData && momoSelectData.length > 0) {
         res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/StakeMOMO?address=${walletAddress}&tokenIds=${
-            isChecked.length === 0 ? [momoSelectData[0].id] : isChecked
+            isChecked.length === 0
+              ? JSON.stringify([momoSelectData[0].id])
+              : isChecked
           }`
           // {
           //   params: {

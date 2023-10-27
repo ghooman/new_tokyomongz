@@ -117,16 +117,6 @@ const Team = ({ language }) => {
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
-  // 팀 스테이킹 취소 모달 리덕스
-  // const cancelTeamStakingModal = useSelector(
-  //   (state) => state.cancelTeamStakingModal.cancelTeamStakingModal
-  // );
-  // const handleCancelTeamStakingModal = (image, id, name) => {
-  //   dispatch(setCancelStakingModal(!cancelTeamStakingModal));
-  //   document.body.style.overflow = "hidden";
-  //   setSelectData([{ image: image, name: name, id: id }]);
-  // };
-
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리

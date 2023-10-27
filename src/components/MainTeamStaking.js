@@ -403,7 +403,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
             <>
               <div className="container__texture">
                 <div className="mongz-team-img">
-                  <img src={clickStakingMongzData.tmhcImg} alt="mongzimg" />
+                  <img src={clickStakingMongzData.image} alt="mongzimg" />
                 </div>
                 <span className="texture__main-text">{`Team ${clickStakingMongzData.tmhcName}`}</span>
                 {language === "EN" ? (

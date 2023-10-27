@@ -13,7 +13,7 @@ const TeamStakingCancelModal = ({
       <div className="team-staking-cancel__background">
         <div className="team-staking-cancel__mongz-info-box">
           <div className="team-staking-cancel__mongz-img">
-            <img src={mongzDummyData[0].tmhcImg} alt="mongzImg" />
+            <img src={mongzDummyData[0].image} alt="mongzImg" />
           </div>
           <span className="team-staking-cancel__mongz-name">
             {mongzDummyData[0].tmhcName}

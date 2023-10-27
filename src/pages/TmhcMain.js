@@ -978,7 +978,13 @@ const Main = ({ language }) => {
       )}
 
       {/* 클레임 모달 */}
-      {claimModal && <ClaimModal language={language} reward={reward} />}
+      {claimModal && (
+        <ClaimModal
+          language={language}
+          reward={reward}
+          selectData={selectData}
+        />
+      )}
 
       {/* 팀 스테이킹 취소 모달 */}
       {/* {true && <TeamStakingCancelModal />} */}

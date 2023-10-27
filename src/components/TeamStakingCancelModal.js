@@ -9,54 +9,56 @@ const TeamStakingCancelModal = ({
   setTeamStakingCancelConfirmModal,
 }) => {
   return (
-    <div className="team-staking-cancel__background">
-      <div className="team-staking-cancel__mongz-info-box">
-        <div className="team-staking-cancel__mongz-img">
-          <img src={mongzDummyData[0].tmhcImg} alt="mongzImg" />
+    <div className="modal-background">
+      <div className="team-staking-cancel__background">
+        <div className="team-staking-cancel__mongz-info-box">
+          <div className="team-staking-cancel__mongz-img">
+            <img src={mongzDummyData[0].tmhcImg} alt="mongzImg" />
+          </div>
+          <span className="team-staking-cancel__mongz-name">
+            {mongzDummyData[0].tmhcName}
+          </span>
         </div>
-        <span className="team-staking-cancel__mongz-name">
-          {mongzDummyData[0].tmhcName}
-        </span>
-      </div>
-      <div className="team-staking-cancel__momo-box">
-        {momoDummyData.slice(0, 4).map((item) => {
-          return (
-            <div className="team-staking-cancel__momo-item">
-              <div className="team-staking-cancel__momo-img">
-                <img src={item.momoImg} alt="momoImg" />
+        <div className="team-staking-cancel__momo-box">
+          {momoDummyData.slice(0, 4).map((item) => {
+            return (
+              <div className="team-staking-cancel__momo-item">
+                <div className="team-staking-cancel__momo-img">
+                  <img src={item.momoImg} alt="momoImg" />
+                </div>
+                <span className="team-staking-cancel__momo-name">
+                  {item.momoName}
+                </span>
               </div>
-              <span className="team-staking-cancel__momo-name">
-                {item.momoName}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="team-staking-cancel__text">
-        Are you sure you want to cancel team staking? ETH is required to cancel
-        staking.
-        <br />
-        <br />
-        [Caution] <br />
-        If the wallet of NFT changes due to sale, wallet transfer, etc., you
-        cannot receive MZC generated from the NFT
-      </div>
-      <div className="team-staking-cancel__btn-box">
-        <button
-          className="team-staking-cancel__back-btn"
-          onClick={() => {
-            setTeamStakingCancelModal((prev) => !prev);
-            document.body.style.overflow = "";
-          }}
-        >
-          Back
-        </button>
-        <button
-          className="team-staking-cancel__cancel-btn"
-          onClick={() => setTeamStakingCancelConfirmModal((prev) => !prev)}
-        >
-          Cancel Staking
-        </button>
+            );
+          })}
+        </div>
+        <div className="team-staking-cancel__text">
+          Are you sure you want to cancel team staking? ETH is required to
+          cancel staking.
+          <br />
+          <br />
+          [Caution] <br />
+          If the wallet of NFT changes due to sale, wallet transfer, etc., you
+          cannot receive MZC generated from the NFT
+        </div>
+        <div className="team-staking-cancel__btn-box">
+          <button
+            className="team-staking-cancel__back-btn"
+            onClick={() => {
+              setTeamStakingCancelModal((prev) => !prev);
+              document.body.style.overflow = "";
+            }}
+          >
+            Back
+          </button>
+          <button
+            className="team-staking-cancel__cancel-btn"
+            onClick={() => setTeamStakingCancelConfirmModal((prev) => !prev)}
+          >
+            Cancel Staking
+          </button>
+        </div>
       </div>
     </div>
   );

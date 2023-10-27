@@ -180,7 +180,8 @@ const StakingConfirmModal = ({
       let stakeData;
       if (selectData && selectData.length > 0) {
         stakeData = await stake([0, selectData.map((el) => el.id)]);
-      } else {
+      }
+      if (momoSelectData && setMomoSelectData.length > 0) {
         stakeData = await stake([0, momoSelectData.map((el) => el.id)]);
       }
       console.info("contract call successs", stakeData);
@@ -266,7 +267,8 @@ const StakingConfirmModal = ({
   if (isChecked.length === 0) {
     if (selectData && selectData.length > 0) {
       workNFT = [selectData[0].id];
-    } else if (momoSelectData && momoSelectData.length > 0) {
+    }
+    if (momoSelectData && momoSelectData.length > 0) {
       workNFT = [momoSelectData[0].id];
     }
   } else {
@@ -301,7 +303,8 @@ const StakingConfirmModal = ({
           //   },
           // }
         );
-      } else {
+      }
+      if (momoSelectData && momoSelectData.length > 0) {
         res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/StakeMOMO?address=${walletAddress}&tokenIds=${
             isChecked.length === 0 ? [momoSelectData[0].id] : isChecked

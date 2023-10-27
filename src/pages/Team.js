@@ -272,8 +272,7 @@ const Team = ({ language }) => {
             image: res.data.image,
           }));
           // setNftData(newData); 기존 사용 되는 코드
-          // 임시로 더미로 바꿔주었습니다.
-          setNftData(teamDummyData);
+          setNftData(teamDummyData); // 임시로 더미로 바꿔주었습니다.
           console.log(newData, "뉴데이터");
         })
         .catch((error) => {

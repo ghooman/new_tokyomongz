@@ -266,6 +266,50 @@ const Main = ({ language }) => {
     setIsChecked([]);
     setSelectData([]);
 
+    // async function getBalanceOfBatch() {
+    //   console.log("실행");
+    //   const balances = await contract.methods
+    //     .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+    //     .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
+    //   // console.log(balances);
+    //   const promises = [];
+
+    //   for (let i = 0; i < balances.length; i++) {
+    //     if (balances[i] === "1") {
+    //       promises.push(
+    //         i + 1
+    //         // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+    //         // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+    //       );
+    //     }
+    //     console.log("프로미스배열", promises);
+    //   }
+
+    //   const res = await axios.get(
+    //     "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
+    //     {
+    //       params: {
+    //         id: JSON.stringify(promises),
+    //       },
+    //     }
+    //   );
+
+    //   Promise.all(promises)
+    //     .then((responses) => {
+    //       console.log("리스폰스 데이터", responses);
+    //       const newData = responses.map((res, index) => ({
+    //         id: parseInt(res.data.name.slice(5)),
+    //         name: res.data.name,
+    //         image: res.data.image,
+    //       }));
+    //       setNftData(newData);
+    //       console.log(newData);
+    //     })
+    //     .catch((error) => {
+    //       console.error("에러", error);
+    //     });
+    // }
+
     async function getBalanceOfBatch() {
       console.log("실행");
       const balances = await contract.methods
@@ -274,38 +318,43 @@ const Main = ({ language }) => {
       // console.log(balances);
       const promises = [];
 
-      console.log("밸런스", balances);
+      // console.log("밸런스", balances);
 
       for (let i = 0; i < balances.length; i++) {
         if (balances[i] === "1") {
           promises.push(
+            i + 1
             // axios.get("http://127.0.0.1:8000/api/get_json_data", {
             // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-            axios.get("https://mongz-api.sevenlinelabs.app/get_metadata_tmhc", {
-              params: {
-                id: i + 1,
-              },
-            })
           );
         }
-        console.log("프로미스배열", promises);
       }
+      const jsonPromise = JSON.stringify(promises);
+      try {
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
+          {
+            params: {
+              tokenIds: jsonPromise,
+            },
+          }
+        );
 
-      Promise.all(promises)
-        .then((responses) => {
-          console.log("리스폰스 데이터", responses);
-          const newData = responses.map((res, index) => ({
-            id: parseInt(res.data.name.slice(5)),
-            name: res.data.name,
-            image: res.data.image,
-          }));
-          setNftData(newData);
-          console.log(newData);
-        })
-        .catch((error) => {
-          console.error("에러", error);
-        });
+        console.log("겟도쿄", res);
+
+        const newData = res.data.map((item, index) => ({
+          id: parseInt(item.name.slice(5)),
+          name: item.name,
+          image: item.image,
+        }));
+
+        console.log(newData);
+        setNftData(newData); //더미 지울시 주석을 풀어줍니다.
+      } catch (err) {
+        console.log("도쿄에러", err);
+      }
     }
+    console.log("도쿄엔에프티", nftData);
 
     // 스테이킹 된 nft 가져오기
     const getStakingNftList = async () => {

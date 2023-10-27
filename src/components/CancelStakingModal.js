@@ -187,9 +187,9 @@ const CancelStakingConfirmModal = ({
     console.log(data);
     try {
       const res = await axios.post(
-        `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${[
-          selectData[0].id,
-        ]}`
+        `https://mongz-api.sevenlinelabs.app/unStakeTMHC?address=${walletAddress}&tokenIds=${JSON.stringify(
+          [selectData[0].id]
+        )}`
       );
       console.log("언스테이킹=================", res.data[1]);
       setErrMsg(res.data[1]);

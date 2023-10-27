@@ -253,7 +253,9 @@ const StakingConfirmModal = ({
     try {
       const res = await axios.post(
         `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
-          isChecked.length === 0 ? [selectData[0].id] : isChecked
+          isChecked.length === 0
+            ? JSON.stringify([selectData[0].id])
+            : isChecked
         }`
         // {
         //   params: {

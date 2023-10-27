@@ -277,7 +277,7 @@ const Main = ({ language }) => {
       console.log("실행");
       const balances = await contract.methods
         .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
+        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
       // console.log(balances);
       const promises = [];
 
@@ -321,12 +321,7 @@ const Main = ({ language }) => {
       setDataStatus(false);
       try {
         const res = await axios.get(
-          "https://mongz-api.sevenlinelabs.app/getStakedTMHCwithVrify",
-          {
-            params: {
-              address: walletAddress,
-            },
-          }
+          `https://mongz-api.sevenlinelabs.app/getStakedTMHCwithVrify?address=${walletAddress}`
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
@@ -339,9 +334,6 @@ const Main = ({ language }) => {
 
     // 수령 가능한 리워드 수량
     const getReward = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
       try {
         const res = await axios.get(
           `https://mongz-api.sevenlinelabs.app/calRewardTMHCBatchWithAddress?address=${walletAddress}`,

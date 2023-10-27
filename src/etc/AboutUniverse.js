@@ -23,7 +23,7 @@ const AboutUniverse = () => {
               <Link to="/about-momo">
                 <div className="about-universe__img">
                   <img src={momoMenu} alt="momo" />
-                  <span className="items__title">#002 PEATCHz.MOMO</span>
+                  <span className="items__title">#002 PEACHz.MOMO</span>
                 </div>
               </Link>
             </li>

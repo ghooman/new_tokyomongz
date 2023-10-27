@@ -9,7 +9,7 @@ import Pagination from "react-js-pagination";
 import StakingModal from "../components/StakingModal";
 import CancelStakingModal from "../components/CancelStakingModal";
 import { ethers } from "ethers";
-import abi from "../contract/newAbi";
+import momoAbi from "../contract/momoAbi";
 import MzcAbi from "../contract/MzcAbi";
 
 import {
@@ -190,17 +190,25 @@ const Momo = ({ language }) => {
 
   //
 
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider("https://rpc.ankr.com/polygon_mumbai")
+  // const web3 = new Web3(
+  //   new Web3.providers.HttpProvider("https://rpc.ankr.com/polygon_mumbai")
+  // );
+
+  const [web3] = useState(
+    new Web3(
+      "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj"
+    )
   );
-  const contractAddress = "0xDFCf6a53243aA7c6F72b7a1cD126fe728D50Ef46"; // ERC-1155 컨트랙트 주소를 입력합니다.
-  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력합니다.
-  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력합니다.
+  const [momoNfts, setMomoNfts] = useState([]);
+
+  const contractAddress = "0xDFCf6a53243aA7c6F72b7a1cD126fe728D50Ef46"; // ERC-1155 컨트랙트 주소를 입력.
+  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
+  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력.
   const tokenIds = Array(10000)
     .fill()
     .map((v, i) => i + 1);
 
-  const contract = new web3.eth.Contract(abi, contractAddress); // ERC-1155 컨트랙트 ABI와 주소를 입력합니다.
+  const contract = new web3.eth.Contract(momoAbi, contractAddress);
 
   // const nftData2 = [{}];
 
@@ -237,54 +245,83 @@ const Momo = ({ language }) => {
     setIsChecked([]);
     setSelectData([]);
 
-    async function getBalanceOfBatch() {
-      console.log("모모 불러오기 실행");
-      const balances = await contract.methods
-        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
-      // console.log(balances);
-      const promises = [];
-      console.log("모모 밸런스", balances);
-      for (let i = 0; i < balances.length; i++) {
-        if (balances[i] === "1") {
-          promises.push(
-            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            axios.get("https://mongz-api.sevenlinelabs.app/get_metadata_momo", {
-              params: {
-                id: i + 1,
-              },
-            })
-          );
-        }
-        console.log("모모프로미스배열", promises);
-      }
+    // 블록체인에서 모모nft정보 불러오기
+    let fetchedNFTs = [];
+    const fetchNFTs = async () => {
+      try {
+        console.log("Start");
+        const contract = new web3.eth.Contract(momoAbi, contractAddress);
 
-      Promise.all(promises)
-        .then((responses) => {
-          console.log("모모 리스폰스 데이터", responses);
-          const newData = responses.map((res, index) => ({
-            id: parseInt(res.data.name.slice(5)),
-            name: res.data.name,
-            image: res.data.image,
-          }));
-          // 임의로 dummydata받기
-          // setMomoNftData(newData);
-          setMomoNftData(newData);
-          console.log(newData);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+        const totalSupply = await contract.methods.totalSupply().call();
+        const userBalance = await contract.methods
+          .balanceOf(walletAddress)
+          .call();
+
+        let userNFTCount = 0;
+
+        for (
+          let tokenId = 0;
+          tokenId < totalSupply && userNFTCount < userBalance;
+          tokenId++
+        ) {
+          const owner = await contract.methods.ownerOf(tokenId).call();
+
+          if (owner === walletAddress) {
+            const tokenURI = await contract.methods.tokenURI(tokenId).call();
+            fetchedNFTs.push({ tokenId, tokenURI });
+            console.log(tokenId);
+            userNFTCount++;
+          }
+        }
+
+        const fetchedNFTsIds = JSON.stringify(
+          fetchedNFTs.map((item) => {
+            return item.tokenId;
+          })
+        );
+        console.log(fetchedNFTsIds);
+        await getBalanceOfBatch(fetchedNFTsIds);
+        // setMomoNfts(fetchedNFTs);
+      } catch (error) {
+        console.error("Cannot get NFT", error);
+      }
+    };
+
+    const getBalanceOfBatch = async (fetchedNFTsIds) => {
+      try {
+        console.log("페치엔애프티", fetchedNFTsIds);
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
+          {
+            params: {
+              tokenIds: fetchedNFTsIds, // 배열 nft아이디들
+            },
+          }
+        );
+        // 빈객체 제외시키기
+        const nonEmptyObjects = res.data.filter(
+          (obj) => Object.keys(obj).length > 0
+        );
+        setMomoNftData(nonEmptyObjects);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    // 스테이킹 된 nft 가져오기
     const getStakingNftList = async () => {
       const data = {
         address: walletAddress, // 현재 지갑
       };
       setDataStatus(false);
       try {
-        const res = await axios.post(
-          "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
-          data
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/getStakedMOMOwithVrify",
+          {
+            params: {
+              address: walletAddress,
+            },
+          }
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
@@ -296,11 +333,8 @@ const Momo = ({ language }) => {
     };
 
     const getReward = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
       try {
-        const res = await axios.post(
+        const res = await axios.get(
           `https://mongz-api.sevenlinelabs.app/calRewardMOMOBatchWithAddress?address=${walletAddress}`,
           {}
         );
@@ -311,8 +345,9 @@ const Momo = ({ language }) => {
       }
     };
 
+    fetchNFTs();
     getStakingNftList();
-    getBalanceOfBatch();
+    // getBalanceOfBatch();
     getReward();
   }, [walletAddress]);
 
@@ -341,36 +376,36 @@ const Momo = ({ language }) => {
   // }, [rewardData, walletAddress]);
 
   // add mzc
-  const addTokenToWallet = async () => {
-    try {
-      if (window.ethereum) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const tokenContract = new ethers.Contract(
-          MONGS_COIN,
-          ["function symbol() view returns (string)"],
-          signer
-        );
-        const symbol = await tokenContract.symbol();
-        await window.ethereum.request({
-          method: "wallet_watchAsset",
-          params: {
-            type: "ERC20",
-            options: {
-              address: MONGS_COIN,
-              symbol: "MZC",
-              decimals: 18,
-              // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
-            },
-          },
-        });
-      } else {
-        console.error("MetaMask is not installed");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const addTokenToWallet = async () => {
+  //   try {
+  //     if (window.ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //       const signer = provider.getSigner();
+  //       const tokenContract = new ethers.Contract(
+  //         MONGS_COIN,
+  //         ["function symbol() view returns (string)"],
+  //         signer
+  //       );
+  //       const symbol = await tokenContract.symbol();
+  //       await window.ethereum.request({
+  //         method: "wallet_watchAsset",
+  //         params: {
+  //           type: "ERC20",
+  //           options: {
+  //             address: MONGS_COIN,
+  //             symbol: "MZC",
+  //             decimals: 18,
+  //             // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
+  //           },
+  //         },
+  //       });
+  //     } else {
+  //       console.error("MetaMask is not installed");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // mongz coin balance
   const { data: mzcBalanceData, isLoading: mczBalance } = useContractRead(
@@ -714,22 +749,17 @@ const Momo = ({ language }) => {
                             className="momo-check"
                             checked={isChecked.includes(item.id)}
                             onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.momoImg,
-                                item.momoName
-                              )
+                              handleChecked(e, item.id, item.image, item.name)
                             }
                           />
                         )}
                         <div className="momo-images">
-                          <img src={item.momoImg} alt="nft" />
+                          <img src={item.image} alt="nft" />
                         </div>
                         {/* stakingData.includes(parseInt(item.id)) */}
                         {true ? (
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
                               Now Staking
                             </span>
@@ -737,9 +767,9 @@ const Momo = ({ language }) => {
                               className="momo-btn-cancel-staking"
                               onClick={() =>
                                 handleCancelStakingModal(
-                                  item.momoImg,
+                                  item.image,
                                   item.id,
-                                  item.momoName
+                                  item.name
                                 )
                               }
                             >
@@ -781,23 +811,23 @@ const Momo = ({ language }) => {
                       .map((item) => (
                         <li className="momo-item" key={item.id}>
                           <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
+                            <img src={item.image} alt="nft" />
                           </div>
 
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
                               Now Staking
                             </span>
                             <button
                               className="momo-btn-cancel-staking"
-                              // onClick={() =>
-                              //   handleCancelStakingModal(
-                              //     item.image,
-                              //     item.id,
-                              //     item.name
-                              //   )
-                              // }
+                              onClick={() =>
+                                handleCancelStakingModal(
+                                  item.image,
+                                  item.id,
+                                  item.name
+                                )
+                              }
                             >
                               Cancel Staking
                             </button>
@@ -820,12 +850,7 @@ const Momo = ({ language }) => {
                             type="checkbox"
                             className="momo-check"
                             onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.momoImg,
-                                item.momoName
-                              )
+                              handleChecked(e, item.id, item.image, item.name)
                             }
                           />
                           <div className="momo-images">
@@ -841,8 +866,8 @@ const Momo = ({ language }) => {
                               className="momo-btn--staking"
                               onClick={() =>
                                 handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
+                                  item.image,
+                                  item.name,
                                   item.id
                                 )
                               }

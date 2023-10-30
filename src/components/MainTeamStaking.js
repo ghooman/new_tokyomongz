@@ -441,19 +441,21 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
 
+  console.log("클릭 몽즈데이터 팀스테이킹", clickStakingMongzData);
+
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
   return (
     <>
       <div className="tmhc-main-background">
         <div className="tmhc-main-container">
-          {nftData.length > 0 ? (
+          {clickStakingMongzData ? (
             <>
               <div className="container__texture">
                 <div className="mongz-team-img">
                   <img src={clickStakingMongzData.image} alt="mongzimg" />
                 </div>
-                <span className="texture__main-text">{`Team ${clickStakingMongzData.tmhcName}`}</span>
+                <span className="texture__main-text">{`Team ${clickStakingMongzData.name}`}</span>
                 {language === "EN" ? (
                   <Link
                     to="https://tmhc-support.notion.site/USERS-GUIDE-51271f936b7b4833b73abe573f37acc7"

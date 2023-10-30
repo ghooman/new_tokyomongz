@@ -772,12 +772,19 @@ const Momo = ({ language }) => {
                           <img src={item.image} alt="nft" />
                         </div>
                         {/* stakingData.includes(parseInt(item.id)) */}
-                        {true ? (
+
+                        {stakingData.includes(parseInt(item.id)) ? (
                           <div className="momo-info">
                             <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
-                              Now Staking
+                              {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
+                              {true ? "Now Staking" : "Now Team Staking"}
                             </span>
+                            {/* <span className="team-staking-text"> */}
+                            {/* 팀 스테이킹이면 해당 텍스트 보여주기 */}
+                            {/* {true && <>Now Staking</>} */}
+                            {/* </span> */}
+                            {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                             <button
                               className="momo-btn-cancel-staking"
                               onClick={() =>
@@ -793,7 +800,7 @@ const Momo = ({ language }) => {
                           </div>
                         ) : (
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state">
                               Ready for Staking
                             </span>
@@ -801,8 +808,8 @@ const Momo = ({ language }) => {
                               className="momo-btn--staking"
                               onClick={() =>
                                 handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
+                                  item.image,
+                                  item.name,
                                   item.id
                                 )
                               }
@@ -869,10 +876,10 @@ const Momo = ({ language }) => {
                             }
                           />
                           <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
+                            <img src={item.image} alt="nft" />
                           </div>
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state">
                               Ready for Staking
                             </span>

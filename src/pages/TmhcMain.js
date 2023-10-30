@@ -336,6 +336,7 @@ const Main = ({ language }) => {
         }
       }
       const jsonPromise = JSON.stringify(promises);
+      console.log(jsonPromise);
       try {
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",

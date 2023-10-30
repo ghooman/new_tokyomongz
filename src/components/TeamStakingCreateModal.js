@@ -6,7 +6,16 @@ const TeamStakingCreateModal = ({
   teamStakingMomoData,
   setTeamStakingModal,
   setTeamStakingConfirmModal,
+  getGradeNameForPercent,
+  getGradeNameForValue,
 }) => {
+  // 모모를 등록하면 총 부스트가 몇이될지 추측
+  let totalBoost = 0;
+  teamStakingMomoData.forEach((item) => {
+    totalBoost += getGradeNameForPercent(
+      item.attributes[item.attributes.length - 1].value
+    );
+  });
   return (
     <div className="create-modal-background">
       <div className="create-modal-body">
@@ -19,7 +28,7 @@ const TeamStakingCreateModal = ({
               {teamStakingMongzData.name}
             </span>
             <span>
-              Estimated BOOST <span>560%</span>
+              Estimated BOOST <span>{totalBoost}%</span>
             </span>
             <span>
               (Default 10.81MZC/Day + BOOST 41.032MZC/Day =
@@ -33,10 +42,23 @@ const TeamStakingCreateModal = ({
             return (
               <div className="momo-box__item">
                 <div className="momo-item__img">
+                  <div
+                    className={`momo-rating ${getGradeNameForValue(
+                      item.attributes[item.attributes.length - 1].value
+                    )}`}
+                  >
+                    {item.attributes[item.attributes.length - 1].value}
+                  </div>
                   <img src={item.image} alt="momoImg" />
                 </div>
                 <span className="momo-item__name">{item.name}</span>
-                <span>Boost 300%</span>
+                <span>
+                  Boost{" "}
+                  {getGradeNameForPercent(
+                    item.attributes[item.attributes.length - 1].value
+                  )}
+                  %
+                </span>
               </div>
             );
           })}

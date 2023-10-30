@@ -93,10 +93,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
 
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
-  const handleStakingModal = (image, name, id) => {
+  const handleStakingModal = (image, name, id, attributes) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setSelectData([
+      { image: image, name: name, id: id, attributes: attributes },
+    ]);
   };
 
   // 스테이킹 모달 여러개
@@ -109,16 +111,18 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
   );
-  const handleCancelStakingModal = (image, id, name) => {
+  const handleCancelStakingModal = (image, id, name, attributes) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setSelectData([
+      { image: image, name: name, id: id, attributes: attributes },
+    ]);
   };
 
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
-  const handleChecked = (e, id, image, name) => {
+  const handleChecked = (e, id, image, name, attributes) => {
     e.stopPropagation();
     console.log("check", e.target.checked);
     console.log("select data", selectData);
@@ -141,7 +145,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       setIsChecked([...isChecked, id]);
       const newData = selectData.filter((el) => el.id !== id);
       setSelectData(
-        [...newData, { image: image, name: name, id: id }].sort((a, b) => {
+        [
+          ...newData,
+          { image: image, name: name, id: id, attributes: attributes },
+        ].sort((a, b) => {
           return a.id - b.id;
         })
       );
@@ -173,7 +180,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           return !stakingData.includes(item.id);
         })
         .map((item) => {
-          return { image: item.image, name: item.name, id: item.id };
+          return {
+            image: item.image,
+            name: item.name,
+            id: item.id,
+            attributes: item.attributes,
+          };
         });
 
       setSelectData(allDatas);
@@ -457,7 +469,21 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         return "";
     }
   };
-
+  // 등급에 따른 부스팅 수치
+  const getGradeNameForPercent = (value) => {
+    switch (value) {
+      case "C":
+        return 10;
+      case "R":
+        return 30;
+      case "SR":
+        return 100;
+      case "UR":
+        return 300;
+      default:
+        return "";
+    }
+  };
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
   return (
@@ -840,7 +866,13 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                             className="tmhc-check"
                             checked={isChecked.includes(item.id)}
                             onClick={(e) =>
-                              handleChecked(e, item.id, item.image, item.name)
+                              handleChecked(
+                                e,
+                                item.id,
+                                item.image,
+                                item.name,
+                                item.attributes
+                              )
                             }
                           />
                         )}
@@ -862,7 +894,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         <div className="tmhc-info">
                           <span className="tmhc-name">{item.name}</span>
                           <span className="mongz-team-staking-text">
-                            BOOST <span>560%</span>
+                            <span>
+                              +
+                              {getGradeNameForPercent(
+                                item.attributes[item.attributes.length - 1]
+                                  .value
+                              )}
+                              %
+                            </span>
                           </span>
                         </div>
                       </li>
@@ -879,6 +918,13 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       .slice(start, end)
                       .map((item) => (
                         <li className="tmhc-item" key={item.id}>
+                          <div
+                            className={`momo-rating ${getGradeNameForValue(
+                              item.attributes[item.attributes.length - 1].value
+                            )}`}
+                          >
+                            {item.attributes[item.attributes.length - 1].value}
+                          </div>
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
                           </div>
@@ -894,7 +940,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 handleCancelStakingModal(
                                   item.image,
                                   item.id,
-                                  item.name
+                                  item.name,
+                                  item.attributes
                                 )
                               }
                             >
@@ -916,11 +963,24 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       .slice(start, end)
                       .map((item) => (
                         <li className="tmhc-item" key={item.id}>
+                          <div
+                            className={`momo-rating ${getGradeNameForValue(
+                              item.attributes[item.attributes.length - 1].value
+                            )}`}
+                          >
+                            {item.attributes[item.attributes.length - 1].value}
+                          </div>
                           <input
                             type="checkbox"
                             className="tmhc-check"
                             onClick={(e) =>
-                              handleChecked(e, item.id, item.image, item.name)
+                              handleChecked(
+                                e,
+                                item.id,
+                                item.image,
+                                item.name,
+                                item.attributes
+                              )
                             }
                           />
                           <div className="tmhc-images">
@@ -938,7 +998,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 handleStakingModal(
                                   item.image,
                                   item.name,
-                                  item.id
+                                  item.id,
+                                  item.attributes
                                 )
                               }
                             >
@@ -995,6 +1056,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           teamStakingMomoData={selectData}
           setTeamStakingModal={setTeamStakingModal}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
+          getGradeNameForPercent={getGradeNameForPercent}
+          getGradeNameForValue={getGradeNameForValue}
         />
       )}
       {teamStakingConfirmModal && (
@@ -1003,6 +1066,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
           teamStakingMongzData={clickStakingMongzData}
           teamStakingMomoData={selectData}
+          getGradeNameForPercent={getGradeNameForPercent}
+          getGradeNameForValue={getGradeNameForValue}
         />
       )}
     </>

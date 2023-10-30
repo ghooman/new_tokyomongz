@@ -567,26 +567,15 @@ const Momo = ({ language }) => {
                 <span className="momo-coin-icon">
                   <img src={coinIcon} alt="momo-coin" />
                 </span>
-                {walletAddress ? (
-                  reward !== "" ? (
-                    reward !== 0 ? (
-                      <div className="momo-mzc">
-                        <span className="momo-coin">{reward.toFixed(3)}</span>
-                        MZC
-                      </div>
-                    ) : (
-                      <div className="momo-mzc">
-                        <span className="momo-coin"> No MZC to Claim</span>
-                      </div>
-                    )
-                  ) : null
-                ) : (
-                  <div className="momo-mzc">
-                    <span className="momo-coin">
-                      Please Connect your Wallet
-                    </span>
-                  </div>
-                )}
+                <div className="momo-mzc">
+                  <span className="momo-coin">
+                    {walletAddress
+                      ? reward !== "" && reward !== 0
+                        ? `${reward.toFixed(3)}  MZC`
+                        : "No MZC to Claim"
+                      : "Please Connect your Wallet"}
+                  </span>
+                </div>
               </div>
               <button
                 type="button"

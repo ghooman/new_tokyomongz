@@ -327,7 +327,7 @@ const Header = () => {
                     #001 Tokyo Mongz Hills Club
                   </Link>
                   <Link to="/about-momo" onClick={handleMenuClicked}>
-                    #002 PEATCHz.MOMO
+                    #002 PEACHz.MOMO
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
                     #003 INU PROJECT

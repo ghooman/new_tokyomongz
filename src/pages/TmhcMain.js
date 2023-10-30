@@ -136,7 +136,14 @@ const Main = ({ language }) => {
     document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
-
+  // 팀 스테이킹 취소 모달
+  const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
+  const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
+    useState(false);
+  const handleCancelTeamStakingModal = () => {
+    document.body.style.overflow = "hidden";
+    setTeamStakingCancelModal((prev) => !prev);
+  };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
@@ -235,7 +242,6 @@ const Main = ({ language }) => {
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     if (nftData) {
       setIsLoading(() => {
@@ -330,6 +336,7 @@ const Main = ({ language }) => {
         }
       }
       const jsonPromise = JSON.stringify(promises);
+      console.log(jsonPromise);
       try {
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
@@ -380,8 +387,7 @@ const Main = ({ language }) => {
           {}
         );
         setReward(res.data);
-        // setNftData(mongsDummyData);
-        // setTeamStakingMomoData(momoDummyData);
+
         console.log("ㄹ리워드 ==========", res.data);
       } catch (err) {
         console.log(err);
@@ -802,6 +808,7 @@ const Main = ({ language }) => {
                                   </>
                                 )}
                               </span>
+                              {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                               <button
                                 className="btn-cancel-staking"
                                 onClick={() =>
@@ -886,14 +893,17 @@ const Main = ({ language }) => {
                                   </>
                                 )}
                               </span>
+                              {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                               <button
                                 className="btn-cancel-staking"
                                 onClick={() =>
-                                  handleCancelStakingModal(
-                                    item.image,
-                                    item.id,
-                                    item.name
-                                  )
+                                  true
+                                    ? handleCancelTeamStakingModal()
+                                    : handleCancelStakingModal(
+                                        item.image,
+                                        item.id,
+                                        item.name
+                                      )
                                 }
                               >
                                 Cancel Staking
@@ -1017,12 +1027,28 @@ const Main = ({ language }) => {
       )}
 
       {/* 클레임 모달 */}
-      {claimModal && <ClaimModal language={language} reward={reward} />}
+      {claimModal && (
+        <ClaimModal
+          language={language}
+          reward={reward}
+          selectData={selectData}
+        />
+      )}
 
       {/* 팀 스테이킹 취소 모달 */}
-      {/* {true && <TeamStakingCancelModal />} */}
+      {teamStakingCancelModal && (
+        <TeamStakingCancelModal
+          setTeamStakingCancelModal={setTeamStakingCancelModal}
+          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+        />
+      )}
       {/* 팀 스테이킹 취소 확정 모달 */}
-      {/* {true && <TeamStakingCancelConfirmModal language={language} />} */}
+      {teamStakingCancelConfirmModal && (
+        <TeamStakingCancelConfirmModal
+          language={language}
+          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+        />
+      )}
     </>
   );
 };

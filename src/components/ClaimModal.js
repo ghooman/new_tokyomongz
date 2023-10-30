@@ -13,7 +13,7 @@ import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
 
 import axios from "axios";
 
-const ClaimModal = ({ language, reward }) => {
+const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleCloseModal = () => {
@@ -114,6 +114,8 @@ const ClaimModal = ({ language, reward }) => {
           claimConfirmModal={claimConfirmModal}
           setClaimConfirmModal={setClaimConfirmModal}
           language={language}
+          selectData={selectData}
+          momoSelectData={momoSelectData}
         />
       )}
     </>
@@ -124,6 +126,8 @@ const ClaimConfirm = ({
   claimConfirmModal,
   setClaimConfirmModal,
   language,
+  selectData,
+  momoSelectData,
 }) => {
   const walletAddress = useAddress();
 
@@ -161,10 +165,20 @@ const ClaimConfirm = ({
     const data = {
       address: walletAddress, // 현재 지갑
     };
+    let apiUrl;
 
+    if (selectData && selectData.length > 0) {
+      apiUrl = `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`;
+    } else if (momoSelectData && momoSelectData.length > 0) {
+      apiUrl = `https://mongz-api.sevenlinelabs.app/ClaimMOMOAll?address=${walletAddress}`;
+    } else {
+      // 둘 다 비어있는 경우, 예외 처리
+      console.log("No data available for claiming");
+      return;
+    }
     try {
       const res = await axios.post(
-        `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`
+        apiUrl
         // {
         //   params: {
         //     address: walletAddress,

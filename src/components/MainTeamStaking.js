@@ -93,10 +93,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
 
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
-  const handleStakingModal = (image, name, id) => {
+  const handleStakingModal = (image, name, id, attributes) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setSelectData([
+      { image: image, name: name, id: id, attributes: attributes },
+    ]);
   };
 
   // 스테이킹 모달 여러개
@@ -109,16 +111,18 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
   );
-  const handleCancelStakingModal = (image, id, name) => {
+  const handleCancelStakingModal = (image, id, name, attributes) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setSelectData([
+      { image: image, name: name, id: id, attributes: attributes },
+    ]);
   };
 
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
-  const handleChecked = (e, id, image, name) => {
+  const handleChecked = (e, id, image, name, attributes) => {
     e.stopPropagation();
     console.log("check", e.target.checked);
     console.log("select data", selectData);
@@ -141,7 +145,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       setIsChecked([...isChecked, id]);
       const newData = selectData.filter((el) => el.id !== id);
       setSelectData(
-        [...newData, { image: image, name: name, id: id }].sort((a, b) => {
+        [
+          ...newData,
+          { image: image, name: name, id: id, attributes: attributes },
+        ].sort((a, b) => {
           return a.id - b.id;
         })
       );
@@ -173,7 +180,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           return !stakingData.includes(item.id);
         })
         .map((item) => {
-          return { image: item.image, name: item.name, id: item.id };
+          return {
+            image: item.image,
+            name: item.name,
+            id: item.id,
+            attributes: item.attributes,
+          };
         });
 
       setSelectData(allDatas);
@@ -214,24 +226,26 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   // const nftData2 = [{}];
 
   const [nftData, setNftData] = useState([]);
+  const [momoNftData, setMomoNftData] = useState([]);
   const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (nftData) {
+    if (momoNftData) {
       setIsLoading(() => {
-        return true;
+        return false;
       });
     } else {
       setIsLoading(() => {
         return true;
       });
     }
-  }, [nftData]);
+  }, [momoNftData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
+  console.log("팀 스테이킹 nft 목록 ==========", teamStakingMomoData);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -248,42 +262,77 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     setIsChecked([]);
     setSelectData([]);
 
-    async function getBalanceOfBatch() {
-      const balances = await contract.methods
-        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
-      // console.log(balances);
-      const promises = [];
-
-      for (let i = 0; i < balances.length; i++) {
-        if (balances[i] === "1") {
-          promises.push(
-            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-              params: {
-                id: i + 1,
-              },
-            })
-          );
-        }
-        // console.log(promises);
+    const fetchNFTs = async () => {
+      try {
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getOwnedMOMO?address=${walletAddress}`
+        );
+        console.log(res);
+        let fetchedNFTs = res.data;
+        const fetchedNFTsIds = JSON.stringify(fetchedNFTs);
+        console.log(fetchedNFTsIds);
+        await getBalanceOfBatch(fetchedNFTsIds);
+      } catch (err) {
+        console.log(err);
       }
+    };
+    const getBalanceOfBatch = async (fetchedNFTsIds) => {
+      try {
+        console.log("페치엔애프티", fetchedNFTsIds);
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
+          {
+            params: {
+              tokenIds: fetchedNFTsIds, // 배열 nft아이디들
+            },
+          }
+        );
+        // 빈객체 제외시키기
+        const nonEmptyObjects = res.data.filter(
+          (obj) => Object.keys(obj).length > 0
+        );
+        setMomoNftData(nonEmptyObjects);
+        setTeamStakingMomoData(nonEmptyObjects);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    // async function getBalanceOfBatch() {
+    //   const balances = await contract.methods
+    //     .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+    //     .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
+    //   // console.log(balances);
+    //   const promises = [];
 
-      Promise.all(promises)
-        .then((responses) => {
-          console.log(responses);
-          const newData = responses.map((res, index) => ({
-            id: parseInt(res.data.name.slice(5)),
-            name: res.data.name,
-            image: res.data.image,
-          }));
-          setNftData(newData);
-          console.log(newData);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+    //   for (let i = 0; i < balances.length; i++) {
+    //     if (balances[i] === "1") {
+    //       promises.push(
+    //         // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+    //         axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+    //           params: {
+    //             id: i + 1,
+    //           },
+    //         })
+    //       );
+    //     }
+    //     // console.log(promises);
+    //   }
+
+    //   Promise.all(promises)
+    //     .then((responses) => {
+    //       console.log(responses);
+    //       const newData = responses.map((res, index) => ({
+    //         id: parseInt(res.data.name.slice(5)),
+    //         name: res.data.name,
+    //         image: res.data.image,
+    //       }));
+    //       setNftData(newData);
+    //       console.log(newData);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // }
     const getStakingNftList = async () => {
       const data = {
         address: walletAddress, // 현재 지갑
@@ -291,8 +340,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       setDataStatus(false);
       try {
         const res = await axios.post(
-          "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
-          data
+          // "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
+          // data
+          "https://mongz-api.sevenlinelabs.app/getStakedMOMOwithVrify",
+          {
+            params: {
+              address: walletAddress,
+            },
+          }
         );
         console.log("스테이킹 리스트=========", res);
         setStakingData(res.data);
@@ -309,21 +364,27 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       };
       try {
         const res = await axios.post(
+          // 팀스테이킹 주소가 들어가야될꺼 같습니다.
           "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
           data
         );
         setReward(res.data);
-        setNftData(mongsDummyData);
-        setTeamStakingMomoData(momoDummyData);
+
+        // setNftData(res.data);
+        // setTeamStakingMomoData(res.data); 임시
+        // setNftData(momoDummyData); 더미 사용
+        // 더미사용
         console.log("ㄹ리워드 ==========", res.data);
       } catch (err) {
         console.log(err);
       }
     };
 
-    getStakingNftList();
     // getBalanceOfBatch();
+    fetchNFTs();
+    getStakingNftList();
     getReward();
+    setTeamStakingMomoData();
   }, [walletAddress]);
 
   console.log("nftData==================", nftData);
@@ -393,19 +454,49 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
 
+  // 등급 표시
+  const getGradeNameForValue = (value) => {
+    switch (value) {
+      case "C":
+        return "grade-C";
+      case "R":
+        return "grade-R";
+      case "SR":
+        return "grade-SR";
+      case "UR":
+        return "grade-UR";
+      default:
+        return "";
+    }
+  };
+  // 등급에 따른 부스팅 수치
+  const getGradeNameForPercent = (value) => {
+    switch (value) {
+      case "C":
+        return 10;
+      case "R":
+        return 30;
+      case "SR":
+        return 100;
+      case "UR":
+        return 300;
+      default:
+        return "";
+    }
+  };
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
   return (
     <>
       <div className="tmhc-main-background">
         <div className="tmhc-main-container">
-          {momoDummyData.length > 0 ? (
+          {clickStakingMongzData ? (
             <>
               <div className="container__texture">
                 <div className="mongz-team-img">
-                  <img src={clickStakingMongzData.tmhcImg} alt="mongzimg" />
+                  <img src={clickStakingMongzData.image} alt="mongzimg" />
                 </div>
-                <span className="texture__main-text">{`Team ${clickStakingMongzData.tmhcName}`}</span>
+                <span className="texture__main-text">{`Team ${clickStakingMongzData.name}`}</span>
                 {language === "EN" ? (
                   <Link
                     to="https://tmhc-support.notion.site/USERS-GUIDE-51271f936b7b4833b73abe573f37acc7"
@@ -560,7 +651,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           <div className="container__nft">
             <div className="nft__header">
               <span className="header__title">
-                {momoDummyData.length > 0
+                {momoNftData.length > 0
                   ? language === "EN"
                     ? "Select NFT for the team boost. You may select up to 4."
                     : "MOMO NFTを最大４つまで選択してTeam Staking可能です"
@@ -637,14 +728,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {nftData ? nftData.length : 0}
+                          {momoNftData ? momoNftData.length : 0}
                         </span>
                       )}
                       {(selectedState === "Staking" ||
                         selectedState === "Staking中") && (
                         <span className="header__text--qtt">
-                          {nftData
-                            ? nftData.filter((item) => {
+                          {momoNftData
+                            ? momoNftData.filter((item) => {
                                 return stakingData.includes(parseInt(item.id));
                               }).length
                             : 0}
@@ -653,8 +744,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "Ready for staking" ||
                         selectedState === "未Staking") && (
                         <span className="header__text--qtt">
-                          {nftData
-                            ? nftData.filter((item) => {
+                          {momoNftData
+                            ? momoNftData.filter((item) => {
                                 return !stakingData.includes(parseInt(item.id));
                               }).length
                             : 0}
@@ -668,14 +759,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {nftData ? nftData.length : 0}
+                          {momoNftData ? momoNftData.length : 0}
                         </span>
                       )}
                       {(selectedState === "Staking" ||
                         selectedState === "Staking中") && (
                         <span className="header__text--qtt">
-                          {nftData
-                            ? nftData.filter((item) => {
+                          {momoNftData
+                            ? momoNftData.filter((item) => {
                                 return stakingData.includes(parseInt(item.id));
                               }).length
                             : 0}
@@ -684,8 +775,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "Ready for staking" ||
                         selectedState === "未Staking") && (
                         <span className="header__text--qtt">
-                          {nftData
-                            ? nftData.filter((item) => {
+                          {momoNftData
+                            ? momoNftData.filter((item) => {
                                 return !stakingData.includes(parseInt(item.id));
                               }).length
                             : 0}
@@ -722,7 +813,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                           document.body.style.overflow = "hidden";
                         }}
                       >
-                        {momoDummyData.length > 0
+                        {momoNftData.length > 0
                           ? "Team Staking"
                           : "Proceed to stake selected NFT"}
                       </button>
@@ -746,7 +837,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               </div>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined || nftData.length === 0 ? (
+              {walletAddress === undefined || momoNftData.length === 0 ? (
                 (language === "EN" && (
                   <div className="empty-nft">
                     There are no NFTs in possession.
@@ -757,11 +848,18 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                     There are no NFTs in possession.
                   </div>
                 ))
-              ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && nftData.length > 0
+              ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && momoNftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">
                     {teamStakingMomoData.slice(start, end).map((item) => (
                       <li className="tmhc-item" key={item.id}>
+                        <div
+                          className={`momo-rating ${getGradeNameForValue(
+                            item.attributes[item.attributes.length - 1].value
+                          )}`}
+                        >
+                          {item.attributes[item.attributes.length - 1].value}
+                        </div>
                         {stakingData.includes(parseInt(item.id)) ? null : (
                           <input
                             type="checkbox"
@@ -771,20 +869,21 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               handleChecked(
                                 e,
                                 item.id,
-                                item.momoImg,
-                                item.momoName
+                                item.image,
+                                item.name,
+                                item.attributes
                               )
                             }
                           />
                         )}
                         <div className="tmhc-images">
-                          <img src={item.momoImg} alt="nft" />
+                          <img src={item.image} alt="nft" />
                           <div className="team-staking-momo-box">
                             {/* {teamStakingMomoData.slice(0, 4).map((item) => {
                             return (
                               <div className="team-staking-momo-img">
                                 <div className="momo-rating">UR</div>
-                                <img src={item.momoImg} alt="momoImg" />
+                                <img src={item.image} alt="image" />
                               </div>
                             );
                           })} */}
@@ -793,9 +892,16 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         {/* stakingData.includes(parseInt(item.id) */}
 
                         <div className="tmhc-info">
-                          <span className="tmhc-name">{item.momoName}</span>
+                          <span className="tmhc-name">{item.name}</span>
                           <span className="mongz-team-staking-text">
-                            BOOST <span>560%</span>
+                            <span>
+                              +
+                              {getGradeNameForPercent(
+                                item.attributes[item.attributes.length - 1]
+                                  .value
+                              )}
+                              %
+                            </span>
                           </span>
                         </div>
                       </li>
@@ -805,14 +911,20 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                 ((selectedState === "Staking" ||
                   selectedState === "Staking中") && (
                   <ul className="main__tmhc-list">
-                    {nftData
-
+                    {momoNftData
                       .filter((item) => {
                         return stakingData.includes(parseInt(item.id));
                       })
                       .slice(start, end)
                       .map((item) => (
                         <li className="tmhc-item" key={item.id}>
+                          <div
+                            className={`momo-rating ${getGradeNameForValue(
+                              item.attributes[item.attributes.length - 1].value
+                            )}`}
+                          >
+                            {item.attributes[item.attributes.length - 1].value}
+                          </div>
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
                           </div>
@@ -828,7 +940,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 handleCancelStakingModal(
                                   item.image,
                                   item.id,
-                                  item.name
+                                  item.name,
+                                  item.attributes
                                 )
                               }
                             >
@@ -842,7 +955,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                 ((selectedState === "Ready for staking" ||
                   selectedState === "未Staking") && (
                   <ul className="main__tmhc-list">
-                    {nftData
+                    {momoNftData
 
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
@@ -850,11 +963,24 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       .slice(start, end)
                       .map((item) => (
                         <li className="tmhc-item" key={item.id}>
+                          <div
+                            className={`momo-rating ${getGradeNameForValue(
+                              item.attributes[item.attributes.length - 1].value
+                            )}`}
+                          >
+                            {item.attributes[item.attributes.length - 1].value}
+                          </div>
                           <input
                             type="checkbox"
                             className="tmhc-check"
                             onClick={(e) =>
-                              handleChecked(e, item.id, item.image, item.name)
+                              handleChecked(
+                                e,
+                                item.id,
+                                item.image,
+                                item.name,
+                                item.attributes
+                              )
                             }
                           />
                           <div className="tmhc-images">
@@ -872,7 +998,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 handleStakingModal(
                                   item.image,
                                   item.name,
-                                  item.id
+                                  item.id,
+                                  item.attributes
                                 )
                               }
                             >
@@ -887,7 +1014,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                 <div className="loading">Now loading...</div>
               )}
 
-              {nftData === undefined ? null : (
+              {momoNftData === undefined ? null : (
                 <div className="pagination-box">
                   <Pagination
                     // 현재 보고있는 페이지
@@ -898,20 +1025,20 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? nftData.filter((item) => {
+                        ? momoNftData.filter((item) => {
                             return stakingData.includes(parseInt(item.id));
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? nftData.filter((item) => {
+                        ? momoNftData.filter((item) => {
                             return !stakingData.includes(parseInt(item.id));
                           }).length
-                        : nftData
-                        ? nftData.length
+                        : momoNftData
+                        ? momoNftData.length
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={10}
+                    pageRangeDisplayed={5}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수
@@ -929,12 +1056,18 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           teamStakingMomoData={selectData}
           setTeamStakingModal={setTeamStakingModal}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
+          getGradeNameForPercent={getGradeNameForPercent}
+          getGradeNameForValue={getGradeNameForValue}
         />
       )}
       {teamStakingConfirmModal && (
         <TeamStakingConfirmModal
           language={language}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
+          teamStakingMongzData={clickStakingMongzData}
+          teamStakingMomoData={selectData}
+          getGradeNameForPercent={getGradeNameForPercent}
+          getGradeNameForValue={getGradeNameForValue}
         />
       )}
     </>

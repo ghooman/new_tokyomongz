@@ -56,7 +56,7 @@ const Momo = ({ language }) => {
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);
-    setSelectData([]);
+    setMomoSelectData([]);
     rotateRef.current.style.transform = "";
   };
 
@@ -86,14 +86,14 @@ const Momo = ({ language }) => {
   const end = start + 15;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
-  const [selectData, setSelectData] = useState([]);
+  const [momoSelectData, setMomoSelectData] = useState([]);
 
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setMomoSelectData([{ image: image, name: name, id: id }]);
   };
 
   // 스테이킹 모달 여러개
@@ -109,7 +109,7 @@ const Momo = ({ language }) => {
   const handleCancelStakingModal = (image, id, name) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([{ image: image, name: name, id: id }]);
+    setMomoSelectData([{ image: image, name: name, id: id }]);
   };
 
   // ===================== 체크 확인
@@ -131,15 +131,15 @@ const Momo = ({ language }) => {
     }
     if (e.target.checked) {
       setIsChecked([...isChecked, id]);
-      const newData = selectData.filter((el) => el.id !== id);
-      setSelectData(
+      const newData = momoSelectData.filter((el) => el.id !== id);
+      setMomoSelectData(
         [...newData, { image: image, name: name, id: id }].sort((a, b) => {
           return a.id - b.id;
         })
       );
     } else {
       setIsChecked(isChecked.filter((el) => el !== id));
-      setSelectData(selectData.filter((el) => el.id !== id));
+      setMomoSelectData(momoSelectData.filter((el) => el.id !== id));
     }
   };
   console.log("체크된 nft===========", isChecked);
@@ -167,7 +167,7 @@ const Momo = ({ language }) => {
           return { image: item.image, name: item.name, id: item.id };
         });
 
-      setSelectData(allDatas);
+      setMomoSelectData(allDatas);
     } else {
       setIsChecked([]);
     }
@@ -243,7 +243,7 @@ const Momo = ({ language }) => {
     });
 
     setIsChecked([]);
-    setSelectData([]);
+    setMomoSelectData([]);
 
     const fetchNFTs = async () => {
       try {
@@ -567,26 +567,15 @@ const Momo = ({ language }) => {
                 <span className="momo-coin-icon">
                   <img src={coinIcon} alt="momo-coin" />
                 </span>
-                {walletAddress ? (
-                  reward !== "" ? (
-                    reward !== 0 ? (
-                      <div className="momo-mzc">
-                        <span className="momo-coin">{reward.toFixed(3)}</span>
-                        MZC
-                      </div>
-                    ) : (
-                      <div className="momo-mzc">
-                        <span className="momo-coin"> No MZC to Claim</span>
-                      </div>
-                    )
-                  ) : null
-                ) : (
-                  <div className="momo-mzc">
-                    <span className="momo-coin">
-                      Please Connect your Wallet
-                    </span>
-                  </div>
-                )}
+                <div className="momo-mzc">
+                  <span className="momo-coin">
+                    {walletAddress
+                      ? reward !== "" && reward !== 0
+                        ? `${reward.toFixed(3)}  MZC`
+                        : "No MZC to Claim"
+                      : "Please Connect your Wallet"}
+                  </span>
+                </div>
               </div>
               <button
                 type="button"
@@ -772,12 +761,19 @@ const Momo = ({ language }) => {
                           <img src={item.image} alt="nft" />
                         </div>
                         {/* stakingData.includes(parseInt(item.id)) */}
-                        {true ? (
+
+                        {stakingData.includes(parseInt(item.id)) ? (
                           <div className="momo-info">
                             <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
-                              Now Staking
+                              {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
+                              {true ? "Now Staking" : "Now Team Staking"}
                             </span>
+                            {/* <span className="team-staking-text"> */}
+                            {/* 팀 스테이킹이면 해당 텍스트 보여주기 */}
+                            {/* {true && <>Now Staking</>} */}
+                            {/* </span> */}
+                            {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                             <button
                               className="momo-btn-cancel-staking"
                               onClick={() =>
@@ -793,7 +789,7 @@ const Momo = ({ language }) => {
                           </div>
                         ) : (
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state">
                               Ready for Staking
                             </span>
@@ -801,8 +797,8 @@ const Momo = ({ language }) => {
                               className="momo-btn--staking"
                               onClick={() =>
                                 handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
+                                  item.image,
+                                  item.name,
                                   item.id
                                 )
                               }
@@ -869,10 +865,10 @@ const Momo = ({ language }) => {
                             }
                           />
                           <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
+                            <img src={item.image} alt="nft" />
                           </div>
                           <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
+                            <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state">
                               Ready for Staking
                             </span>
@@ -938,8 +934,8 @@ const Momo = ({ language }) => {
       {/* 스테이킹 모달 */}
       {stakingModal && (
         <StakingModal
-          selectData={selectData}
-          setSelectData={setSelectData}
+          momoSelectData={momoSelectData}
+          setMomoSelectData={setMomoSelectData}
           language={language}
           setIsChecked={setIsChecked}
           isChecked={isChecked}
@@ -948,15 +944,21 @@ const Momo = ({ language }) => {
       {/* 스테이킹 취소 모달 */}
       {cancelStakingModal && (
         <CancelStakingModal
-          selectData={selectData}
-          setSelectData={setSelectData}
+          momoSelectData={momoSelectData}
+          setMomoSelectData={setMomoSelectData}
           language={language}
           isChecked={isChecked}
         />
       )}
 
       {/* 클레임 모달 */}
-      {claimModal && <ClaimModal language={language} reward={reward} />}
+      {claimModal && (
+        <ClaimModal
+          language={language}
+          reward={reward}
+          momoSelectData={momoSelectData}
+        />
+      )}
     </>
   );
 };

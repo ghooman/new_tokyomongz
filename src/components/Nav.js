@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Nav.scss";
@@ -6,7 +7,16 @@ import { setActiveTab } from "../store";
 
 const Nav = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const activeTab = useSelector((state) => state.activeTab.num);
+
+  useEffect(() => {
+    const reawardPath = location.pathname;
+    const matchingTab = tabMenuData.find((tab) => tab.link === reawardPath);
+    if (matchingTab) {
+      dispatch(setActiveTab(matchingTab.id));
+    }
+  }, [location, dispatch]);
 
   const tabMenuData = [
     {

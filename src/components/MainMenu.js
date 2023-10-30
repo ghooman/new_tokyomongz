@@ -35,7 +35,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               <Link to="/about-tmhc">#001 Tokyo Mongz Hills Club</Link>
             </li>
             <li>
-              <Link to="/about-momo">#002 PEATCHz.MOMO</Link>
+              <Link to="/about-momo">#002 PEACHz.MOMO</Link>
             </li>
             <li>
               <Link to="https://universalstallion.io/" target="_blank">

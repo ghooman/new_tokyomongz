@@ -21,8 +21,9 @@ const stakingModal = createSlice({
     },
   },
 });
-
+// 캔슬 스테이킹 모달
 const cancelStakingModal = createSlice({
+  // 오타있음
   name: "canecelStakingModal",
   initialState: { cancelStakingModal: false },
   reducers: {
@@ -31,7 +32,16 @@ const cancelStakingModal = createSlice({
     },
   },
 });
-
+// 캔슬 팀 스테이킹 모달
+const cancelTeamStakingModal = createSlice({
+  name: "cancelTeamStakingModal",
+  initialState: { cancelTeamStakingModal: false },
+  reducers: {
+    setCancelStakingModal(state, action) {
+      state.cancelTeamStakingModal = action.payload;
+    },
+  },
+});
 // 드랍다운 컨트롤
 const isOpen = createSlice({
   name: "isOpen",
@@ -69,6 +79,7 @@ export const { setIsOpen } = isOpen.actions;
 export const { setClaimModal } = claimModal.actions;
 export const { setStakingModal } = stakingModal.actions;
 export const { setCancelStakingModal } = cancelStakingModal.actions;
+export const { setCancelTeamStakingModal } = cancelTeamStakingModal.actions;
 export const { setActiveTab } = activeTab.actions;
 
 export default configureStore({
@@ -78,6 +89,7 @@ export default configureStore({
     claimModal: claimModal.reducer,
     stakingModal: stakingModal.reducer,
     cancelStakingModal: cancelStakingModal.reducer,
+    cancelTeamStakingModal: cancelTeamStakingModal.reducer,
     activeTab: activeTab.reducer,
   },
 });

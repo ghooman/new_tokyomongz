@@ -11,28 +11,28 @@ const teamDummyData = [
     tmhcImg: nftSample,
     mongz: {
       tmhcImg: nftSample,
-      tmhcName: "TMHC #1234",
+      tmhcName: "TMHC #1111",
       tmhcBoost: 100,
     },
     momo: [
       {
         momoImg: momoSample,
-        momoName: "PZMO #1234",
+        momoName: "PZMO #1111",
         momoBoost: 300,
       },
       {
         momoImg: momoSample,
-        momoName: "PZMO #1234",
+        momoName: "PZMO #1112",
         momoBoost: 300,
       },
       {
         momoImg: momoSample,
-        momoName: "PZMO #1234",
+        momoName: "PZMO #1113",
         momoBoost: 300,
       },
       {
         momoImg: momoSample,
-        momoName: "PZMO #1234",
+        momoName: "PZMO #1114",
         momoBoost: 300,
       },
     ],

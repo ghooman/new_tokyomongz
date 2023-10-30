@@ -3,22 +3,22 @@ import momoSample from "../assets/images/momoNft.png";
 const momoDummyData = [
   {
     id: 1,
-    momoName: "PZMO #1234",
+    momoName: "PEACHzMOMO (C) #1111",
     momoImg: momoSample,
   },
   {
     id: 2,
-    momoName: "PZMO #1234",
+    momoName: "PEACHzMOMO (R) #2222",
     momoImg: momoSample,
   },
   {
     id: 3,
-    momoName: "PZMO #1234",
+    momoName: "PEACHzMOMO (SR) #3333",
     momoImg: momoSample,
   },
   {
     id: 4,
-    momoName: "PZMO #1234",
+    momoName: "PEACHzMOMO (UR) #4444",
     momoImg: momoSample,
   },
   {

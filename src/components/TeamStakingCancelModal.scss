@@ -1,3 +1,16 @@
+.modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
 .team-staking-cancel__background {
   position: fixed;
   width: 460px;
@@ -85,8 +98,8 @@
       justify-content: center;
       align-items: center;
       border-radius: 8px;
-      background-color: #fbca77;
-      color: black;
+      background-color: #ff2121;
+      color: white;
     }
   }
 }

@@ -233,6 +233,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
+  console.log("팀 스테이킹 nft 목록 ==========", teamStakingMomoData);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -440,6 +441,22 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const mzcBalance = mzcBalanceData
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
+
+  // 등급 표시
+  const getGradeNameForValue = (value) => {
+    switch (value) {
+      case "C":
+        return "grade-C";
+      case "R":
+        return "grade-R";
+      case "SR":
+        return "grade-SR";
+      case "UR":
+        return "grade-UR";
+      default:
+        return "";
+    }
+  };
 
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
@@ -810,6 +827,13 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                   <ul className="main__tmhc-list">
                     {teamStakingMomoData.slice(start, end).map((item) => (
                       <li className="tmhc-item" key={item.id}>
+                        <div
+                          className={`momo-rating ${getGradeNameForValue(
+                            item.attributes[item.attributes.length - 1].value
+                          )}`}
+                        >
+                          {item.attributes[item.attributes.length - 1].value}
+                        </div>
                         {stakingData.includes(parseInt(item.id)) ? null : (
                           <input
                             type="checkbox"

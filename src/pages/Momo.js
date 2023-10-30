@@ -245,47 +245,63 @@ const Momo = ({ language }) => {
     setIsChecked([]);
     setSelectData([]);
 
-    // 블록체인에서 모모nft정보 불러오기
     let fetchedNFTs = [];
     const fetchNFTs = async () => {
       try {
-        console.log("Start");
-        const contract = new web3.eth.Contract(momoAbi, contractAddress);
-
-        const totalSupply = await contract.methods.totalSupply().call();
-        const userBalance = await contract.methods
-          .balanceOf(walletAddress)
-          .call();
-
-        let userNFTCount = 0;
-
-        for (
-          let tokenId = 0;
-          tokenId < totalSupply && userNFTCount < userBalance;
-          tokenId++
-        ) {
-          const owner = await contract.methods.ownerOf(tokenId).call();
-
-          if (owner === walletAddress) {
-            const tokenURI = await contract.methods.tokenURI(tokenId).call();
-            fetchedNFTs.push({ tokenId, tokenURI });
-            console.log(tokenId);
-            userNFTCount++;
-          }
-        }
-
-        const fetchedNFTsIds = JSON.stringify(
-          fetchedNFTs.map((item) => {
-            return item.tokenId;
-          })
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getOwnedMOMO?address=${walletAddress}`
         );
+        console.log(res);
+        fetchedNFTs.push(res.data);
+        const fetchedNFTsIds = JSON.stringify(fetchedNFTs);
         console.log(fetchedNFTsIds);
         await getBalanceOfBatch(fetchedNFTsIds);
-        // setMomoNfts(fetchedNFTs);
-      } catch (error) {
-        console.error("Cannot get NFT", error);
+      } catch (err) {
+        console.log(err);
       }
     };
+
+    // 블록체인에서 모모nft정보 불러오기
+
+    // const fetchNFTs = async () => {
+    //   try {
+    //     console.log("Start");
+    //     const contract = new web3.eth.Contract(momoAbi, contractAddress);
+
+    //     const totalSupply = await contract.methods.totalSupply().call();
+    //     const userBalance = await contract.methods
+    //       .balanceOf(walletAddress)
+    //       .call();
+
+    //     let userNFTCount = 0;
+
+    //     for (
+    //       let tokenId = 0;
+    //       tokenId < totalSupply && userNFTCount < userBalance;
+    //       tokenId++
+    //     ) {
+    //       const owner = await contract.methods.ownerOf(tokenId).call();
+
+    //       if (owner === walletAddress) {
+    //         const tokenURI = await contract.methods.tokenURI(tokenId).call();
+    //         fetchedNFTs.push({ tokenId, tokenURI });
+    //         console.log(tokenId);
+    //         userNFTCount++;
+    //       }
+    //     }
+
+    //     const fetchedNFTsIds = JSON.stringify(
+    //       fetchedNFTs.map((item) => {
+    //         return item.tokenId;
+    //       })
+    //     );
+    //     console.log(fetchedNFTsIds);
+    //     await getBalanceOfBatch(fetchedNFTsIds);
+    //     // setMomoNfts(fetchedNFTs);
+    //   } catch (error) {
+    //     console.error("Cannot get NFT", error);
+    //   }
+    // };
 
     const getBalanceOfBatch = async (fetchedNFTsIds) => {
       try {

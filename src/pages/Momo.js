@@ -245,14 +245,13 @@ const Momo = ({ language }) => {
     setIsChecked([]);
     setSelectData([]);
 
-    let fetchedNFTs = [];
     const fetchNFTs = async () => {
       try {
         const res = await axios.get(
           `https://mongz-api.sevenlinelabs.app/getOwnedMOMO?address=${walletAddress}`
         );
         console.log(res);
-        fetchedNFTs.push(res.data);
+        let fetchedNFTs = res.data;
         const fetchedNFTsIds = JSON.stringify(fetchedNFTs);
         console.log(fetchedNFTsIds);
         await getBalanceOfBatch(fetchedNFTsIds);

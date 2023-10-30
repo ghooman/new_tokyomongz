@@ -12,11 +12,11 @@ const TeamStakingCreateModal = ({
       <div className="create-modal-body">
         <div>
           <div className="create-modal-mongz-img">
-            <img src={teamStakingMongzData.tmhcImg} alt="mongzImg" />
+            <img src={teamStakingMongzData.image} alt="mongzImg" />
           </div>
           <div className="create-modal-mongz-info">
             <span className="create-modal-mongz-title">
-              {teamStakingMongzData.tmhcName}
+              {teamStakingMongzData.name}
             </span>
             <span>
               Estimated BOOST <span>560%</span>

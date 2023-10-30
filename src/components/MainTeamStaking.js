@@ -441,8 +441,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
 
-  console.log("클릭 몽즈데이터 팀스테이킹", clickStakingMongzData);
-
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
   return (
@@ -979,6 +977,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         <TeamStakingConfirmModal
           language={language}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
+          teamStakingMongzData={clickStakingMongzData}
+          teamStakingMomoData={selectData}
         />
       )}
     </>

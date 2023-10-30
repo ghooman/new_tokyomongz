@@ -242,7 +242,6 @@ const Main = ({ language }) => {
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("클릭 몽즈데이터 메인", clickStakingMongzData);
   useEffect(() => {
     if (nftData) {
       setIsLoading(() => {

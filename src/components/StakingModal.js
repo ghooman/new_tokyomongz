@@ -264,15 +264,16 @@ const StakingConfirmModal = ({
 
   // ========= api data ===========
   let workNFT;
+
+  if (isChecked.length > 0) {
+    workNFT = isChecked;
+  }
   if (isChecked.length === 0) {
     if (selectData && selectData.length > 0) {
       workNFT = [selectData[0].id];
-    }
-    if (momoSelectData && momoSelectData.length > 0) {
+    } else if (momoSelectData && momoSelectData.length > 0) {
       workNFT = [momoSelectData[0].id];
     }
-  } else {
-    workNFT = isChecked;
   }
 
   const data = {
@@ -284,7 +285,7 @@ const StakingConfirmModal = ({
 
   console.log("포스트데이터", data);
 
-  console.log("셀렉트데이터", selectData);
+  console.log("셀렉트데이터", momoSelectData);
   const handleStaking = async () => {
     setStakingIsLoading(true);
 
@@ -293,32 +294,26 @@ const StakingConfirmModal = ({
       let res;
       if (selectData && selectData.length > 0) {
         res = await axios.post(
-          `https://mongz-api.sevenlinelabs.app/StakeTMHC?address=${walletAddress}&tokenIds=${
-            isChecked.length === 0
-              ? JSON.stringify([selectData[0].id])
-              : isChecked
-          }`
-          // {
-          //   params: {
-          //     address: walletAddress,
-          //     tokenIds: isChecked.length === 0 ? [selectData[0].id] : isChecked,
-          //   },
-          // }
+          `https://mongz-api.sevenlinelabs.app/StakeTMHC`,
+          {},
+          {
+            params: {
+              address: walletAddress,
+              tokenIds: JSON.stringify(workNFT),
+            },
+          }
         );
       }
       if (momoSelectData && momoSelectData.length > 0) {
         res = await axios.post(
-          `https://mongz-api.sevenlinelabs.app/StakeMOMO?address=${walletAddress}&tokenIds=${
-            isChecked.length === 0
-              ? JSON.stringify([momoSelectData[0].id])
-              : isChecked
-          }`
-          // {
-          //   params: {
-          //     address: walletAddress,
-          //     tokenIds: isChecked.length === 0 ? [momoSelectData[0].id] : isChecked,
-          //   },
-          // }
+          `https://mongz-api.sevenlinelabs.app/StakeMOMO`,
+          {},
+          {
+            params: {
+              address: walletAddress,
+              tokenIds: JSON.stringify(workNFT),
+            },
+          }
         );
       }
 
@@ -326,7 +321,7 @@ const StakingConfirmModal = ({
       setErrMsg(res.data[1]);
       setFailModalControl(true);
     } catch (err) {
-      console.log(err);
+      console.log("에러메시지", err);
     } finally {
       setStakingIsLoading(false);
     }

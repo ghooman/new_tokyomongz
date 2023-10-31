@@ -8,7 +8,7 @@ const TeamStakingCancelModal = ({
   setTeamStakingCancelConfirmModal,
   selectData,
 }) => {
-  console.log(selectData);
+  console.log("팀캔슬모달", selectData);
   return (
     <div className="modal-background">
       <div className="team-staking-cancel__background">
@@ -21,7 +21,7 @@ const TeamStakingCancelModal = ({
           </span>
         </div>
         <div className="team-staking-cancel__momo-box">
-          {selectData[0].teamStakingItem.member.map((item) => {
+          {selectData[0].teamStakingNftData[0].member.map((item) => {
             return (
               <div className="team-staking-cancel__momo-item">
                 <div className="team-staking-cancel__momo-img">

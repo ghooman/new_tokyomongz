@@ -219,6 +219,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const [nftData, setNftData] = useState([]);
   const [momoNftData, setMomoNftData] = useState([]);
   const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
+  const [teamStakingIds, setTeamStakingIds] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -313,10 +314,30 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         setDataStatus(true);
       }
     };
+
+    // 팀스테이킹 된 nft id 가져오기
+    const getTeamStakingNftList = async () => {
+      // setDataStatus(false);
+      try {
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
+        );
+        console.log("팀스테이킹 리스트=========", res.data[1]);
+        const fetchTeamStakingList = res.data[1];
+        const momoNftIds = [].concat(
+          ...fetchTeamStakingList.map((item) => item.member)
+        );
+        console.log(momoNftIds);
+        setTeamStakingIds(momoNftIds);
+        // setTeamStakingNftList(fetchTeamStakingList);
+      } catch (err) {
+        console.log("팀스테이킹 리스트 에러 ==========", err);
+      } finally {
+        // setDataStatus(true);
+      }
+    };
     // getBalanceOfBatch();
 
-
-    
     fetchNFTs();
     getStakingNftList();
   }, [walletAddress]);
@@ -402,6 +423,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         return "";
     }
   };
+
+  console.log("모모데이터", teamStakingMomoData);
+  console.log("팀스테이킹중인 아이디", teamStakingIds);
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
   return (

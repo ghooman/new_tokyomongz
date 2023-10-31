@@ -348,11 +348,8 @@ const Momo = ({ language }) => {
   console.log("nftData==================", momoNftData);
   console.log("소유한 nft 개수 =============", momoNftData.length);
 
-
-
   const [reward, setReward] = useState("");
   console.log(reward);
-  
 
   console.log(language);
   return (

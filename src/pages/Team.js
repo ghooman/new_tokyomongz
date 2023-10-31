@@ -176,49 +176,8 @@ const Team = ({ language }) => {
   };
   ///////////////////////////////////////////////////////////////////////////////
 
-  // nft가져오기
-  const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
-  const { contract: mongzContract } = useContract(MONGS_COIN, MzcAbi);
-
   const walletAddress = useAddress();
-  console.log(walletAddress);
-  // const {
-  //   data: teamStakingData,
-  //   isLoading,
-  //   error,
-  // } = useOwnedNFTs(importTmhc, walletAddress);
-  //
-  // console.log(teamStakingData);
 
-  //
-
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider("https://eth.llamarpc.com")
-  );
-  const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력합니다.
-  // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력합니다.
-  // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력합니다.
-  const tokenIds = Array(10000)
-    .fill()
-    .map((v, i) => i + 1);
-
-  const contract = new web3.eth.Contract(abi, contractAddress); // ERC-1155 컨트랙트 ABI와 주소를 입력합니다.
-
-  // const nftData2 = [{}];
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   if (teamStakingData) {
-  //     setIsLoading(() => {
-  //       return true;
-  //     });
-  //   } else {
-  //     setIsLoading(() => {
-  //       return true;
-  //     });
-  //   }
-  // }, [teamStakingData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
@@ -241,67 +200,108 @@ const Team = ({ language }) => {
     setIsChecked([]);
     setSelectData([]);
 
-    async function getBalanceOfBatch() {
-      const balances = await contract.methods
-        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
-      // console.log(balances);
-      const promises = [];
+    // 팀스테이킹 데이터 가져오기
+    const getTeamStakingData = async () => {
+      // setDataStatus(false);
+      try {
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
+        );
+        console.log("팀스테이킹 리스트=========", res.data[1]);
+        const fetchTeamStakingList = res.data[1];
+        const momoNftIds = [].concat(
+          ...fetchTeamStakingList.map((item) => item.member)
+        );
+        console.log(momoNftIds);
+        const tmhcNftIds = [].concat(
+          ...fetchTeamStakingList.map((item) => item.leader)
+        );
+        console.log(tmhcNftIds);
+        // setTeamStakingNftList(fetchTeamStakingList);
 
-      for (let i = 0; i < balances.length; i++) {
-        if (balances[i] === "1") {
-          promises.push(
-            axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-              params: {
-                id: i + 1,
-              },
-            })
-          );
-        }
+        await getTeamStakingMomoData(
+          momoNftIds,
+          tmhcNftIds,
+          fetchTeamStakingList
+        );
+      } catch (err) {
+        console.log("팀스테이킹 리스트 에러 ==========", err);
+      } finally {
+        // setDataStatus(true);
       }
+    };
 
-      Promise.all(promises)
-        .then((responses) => {
-          console.log(responses);
-          const newData = responses.map((res, index) => ({
-            id: parseInt(res.data.name.slice(5)),
-            name: res.data.name,
-            image: res.data.image,
-          }));
-          // setTeamStakingData(newData); 기존 사용 되는 코드
-          // setTeamStakingData(teamStakingData); // 임시로 더미로 바꿔주었습니다.
-          console.log(newData, "뉴데이터");
-        })
-        .catch((error) => {
-          console.error(error);
+    // 모모 데이터 가져오기
+    const getTeamStakingMomoData = async (
+      momoNftIds,
+      tmhcNftIds,
+      fetchTeamStakingList
+    ) => {
+      try {
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
+          {
+            params: {
+              tokenIds: JSON.stringify(momoNftIds), // 배열 nft아이디들
+            },
+          }
+        );
+
+        const changeMomoData = fetchTeamStakingList.map((item) => {
+          return {
+            ...item,
+            member: item.member.map((id) =>
+              res.data.find((member) => member.id === id)
+            ),
+          };
         });
-    }
-    // const getStakingNftList = async () => {
-    //   const data = {
-    //     address: walletAddress, // 현재 지갑
-    //   };
-    //   setDataStatus(false);
-    //   try {
-    //     const res = await axios.post(
-    //       "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
-    //       data
-    //     );
-    //     console.log("스테이킹 리스트=========", res);
-    //     setStakingData(res.data);
-    //   } catch (err) {
-    //     console.log("스테이킹 리스트 에러 ==========", err);
-    //   } finally {
-    //     setDataStatus(true);
-    //   }
-    // };
+        console.log("모모nft", res);
+        console.log("모모데이타 체인지", changeMomoData);
+        await getTeamStakingTmhcData(tmhcNftIds, changeMomoData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-    //  팀스테이킹을 가져오는 코드
-    const fetchTeamStakingData = async () => {
-      const res = await axios.get(
-        `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
-      );
-      console.log("스테이킹1", res);
-      setTeamStakingData(res.data[1]);
+    // 도쿄몽즈 데이터 가져오기
+    const getTeamStakingTmhcData = async (tmhcNftIds, changeMomoData) => {
+      try {
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
+          {
+            params: {
+              tokenIds: JSON.stringify(tmhcNftIds),
+            },
+          }
+        );
+
+        console.log("겟도쿄", res);
+
+        const newData = res.data.map((item, index) => ({
+          id: parseInt(item.name.slice(5)),
+          name: item.name,
+          image: item.image,
+        }));
+
+        console.log("뉴데이터", newData);
+
+        console.log(changeMomoData);
+
+        const finalStakingNftData = changeMomoData.map((item) => {
+          return {
+            ...item,
+            leader: newData.find(
+              (newDataItem) => newDataItem.id === item.leader
+            ),
+          };
+        });
+
+        console.log("파이널 데이터", finalStakingNftData);
+
+        setTeamStakingData(newData); //더미 지울시 주석을 풀어줍니다.
+      } catch (err) {
+        console.log("도쿄에러", err);
+      }
     };
 
     const getReward = async () => {
@@ -319,80 +319,15 @@ const Team = ({ language }) => {
         console.log(err);
       }
     };
-
-    // fetchTeamStakingData().then(() => {
-    //   fetchTmhcStakingData();
-    //   fetchMomoStakingData();
-    // });
-    fetchTeamStakingData();
-    console.log("팀 팀스테이킹 정보", teamStakingData);
-
-    getBalanceOfBatch();
+    getTeamStakingData();
     getReward();
   }, [walletAddress]);
-  // 팀스테이킹 정보를 가져오고 나서 실행됩니다.
-  useEffect(() => {
-    // Tmhc 를 가져오는 코드
-    const fetchTmhcStakingData = async () => {
-      const tokenIds = teamStakingData.map((item) => item.leader);
-      const res = await axios.get(
-        "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
-        {
-          params: {
-            tokenIds: JSON.stringify(tokenIds), //
-          },
-        }
-      );
-      setTmhcStakingData(res.data);
-    };
-
-    // momo 를 가져오는 코드
-    const fetchMomoStakingData = async () => {
-      const tokenIds = teamStakingData.map((item) => item.member);
-
-      const res = await axios.get(
-        "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
-        {
-          params: {
-            tokenIds: JSON.stringify(tokenIds), //
-          },
-        }
-      );
-      setMomoStakingData(res.data);
-    };
-
-    fetchTmhcStakingData();
-    fetchMomoStakingData();
-  }, [teamStakingData]);
-
-  console.log("몽즈 팀스테이킹 정보", tmhcStakingData);
-  console.log("모모 팀스테이킹 정보", momoStakingData);
 
   console.log("teamStakingData==================", teamStakingData);
   console.log("소유한 nft 개수 =============", teamStakingData.length);
 
-  // 스테이킹 된 목록 확인하기
-  const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
-  // const { data: stakingData, isLoading: stakingDataIsLoading } =
-  //   useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
-
-  // 겟 리워드
-  // const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
-  //   stakingTmhc,
-  //   "calRewardAll",
-  //   walletAddress
-  // );
-
   const [reward, setReward] = useState("");
   console.log(reward);
-  // useEffect(() => {
-  //   if (rewardData) {
-  //     const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
-  //     setReward(newReward);
-  //   }
-  // }, [rewardData, walletAddress]);
-
-  // add mzc
 
   const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
   const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =

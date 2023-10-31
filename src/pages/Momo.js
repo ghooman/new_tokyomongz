@@ -37,6 +37,7 @@ import axios from "axios";
 import momoDummyData from "../data/momoDummyData";
 
 const Momo = ({ language }) => {
+  const pageName = "momo";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
@@ -953,7 +954,13 @@ const Momo = ({ language }) => {
 
       {/* 클레임 모달 */}
       {claimModal && (
-        <ClaimModal language={language} reward={reward} claimType="momoClaim" />
+        <ClaimModal
+          language={language}
+          reward={reward}
+          momoSelectData={momoSelectData}
+          pageName={pageName}
+          claimType="momoClaim"
+        />
       )}
     </>
   );

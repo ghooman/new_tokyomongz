@@ -18,7 +18,7 @@ const ClaimModal = ({
   reward,
   selectData,
   momoSelectData,
-  pageName,
+
 }) => {
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
@@ -28,7 +28,7 @@ const ClaimModal = ({
   };
 
   console.log("셀렉트데이터", selectData);
-  console.log("모모셀렉트데이터", pageName);
+
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 
   const handleConfirmModal = () => {

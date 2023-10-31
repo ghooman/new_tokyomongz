@@ -758,7 +758,9 @@ const Team = ({ language }) => {
       )}
 
       {/* 클레임 모달 */}
-      {claimModal && <ClaimModal language={language} reward={reward} />}
+      {claimModal && (
+        <ClaimModal language={language} reward={reward} claimType="teamClaim" />
+      )}
       {/* 팀 스테이킹 취소 모달 */}
       {teamStakingCancelModal && (
         <TeamStakingCancelModal

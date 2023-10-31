@@ -953,11 +953,7 @@ const Momo = ({ language }) => {
 
       {/* 클레임 모달 */}
       {claimModal && (
-        <ClaimModal
-          language={language}
-          reward={reward}
-          momoSelectData={momoSelectData}
-        />
+        <ClaimModal language={language} reward={reward} claimType="momoClaim" />
       )}
     </>
   );

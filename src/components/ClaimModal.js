@@ -13,15 +13,14 @@ import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
 
 import axios from "axios";
 
-const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
+const ClaimModal = ({ language, reward, claimType }) => {
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleCloseModal = () => {
     dispatch(setClaimModal(!claimModal));
     document.body.style.overflow = "";
   };
-
-  console.log(momoSelectData);
+  console.log("@@@", claimType);
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 
   const handleConfirmModal = () => {
@@ -115,8 +114,7 @@ const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
           claimConfirmModal={claimConfirmModal}
           setClaimConfirmModal={setClaimConfirmModal}
           language={language}
-          selectData={selectData}
-          momoSelectData={momoSelectData}
+          claimType={claimType}
         />
       )}
     </>
@@ -127,9 +125,9 @@ const ClaimConfirm = ({
   claimConfirmModal,
   setClaimConfirmModal,
   language,
-  selectData,
-  momoSelectData,
+  claimType,
 }) => {
+  console.log("클레임모달", claimType);
   const walletAddress = useAddress();
 
   const { contract } = useContract(STAKING_TMHC_CONTRACT);
@@ -161,34 +159,34 @@ const ClaimConfirm = ({
   // ========== 로딩중 ============
   const [claimIsLoading, setClaimIsLoading] = useState(false);
 
-  const handleClaim = async () => {
+  const handleClaim = async (claimType) => {
     setClaimIsLoading(true);
     const data = {
       address: walletAddress, // 현재 지갑
     };
-    let apiUrl;
 
-    if (selectData && selectData.length > 0) {
-      apiUrl = `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`;
-    } else if (momoSelectData && momoSelectData.length > 0) {
-      apiUrl = `https://mongz-api.sevenlinelabs.app/ClaimMOMOAll?address=${walletAddress}`;
-    } else {
-      // 둘 다 비어있는 경우, 예외 처리
-      console.log("No data available for claiming");
-      return;
-    }
     try {
-      const res = await axios.post(
-        apiUrl
-        // {
-        //   params: {
-        //     address: walletAddress,
-        //   },
-        // }
-      );
-      console.log("클레임=================", res);
-      setErrMsg(res.data[1]);
-      setFailModalControl(true);
+      if (claimType === "tmhcClaim") {
+        const res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`
+        );
+        setErrMsg(res.data[1]);
+        setFailModalControl(true);
+      } else if (claimType === "momoClaim") {
+        const res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/ClaimMOMOAll?address=${walletAddress}`
+        );
+        setErrMsg(res.data[1]);
+        setFailModalControl(true);
+      } else if (claimType === "teamClaim") {
+        const res = await axios.post(
+          `https://mongz-api.sevenlinelabs.app/ClaimTeamAll?address=${walletAddress}`
+        );
+        setErrMsg(res.data[1]);
+        setFailModalControl(true);
+      }
+
+      // console.log("클레임=================", res);
       // window.location.reload();
     } catch (err) {
       console.log("클레임 에러===========", err);
@@ -222,7 +220,7 @@ const ClaimConfirm = ({
               </button> */}
               <button
                 className="btn-claim-confirm"
-                onClick={handleClaim}
+                onClick={() => handleClaim(claimType)}
                 disabled={claimIsLoading}
               >
                 {claimIsLoading ? "Loading..." : "Claim"}

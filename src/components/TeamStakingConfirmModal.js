@@ -44,7 +44,6 @@ const TeamStakingConfirmModal = ({
       setFailModalControl(true);
     } catch (err) {
       console.log("스테이킹 리스트 에러 정보 ==========", err);
-    } finally {
     }
   };
 

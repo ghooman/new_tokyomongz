@@ -959,6 +959,7 @@ const Momo = ({ language }) => {
           reward={reward}
           momoSelectData={momoSelectData}
           pageName={pageName}
+          claimType="momoClaim"
         />
       )}
     </>

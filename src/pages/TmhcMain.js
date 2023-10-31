@@ -1066,7 +1066,9 @@ const Main = ({ language }) => {
                         .map((item) => (
                           <li className="tmhc-item" key={item.id}>
                             {stakingData.includes(parseInt(item.id)) ||
-                            teamStakingNftId.includes(parseInt(item.id)) ? (
+                            teamStakingNftId.includes(
+                              parseInt(item.id)
+                            ) ? null : (
                               <input
                                 type="checkbox"
                                 className="tmhc-check"
@@ -1080,7 +1082,7 @@ const Main = ({ language }) => {
                                   )
                                 }
                               />
-                            ) : null}
+                            )}
                             <div className="tmhc-images">
                               <img src={item.image} alt="nft" />
                             </div>

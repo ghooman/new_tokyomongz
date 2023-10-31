@@ -21,6 +21,7 @@ const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
     document.body.style.overflow = "";
   };
 
+  console.log(momoSelectData);
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 
   const handleConfirmModal = () => {

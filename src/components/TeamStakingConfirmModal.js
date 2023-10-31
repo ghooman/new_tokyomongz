@@ -18,7 +18,16 @@ const TeamStakingConfirmModal = ({
   const [errMsg, setErrMsg] = useState("");
 
   const postTeamStakingNftList = async () => {
+    // const data = {
+    //   address: walletAddress,
+    //   tmhcids: ,
+    //   momoids: ,
+    // };
+    // setDataStatus(false);
+
     try {
+      console.log("스테이킹 보내는 정보json =======", JSON.stringify(tmhcIds));
+      console.log("스테이킹 보내는 정보json =======", JSON.stringify(momoIds));
       const res = await axios.post(
         "https://mongz-api.sevenlinelabs.app/StakeTeam",
         {},

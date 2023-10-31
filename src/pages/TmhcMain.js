@@ -239,6 +239,7 @@ const Main = ({ language }) => {
 
   const [nftData, setNftData] = useState([]);
   const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
+  const [teamStakingNftData, setTeamStakingNftData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -271,50 +272,6 @@ const Main = ({ language }) => {
 
     setIsChecked([]);
     setSelectData([]);
-
-    // async function getBalanceOfBatch() {
-    //   console.log("실행");
-    //   const balances = await contract.methods
-    //     .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-    //     .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
-    //   // console.log(balances);
-    //   const promises = [];
-
-    //   for (let i = 0; i < balances.length; i++) {
-    //     if (balances[i] === "1") {
-    //       promises.push(
-    //         i + 1
-    //         // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-    //         // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-    //       );
-    //     }
-    //     console.log("프로미스배열", promises);
-    //   }
-
-    //   const res = await axios.get(
-    //     "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
-    //     {
-    //       params: {
-    //         id: JSON.stringify(promises),
-    //       },
-    //     }
-    //   );
-
-    //   Promise.all(promises)
-    //     .then((responses) => {
-    //       console.log("리스폰스 데이터", responses);
-    //       const newData = responses.map((res, index) => ({
-    //         id: parseInt(res.data.name.slice(5)),
-    //         name: res.data.name,
-    //         image: res.data.image,
-    //       }));
-    //       setNftData(newData);
-    //       console.log(newData);
-    //     })
-    //     .catch((error) => {
-    //       console.error("에러", error);
-    //     });
-    // }
 
     async function getBalanceOfBatch() {
       console.log("실행");
@@ -379,6 +336,58 @@ const Main = ({ language }) => {
       }
     };
 
+    // 팀 스테이킹 된 nft 가져오기
+    const getTeamStakingNftList = async () => {
+      // setDataStatus(false);
+      try {
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
+        );
+        console.log("팀스테이킹 리스트=========", res.data[1]);
+        const fetchTeamStakingList = res.data[1];
+        const momoNftIds = [].concat(
+          ...fetchTeamStakingList.map((item) => item.member)
+        );
+        console.log(momoNftIds);
+        // setTeamStakingNftList(fetchTeamStakingList);
+
+        getTeamStakingMomoNft(momoNftIds, fetchTeamStakingList);
+      } catch (err) {
+        console.log("팀스테이킹 리스트 에러 ==========", err);
+      } finally {
+        // setDataStatus(true);
+      }
+    };
+
+    const getTeamStakingMomoNft = async (momoNftIds, fetchTeamStakingList) => {
+      try {
+        const res = await axios.get(
+          "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
+          {
+            params: {
+              tokenIds: JSON.stringify(momoNftIds), // 배열 nft아이디들
+            },
+          }
+        );
+
+        const finalTeamStakingData = fetchTeamStakingList.map((item) => {
+          return {
+            ...item,
+            member: item.member.map((id) =>
+              res.data.find((member) => member.id === id)
+            ),
+          };
+        });
+        console.log("모모nft", res);
+        console.log("파이널nft", finalTeamStakingData);
+        setTeamStakingNftData(finalTeamStakingData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    console.log(teamStakingNftData);
+
     // 수령 가능한 리워드 수량
     const getReward = async () => {
       try {
@@ -396,6 +405,7 @@ const Main = ({ language }) => {
 
     getStakingNftList();
     getBalanceOfBatch();
+    getTeamStakingNftList();
     getReward();
   }, [walletAddress]);
 

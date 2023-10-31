@@ -1,33 +1,34 @@
 import React from "react";
 import "./TeamStakingCancelModal.scss";
-import mongzDummyData from "../data/tmhcDummyData";
 import momoDummyData from "../data/momoDummyData";
 const TeamStakingCancelModal = ({
   teamStakingMongzData,
   teamStakingMomoData,
   setTeamStakingCancelModal,
   setTeamStakingCancelConfirmModal,
+  selectData,
 }) => {
+  console.log(selectData);
   return (
     <div className="modal-background">
       <div className="team-staking-cancel__background">
         <div className="team-staking-cancel__mongz-info-box">
           <div className="team-staking-cancel__mongz-img">
-            <img src={mongzDummyData[0].image} alt="mongzImg" />
+            <img src={selectData[0].image} alt="mongzImg" />
           </div>
           <span className="team-staking-cancel__mongz-name">
-            {mongzDummyData[0].tmhcName}
+            {selectData[0].name}
           </span>
         </div>
         <div className="team-staking-cancel__momo-box">
-          {momoDummyData.slice(0, 4).map((item) => {
+          {selectData[0].teamStakingItem.member.map((item) => {
             return (
               <div className="team-staking-cancel__momo-item">
                 <div className="team-staking-cancel__momo-img">
-                  <img src={item.momoImg} alt="momoImg" />
+                  <img src={item.image} alt="momoImg" />
                 </div>
                 <span className="team-staking-cancel__momo-name">
-                  {item.momoName}
+                  {item.name}
                 </span>
               </div>
             );

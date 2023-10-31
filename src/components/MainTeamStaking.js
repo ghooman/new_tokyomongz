@@ -201,15 +201,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
 
   const walletAddress = useAddress();
   console.log(walletAddress);
-  // const {
-  //   data: nftData,
-  //   isLoading,
-  //   error,
-  // } = useOwnedNFTs(importTmhc, walletAddress);
-  //
-  // console.log(nftData);
-
-  //
 
   const web3 = new Web3(
     new Web3.providers.HttpProvider("https://eth.llamarpc.com")
@@ -297,42 +288,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         console.log(err);
       }
     };
-    // async function getBalanceOfBatch() {
-    //   const balances = await contract.methods
-    //     .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-    //     .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옵니다.
-    //   // console.log(balances);
-    //   const promises = [];
 
-    //   for (let i = 0; i < balances.length; i++) {
-    //     if (balances[i] === "1") {
-    //       promises.push(
-    //         // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-    //         axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-    //           params: {
-    //             id: i + 1,
-    //           },
-    //         })
-    //       );
-    //     }
-    //     // console.log(promises);
-    //   }
-
-    //   Promise.all(promises)
-    //     .then((responses) => {
-    //       console.log(responses);
-    //       const newData = responses.map((res, index) => ({
-    //         id: parseInt(res.data.name.slice(5)),
-    //         name: res.data.name,
-    //         image: res.data.image,
-    //       }));
-    //       setNftData(newData);
-    //       console.log(newData);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // }
     const getStakingNftList = async () => {
       const data = {
         address: walletAddress, // 현재 지갑
@@ -365,26 +321,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   console.log("nftData==================", nftData);
   console.log("소유한 nft 개수 =============", nftData.length);
 
-  // 스테이킹 된 목록 확인하기
-  const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
-  // const { data: stakingData, isLoading: stakingDataIsLoading } =
-  //   useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
-
-  // 겟 리워드
-  // const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
-  //   stakingTmhc,
-  //   "calRewardAll",
-  //   walletAddress
-  // );
+  // console.log(stakingMomoIds);
 
   const [reward, setReward] = useState("");
   console.log(reward);
-  // useEffect(() => {
-  //   if (rewardData) {
-  //     const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
-  //     setReward(newReward);
-  //   }
-  // }, [rewardData, walletAddress]);
 
   // add mzc
   const addTokenToWallet = async () => {

@@ -228,6 +228,7 @@ const Momo = ({ language }) => {
   }, [momoNftData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
+  const [teamStakingData, setTeamStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
@@ -260,48 +261,6 @@ const Momo = ({ language }) => {
       }
     };
 
-    // 블록체인에서 모모nft정보 불러오기
-
-    // const fetchNFTs = async () => {
-    //   try {
-    //     console.log("Start");
-    //     const contract = new web3.eth.Contract(momoAbi, contractAddress);
-
-    //     const totalSupply = await contract.methods.totalSupply().call();
-    //     const userBalance = await contract.methods
-    //       .balanceOf(walletAddress)
-    //       .call();
-
-    //     let userNFTCount = 0;
-
-    //     for (
-    //       let tokenId = 0;
-    //       tokenId < totalSupply && userNFTCount < userBalance;
-    //       tokenId++
-    //     ) {
-    //       const owner = await contract.methods.ownerOf(tokenId).call();
-
-    //       if (owner === walletAddress) {
-    //         const tokenURI = await contract.methods.tokenURI(tokenId).call();
-    //         fetchedNFTs.push({ tokenId, tokenURI });
-    //         console.log(tokenId);
-    //         userNFTCount++;
-    //       }
-    //     }
-
-    //     const fetchedNFTsIds = JSON.stringify(
-    //       fetchedNFTs.map((item) => {
-    //         return item.tokenId;
-    //       })
-    //     );
-    //     console.log(fetchedNFTsIds);
-    //     await getBalanceOfBatch(fetchedNFTsIds);
-    //     // setMomoNfts(fetchedNFTs);
-    //   } catch (error) {
-    //     console.error("Cannot get NFT", error);
-    //   }
-    // };
-
     const getBalanceOfBatch = async (fetchedNFTsIds) => {
       try {
         console.log("페치엔애프티", fetchedNFTsIds);
@@ -325,9 +284,6 @@ const Momo = ({ language }) => {
 
     // 스테이킹 된 nft 가져오기
     const getStakingNftList = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
       setDataStatus(false);
       try {
         const res = await axios.get(
@@ -347,6 +303,28 @@ const Momo = ({ language }) => {
       }
     };
 
+    // 팀스테이킹 된 nft id 가져오기
+    const getTeamStakingNftList = async () => {
+      // setDataStatus(false);
+      try {
+        const res = await axios.get(
+          `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
+        );
+        console.log("팀스테이킹 리스트=========", res.data[1]);
+        const fetchTeamStakingList = res.data[1];
+        const momoNftIds = [].concat(
+          ...fetchTeamStakingList.map((item) => item.member)
+        );
+        console.log(momoNftIds);
+        setTeamStakingData(momoNftIds);
+        // setTeamStakingNftList(fetchTeamStakingList);
+      } catch (err) {
+        console.log("팀스테이킹 리스트 에러 ==========", err);
+      } finally {
+        // setDataStatus(true);
+      }
+    };
+
     const getReward = async () => {
       try {
         const res = await axios.get(
@@ -362,6 +340,7 @@ const Momo = ({ language }) => {
 
     fetchNFTs();
     getStakingNftList();
+    getTeamStakingNftList();
     // getBalanceOfBatch();
     getReward();
   }, [walletAddress]);
@@ -747,7 +726,8 @@ const Momo = ({ language }) => {
                   <ul className="main__momo-list">
                     {momoNftData.slice(start, end).map((item) => (
                       <li className="momo-item" key={item.id}>
-                        {stakingData.includes(parseInt(item.id)) ? null : (
+                        {stakingData.includes(parseInt(item.id)) ||
+                        teamStakingData.includes(parseInt(item.id)) ? null : (
                           <input
                             type="checkbox"
                             className="momo-check"
@@ -760,14 +740,17 @@ const Momo = ({ language }) => {
                         <div className="momo-images">
                           <img src={item.image} alt="nft" />
                         </div>
-                        {/* stakingData.includes(parseInt(item.id)) */}
 
-                        {stakingData.includes(parseInt(item.id)) ? (
+                        {/* 싱글 스테이킹 또는 팀 스테이킹 중 ui */}
+                        {stakingData.includes(parseInt(item.id)) ||
+                        teamStakingData.includes(parseInt(item.id)) ? (
                           <div className="momo-info">
                             <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
                               {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
-                              {true ? "Now Staking" : "Now Team Staking"}
+                              {stakingData.includes(parseInt(item.id))
+                                ? "Now Staking"
+                                : "Now Team Staking"}
                             </span>
                             {/* <span className="team-staking-text"> */}
                             {/* 팀 스테이킹이면 해당 텍스트 보여주기 */}
@@ -957,6 +940,7 @@ const Momo = ({ language }) => {
           language={language}
           reward={reward}
           momoSelectData={momoSelectData}
+          claimType="momoClaim"
         />
       )}
     </>

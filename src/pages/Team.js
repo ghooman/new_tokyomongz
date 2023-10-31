@@ -34,9 +34,6 @@ import {
 } from "@thirdweb-dev/react";
 import Web3 from "web3";
 import axios from "axios";
-import mongzDummyData from "../data/tmhcDummyData";
-import momoDummyData from "../data/momoDummyData";
-import teamDummyData from "../data/teamDummyData";
 import AndIcon from "../assets/images/and-icon.svg";
 import TeamStakingCancelModal from "../components/TeamStakingCancelModal";
 import TeamStakingCancelConfirmModal from "../components/TeamStakingCancelConfirmModal";
@@ -155,7 +152,7 @@ const Team = ({ language }) => {
   const handleAllChecked = () => {
     // setIsChecked
     if (isChecked.length === 0) {
-      let allIds = nftData
+      let allIds = teamStakingData
         .slice(start, end)
         .filter((item) => {
           return !stakingData.includes(item.id);
@@ -163,7 +160,7 @@ const Team = ({ language }) => {
         .map((item) => item.id);
       setIsChecked(allIds);
 
-      let allDatas = nftData
+      let allDatas = teamStakingData
         .slice(start, end)
         .filter((item) => {
           return !stakingData.includes(item.id);
@@ -186,12 +183,12 @@ const Team = ({ language }) => {
   const walletAddress = useAddress();
   console.log(walletAddress);
   // const {
-  //   data: nftData,
+  //   data: teamStakingData,
   //   isLoading,
   //   error,
   // } = useOwnedNFTs(importTmhc, walletAddress);
   //
-  // console.log(nftData);
+  // console.log(teamStakingData);
 
   //
 
@@ -209,35 +206,37 @@ const Team = ({ language }) => {
 
   // const nftData2 = [{}];
 
-  const [nftData, setNftData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (nftData) {
-      setIsLoading(() => {
-        return true;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
-    }
-  }, [nftData]);
+  // useEffect(() => {
+  //   if (teamStakingData) {
+  //     setIsLoading(() => {
+  //       return true;
+  //     });
+  //   } else {
+  //     setIsLoading(() => {
+  //       return true;
+  //     });
+  //   }
+  // }, [teamStakingData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
+  const [teamStakingData, setTeamStakingData] = useState([]);
+  const [tmhcStakingData, setTmhcStakingData] = useState([]);
+  const [momoStakingData, setMomoStakingData] = useState([]);
+  const [newTeamStakingData, setNewTeamStakingData] = useState([]);
+
   console.log("스테이킹 nft 목록 ==========", stakingData);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
-
-  //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
 
   // ========== 값을 가져왔나 확인 =============
   const [dataStatus, setDataStatus] = useState(false);
 
   console.log(dataStatus);
   useEffect(() => {
-    setNftData(() => {
-      return [];
-    });
+    // setTeamStakingData(() => {
+    //   return [];
+    // });
 
     setIsChecked([]);
     setSelectData([]);
@@ -252,7 +251,6 @@ const Team = ({ language }) => {
       for (let i = 0; i < balances.length; i++) {
         if (balances[i] === "1") {
           promises.push(
-            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
             axios.get("https://www.tokyo-test.shop/api/get_json_data", {
               params: {
                 id: i + 1,
@@ -260,7 +258,6 @@ const Team = ({ language }) => {
             })
           );
         }
-        // console.log(promises);
       }
 
       Promise.all(promises)
@@ -271,31 +268,40 @@ const Team = ({ language }) => {
             name: res.data.name,
             image: res.data.image,
           }));
-          // setNftData(newData); 기존 사용 되는 코드
-          setNftData(teamDummyData); // 임시로 더미로 바꿔주었습니다.
+          // setTeamStakingData(newData); 기존 사용 되는 코드
+          // setTeamStakingData(teamStakingData); // 임시로 더미로 바꿔주었습니다.
           console.log(newData, "뉴데이터");
         })
         .catch((error) => {
           console.error(error);
         });
     }
-    const getStakingNftList = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
-      setDataStatus(false);
-      try {
-        const res = await axios.post(
-          "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
-          data
-        );
-        console.log("스테이킹 리스트=========", res);
-        setStakingData(res.data);
-      } catch (err) {
-        console.log("스테이킹 리스트 에러 ==========", err);
-      } finally {
-        setDataStatus(true);
-      }
+    // const getStakingNftList = async () => {
+    //   const data = {
+    //     address: walletAddress, // 현재 지갑
+    //   };
+    //   setDataStatus(false);
+    //   try {
+    //     const res = await axios.post(
+    //       "https://www.tokyo-test.shop/api/getGStakedTMHCwithVrify",
+    //       data
+    //     );
+    //     console.log("스테이킹 리스트=========", res);
+    //     setStakingData(res.data);
+    //   } catch (err) {
+    //     console.log("스테이킹 리스트 에러 ==========", err);
+    //   } finally {
+    //     setDataStatus(true);
+    //   }
+    // };
+
+    //  팀스테이킹을 가져오는 코드
+    const fetchTeamStakingData = async () => {
+      const res = await axios.get(
+        `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
+      );
+      console.log("스테이킹1", res);
+      setTeamStakingData(res.data[1]);
     };
 
     const getReward = async () => {
@@ -314,13 +320,56 @@ const Team = ({ language }) => {
       }
     };
 
-    getStakingNftList();
+    // fetchTeamStakingData().then(() => {
+    //   fetchTmhcStakingData();
+    //   fetchMomoStakingData();
+    // });
+    fetchTeamStakingData();
+    console.log("팀 팀스테이킹 정보", teamStakingData);
+
     getBalanceOfBatch();
     getReward();
   }, [walletAddress]);
+  // 팀스테이킹 정보를 가져오고 나서 실행됩니다.
+  useEffect(() => {
+    // Tmhc 를 가져오는 코드
+    const fetchTmhcStakingData = async () => {
+      const tokenIds = teamStakingData.map((item) => item.leader);
+      const res = await axios.get(
+        "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
+        {
+          params: {
+            tokenIds: JSON.stringify(tokenIds), //
+          },
+        }
+      );
+      setTmhcStakingData(res.data);
+    };
 
-  console.log("nftData==================", nftData);
-  console.log("소유한 nft 개수 =============", nftData.length);
+    // momo 를 가져오는 코드
+    const fetchMomoStakingData = async () => {
+      const tokenIds = teamStakingData.map((item) => item.member);
+
+      const res = await axios.get(
+        "https://mongz-api.sevenlinelabs.app/get_metadata_momo",
+        {
+          params: {
+            tokenIds: JSON.stringify(tokenIds), //
+          },
+        }
+      );
+      setMomoStakingData(res.data);
+    };
+
+    fetchTmhcStakingData();
+    fetchMomoStakingData();
+  }, [teamStakingData]);
+
+  console.log("몽즈 팀스테이킹 정보", tmhcStakingData);
+  console.log("모모 팀스테이킹 정보", momoStakingData);
+
+  console.log("teamStakingData==================", teamStakingData);
+  console.log("소유한 nft 개수 =============", teamStakingData.length);
 
   // 스테이킹 된 목록 확인하기
   const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
@@ -471,14 +520,14 @@ const Team = ({ language }) => {
                 Total :&nbsp;
                 {(selectedState === "All" || selectedState === "すべて") && (
                   <span className="header__text--qtt">
-                    {nftData ? nftData.length : 0}
+                    {teamStakingData ? teamStakingData.length : 0}
                   </span>
                 )}
                 {(selectedState === "Staking" ||
                   selectedState === "Staking中") && (
                   <span className="header__text--qtt">
-                    {nftData
-                      ? nftData.filter((item) => {
+                    {teamStakingData
+                      ? teamStakingData.filter((item) => {
                           return stakingData.includes(parseInt(item.id));
                         }).length
                       : 0}
@@ -487,8 +536,8 @@ const Team = ({ language }) => {
                 {(selectedState === "Ready for staking" ||
                   selectedState === "未Staking") && (
                   <span className="header__text--qtt">
-                    {nftData
-                      ? nftData.filter((item) => {
+                    {teamStakingData
+                      ? teamStakingData.filter((item) => {
                           return !stakingData.includes(parseInt(item.id));
                         }).length
                       : 0}
@@ -502,10 +551,10 @@ const Team = ({ language }) => {
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
-              ) : momoDummyData.length > 0 && dataStatus ? (
+              ) : momoStakingData.length > 0 ? (
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <>
-                    {teamDummyData.slice(start, end).map((team) => (
+                    {teamStakingData.slice(start, end).map((team) => (
                       <div className="main__team-item-box">
                         <div className="main__team-item-top">
                           <div className="main__team-item-text">
@@ -565,7 +614,7 @@ const Team = ({ language }) => {
                 ((selectedState === "Staking" ||
                   selectedState === "Staking中") && (
                   <ul className="main__momo-list">
-                    {momoDummyData
+                    {momoStakingData
 
                       .filter((item) => {
                         return stakingData.includes(parseInt(item.id));
@@ -602,8 +651,7 @@ const Team = ({ language }) => {
                 ((selectedState === "Ready for staking" ||
                   selectedState === "未Staking") && (
                   <ul className="main__momo-list">
-                    {momoDummyData
-
+                    {momoStakingData
                       .filter((item) => {
                         return !stakingData.includes(parseInt(item.id));
                       })
@@ -652,7 +700,7 @@ const Team = ({ language }) => {
                 <div className="loading">Now loading...</div>
               )}
 
-              {nftData === undefined ? null : (
+              {teamStakingData === undefined ? null : (
                 <div className="pagination-box">
                   <Pagination
                     // 현재 보고있는 페이지
@@ -663,16 +711,16 @@ const Team = ({ language }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? nftData.filter((item) => {
+                        ? teamStakingData.filter((item) => {
                             return stakingData.includes(parseInt(item.id));
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? nftData.filter((item) => {
+                        ? teamStakingData.filter((item) => {
                             return !stakingData.includes(parseInt(item.id));
                           }).length
-                        : nftData
-                        ? nftData.length
+                        : teamStakingData
+                        ? teamStakingData.length
                         : 0
                     }
                     // 표시할 페이지수

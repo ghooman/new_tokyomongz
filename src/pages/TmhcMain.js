@@ -906,7 +906,6 @@ const Main = ({ language }) => {
                               <button
                                 className="btn-cancel-staking"
                                 onClick={() =>
-                                  stakingData.includes(parseInt(item.id)) ||
                                   teamStakingNftId.includes(parseInt(item.id))
                                     ? handleCancelTeamStakingModal(
                                         item.image,
@@ -1029,7 +1028,6 @@ const Main = ({ language }) => {
                                 <button
                                   className="btn-cancel-staking"
                                   onClick={() =>
-                                    stakingData.includes(parseInt(item.id)) ||
                                     teamStakingNftId.includes(parseInt(item.id))
                                       ? handleCancelTeamStakingModal(
                                           item.image,

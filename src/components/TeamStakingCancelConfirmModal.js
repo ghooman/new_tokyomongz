@@ -133,8 +133,8 @@ const TeamStakingFailModal = ({
   const modalClose = () => {
     setFailModalControl(false);
     if (
-      errMsg.includes("のステーキング処理に成功しました。") ||
-      errMsg.includes("was successful.")
+      errMsg.includes("のステーキングの解除処理が完了しました") ||
+      errMsg.includes("has been unstaked")
     ) {
       window.location.reload();
     }

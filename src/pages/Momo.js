@@ -348,108 +348,11 @@ const Momo = ({ language }) => {
   console.log("nftData==================", momoNftData);
   console.log("소유한 nft 개수 =============", momoNftData.length);
 
-  // 스테이킹 된 목록 확인하기
-  const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
-  // const { data: stakingData, isLoading: stakingDataIsLoading } =
-  //   useContractRead(stakingTmhc, "getStakedTMHC", walletAddress);
 
-  // 겟 리워드
-  // const { data: rewardData, isLoading: rewardDataIsLoading } = useContractRead(
-  //   stakingTmhc,
-  //   "calRewardAll",
-  //   walletAddress
-  // );
 
   const [reward, setReward] = useState("");
   console.log(reward);
-  // useEffect(() => {
-  //   if (rewardData) {
-  //     const newReward = (parseInt(rewardData._hex, 16) / 10 ** 18).toFixed(4);
-  //     setReward(newReward);
-  //   }
-  // }, [rewardData, walletAddress]);
-
-  // add mzc
-  // const addTokenToWallet = async () => {
-  //   try {
-  //     if (window.ethereum) {
-  //       const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //       const signer = provider.getSigner();
-  //       const tokenContract = new ethers.Contract(
-  //         MONGS_COIN,
-  //         ["function symbol() view returns (string)"],
-  //         signer
-  //       );
-  //       const symbol = await tokenContract.symbol();
-  //       await window.ethereum.request({
-  //         method: "wallet_watchAsset",
-  //         params: {
-  //           type: "ERC20",
-  //           options: {
-  //             address: MONGS_COIN,
-  //             symbol: "MZC",
-  //             decimals: 18,
-  //             // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
-  //           },
-  //         },
-  //       });
-  //     } else {
-  //       console.error("MetaMask is not installed");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // mongz coin balance
-  const { data: mzcBalanceData, isLoading: mczBalance } = useContractRead(
-    mongzContract,
-    "balanceOf",
-    walletAddress
-  );
-
-  const mzcBalance = mzcBalanceData
-    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
-    : undefined;
-
-  // ==================== 스테이킹 ======================
-  // const handleStaking = async () => {
-  //   const data = {
-  //     address: walletAddress, // 현재 지갑
-  //     // workNFT: isChecked,
-  //     workNFT: [7],
-  //     // 선택한 목록
-  //   };
-
-  //   try {
-  //     const res = await axios.post("https://www.tokyo-test.shop/api/StakeTMHC", data);
-  //     console.log("스테이킹=================", res);
-  //     // window.location.reload();
-  //   } catch (err) {
-  //     console.log(err);
-  //     // setFailModalControl(true);
-  //   }
-  // };
-  // ================= 언스테이킹 ===============
-  // const handleUnStaking = async () => {
-  //   const data = {
-  //     address: walletAddress, // 현재 지갑
-  //     // workNFT: isChecked,
-  //     workNFT: [7],
-  //     // 선택한 목록
-  //   };
-
-  //   try {
-  //     const res = await axios.post(
-  //       "https://www.tokyo-test.shop/api/unStakeTMHC",
-  //       data
-  //     );
-  //     console.log("언스테이킹=================", res);
-  //     // window.location.reload();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  
 
   console.log(language);
   return (

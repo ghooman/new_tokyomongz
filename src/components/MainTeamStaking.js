@@ -314,6 +314,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       }
     };
     // getBalanceOfBatch();
+
+
+    
     fetchNFTs();
     getStakingNftList();
   }, [walletAddress]);
@@ -574,7 +577,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               </span>
               <div>
                 <div className="left__menu">
-                  <div className="state-select-box">
+                  {/* <div className="state-select-box">
                     <button
                       className="btn--state-select"
                       onClick={handleDropdownClick}
@@ -635,7 +638,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         </li>
                       </ul>
                     )}
-                  </div>
+                  </div> */}
 
                   {language === "EN" ? (
                     <span className="header__text">

@@ -351,7 +351,7 @@ const Main = ({ language }) => {
         console.log(momoNftIds);
         // setTeamStakingNftList(fetchTeamStakingList);
 
-        getTeamStakingMomoNft(momoNftIds, fetchTeamStakingList);
+        await getTeamStakingMomoNft(momoNftIds, fetchTeamStakingList);
       } catch (err) {
         console.log("팀스테이킹 리스트 에러 ==========", err);
       } finally {

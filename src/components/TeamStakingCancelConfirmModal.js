@@ -136,7 +136,7 @@ const TeamStakingFailModal = ({
       errMsg.includes("のステーキング処理に成功しました。") ||
       errMsg.includes("was successful.")
     ) {
-      window.location.href = "/team";
+      window.location.reload();
     }
   };
   console.log(errMsg);

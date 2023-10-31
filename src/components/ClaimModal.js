@@ -13,7 +13,13 @@ import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
 
 import axios from "axios";
 
-const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
+const ClaimModal = ({
+  language,
+  reward,
+  selectData,
+  momoSelectData,
+  pageName,
+}) => {
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleCloseModal = () => {
@@ -21,7 +27,8 @@ const ClaimModal = ({ language, reward, selectData, momoSelectData }) => {
     document.body.style.overflow = "";
   };
 
-  console.log(momoSelectData);
+  console.log("셀렉트데이터", selectData);
+  console.log("모모셀렉트데이터", pageName);
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 
   const handleConfirmModal = () => {
@@ -178,7 +185,7 @@ const ClaimConfirm = ({
       return;
     }
     try {
-      const res = await axios.post(
+      const res = axios.post(
         apiUrl
         // {
         //   params: {

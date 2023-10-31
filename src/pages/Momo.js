@@ -37,6 +37,7 @@ import axios from "axios";
 import momoDummyData from "../data/momoDummyData";
 
 const Momo = ({ language }) => {
+  const pageName = "momo";
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
@@ -957,6 +958,7 @@ const Momo = ({ language }) => {
           language={language}
           reward={reward}
           momoSelectData={momoSelectData}
+          pageName={pageName}
         />
       )}
     </>

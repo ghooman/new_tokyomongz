@@ -1,6 +1,9 @@
 import React from "react";
 import "./TeamStakingConfirmModal.scss";
+import { useAddress } from "@thirdweb-dev/react";
 const TeamStakingConfirmModal = ({ language, setTeamStakingConfirmModal }) => {
+  const walletAddress = useAddress();
+  console.log(walletAddress);
   return (
     <div className="modal-background">
       <div className="confirm-modal-background">

@@ -358,33 +358,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       }
     };
 
-    const getReward = async () => {
-      const data = {
-        address: walletAddress, // 현재 지갑
-      };
-      try {
-        const res = await axios.post(
-          // 팀스테이킹 주소가 들어가야될꺼 같습니다.
-          "https://www.tokyo-test.shop/api/calRewardTMHCBatch",
-          data
-        );
-        setReward(res.data);
-
-        // setNftData(res.data);
-        // setTeamStakingMomoData(res.data); 임시
-        // setNftData(momoDummyData); 더미 사용
-        // 더미사용
-        console.log("ㄹ리워드 ==========", res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     // getBalanceOfBatch();
     fetchNFTs();
     getStakingNftList();
-    getReward();
-    setTeamStakingMomoData();
   }, [walletAddress]);
 
   console.log("nftData==================", nftData);

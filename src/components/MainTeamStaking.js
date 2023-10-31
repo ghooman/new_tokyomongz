@@ -357,7 +357,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         setDataStatus(true);
       }
     };
-
     // getBalanceOfBatch();
     fetchNFTs();
     getStakingNftList();

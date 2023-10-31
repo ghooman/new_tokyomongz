@@ -12,7 +12,7 @@
   .create-modal-body {
     position: relative;
     width: 460px;
-    height: 625px;
+    height: 685px;
     border-radius: 8px;
     border: 1px solid #545454;
     background: #000;
@@ -93,6 +93,15 @@
       justify-content: flex-start;
       border-bottom: 1px solid #545454;
       padding-bottom: 24px;
+      &::-webkit-scrollbar-thumb {
+        background-color: #545454;
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar {
+        // background-color: #545454;
+        border-radius: 10px;
+        height: 8px;
+      }
       .momo-box__item {
         display: flex;
         flex-direction: column;
@@ -214,7 +223,7 @@
   .create-modal-background {
     .create-modal-body {
       width: 320px;
-      height: 680px;
+      height: auto;
       .create-modal-text-box {
         ul {
           li {

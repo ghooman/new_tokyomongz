@@ -8,12 +8,11 @@ const TeamStakingConfirmModal = ({
   teamStakingMongzData,
   teamStakingMomoData,
 }) => {
+  // 팀 스테이킹 등록할때 필요한 정보입니다.
   const walletAddress = useAddress();
   const tmhcIds = teamStakingMongzData.id;
   const momoIds = teamStakingMomoData.map((momo) => momo.id);
 
-  console.log("몽즈", tmhcIds);
-  console.log("모모아이디", momoIds);
   const postTeamStakingNftList = async () => {
     try {
       const res = await axios.post(
@@ -22,7 +21,7 @@ const TeamStakingConfirmModal = ({
         {
           params: {
             address: walletAddress,
-            tmhcIds: JSON.stringify(tmhcIds),
+            tmhcIds: tmhcIds,
             momoIds: JSON.stringify(momoIds),
           },
         }

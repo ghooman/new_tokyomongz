@@ -590,31 +590,33 @@ const Team = ({ language }) => {
                           <div className="main__team-item-and-icon">
                             <img src={AndIcon} alt="andIcon" />
                           </div>
-                          {team.member.map((member) => (
-                            <div className="main__team-item-momo-box">
-                              <div className="main__team-item-momo-img">
-                                <div
-                                  className={`momo-rating ${getGradeNameForValue(
-                                    member.attributes[
-                                      member.attributes.length - 1
-                                    ].value
-                                  )}`}
-                                >
-                                  {
-                                    member.attributes[
-                                      member.attributes.length - 1
-                                    ].value
-                                  }
+                          <div className="main__team-item-momo-box-container">
+                            {team.member.map((member) => (
+                              <div className="main__team-item-momo-box">
+                                <div className="main__team-item-momo-img">
+                                  <div
+                                    className={`momo-rating ${getGradeNameForValue(
+                                      member.attributes[
+                                        member.attributes.length - 1
+                                      ].value
+                                    )}`}
+                                  >
+                                    {
+                                      member.attributes[
+                                        member.attributes.length - 1
+                                      ].value
+                                    }
+                                  </div>
+                                  <img src={member.image} alt="momoImg" />
                                 </div>
-                                <img src={member.image} alt="momoImg" />
+                                <span className="main__team-item-momo-title">
+                                  {member.name}
+                                </span>
+                                {/* 임시로 고정 값으로 두겠습니다. */}
+                                <span>300%</span>
                               </div>
-                              <span className="main__team-item-momo-title">
-                                {member.name}
-                              </span>
-                              {/* 임시로 고정 값으로 두겠습니다. */}
-                              <span>300%</span>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
                         </div>
                       </div>
                     ))}

@@ -241,18 +241,8 @@ const Main = ({ language }) => {
   const [teamStakingNftData, setTeamStakingNftData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    if (nftData) {
-      setIsLoading(() => {
-        return true;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
-    }
-  }, [nftData]);
+  const [isLoading, setIsLoading] = useState(true);
+
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -384,7 +374,6 @@ const Main = ({ language }) => {
         console.log(err);
       }
     };
-
     console.log(teamStakingNftData);
 
     // 수령 가능한 리워드 수량
@@ -408,11 +397,6 @@ const Main = ({ language }) => {
     getReward();
   }, [walletAddress]);
 
-  console.log("nftData==================", nftData);
-  console.log("소유한 nft 개수 =============", nftData.length);
-  console.log("$nftData.id:", nftData);
-  console.log("$teamStakingNftData.leader:", teamStakingNftData);
-  console.log("$teamStakingNftData.member:", teamStakingNftData);
   // 스테이킹 된 목록 확인하기
   const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
   // const { data: stakingData, isLoading: stakingDataIsLoading } =
@@ -545,11 +529,13 @@ const Main = ({ language }) => {
         return "";
     }
   };
-  console.log(language);
-  console.log("팀스테이킹데이터", teamStakingNftData);
 
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-  console.log(teamStakingNftId);
+  useEffect(() => {
+    if (teamStakingNftData.length > 0) {
+      setIsLoading(false);
+    }
+  }, [teamStakingNftData]);
   return (
     <>
       <Nav />

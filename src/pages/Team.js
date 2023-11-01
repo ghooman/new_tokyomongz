@@ -541,171 +541,85 @@ const Team = ({ language }) => {
                 </div>
               ) : // 만약 지갑이 연결되있고,NFT 1개이상 보유하고있다면 팀스테이킹 데이터를 출력합니다.
               newTeamStakingData && newTeamStakingData.length > 0 ? (
-                ((selectedState === "All" || selectedState === "すべて") && (
-                  <>
-                    {newTeamStakingData.slice(start, end).map((team) => (
-                      <div className="main__team-item-box">
-                        <div className="main__team-item-top">
-                          <div className="main__team-item-text">
-                            <span className="main__team-item-title">
-                              {team.leader.name}
-                            </span>
-                            <span>
-                              {/* 정확한 수치가 들어오면 고정값을 풀어줍니다. */}
-                              BOOST <span>560%</span>
-                            </span>
-                            {/* 정확한 수치가 들어오면 고정값(임시)을 풀어줍니다. */}
-                            <span>
-                              Default 8.92MZC/Day + BOOST 41.032MZC/Day =
-                              <span>49.952 MZC / DAY</span>
-                            </span>
-                          </div>
-                          <div className="main__team-item-btn-box">
-                            <button
-                              className="main__team-item-cancel-btn"
-                              onClick={() =>
-                                handleCancelTeamStakingModal(
-                                  team.leader.image,
-                                  team.leader.id,
-                                  team.leader.name,
-                                  newTeamStakingData
-                                )
-                              }
-                            >
-                              Cancel Team Staking
-                            </button>
-                          </div>
+                <>
+                  {newTeamStakingData.slice(start, end).map((team) => (
+                    <div className="main__team-item-box">
+                      <div className="main__team-item-top">
+                        <div className="main__team-item-text">
+                          <span className="main__team-item-title">
+                            {team.leader.name}
+                          </span>
+                          <span>
+                            {/* 정확한 수치가 들어오면 고정값을 풀어줍니다. */}
+                            BOOST <span>560%</span>
+                          </span>
+                          {/* 정확한 수치가 들어오면 고정값(임시)을 풀어줍니다. */}
+                          <span>
+                            Default 8.92MZC/Day + BOOST 41.032MZC/Day =
+                            <span>49.952 MZC / DAY</span>
+                          </span>
                         </div>
-                        <div className="main__team-item-bottom">
-                          <div className="main__team-item-mongz-box">
-                            <div className="main__team-item-mongz-img">
-                              <img src={team.leader.image} alt="mongzImg" />
-                            </div>
-                            <span className="main__team-item-mongz-title">
-                              {team.leader.name}
-                            </span>
-                            {/* 임시로 고정 값으로 두겠습니다. */}
-                            <span>560%</span>
-                          </div>
-                          <div className="main__team-item-and-icon">
-                            <img src={AndIcon} alt="andIcon" />
-                          </div>
-                          <div className="main__team-item-momo-box-container">
-                            {team.member.map((member) => (
-                              <div className="main__team-item-momo-box">
-                                <div className="main__team-item-momo-img">
-                                  <div
-                                    className={`momo-rating ${getGradeNameForValue(
-                                      member.attributes[
-                                        member.attributes.length - 1
-                                      ].value
-                                    )}`}
-                                  >
-                                    {
-                                      member.attributes[
-                                        member.attributes.length - 1
-                                      ].value
-                                    }
-                                  </div>
-                                  <img src={member.image} alt="momoImg" />
-                                </div>
-                                <span className="main__team-item-momo-title">
-                                  {member.name}
-                                </span>
-                                {/* 임시로 고정 값으로 두겠습니다. */}
-                                <span>300%</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </>
-                )) ||
-                ((selectedState === "Staking" ||
-                  selectedState === "Staking中") && (
-                  <ul className="main__momo-list">
-                    {momoStakingData
-                      .filter((item) => {
-                        return stakingData.includes(parseInt(item.id));
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
-                          </div>
-
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state now-staking">
-                              Now Staking
-                            </span>
-                            <button
-                              className="btn-cancel-staking"
-                              onClick={() =>
-                                handleCancelStakingModal(
-                                  item.image,
-                                  item.id,
-                                  item.name
-                                )
-                              }
-                            >
-                              Cancel Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                )) ||
-                ((selectedState === "Ready for staking" ||
-                  selectedState === "未Staking") && (
-                  <ul className="main__momo-list">
-                    {momoStakingData
-                      .filter((item) => {
-                        return !stakingData.includes(parseInt(item.id));
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <input
-                            type="checkbox"
-                            className="momo-check"
-                            onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.momoImg,
-                                item.momoName
+                        <div className="main__team-item-btn-box">
+                          <button
+                            className="main__team-item-cancel-btn"
+                            onClick={() =>
+                              handleCancelTeamStakingModal(
+                                team.leader.image,
+                                team.leader.id,
+                                team.leader.name,
+                                newTeamStakingData
                               )
                             }
-                          />
-                          <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
+                          >
+                            Cancel Team Staking
+                          </button>
+                        </div>
+                      </div>
+                      <div className="main__team-item-bottom">
+                        <div className="main__team-item-mongz-box">
+                          <div className="main__team-item-mongz-img">
+                            <img src={team.leader.image} alt="mongzImg" />
                           </div>
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state">
-                              Ready for Staking
-                            </span>
-
-                            <button
-                              className="btn--staking"
-                              onClick={() =>
-                                handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
-                                  item.id
-                                )
-                              }
-                            >
-                              Single Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                ))
+                          <span className="main__team-item-mongz-title">
+                            {team.leader.name}
+                          </span>
+                          {/* 임시로 고정 값으로 두겠습니다. */}
+                          <span>560%</span>
+                        </div>
+                        <div className="main__team-item-and-icon">
+                          <img src={AndIcon} alt="andIcon" />
+                        </div>
+                        <div className="main__team-item-momo-box-container">
+                          {team.member.map((member) => (
+                            <div className="main__team-item-momo-box">
+                              <div className="main__team-item-momo-img">
+                                <div
+                                  className={`momo-rating ${getGradeNameForValue(
+                                    member.attributes[
+                                      member.attributes.length - 1
+                                    ].value
+                                  )}`}
+                                >
+                                  {
+                                    member.attributes[
+                                      member.attributes.length - 1
+                                    ].value
+                                  }
+                                </div>
+                                <img src={member.image} alt="momoImg" />
+                              </div>
+                              <span className="main__team-item-momo-title">
+                                {member.name}
+                              </span>
+                              {/* 임시로 고정 값으로 두겠습니다. */}
+                              <span>300%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </>
               ) : (
                 <div className="loading">Now loading...</div>
               )}

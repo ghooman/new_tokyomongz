@@ -42,7 +42,6 @@ const Team = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
-
   // 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);
@@ -184,8 +183,14 @@ const Team = ({ language }) => {
   const [tmhcStakingData, setTmhcStakingData] = useState([]);
   const [momoStakingData, setMomoStakingData] = useState([]);
   const [newTeamStakingData, setNewTeamStakingData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  console.log("스테이킹 nft 목록 ==========", stakingData);
+  // 로딩 상태 조건
+  useEffect(() => {
+    if (teamStakingData.length > 0) {
+      setIsLoading(false);
+    }
+  }, [teamStakingData]);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   // ========== 값을 가져왔나 확인 =============
@@ -255,8 +260,8 @@ const Team = ({ language }) => {
             ),
           };
         });
-        console.log("모모nft", res);
-        console.log("모모데이타 체인지", changeMomoData);
+        console.log("%모모nft", res);
+        console.log("%모모데이타 체인지", changeMomoData);
         await getTeamStakingTmhcData(tmhcNftIds, changeMomoData);
       } catch (err) {
         console.log(err);
@@ -275,7 +280,7 @@ const Team = ({ language }) => {
           }
         );
 
-        console.log("겟도쿄", res);
+        console.log("%겟도쿄", res);
 
         const newData = res.data.map((item, index) => ({
           id: parseInt(item.name.slice(5)),
@@ -283,7 +288,7 @@ const Team = ({ language }) => {
           image: item.image,
         }));
 
-        console.log("뉴데이터", newData);
+        console.log("%뉴데이터", newData);
 
         console.log(changeMomoData);
 
@@ -295,10 +300,10 @@ const Team = ({ language }) => {
             ),
           };
         });
-
-        console.log("파이널 데이터", finalStakingNftData);
-
-        setTeamStakingData(newData); //더미 지울시 주석을 풀어줍니다.
+        //
+        console.log("%파이널 데이터", finalStakingNftData);
+        setTeamStakingData(newData); //tmhc의 정보들을 저장하며 이정보로 tmhc.id와팀스테이킹리더를 비교하는데 사용됩니다.
+        setNewTeamStakingData(finalStakingNftData);
       } catch (err) {
         console.log("도쿄에러", err);
       }
@@ -323,15 +328,67 @@ const Team = ({ language }) => {
     getReward();
   }, [walletAddress]);
 
+  useEffect(() => {
+    console.log("!!!뿌려줄 배열", newTeamStakingData);
+  }, [newTeamStakingData]);
+
   console.log("teamStakingData==================", teamStakingData);
   console.log("소유한 nft 개수 =============", teamStakingData.length);
 
   const [reward, setReward] = useState("");
   console.log(reward);
-
+  // 팀 스테이킹 취소,컨펌 상태 / 함수 입니다.
   const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
   const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
     useState(false);
+  const handleCancelTeamStakingModal = (
+    image,
+    id,
+    name,
+    teamStakingNftData
+  ) => {
+    document.body.style.overflow = "hidden";
+    setTeamStakingCancelModal((prev) => !prev);
+    setSelectData([
+      {
+        image: image,
+        name: name,
+        id: id,
+        teamStakingNftData: teamStakingNftData,
+      },
+    ]);
+  };
+  // 모모 등급 표시
+  const getGradeNameForValue = (value) => {
+    switch (value) {
+      case "C":
+        return "grade-C";
+      case "R":
+        return "grade-R";
+      case "SR":
+        return "grade-SR";
+      case "UR":
+        return "grade-UR";
+      default:
+        return "";
+    }
+  };
+  // 모모 등급에 따른 부스팅 수치
+  const getGradeNameForPercent = (value) => {
+    switch (value) {
+      case "C":
+        return 10;
+      case "R":
+        return 30;
+      case "SR":
+        return 100;
+      case "UR":
+        return 300;
+      default:
+        return "";
+    }
+  };
+
   console.log(language);
   return (
     <>
@@ -482,155 +539,94 @@ const Team = ({ language }) => {
               </span>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined ? (
+              {walletAddress === undefined ||
+              newTeamStakingData.length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
-              ) : momoStakingData.length > 0 ? (
-                ((selectedState === "All" || selectedState === "すべて") && (
-                  <>
-                    {teamStakingData.slice(start, end).map((team) => (
-                      <div className="main__team-item-box">
-                        <div className="main__team-item-top">
-                          <div className="main__team-item-text">
-                            <span className="main__team-item-title">
-                              {team.tmhcName}
-                            </span>
-                            <span>
-                              BOOST <span>{team.boost}%</span>
-                            </span>
-                            <span>
-                              Default {team.defaultMzcPerDay}MZC/Day + BOOST{" "}
-                              {team.boostMzcPerDay}MZC/Day =
-                              <span>{team.totalMzcPerDay} MZC / DAY</span>
-                            </span>
-                          </div>
-                          <div className="main__team-item-btn-box">
-                            <button
-                              className="main__team-item-cancel-btn"
-                              onClick={() => {
-                                setTeamStakingCancelModal((prev) => !prev);
-                                document.body.style.overflow = "hidden";
-                              }}
-                            >
-                              Cancel Team Staking
-                            </button>
-                          </div>
+              ) : isLoading || newTeamStakingData.length === 0 ? (
+                <div className="loading">Now loading...</div>
+              ) : // 만약 지갑이 연결되있고,NFT 1개이상 보유하고있다면 팀스테이킹 데이터를 출력합니다.
+              newTeamStakingData && newTeamStakingData.length > 0 ? (
+                <>
+                  {newTeamStakingData.slice(start, end).map((team) => (
+                    <div className="main__team-item-box">
+                      <div className="main__team-item-top">
+                        <div className="main__team-item-text">
+                          <span className="main__team-item-title">
+                            {team.leader.name}
+                          </span>
+                          <span>
+                            {/* 정확한 수치가 들어오면 고정값을 풀어줍니다. */}
+                            BOOST <span>560%</span>
+                          </span>
+                          {/* 정확한 수치가 들어오면 고정값(임시)을 풀어줍니다. */}
+                          <span>
+                            Default 8.92MZC/Day + BOOST 41.032MZC/Day =
+                            <span>49.952 MZC / DAY</span>
+                          </span>
                         </div>
-                        <div className="main__team-item-bottom">
-                          <div className="main__team-item-mongz-box">
-                            <div className="main__team-item-mongz-img">
-                              <img src={team.mongz.tmhcImg} alt="mongzImg" />
-                            </div>
-                            <span className="main__team-item-mongz-title">
-                              {team.mongz.tmhcName}
-                            </span>
-                            <span>{team.mongz.tmhcBoost}%</span>
+                        <div className="main__team-item-btn-box">
+                          <button
+                            className="main__team-item-cancel-btn"
+                            onClick={() =>
+                              handleCancelTeamStakingModal(
+                                team.leader.image,
+                                team.leader.id,
+                                team.leader.name,
+                                newTeamStakingData
+                              )
+                            }
+                          >
+                            Cancel Team Staking
+                          </button>
+                        </div>
+                      </div>
+                      <div className="main__team-item-bottom">
+                        <div className="main__team-item-mongz-box">
+                          <div className="main__team-item-mongz-img">
+                            <img src={team.leader.image} alt="mongzImg" />
                           </div>
-                          <div className="main__team-item-and-icon">
-                            <img src={AndIcon} alt="andIcon" />
-                          </div>
-                          {team.momo.slice(0, 4).map((item) => (
+                          <span className="main__team-item-mongz-title">
+                            {team.leader.name}
+                          </span>
+                          {/* 임시로 고정 값으로 두겠습니다. */}
+                          <span>560%</span>
+                        </div>
+                        <div className="main__team-item-and-icon">
+                          <img src={AndIcon} alt="andIcon" />
+                        </div>
+                        <div className="main__team-item-momo-box-container">
+                          {team.member.map((member) => (
                             <div className="main__team-item-momo-box">
                               <div className="main__team-item-momo-img">
-                                <img src={item.momoImg} alt="momoImg" />
+                                <div
+                                  className={`momo-rating ${getGradeNameForValue(
+                                    member.attributes[
+                                      member.attributes.length - 1
+                                    ].value
+                                  )}`}
+                                >
+                                  {
+                                    member.attributes[
+                                      member.attributes.length - 1
+                                    ].value
+                                  }
+                                </div>
+                                <img src={member.image} alt="momoImg" />
                               </div>
                               <span className="main__team-item-momo-title">
-                                {item.momoName}
+                                {member.name}
                               </span>
-                              <span>{item.momoBoost}%</span>
+                              {/* 임시로 고정 값으로 두겠습니다. */}
+                              <span>300%</span>
                             </div>
                           ))}
                         </div>
                       </div>
-                    ))}
-                  </>
-                )) ||
-                ((selectedState === "Staking" ||
-                  selectedState === "Staking中") && (
-                  <ul className="main__momo-list">
-                    {momoStakingData
-
-                      .filter((item) => {
-                        return stakingData.includes(parseInt(item.id));
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
-                          </div>
-
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state now-staking">
-                              Now Staking
-                            </span>
-                            <button
-                              className="btn-cancel-staking"
-                              onClick={() =>
-                                handleCancelStakingModal(
-                                  item.image,
-                                  item.id,
-                                  item.name
-                                )
-                              }
-                            >
-                              Cancel Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                )) ||
-                ((selectedState === "Ready for staking" ||
-                  selectedState === "未Staking") && (
-                  <ul className="main__momo-list">
-                    {momoStakingData
-                      .filter((item) => {
-                        return !stakingData.includes(parseInt(item.id));
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <input
-                            type="checkbox"
-                            className="momo-check"
-                            onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.momoImg,
-                                item.momoName
-                              )
-                            }
-                          />
-                          <div className="momo-images">
-                            <img src={item.momoImg} alt="nft" />
-                          </div>
-                          <div className="momo-info">
-                            <span className="momo-name">{item.momoName}</span>
-                            <span className="momo-staking-state">
-                              Ready for Staking
-                            </span>
-
-                            <button
-                              className="btn--staking"
-                              onClick={() =>
-                                handleStakingModal(
-                                  item.momoImg,
-                                  item.momoName,
-                                  item.id
-                                )
-                              }
-                            >
-                              Single Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                ))
+                    </div>
+                  ))}
+                </>
               ) : (
                 <div className="loading">Now loading...</div>
               )}
@@ -670,46 +666,31 @@ const Team = ({ language }) => {
             </div>
           </div>
         </div>
+        {/* 클레임 모달 */}
+        {claimModal && (
+          <ClaimModal
+            language={language}
+            reward={reward}
+            claimType="teamClaim"
+          />
+        )}
+        {/* 팀 스테이킹 취소 모달 */}
+        {teamStakingCancelModal && (
+          <TeamStakingCancelModal
+            setTeamStakingCancelModal={setTeamStakingCancelModal}
+            setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+            selectData={selectData}
+          />
+        )}
+        {/* 팀 스테이킹 취소 확정 모달 */}
+        {teamStakingCancelConfirmModal && (
+          <TeamStakingCancelConfirmModal
+            language={language}
+            setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+            selectData={selectData}
+          />
+        )}
       </div>
-
-      {/* 스테이킹 모달 */}
-      {stakingModal && (
-        <StakingModal
-          selectData={selectData}
-          setSelectData={setSelectData}
-          language={language}
-          setIsChecked={setIsChecked}
-          isChecked={isChecked}
-        />
-      )}
-      {/* 스테이킹 취소 모달 */}
-      {cancelStakingModal && (
-        <CancelStakingModal
-          selectData={selectData}
-          setSelectData={setSelectData}
-          language={language}
-          isChecked={isChecked}
-        />
-      )}
-
-      {/* 클레임 모달 */}
-      {claimModal && (
-        <ClaimModal language={language} reward={reward} claimType="teamClaim" />
-      )}
-      {/* 팀 스테이킹 취소 모달 */}
-      {teamStakingCancelModal && (
-        <TeamStakingCancelModal
-          setTeamStakingCancelModal={setTeamStakingCancelModal}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-        />
-      )}
-      {/* 팀 스테이킹 취소 확정 모달 */}
-      {teamStakingCancelConfirmModal && (
-        <TeamStakingCancelConfirmModal
-          language={language}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-        />
-      )}
     </>
   );
 };

@@ -167,6 +167,7 @@ const ClaimConfirm = ({
 
     try {
       if (claimType === "tmhcClaim") {
+        console.log("!!실패1");
         const res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`
         );
@@ -182,6 +183,7 @@ const ClaimConfirm = ({
         const res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/ClaimTeamAll?address=${walletAddress}`
         );
+        console.log("!!실패2");
         setErrMsg(res.data[1]);
         setFailModalControl(true);
       }

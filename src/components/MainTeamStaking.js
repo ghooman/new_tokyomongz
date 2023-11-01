@@ -187,19 +187,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const [singleStakingMomoIds, setSingleStakingMomoIds] = useState([]);
   const [teamStakingMomoIds, setTeamStakingMomoIds] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (teamStakingMomoData) {
-      setIsLoading(() => {
-        return false;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
-    }
-  }, [teamStakingMomoData]);
   // ================== 스테이킹 리스트 ===============
   console.log("스테이킹 nft 목록 ==========", singleStakingMomoIds);
   console.log("팀 스테이킹 nft 목록 ==========", teamStakingMomoData);
@@ -231,6 +220,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       }
     };
     const getBalanceOfBatch = async (fetchedNFTsIds) => {
+      setIsLoading(true);
       try {
         console.log("페치엔애프티", fetchedNFTsIds);
         const res = await axios.get(
@@ -246,8 +236,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           (obj) => Object.keys(obj).length > 0
         );
         setTeamStakingMomoData(nonEmptyObjects);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     };
 
@@ -632,7 +624,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {teamStakingMomoData ? teamStakingMomoData.length : 0}
+                          {teamStakingMomoData
+                            ? teamStakingMomoData.length -
+                              finalStakingMomoIds.length
+                            : 0}
                         </span>
                       )}
                       {(selectedState === "Staking" ||
@@ -667,7 +662,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {teamStakingMomoData ? teamStakingMomoData.length : 0}
+                          {teamStakingMomoData
+                            ? teamStakingMomoData.length -
+                              finalStakingMomoIds.length
+                            : 0}
                         </span>
                       )}
                       {(selectedState === "Staking" ||
@@ -749,33 +747,29 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               </div>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined ||
-              teamStakingMomoData.length === 0 ? (
-                (language === "EN" && (
-                  <div className="empty-nft">
-                    There are no NFTs in possession.
-                  </div>
-                )) ||
-                (language === "JP" && (
-                  <div className="empty-nft">
-                    There are no NFTs in possession.
-                  </div>
-                ))
-              ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && teamStakingMomoData.length > 0
+              {isLoading ? (
+                <div className="loading">Now loading...</div>
+              ) : walletAddress === undefined ||
+                teamStakingMomoData.length === 0 ? (
+                <div className="empty-nft">
+                  There are no NFTs in possession.
+                </div>
+              ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && momoNftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">
-                    {teamStakingMomoData.slice(start, end).map((item) => (
-                      <li className="tmhc-item" key={item.id}>
-                        <div
-                          className={`momo-rating ${getGradeNameForValue(
-                            item.attributes[item.attributes.length - 1].value
-                          )}`}
-                        >
-                          {item.attributes[item.attributes.length - 1].value}
-                        </div>
-                        {singleStakingMomoIds.includes(
-                          parseInt(item.id)
-                        ) ? null : (
+                    {teamStakingMomoData
+                      .filter((item) => !finalStakingMomoIds.includes(item.id))
+                      .slice(start, end)
+                      .map((item) => (
+                        <li className="tmhc-item" key={item.id}>
+                          <div
+                            className={`momo-rating ${getGradeNameForValue(
+                              item.attributes[item.attributes.length - 1].value
+                            )}`}
+                          >
+                            {item.attributes[item.attributes.length - 1].value}
+                          </div>
+
                           <input
                             type="checkbox"
                             className="tmhc-check"
@@ -790,11 +784,11 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               )
                             }
                           />
-                        )}
-                        <div className="tmhc-images">
-                          <img src={item.image} alt="nft" />
-                          <div className="team-staking-momo-box">
-                            {/* {teamStakingMomoData.slice(0, 4).map((item) => {
+
+                          <div className="tmhc-images">
+                            <img src={item.image} alt="nft" />
+                            <div className="team-staking-momo-box">
+                              {/* {teamStakingMomoData.slice(0, 4).map((item) => {
                             return (
                               <div className="team-staking-momo-img">
                                 <div className="momo-rating">UR</div>
@@ -802,25 +796,25 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               </div>
                             );
                           })} */}
+                            </div>
                           </div>
-                        </div>
-                        {/* singleStakingMomoIds.includes(parseInt(item.id) */}
+                          {/* singleStakingMomoIds.includes(parseInt(item.id) */}
 
-                        <div className="tmhc-info">
-                          <span className="tmhc-name">{item.name}</span>
-                          <span className="mongz-team-staking-text">
-                            <span>
-                              +
-                              {getGradeNameForPercent(
-                                item.attributes[item.attributes.length - 1]
-                                  .value
-                              )}
-                              %
+                          <div className="tmhc-info">
+                            <span className="tmhc-name">{item.name}</span>
+                            <span className="mongz-team-staking-text">
+                              <span>
+                                +
+                                {getGradeNameForPercent(
+                                  item.attributes[item.attributes.length - 1]
+                                    .value
+                                )}
+                                %
+                              </span>
                             </span>
-                          </span>
-                        </div>
-                      </li>
-                    ))}
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 )) ||
                 ((selectedState === "Staking" ||

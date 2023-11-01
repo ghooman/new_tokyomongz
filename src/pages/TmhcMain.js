@@ -40,6 +40,7 @@ import MainTeamStaking from "../components/MainTeamStaking";
 import TeamStakingCreateModal from "../components/TeamStakingCreateModal";
 import TeamStakingCancelModal from "../components/TeamStakingCancelModal";
 import TeamStakingCancelConfirmModal from "../components/TeamStakingCancelConfirmModal";
+import MoveTeamPageModal from "../components/MoveTeamPageModal";
 
 const Main = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
@@ -136,26 +137,11 @@ const Main = ({ language }) => {
     document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
-  // 팀 스테이킹 취소 모달
-  const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
-  const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
-    useState(false);
-  const handleCancelTeamStakingModal = (
-    image,
-    id,
-    name,
-    teamStakingNftData
-  ) => {
+  // 팀 스테이킹 이동 안내 모달
+  const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
+  const handleMoveTeamModal = () => {
     document.body.style.overflow = "hidden";
-    setTeamStakingCancelModal((prev) => !prev);
-    setSelectData([
-      {
-        image: image,
-        name: name,
-        id: id,
-        teamStakingNftData: teamStakingNftData,
-      },
-    ]);
+    setOpenMoveTeamModal((prev) => !prev);
   };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
@@ -255,18 +241,8 @@ const Main = ({ language }) => {
   const [teamStakingNftData, setTeamStakingNftData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    if (nftData) {
-      setIsLoading(() => {
-        return true;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
-    }
-  }, [nftData]);
+  const [isLoading, setIsLoading] = useState(true);
+
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -287,27 +263,30 @@ const Main = ({ language }) => {
     setSelectData([]);
 
     async function getBalanceOfBatch() {
+      setIsLoading(true);
       console.log("실행");
-      const balances = await contract.methods
-        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
-      // console.log(balances);
-      const promises = [];
 
-      // console.log("밸런스", balances);
-
-      for (let i = 0; i < balances.length; i++) {
-        if (balances[i] === "1") {
-          promises.push(
-            i + 1
-            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-          );
-        }
-      }
-      const jsonPromise = JSON.stringify(promises);
-      console.log(jsonPromise);
       try {
+        const balances = await contract.methods
+          .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+          .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
+        // console.log(balances);
+        const promises = [];
+
+        // console.log("밸런스", balances);
+
+        for (let i = 0; i < balances.length; i++) {
+          if (balances[i] === "1") {
+            promises.push(
+              i + 1
+              // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+              // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+            );
+          }
+        }
+        const jsonPromise = JSON.stringify(promises);
+        console.log(jsonPromise);
+        //////////////////////////////////////////////////////////////////////////////////
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
           {
@@ -327,8 +306,11 @@ const Main = ({ language }) => {
 
         console.log(newData);
         setNftData(newData); //더미 지울시 주석을 풀어줍니다.
+        setIsLoading(false);
+        console.log("실행됨");
       } catch (err) {
         console.log("도쿄에러", err);
+        setIsLoading(false);
       }
     }
     console.log("도쿄엔에프티", nftData);
@@ -345,10 +327,11 @@ const Main = ({ language }) => {
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);
       } finally {
+        // setIsLoading(false);
         setDataStatus(true);
       }
     };
-
+    console.log(walletAddress, "월렛지갑");
     // 팀 스테이킹 된 nft 가져오기
     const getTeamStakingNftList = async () => {
       // setDataStatus(false);
@@ -398,7 +381,6 @@ const Main = ({ language }) => {
         console.log(err);
       }
     };
-
     console.log(teamStakingNftData);
 
     // 수령 가능한 리워드 수량
@@ -422,11 +404,6 @@ const Main = ({ language }) => {
     getReward();
   }, [walletAddress]);
 
-  console.log("nftData==================", nftData);
-  console.log("소유한 nft 개수 =============", nftData.length);
-  console.log("$nftData.id:", nftData);
-  console.log("$teamStakingNftData.leader:", teamStakingNftData);
-  console.log("$teamStakingNftData.member:", teamStakingNftData);
   // 스테이킹 된 목록 확인하기
   const { contract: stakingTmhc } = useContract(STAKING_TMHC_CONTRACT);
   // const { data: stakingData, isLoading: stakingDataIsLoading } =
@@ -559,11 +536,9 @@ const Main = ({ language }) => {
         return "";
     }
   };
-  console.log(language);
-  console.log("팀스테이킹데이터", teamStakingNftData);
 
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-  console.log(teamStakingNftId);
+
   return (
     <>
       <Nav />
@@ -823,11 +798,13 @@ const Main = ({ language }) => {
                 </div>
               </div>
               <div className="nft__main">
-                {walletAddress === undefined || nftData.length === 0 ? (
+                {isLoading ? (
+                  <div className="loading">Now loading...</div>
+                ) : walletAddress === undefined || nftData.length === 0 ? (
                   <div className="empty-nft">
                     There are no NFTs in possession.
                   </div>
-                ) : nftData.length > 0 && dataStatus ? ( // isLoading === false && nftData.length > 0
+                ) : nftData.length > 0 && dataStatus ? (
                   ((selectedState === "All" || selectedState === "すべて") && (
                     <ul className="main__tmhc-list">
                       {/* tmhc원숭이들을 뿌려줍니다. */}
@@ -907,7 +884,7 @@ const Main = ({ language }) => {
                                 className="btn-cancel-staking"
                                 onClick={() =>
                                   teamStakingNftId.includes(parseInt(item.id))
-                                    ? handleCancelTeamStakingModal(
+                                    ? handleMoveTeamModal(
                                         item.image,
                                         item.id,
                                         item.name,
@@ -1029,7 +1006,7 @@ const Main = ({ language }) => {
                                   className="btn-cancel-staking"
                                   onClick={() =>
                                     teamStakingNftId.includes(parseInt(item.id))
-                                      ? handleCancelTeamStakingModal(
+                                      ? handleMoveTeamModal(
                                           item.image,
                                           item.id,
                                           item.name,
@@ -1188,20 +1165,12 @@ const Main = ({ language }) => {
         <ClaimModal language={language} reward={reward} claimType="tmhcClaim" />
       )}
 
-      {/* 팀 스테이킹 취소 모달 */}
-      {teamStakingCancelModal && (
-        <TeamStakingCancelModal
-          setTeamStakingCancelModal={setTeamStakingCancelModal}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-          selectData={selectData}
-        />
-      )}
-      {/* 팀 스테이킹 취소 확정 모달 */}
-      {teamStakingCancelConfirmModal && (
-        <TeamStakingCancelConfirmModal
+      {/* 팀 스테이킹 불가 공지 팝업 */}
+      {openMoveTeamModal && (
+        <MoveTeamPageModal
           language={language}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-          selectData={selectData}
+          handleMoveTeamModal={handleMoveTeamModal}
+          setOpenMoveTeamModal={setOpenMoveTeamModal}
         />
       )}
     </>

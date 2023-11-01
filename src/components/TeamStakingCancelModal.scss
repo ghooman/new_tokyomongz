@@ -47,25 +47,59 @@
     }
   }
   .team-staking-cancel__momo-box {
-    margin-top: 40px;
+    margin-top: 30px;
     display: flex;
     border-bottom: 1px solid #545454;
-    padding-bottom: 24px;
+    padding-bottom: 34px;
     overflow: auto;
     .team-staking-cancel__momo-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-right: 4px;
       .team-staking-cancel__momo-img {
         width: 100px;
         height: 100px;
         border: 1px solid white;
+        position: relative;
+        .momo-rating {
+          z-index: 1;
+          font-size: 12px;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 8px;
+          width: 28px;
+          height: 15px;
+          border-radius: 10px;
+          position: absolute;
+          top: 5px;
+          left: 5px;
+          border: 1px solid white;
+          // font-family: "poppins400"; 주면 글자가 상단으로 위치합니다.
+        }
+        // 등급에 따른 색변경
+        .grade-UR {
+          background-color: #be75ff;
+        }
+        .grade-SR {
+          background-color: #7593ff;
+        }
+        .grade-R {
+          background-color: #4c4c4c;
+        }
+        .grade-C {
+          background-color: #ff7575;
+        }
         img {
           width: 100%;
           height: 100%;
         }
       }
       .team-staking-cancel__momo-name {
+        white-space: normal;
+        width: 100px;
         margin-top: 8px;
         color: #fff;
         font-size: 12px;

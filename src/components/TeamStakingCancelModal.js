@@ -9,6 +9,36 @@ const TeamStakingCancelModal = ({
   selectData,
 }) => {
   console.log("팀캔슬모달", selectData);
+  // 모모 등급 표시
+  const getGradeNameForValue = (value) => {
+    switch (value) {
+      case "C":
+        return "grade-C";
+      case "R":
+        return "grade-R";
+      case "SR":
+        return "grade-SR";
+      case "UR":
+        return "grade-UR";
+      default:
+        return "";
+    }
+  };
+  // 모모 등급에 따른 부스팅 수치
+  const getGradeNameForPercent = (value) => {
+    switch (value) {
+      case "C":
+        return 10;
+      case "R":
+        return 30;
+      case "SR":
+        return 100;
+      case "UR":
+        return 300;
+      default:
+        return "";
+    }
+  };
   return (
     <div className="modal-background">
       <div className="team-staking-cancel__background">
@@ -25,6 +55,13 @@ const TeamStakingCancelModal = ({
             return (
               <div className="team-staking-cancel__momo-item">
                 <div className="team-staking-cancel__momo-img">
+                  <div
+                    className={`momo-rating ${getGradeNameForValue(
+                      item.attributes[item.attributes.length - 1].value
+                    )}`}
+                  >
+                    {item.attributes[item.attributes.length - 1].value}
+                  </div>
                   <img src={item.image} alt="momoImg" />
                 </div>
                 <span className="team-staking-cancel__momo-name">

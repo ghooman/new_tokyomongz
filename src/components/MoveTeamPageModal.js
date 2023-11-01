@@ -18,70 +18,22 @@ const MoveTeamPageModal = ({
   };
 
   return (
-    <div>
-      <div onClick={handleModalBackground} className="modal-background">
+    <div onClick={handleModalBackground} className="modal-background">
+      <div className="move-team__modal">
         {language === "EN" ? (
-          <div className="claim">
-            <div className="claim__header">
-              <span className="claim__header-title">
-                영어버전에 나오는 팝업 모달입니다.(디자인 아직 미정)
-              </span>
-            </div>
-            <div className="claim__main">
-              <ul>
-                <li>
-                  <span>is being team-staked.</span>
-                </li>
-                <li>
-                  <span>
-                    The cancellation is available on the Team-staking page.
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="claim__btn">
-              <button
-                className="btn--cancel"
-                onClick={() => handleCloseModal()}
-              >
-                OK
-              </button>
-            </div>
+          <div className="modal-text-box">
+            <p className="waiting__title">TBD</p>
+            <p className="waiting__title">TBD</p>
           </div>
         ) : (
-          <div className="claim">
-            <div className="claim__header">
-              <span className="claim__header-title">
-                일본어버전에 나오는 팝업 모달입니다.(디자인 아직 미정)
-              </span>
-              <span className="claim__header-mzc">
-                {/* <span className="claim__header-coin">{reward}</span>&nbsp;MZC */}
-              </span>
-            </div>
-            <div className="claim__main">
-              <ul>
-                <li>
-                  <span>は今チームステーキング中です。</span>
-                </li>
-                <li>
-                  <span>
-                    チームステーキングのキャンセルはチームテーキングページで可能です
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="claim__btn">
-              <button
-                className="btn--cancel"
-                onClick={() => handleCloseModal()}
-              >
-                OK
-              </button>
-            </div>
+          <div className="modal-text-box">
+            <p className="waiting__title">TBD</p>
+            <p className="waiting__title">TBD</p>
           </div>
         )}
+        <button className="btn--cancel" onClick={() => handleCloseModal()}>
+          OK
+        </button>
       </div>
     </div>
   );

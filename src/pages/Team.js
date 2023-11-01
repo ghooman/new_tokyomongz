@@ -42,7 +42,6 @@ const Team = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
-
   // 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);

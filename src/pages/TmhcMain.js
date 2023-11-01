@@ -40,6 +40,7 @@ import MainTeamStaking from "../components/MainTeamStaking";
 import TeamStakingCreateModal from "../components/TeamStakingCreateModal";
 import TeamStakingCancelModal from "../components/TeamStakingCancelModal";
 import TeamStakingCancelConfirmModal from "../components/TeamStakingCancelConfirmModal";
+import MoveTeamPageModal from "../components/MoveTeamPageModal";
 
 const Main = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
@@ -136,26 +137,11 @@ const Main = ({ language }) => {
     document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
-  // 팀 스테이킹 취소 모달
-  const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
-  const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
-    useState(false);
-  const handleCancelTeamStakingModal = (
-    image,
-    id,
-    name,
-    teamStakingNftData
-  ) => {
+  // 팀 스테이킹 이동 안내 모달
+  const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
+  const handleMoveTeamModal = () => {
     document.body.style.overflow = "hidden";
-    setTeamStakingCancelModal((prev) => !prev);
-    setSelectData([
-      {
-        image: image,
-        name: name,
-        id: id,
-        teamStakingNftData: teamStakingNftData,
-      },
-    ]);
+    setOpenMoveTeamModal((prev) => !prev);
   };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
@@ -907,7 +893,7 @@ const Main = ({ language }) => {
                                 className="btn-cancel-staking"
                                 onClick={() =>
                                   teamStakingNftId.includes(parseInt(item.id))
-                                    ? handleCancelTeamStakingModal(
+                                    ? handleMoveTeamModal(
                                         item.image,
                                         item.id,
                                         item.name,
@@ -1029,7 +1015,7 @@ const Main = ({ language }) => {
                                   className="btn-cancel-staking"
                                   onClick={() =>
                                     teamStakingNftId.includes(parseInt(item.id))
-                                      ? handleCancelTeamStakingModal(
+                                      ? handleMoveTeamModal(
                                           item.image,
                                           item.id,
                                           item.name,
@@ -1188,20 +1174,11 @@ const Main = ({ language }) => {
         <ClaimModal language={language} reward={reward} claimType="tmhcClaim" />
       )}
 
-      {/* 팀 스테이킹 취소 모달 */}
-      {teamStakingCancelModal && (
-        <TeamStakingCancelModal
-          setTeamStakingCancelModal={setTeamStakingCancelModal}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-          selectData={selectData}
-        />
-      )}
-      {/* 팀 스테이킹 취소 확정 모달 */}
-      {teamStakingCancelConfirmModal && (
-        <TeamStakingCancelConfirmModal
-          language={language}
-          setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
-          selectData={selectData}
+      {/* 팀 스테이킹 불가 공지 팝업 */}
+      {openMoveTeamModal && (
+        <MoveTeamPageModal
+          handleMoveTeamModal={handleMoveTeamModal}
+          setOpenMoveTeamModal={setOpenMoveTeamModal}
         />
       )}
     </>

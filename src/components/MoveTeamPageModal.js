@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./MoveTeamPageModal.scss";
 
 const MoveTeamPageModal = ({
@@ -22,16 +22,20 @@ const MoveTeamPageModal = ({
       <div className="move-team__modal">
         {language === "EN" ? (
           <div className="modal-text-box">
-            <p className="waiting__title">TBD</p>
-            <p className="waiting__title">TBD</p>
+            <p className="move__text">is being team-staked.</p>
+            <p className="move__text">
+              The cancellation is available on the Team-staking page.
+            </p>
           </div>
         ) : (
           <div className="modal-text-box">
-            <p className="waiting__title">TBD</p>
-            <p className="waiting__title">TBD</p>
+            <p className="move__text">は今チームステーキング中です。</p>
+            <p className="move__text">
+              チームステーキングのキャンセルはチームテーキングページで可能です
+            </p>
           </div>
         )}
-        <button className="btn--cancel" onClick={() => handleCloseModal()}>
+        <button className="btn--ok" onClick={() => handleCloseModal()}>
           OK
         </button>
       </div>

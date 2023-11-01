@@ -539,10 +539,6 @@ const Main = ({ language }) => {
 
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
 
-  console.log("로딩상태", nftData);
-  console.log("로딩상태", isLoading);
-  console.log("1", nftData.length > 0);
-  console.log(nftData.length);
   return (
     <>
       <Nav />

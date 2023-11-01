@@ -221,20 +221,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
   const [teamStakingIds, setTeamStakingIds] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log("모모데이터,", momoNftData);
-  console.log("모모데이터 팀,", teamStakingMomoData);
-  useEffect(() => {
-    if (momoNftData) {
-      setIsLoading(() => {
-        return false;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
-    }
-  }, [momoNftData]);
+  const [isLoading, setIsLoading] = useState(true);
+
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -270,6 +258,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       }
     };
     const getBalanceOfBatch = async (fetchedNFTsIds) => {
+      setIsLoading(true);
       try {
         console.log("페치엔애프티", fetchedNFTsIds);
         const res = await axios.get(
@@ -286,8 +275,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         );
         setMomoNftData(nonEmptyObjects);
         setTeamStakingMomoData(nonEmptyObjects);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     };
 
@@ -780,17 +771,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               </div>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined || momoNftData.length === 0 ? (
-                (language === "EN" && (
-                  <div className="empty-nft">
-                    There are no NFTs in possession.
-                  </div>
-                )) ||
-                (language === "JP" && (
-                  <div className="empty-nft">
-                    There are no NFTs in possession.
-                  </div>
-                ))
+              {isLoading ? (
+                <div className="loading">Now loading...</div>
+              ) : walletAddress === undefined || momoNftData.length === 0 ? (
+                <div className="empty-nft">
+                  There are no NFTs in possession.
+                </div>
               ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && momoNftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">

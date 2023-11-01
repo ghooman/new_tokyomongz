@@ -219,13 +219,8 @@ const Momo = ({ language }) => {
   // const nftData2 = [{}];
 
   const [momoNftData, setMomoNftData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (momoNftData.length > 0) {
-      setIsLoading(false);
-    }
-  }, [momoNftData]);
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
@@ -262,6 +257,7 @@ const Momo = ({ language }) => {
     };
 
     const getBalanceOfBatch = async (fetchedNFTsIds) => {
+      setIsLoading(true);
       try {
         console.log("페치엔애프티", fetchedNFTsIds);
         const res = await axios.get(
@@ -277,8 +273,10 @@ const Momo = ({ language }) => {
           (obj) => Object.keys(obj).length > 0
         );
         setMomoNftData(nonEmptyObjects);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     };
 
@@ -349,9 +347,7 @@ const Momo = ({ language }) => {
   console.log("소유한 nft 개수 =============", momoNftData.length);
 
   const [reward, setReward] = useState("");
-  console.log(reward);
 
-  console.log(language);
   return (
     <>
       <Nav />
@@ -623,7 +619,9 @@ const Momo = ({ language }) => {
               </div>
             </div>
             <div className="momo-nft__main">
-              {walletAddress === undefined || momoNftData.length === 0 ? (
+              {isLoading ? (
+                <div className="loading">Now loading...</div>
+              ) : walletAddress === undefined || momoNftData.length === 0 ? (
                 <div className="momo-empty-nft">
                   There are no NFTs in possession.
                 </div>

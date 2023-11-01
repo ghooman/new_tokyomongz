@@ -35,6 +35,7 @@ import {
 import Web3 from "web3";
 import axios from "axios";
 import momoDummyData from "../data/momoDummyData";
+import MoveTeamPageModal from "../components/MoveTeamPageModal";
 
 const Momo = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
@@ -111,7 +112,12 @@ const Momo = ({ language }) => {
     document.body.style.overflow = "hidden";
     setMomoSelectData([{ image: image, name: name, id: id }]);
   };
-
+  // 팀 스테이킹 이동 안내 모달
+  const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
+  const handleMoveTeamModal = () => {
+    document.body.style.overflow = "hidden";
+    setOpenMoveTeamModal((prev) => !prev);
+  };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
@@ -652,19 +658,21 @@ const Momo = ({ language }) => {
                                 ? "Now Staking"
                                 : "Now Team Staking"}
                             </span>
-                            {/* <span className="team-staking-text"> */}
-                            {/* 팀 스테이킹이면 해당 텍스트 보여주기 */}
-                            {/* {true && <>Now Staking</>} */}
-                            {/* </span> */}
-                            {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                             <button
                               className="momo-btn-cancel-staking"
                               onClick={() =>
-                                handleCancelStakingModal(
-                                  item.image,
-                                  item.id,
-                                  item.name
-                                )
+                                teamStakingData.includes(parseInt(item.id))
+                                  ? handleMoveTeamModal()
+                                  : // 임시주석 1101 이상없음 삭제하겠습니다.
+                                    // item.image,
+                                    // item.id,
+                                    // item.name,
+                                    // teamStakingData
+                                    handleCancelStakingModal(
+                                      item.image,
+                                      item.id,
+                                      item.name
+                                    )
                               }
                             >
                               Cancel Staking
@@ -699,7 +707,10 @@ const Momo = ({ language }) => {
                   <ul className="main__momo-list">
                     {momoNftData
                       .filter((item) => {
-                        return stakingData.includes(parseInt(item.id));
+                        return (
+                          stakingData.includes(parseInt(item.id)) ||
+                          teamStakingData.includes(parseInt(item.id))
+                        );
                       })
                       .slice(start, end)
                       .map((item) => (
@@ -711,16 +722,26 @@ const Momo = ({ language }) => {
                           <div className="momo-info">
                             <span className="momo-name">{item.name}</span>
                             <span className="momo-staking-state now-staking">
-                              Now Staking
+                              {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
+                              {stakingData.includes(parseInt(item.id))
+                                ? "Now Staking"
+                                : "Now Team Staking"}
                             </span>
                             <button
                               className="momo-btn-cancel-staking"
                               onClick={() =>
-                                handleCancelStakingModal(
-                                  item.image,
-                                  item.id,
-                                  item.name
-                                )
+                                teamStakingData.includes(parseInt(item.id))
+                                  ? handleMoveTeamModal()
+                                  : // 임시주석 1101 이상없음 삭제하겠습니다.
+                                    // item.image,
+                                    // item.id,
+                                    // item.name,
+                                    // teamStakingData
+                                    handleCancelStakingModal(
+                                      item.image,
+                                      item.id,
+                                      item.name
+                                    )
                               }
                             >
                               Cancel Staking
@@ -735,7 +756,10 @@ const Momo = ({ language }) => {
                   <ul className="main__momo-list">
                     {momoNftData
                       .filter((item) => {
-                        return !stakingData.includes(parseInt(item.id));
+                        return (
+                          !stakingData.includes(parseInt(item.id)) &&
+                          !teamStakingData.includes(parseInt(item.id))
+                        );
                       })
                       .slice(start, end)
                       .map((item) => (
@@ -841,6 +865,14 @@ const Momo = ({ language }) => {
           reward={reward}
           momoSelectData={momoSelectData}
           claimType="momoClaim"
+        />
+      )}
+      {/* 팀 스테이킹 불가 공지 팝업 */}
+      {openMoveTeamModal && (
+        <MoveTeamPageModal
+          language={language}
+          handleMoveTeamModal={handleMoveTeamModal}
+          setOpenMoveTeamModal={setOpenMoveTeamModal}
         />
       )}
     </>

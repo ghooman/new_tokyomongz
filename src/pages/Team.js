@@ -533,9 +533,9 @@ const Team = ({ language }) => {
               </span>
             </div>
             <div className="nft__main">
-              {/* 질문 nft가 없을때도 이문구가 출력되야 할꺼같습니다. 현재는 로딩중이 출력됩니다. */}
-              {/* 지갑이 연결되지 않았을경우 NFT  보유하지 않았다고 출력됩니다.*/}
-              {walletAddress === undefined ? (
+              {/* 지갑이 연결되지 않았을경우 / 연결한 팀스테이킹 없을 경우 출력됩니다. .*/}
+              {walletAddress === undefined ||
+              newTeamStakingData.length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>

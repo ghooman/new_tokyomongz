@@ -1177,6 +1177,7 @@ const Main = ({ language }) => {
       {/* 팀 스테이킹 불가 공지 팝업 */}
       {openMoveTeamModal && (
         <MoveTeamPageModal
+          language={language}
           handleMoveTeamModal={handleMoveTeamModal}
           setOpenMoveTeamModal={setOpenMoveTeamModal}
         />

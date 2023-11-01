@@ -332,11 +332,27 @@ const Team = ({ language }) => {
 
   const [reward, setReward] = useState("");
   console.log(reward);
-
+  // 팀 스테이킹 취소,컨펌 상태 / 함수 입니다.
   const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
   const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
     useState(false);
-
+  const handleCancelTeamStakingModal = (
+    image,
+    id,
+    name,
+    teamStakingNftData
+  ) => {
+    document.body.style.overflow = "hidden";
+    setTeamStakingCancelModal((prev) => !prev);
+    setSelectData([
+      {
+        image: image,
+        name: name,
+        id: id,
+        teamStakingNftData: teamStakingNftData,
+      },
+    ]);
+  };
   // 모모 등급 표시
   const getGradeNameForValue = (value) => {
     switch (value) {
@@ -548,10 +564,14 @@ const Team = ({ language }) => {
                           <div className="main__team-item-btn-box">
                             <button
                               className="main__team-item-cancel-btn"
-                              onClick={() => {
-                                setTeamStakingCancelModal((prev) => !prev);
-                                document.body.style.overflow = "hidden";
-                              }}
+                              onClick={() =>
+                                handleCancelTeamStakingModal(
+                                  team.leader.image,
+                                  team.leader.id,
+                                  team.leader.name,
+                                  newTeamStakingData
+                                )
+                              }
                             >
                               Cancel Team Staking
                             </button>
@@ -724,6 +744,30 @@ const Team = ({ language }) => {
             </div>
           </div>
         </div>
+        {/* 클레임 모달 */}
+        {claimModal && (
+          <ClaimModal
+            language={language}
+            reward={reward}
+            claimType="teamClaim"
+          />
+        )}
+        {/* 팀 스테이킹 취소 모달 */}
+        {teamStakingCancelModal && (
+          <TeamStakingCancelModal
+            setTeamStakingCancelModal={setTeamStakingCancelModal}
+            setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+            selectData={selectData}
+          />
+        )}
+        {/* 팀 스테이킹 취소 확정 모달 */}
+        {teamStakingCancelConfirmModal && (
+          <TeamStakingCancelConfirmModal
+            language={language}
+            setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
+            selectData={selectData}
+          />
+        )}
       </div>
     </>
   );

@@ -300,6 +300,37 @@
               .main__team-item-momo-img {
                 width: 256px;
                 height: 238px;
+                position: relative;
+                .momo-rating {
+                  z-index: 1;
+                  font-size: 12px;
+                  color: white;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 8px;
+                  width: 28px;
+                  height: 15px;
+                  border-radius: 10px;
+                  position: absolute;
+                  top: 5px;
+                  left: 5px;
+                  border: 1px solid white;
+                  // font-family: "poppins400"; 주면 글자가 상단으로 위치합니다.
+                }
+                // 등급에 따른 색변경
+                .grade-UR {
+                  background-color: #be75ff;
+                }
+                .grade-SR {
+                  background-color: #7593ff;
+                }
+                .grade-R {
+                  background-color: #4c4c4c;
+                }
+                .grade-C {
+                  background-color: #ff7575;
+                }
                 img {
                   border-radius: 8px 8px 0 0;
                   width: 100%;

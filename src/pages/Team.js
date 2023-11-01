@@ -183,8 +183,15 @@ const Team = ({ language }) => {
   const [tmhcStakingData, setTmhcStakingData] = useState([]);
   const [momoStakingData, setMomoStakingData] = useState([]);
   const [newTeamStakingData, setNewTeamStakingData] = useState([]);
-
-  console.log("스테이킹 nft 목록 ==========", stakingData);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log("!!!스테이킹 nft 목록 ==========", teamStakingData);
+  console.log("!!!로딩 상태 ==========", isLoading);
+  // 로딩 상태 조건
+  useEffect(() => {
+    if (teamStakingData.length > 0) {
+      setIsLoading(false);
+    }
+  }, [teamStakingData]);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   // ========== 값을 가져왔나 확인 =============
@@ -533,12 +540,12 @@ const Team = ({ language }) => {
               </span>
             </div>
             <div className="nft__main">
-              {/* 지갑이 연결되지 않았을경우 / 연결한 팀스테이킹 없을 경우 출력됩니다. .*/}
-              {walletAddress === undefined ||
-              newTeamStakingData.length === 0 ? (
+              {walletAddress === undefined ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
+              ) : isLoading || newTeamStakingData.length === 0 ? (
+                <div className="loading">Now loading...</div>
               ) : // 만약 지갑이 연결되있고,NFT 1개이상 보유하고있다면 팀스테이킹 데이터를 출력합니다.
               newTeamStakingData && newTeamStakingData.length > 0 ? (
                 <>

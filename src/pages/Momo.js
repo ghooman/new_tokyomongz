@@ -567,7 +567,10 @@ const Momo = ({ language }) => {
                       <span className="momo-header__text--qtt">
                         {momoNftData
                           ? momoNftData.filter((item) => {
-                              return stakingData.includes(parseInt(item.id));
+                              return (
+                                stakingData.includes(parseInt(item.id)) ||
+                                teamStakingData.includes(parseInt(item.id))
+                              );
                             }).length
                           : 0}
                       </span>
@@ -577,7 +580,10 @@ const Momo = ({ language }) => {
                       <span className="momo-header__text--qtt">
                         {momoNftData
                           ? momoNftData.filter((item) => {
-                              return !stakingData.includes(parseInt(item.id));
+                              return (
+                                !stakingData.includes(parseInt(item.id)) &&
+                                !teamStakingData.includes(parseInt(item.id))
+                              );
                             }).length
                           : 0}
                       </span>
@@ -813,12 +819,18 @@ const Momo = ({ language }) => {
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
                         ? momoNftData.filter((item) => {
-                            return stakingData.includes(parseInt(item.id));
+                            return (
+                              stakingData.includes(parseInt(item.id)) ||
+                              teamStakingData.includes(parseInt(item.id))
+                            );
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
                         ? momoNftData.filter((item) => {
-                            return !stakingData.includes(parseInt(item.id));
+                            return (
+                              !stakingData.includes(parseInt(item.id)) &&
+                              !teamStakingData.includes(parseInt(item.id))
+                            );
                           }).length
                         : momoNftData
                         ? momoNftData.length

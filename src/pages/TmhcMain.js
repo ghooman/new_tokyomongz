@@ -536,6 +536,8 @@ const Main = ({ language }) => {
       setIsLoading(false);
     }
   }, [teamStakingNftData]);
+  console.log("로딩상태", teamStakingNftData);
+  console.log("로딩상태", isLoading);
   return (
     <>
       <Nav />
@@ -795,10 +797,12 @@ const Main = ({ language }) => {
                 </div>
               </div>
               <div className="nft__main">
-                {walletAddress === undefined || nftData.length === 0 ? (
+                {walletAddress === undefined ? (
                   <div className="empty-nft">
                     There are no NFTs in possession.
                   </div>
+                ) : isLoading ? (
+                  <div className="loading">Now loading...</div>
                 ) : nftData.length > 0 && dataStatus ? ( // isLoading === false && nftData.length > 0
                   ((selectedState === "All" || selectedState === "すべて") && (
                     <ul className="main__tmhc-list">

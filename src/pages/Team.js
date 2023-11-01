@@ -184,8 +184,7 @@ const Team = ({ language }) => {
   const [momoStakingData, setMomoStakingData] = useState([]);
   const [newTeamStakingData, setNewTeamStakingData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log("!!!스테이킹 nft 목록 ==========", teamStakingData);
-  console.log("!!!로딩 상태 ==========", isLoading);
+
   // 로딩 상태 조건
   useEffect(() => {
     if (teamStakingData.length > 0) {
@@ -540,7 +539,8 @@ const Team = ({ language }) => {
               </span>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined ? (
+              {walletAddress === undefined ||
+              newTeamStakingData.length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>

@@ -218,18 +218,12 @@ const Momo = ({ language }) => {
 
   // const nftData2 = [{}];
 
-  const [momoNftData, setMomoNftData] = useState(momoDummyData);
+  const [momoNftData, setMomoNftData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (momoNftData) {
-      setIsLoading(() => {
-        return true;
-      });
-    } else {
-      setIsLoading(() => {
-        return true;
-      });
+    if (momoNftData.length > 0) {
+      setIsLoading(false);
     }
   }, [momoNftData]);
   // ================== 스테이킹 리스트 ===============

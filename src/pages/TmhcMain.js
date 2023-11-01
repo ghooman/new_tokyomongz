@@ -263,27 +263,30 @@ const Main = ({ language }) => {
     setSelectData([]);
 
     async function getBalanceOfBatch() {
+      setIsLoading(true);
       console.log("실행");
-      const balances = await contract.methods
-        .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
-        .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
-      // console.log(balances);
-      const promises = [];
 
-      // console.log("밸런스", balances);
-
-      for (let i = 0; i < balances.length; i++) {
-        if (balances[i] === "1") {
-          promises.push(
-            i + 1
-            // axios.get("http://127.0.0.1:8000/api/get_json_data", {
-            // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
-          );
-        }
-      }
-      const jsonPromise = JSON.stringify(promises);
-      console.log(jsonPromise);
       try {
+        const balances = await contract.methods
+          .balanceOfBatch(Array(tokenIds.length).fill(walletAddress), tokenIds)
+          .call(); // balanceOfBatch 함수를 사용하여 지갑의 다수의 자산 ID에 대한 잔액을 일괄적으로 가져옴.
+        // console.log(balances);
+        const promises = [];
+
+        // console.log("밸런스", balances);
+
+        for (let i = 0; i < balances.length; i++) {
+          if (balances[i] === "1") {
+            promises.push(
+              i + 1
+              // axios.get("http://127.0.0.1:8000/api/get_json_data", {
+              // axios.get("https://www.tokyo-test.shop/api/get_json_data", {
+            );
+          }
+        }
+        const jsonPromise = JSON.stringify(promises);
+        console.log(jsonPromise);
+        //////////////////////////////////////////////////////////////////////////////////
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
           {
@@ -303,8 +306,11 @@ const Main = ({ language }) => {
 
         console.log(newData);
         setNftData(newData); //더미 지울시 주석을 풀어줍니다.
+        setIsLoading(false);
+        console.log("실행됨");
       } catch (err) {
         console.log("도쿄에러", err);
+        setIsLoading(false);
       }
     }
     console.log("도쿄엔에프티", nftData);
@@ -321,10 +327,11 @@ const Main = ({ language }) => {
       } catch (err) {
         console.log("스테이킹 리스트 에러 ==========", err);
       } finally {
+        // setIsLoading(false);
         setDataStatus(true);
       }
     };
-
+    console.log(walletAddress, "월렛지갑");
     // 팀 스테이킹 된 nft 가져오기
     const getTeamStakingNftList = async () => {
       // setDataStatus(false);
@@ -531,13 +538,11 @@ const Main = ({ language }) => {
   };
 
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-  useEffect(() => {
-    if (teamStakingNftData.length > 0) {
-      setIsLoading(false);
-    }
-  }, [teamStakingNftData]);
-  console.log("로딩상태", teamStakingNftData);
+
+  console.log("로딩상태", nftData);
   console.log("로딩상태", isLoading);
+  console.log("1", nftData.length > 0);
+  console.log(nftData.length);
   return (
     <>
       <Nav />
@@ -797,13 +802,13 @@ const Main = ({ language }) => {
                 </div>
               </div>
               <div className="nft__main">
-                {walletAddress === undefined ? (
+                {isLoading ? (
+                  <div className="loading">Now loading...</div>
+                ) : walletAddress === undefined || nftData.length === 0 ? (
                   <div className="empty-nft">
                     There are no NFTs in possession.
                   </div>
-                ) : isLoading ? (
-                  <div className="loading">Now loading...</div>
-                ) : nftData.length > 0 && dataStatus ? ( // isLoading === false && nftData.length > 0
+                ) : nftData.length > 0 && dataStatus ? (
                   ((selectedState === "All" || selectedState === "すべて") && (
                     <ul className="main__tmhc-list">
                       {/* tmhc원숭이들을 뿌려줍니다. */}

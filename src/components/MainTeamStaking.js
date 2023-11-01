@@ -222,7 +222,8 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const [teamStakingIds, setTeamStakingIds] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log("모모데이터,", momoNftData);
+  console.log("모모데이터 팀,", teamStakingMomoData);
   useEffect(() => {
     if (momoNftData) {
       setIsLoading(() => {

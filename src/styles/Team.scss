@@ -607,6 +607,32 @@
           }
         }
         .nft__main {
+          .main__team-item-box {
+            .main__team-item-bottom {
+              .main__team-item-momo-box-container {
+                .main__team-item-momo-box {
+                  .main__team-item-momo-img {
+                    .momo-rating {
+                      z-index: 1;
+                      font-size: 12px;
+                      color: white;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      padding: 8px;
+                      width: 28px;
+                      height: 15px;
+                      border-radius: 10px;
+                      position: absolute;
+                      top: 5px;
+                      left: 5px;
+                      border: 1px solid white;
+                    }
+                  }
+                }
+              }
+            }
+          }
           .main__momo-list {
             .momo-item {
               .momo-check {

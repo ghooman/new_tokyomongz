@@ -661,12 +661,7 @@ const Momo = ({ language }) => {
                               onClick={() =>
                                 teamStakingData.includes(parseInt(item.id))
                                   ? handleMoveTeamModal()
-                                  : // 임시주석 1101 이상없음 삭제하겠습니다.
-                                    // item.image,
-                                    // item.id,
-                                    // item.name,
-                                    // teamStakingData
-                                    handleCancelStakingModal(
+                                  : handleCancelStakingModal(
                                       item.image,
                                       item.id,
                                       item.name
@@ -701,100 +696,111 @@ const Momo = ({ language }) => {
                   </ul>
                 )) ||
                 ((selectedState === "Staking" ||
-                  selectedState === "Staking中") && (
-                  <ul className="main__momo-list">
-                    {momoNftData
-                      .filter((item) => {
-                        return (
-                          stakingData.includes(parseInt(item.id)) ||
-                          teamStakingData.includes(parseInt(item.id))
-                        );
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <div className="momo-images">
-                            <img src={item.image} alt="nft" />
-                          </div>
+                  selectedState === "Staking中") &&
+                  (isLoading ? (
+                    <div className="loading">Now loading...</div>
+                  ) : stakingData.length === 0 &&
+                    teamStakingData.length === 0 ? (
+                    <div className="momo-empty-nft">
+                      There are no NFTs in possession.
+                    </div>
+                  ) : (
+                    <ul className="main__momo-list">
+                      {momoNftData
+                        .filter((item) => {
+                          return (
+                            stakingData.includes(parseInt(item.id)) ||
+                            teamStakingData.includes(parseInt(item.id))
+                          );
+                        })
+                        .slice(start, end)
+                        .map((item) => (
+                          <li className="momo-item" key={item.id}>
+                            <div className="momo-images">
+                              <img src={item.image} alt="nft" />
+                            </div>
 
-                          <div className="momo-info">
-                            <span className="momo-name">{item.name}</span>
-                            <span className="momo-staking-state now-staking">
-                              {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
-                              {stakingData.includes(parseInt(item.id))
-                                ? "Now Staking"
-                                : "Now Team Staking"}
-                            </span>
-                            <button
-                              className="momo-btn-cancel-staking"
-                              onClick={() =>
-                                teamStakingData.includes(parseInt(item.id))
-                                  ? handleMoveTeamModal()
-                                  : // 임시주석 1101 이상없음 삭제하겠습니다.
-                                    // item.image,
-                                    // item.id,
-                                    // item.name,
-                                    // teamStakingData
-                                    handleCancelStakingModal(
-                                      item.image,
-                                      item.id,
-                                      item.name
-                                    )
-                              }
-                            >
-                              Cancel Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                )) ||
+                            <div className="momo-info">
+                              <span className="momo-name">{item.name}</span>
+                              <span className="momo-staking-state now-staking">
+                                {/* 싱글 스테이킹 일때와 팀 스테이킹 일때가 다르게 보이게 하기 */}
+                                {stakingData.includes(parseInt(item.id))
+                                  ? "Now Staking"
+                                  : "Now Team Staking"}
+                              </span>
+                              <button
+                                className="momo-btn-cancel-staking"
+                                onClick={() =>
+                                  teamStakingData.includes(parseInt(item.id))
+                                    ? handleMoveTeamModal()
+                                    : handleCancelStakingModal(
+                                        item.image,
+                                        item.id,
+                                        item.name
+                                      )
+                                }
+                              >
+                                Cancel Staking
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  ))) ||
                 ((selectedState === "Ready for staking" ||
-                  selectedState === "未Staking") && (
-                  <ul className="main__momo-list">
-                    {momoNftData
-                      .filter((item) => {
-                        return (
-                          !stakingData.includes(parseInt(item.id)) &&
-                          !teamStakingData.includes(parseInt(item.id))
-                        );
-                      })
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="momo-item" key={item.id}>
-                          <input
-                            type="checkbox"
-                            className="momo-check"
-                            onClick={(e) =>
-                              handleChecked(e, item.id, item.image, item.name)
-                            }
-                          />
-                          <div className="momo-images">
-                            <img src={item.image} alt="nft" />
-                          </div>
-                          <div className="momo-info">
-                            <span className="momo-name">{item.name}</span>
-                            <span className="momo-staking-state">
-                              Ready for Staking
-                            </span>
-
-                            <button
-                              className="momo-btn--staking"
-                              onClick={() =>
-                                handleStakingModal(
-                                  item.image,
-                                  item.name,
-                                  item.id
-                                )
+                  selectedState === "未Staking") &&
+                  (isLoading ? (
+                    <div className="loading">Now loading...</div>
+                  ) : stakingData.length !== 0 &&
+                    teamStakingData.length !== 0 ? (
+                    <div className="momo-empty-nft">
+                      There are no NFTs in possession.
+                    </div>
+                  ) : (
+                    <ul className="main__momo-list">
+                      {momoNftData
+                        .filter((item) => {
+                          return (
+                            !stakingData.includes(parseInt(item.id)) &&
+                            !teamStakingData.includes(parseInt(item.id))
+                          );
+                        })
+                        .slice(start, end)
+                        .map((item) => (
+                          <li className="momo-item" key={item.id}>
+                            <input
+                              type="checkbox"
+                              className="momo-check"
+                              onClick={(e) =>
+                                handleChecked(e, item.id, item.image, item.name)
                               }
-                            >
-                              Single Staking
-                            </button>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
-                ))
+                            />
+                            <div className="momo-images">
+                              <img src={item.image} alt="nft" />
+                            </div>
+                            <div className="momo-info">
+                              <span className="momo-name">{item.name}</span>
+                              <span className="momo-staking-state">
+                                Ready for Staking
+                              </span>
+
+                              <button
+                                className="momo-btn--staking"
+                                onClick={() =>
+                                  handleStakingModal(
+                                    item.image,
+                                    item.name,
+                                    item.id
+                                  )
+                                }
+                              >
+                                Single Staking
+                              </button>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  )))
               ) : (
                 <div className="momo-loading">Now loading...</div>
               )}

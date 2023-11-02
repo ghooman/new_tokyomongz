@@ -262,7 +262,6 @@ const Team = ({ language }) => {
 
     // 도쿄몽즈 데이터 가져오기
     const getTeamStakingTmhcData = async (tmhcNftIds, changeMomoData) => {
-      setIsLoading(true);
       try {
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",
@@ -298,12 +297,11 @@ const Team = ({ language }) => {
       } catch (err) {
         console.log("도쿄에러", err);
         setIsLoading(false);
+      } finally {
+        // setIsLoading(false);
       }
     };
-    console.log("지갑상태", walletAddress);
-    console.log("팀스테이킹길이상태2", teamStakingData.length);
-    console.log("이즈로딩상태3", isLoading);
-    console.log("뉴팀스테이킹상태4", newTeamStakingData.length);
+
     const getReward = async () => {
       const data = {
         address: walletAddress, // 현재 지갑
@@ -321,15 +319,11 @@ const Team = ({ language }) => {
     };
     getTeamStakingData();
     getReward();
+    // setIsLoading(false);
   }, [walletAddress]);
 
-  useEffect(() => {
-    // console.log("상태5", newTeamStakingData);
-    console.log("상태8", isLoading);
-  }, [isLoading]);
-
-  console.log("teamStakingData==================", teamStakingData);
-  console.log("소유한 nft 개수 =============", teamStakingData.length);
+  console.log("이즈로딩상태3", isLoading);
+  console.log("뉴팀스테이킹상태4", newTeamStakingData.length);
 
   const [reward, setReward] = useState("");
   console.log(reward);
@@ -538,7 +532,7 @@ const Team = ({ language }) => {
               {isLoading ? (
                 <div className="loading">Now loading...</div>
               ) : walletAddress === undefined ||
-                teamStakingData.length === 0 ? (
+                newTeamStakingData.length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>

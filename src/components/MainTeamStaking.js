@@ -127,7 +127,13 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     console.log("check", e.target.checked);
     console.log("select data", selectData);
     if (selectData.length === 4 && e.target.checked) {
-      alert("팀 스테이킹은 최대 4개까지 모모를 선택 할 수 있습니다");
+      // 선택 개수 제한
+      e.preventDefault();
+      if (language === "EN") {
+        alert("You can only select up to 4.");
+      } else {
+        alert("最大4個まで選択できます。");
+      }
       return;
     }
     const targetChecked = e.target.checked;

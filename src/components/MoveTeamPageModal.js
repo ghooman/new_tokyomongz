@@ -1,11 +1,7 @@
 import React from "react";
 import "./MoveTeamPageModal.scss";
 
-const MoveTeamPageModal = ({
-  language,
-  handleMoveTeamModal,
-  setOpenMoveTeamModal,
-}) => {
+const MoveTeamPageModal = ({ language, setOpenMoveTeamModal }) => {
   const handleCloseModal = () => {
     document.body.style.overflow = "";
     setOpenMoveTeamModal((prev) => !prev);
@@ -18,7 +14,7 @@ const MoveTeamPageModal = ({
   };
 
   return (
-    <div onClick={handleModalBackground} className="modal-background">
+    <div className="modal-background" onClick={handleModalBackground}>
       <div className="move-team__modal">
         {language === "EN" ? (
           <div className="modal-text-box">

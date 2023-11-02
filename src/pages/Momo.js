@@ -88,12 +88,15 @@ const Momo = ({ language }) => {
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
-
+  // 싱글 스테이킹 상태를 판단합니다.
+  const [isSingleStaking, setIsSingleStaking] = useState(true);
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
+    setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setMomoSelectData([{ image: image, name: name, id: id }]);
   };
 
@@ -101,6 +104,7 @@ const Momo = ({ language }) => {
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(false); // 멀티 스테이킹일 경우
   };
 
   // 스테이킹 취소 모달

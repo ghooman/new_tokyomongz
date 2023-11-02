@@ -34,10 +34,14 @@ const CancelStakingModal = ({
   };
 
   console.log(selectData);
-
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         {language === "EN" ? (
           <div className="cancel">
             {selectData && selectData.length > 0 ? (

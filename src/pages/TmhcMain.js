@@ -113,12 +113,15 @@ const Main = ({ language }) => {
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
-
+  // 싱글 스테이킹 상태를 판단합니다.
+  const [isSingleStaking, setIsSingleStaking] = useState(true);
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
+    setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
@@ -126,6 +129,14 @@ const Main = ({ language }) => {
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(false); // 멀티 스테이킹일 경우
+    // 체크한 것들만 selected에 다시담아 보내줍니다.
+    const newSelectData = isChecked.map((id) => {
+      const item = nftData.find((nftItem) => nftItem.id === id);
+      return { image: item.image, name: item.name, id: item.id };
+    });
+
+    setSelectData(newSelectData);
   };
 
   // 스테이킹 취소 모달
@@ -237,12 +248,10 @@ const Main = ({ language }) => {
   // const nftData2 = [{}];
 
   const [nftData, setNftData] = useState([]);
-  const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
   const [teamStakingNftData, setTeamStakingNftData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -1043,7 +1052,7 @@ const Main = ({ language }) => {
                     selectedState === "未Staking") &&
                   isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : nftData.length === 0 && stakingData.length !== 0 ? (
+                  ) : stakingData.length !== 0 ? (
                     <div className="empty-nft">
                       There are no NFTs in possession.
                     </div>

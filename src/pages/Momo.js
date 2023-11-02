@@ -88,12 +88,15 @@ const Momo = ({ language }) => {
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
-
+  // 싱글 스테이킹 상태를 판단합니다.
+  const [isSingleStaking, setIsSingleStaking] = useState(true);
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
+    setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setMomoSelectData([{ image: image, name: name, id: id }]);
   };
 
@@ -101,6 +104,13 @@ const Momo = ({ language }) => {
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(false); // 멀티 스테이킹일 경우
+    // 체크한 것들만 selected에 다시담아 보내줍니다.
+    const newSelectData = isChecked.map((id) => {
+      const item = momoNftData.find((nftItem) => nftItem.id === id);
+      return { image: item.image, name: item.name, id: item.id };
+    });
+    setMomoSelectData(newSelectData);
   };
 
   // 스테이킹 취소 모달
@@ -224,7 +234,6 @@ const Momo = ({ language }) => {
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
-  console.log("스테이킹 nft 목록 ==========", stakingData);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -751,8 +760,8 @@ const Momo = ({ language }) => {
                   selectedState === "未Staking") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length !== 0 &&
-                    teamStakingData.length !== 0 ? (
+                  ) : stakingData.length + teamStakingData.length ===
+                    momoNftData.length ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>

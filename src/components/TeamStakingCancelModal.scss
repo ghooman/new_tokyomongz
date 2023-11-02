@@ -47,11 +47,20 @@
     }
   }
   .team-staking-cancel__momo-box {
-    margin-top: 30px;
+    margin-top: 24px;
     display: flex;
     border-bottom: 1px solid #545454;
-    padding-bottom: 34px;
+    padding-bottom: 24px;
     overflow: auto;
+    &::-webkit-scrollbar-thumb {
+      background-color: #545454;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar {
+      // background-color: #545454;
+      border-radius: 10px;
+      height: 8px;
+    }
     .team-staking-cancel__momo-item {
       display: flex;
       flex-direction: column;

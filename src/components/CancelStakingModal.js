@@ -70,12 +70,13 @@ const CancelStakingModal = ({
 
             <div className="cancel__text">
               <p>
-                Would you like to apply for staking?
+                Are you sure you want to cancel staking? ETH is required to
+                cancel staking.
                 <br />
                 <br />
                 [Caution]
                 <br />
-                If the wallet of NFT changes due to sale, transfer, and etc.,
+                If the wallet of NFT changes due to sale, wallet transfer, etc.,
                 MZC generated from applicable NFT will not be distributed.
                 {/* <br />
                 You will automatically receive the MZC acquired by NFT when you

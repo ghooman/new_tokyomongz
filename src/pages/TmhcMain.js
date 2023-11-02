@@ -113,12 +113,15 @@ const Main = ({ language }) => {
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
-
+  // 싱글 스테이킹 상태를 판단합니다.
+  const [isSingleStaking, setIsSingleStaking] = useState(true);
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
+    setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
@@ -126,6 +129,14 @@ const Main = ({ language }) => {
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
+    setIsSingleStaking(false); // 멀티 스테이킹일 경우
+    // 체크한 것들만 selected에 다시담아 보내줍니다.
+    const newSelectData = isChecked.map((id) => {
+      const item = nftData.find((nftItem) => nftItem.id === id);
+      return { image: item.image, name: item.name, id: item.id };
+    });
+
+    setSelectData(newSelectData);
   };
 
   // 스테이킹 취소 모달
@@ -237,12 +248,10 @@ const Main = ({ language }) => {
   // const nftData2 = [{}];
 
   const [nftData, setNftData] = useState([]);
-  const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
   const [teamStakingNftData, setTeamStakingNftData] = useState([]);
   const [teamStaking, setTeamStaking] = useState(false);
   const [clickStakingMongzData, setClickStakingMongzData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   console.log("스테이킹 nft 목록 ==========", stakingData);
@@ -788,6 +797,7 @@ const Main = ({ language }) => {
                       className={`btn--all-staking ${
                         isChecked.length <= 0 ? "" : "checked"
                       }`}
+                      disabled={isChecked.length <= 0}
                       onClick={handleAllStakingModal}
                     >
                       {language === "EN"
@@ -934,101 +944,119 @@ const Main = ({ language }) => {
                     </ul>
                   )) ||
                   ((selectedState === "Staking" ||
-                    selectedState === "Staking中") && (
-                    <ul className="main__tmhc-list">
-                      {nftData
-                        .filter((item) => {
-                          return (
-                            stakingData.includes(parseInt(item.id)) ||
-                            teamStakingNftId.includes(parseInt(item.id))
-                          );
-                        })
-                        .slice(start, end)
-                        .map((item) => (
-                          <li className="tmhc-item" key={item.id}>
-                            <div className="tmhc-images">
-                              <img src={item.image} alt="nft" />
-                              {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
-                              {teamStakingNftData.map(
-                                (teamStakingItem, index) => {
-                                  return item.id === teamStakingItem.leader &&
-                                    teamStakingItem.member ? (
-                                    <div
-                                      className="team-staking-momo-box"
-                                      key={index}
-                                    >
-                                      {teamStakingItem.member.map(
-                                        (memberItem, subIndex) => (
-                                          <div
-                                            className="team-staking-momo-img"
-                                            key={subIndex}
-                                          >
+                    selectedState === "Staking中") &&
+                    (isLoading ? (
+                      <div className="loading">Now loading...</div>
+                    ) : stakingData.length === 0 ? (
+                      <div className="empty-nft">
+                        There are no NFTs in possession.
+                      </div>
+                    ) : (
+                      <ul className="main__tmhc-list">
+                        {nftData
+                          .filter((item) => {
+                            return (
+                              stakingData.includes(parseInt(item.id)) ||
+                              teamStakingNftId.includes(parseInt(item.id))
+                            );
+                          })
+                          .slice(start, end)
+                          .map((item) => (
+                            <li className="tmhc-item" key={item.id}>
+                              <div className="tmhc-images">
+                                <img src={item.image} alt="nft" />
+                                {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
+                                {teamStakingNftData.map(
+                                  (teamStakingItem, index) => {
+                                    return item.id === teamStakingItem.leader &&
+                                      teamStakingItem.member ? (
+                                      <div
+                                        className="team-staking-momo-box"
+                                        key={index}
+                                      >
+                                        {teamStakingItem.member.map(
+                                          (memberItem, subIndex) => (
                                             <div
-                                              className={`momo-rating ${getGradeNameForValue(
-                                                memberItem.attributes[
-                                                  memberItem.attributes.length -
-                                                    1
-                                                ].value
-                                              )}`}
+                                              className="team-staking-momo-img"
+                                              key={subIndex}
                                             >
-                                              {
-                                                memberItem.attributes[
-                                                  memberItem.attributes.length -
-                                                    1
-                                                ].value
-                                              }
+                                              <div
+                                                className={`momo-rating ${getGradeNameForValue(
+                                                  memberItem.attributes[
+                                                    memberItem.attributes
+                                                      .length - 1
+                                                  ].value
+                                                )}`}
+                                              >
+                                                {
+                                                  memberItem.attributes[
+                                                    memberItem.attributes
+                                                      .length - 1
+                                                  ].value
+                                                }
+                                              </div>
+                                              <img
+                                                src={memberItem.image}
+                                                alt="momoImg"
+                                              />
                                             </div>
-                                            <img
-                                              src={memberItem.image}
-                                              alt="momoImg"
-                                            />
-                                          </div>
-                                        )
-                                      )}
-                                    </div>
-                                  ) : null;
-                                }
-                              )}
-                            </div>
-                            {
-                              <div className="tmhc-info">
-                                <span className="tmhc-name">{item.name}</span>
-                                <span className="tmhc-staking-state now-staking">
-                                  {teamStakingNftId.includes(parseInt(item.id))
-                                    ? "Now Team Staking"
-                                    : "Now Staking"}
-                                </span>
-                                <span className="team-staking-text">
-                                  BOOST <span>560%</span>
-                                </span>
-                                {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
-                                <button
-                                  className="btn-cancel-staking"
-                                  onClick={() =>
-                                    teamStakingNftId.includes(parseInt(item.id))
-                                      ? handleMoveTeamModal(
-                                          item.image,
-                                          item.id,
-                                          item.name,
-                                          teamStakingNftData
-                                        )
-                                      : handleCancelStakingModal(
-                                          item.image,
-                                          item.id,
-                                          item.name
-                                        )
+                                          )
+                                        )}
+                                      </div>
+                                    ) : null;
                                   }
-                                >
-                                  Cancel Staking
-                                </button>
+                                )}
                               </div>
-                            }
-                          </li>
-                        ))}
-                    </ul>
-                  )) ||
+                              {
+                                <div className="tmhc-info">
+                                  <span className="tmhc-name">{item.name}</span>
+                                  <span className="tmhc-staking-state now-staking">
+                                    {teamStakingNftId.includes(
+                                      parseInt(item.id)
+                                    )
+                                      ? "Now Team Staking"
+                                      : "Now Staking"}
+                                  </span>
+                                  <span className="team-staking-text">
+                                    BOOST <span>560%</span>
+                                  </span>
+                                  {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
+                                  <button
+                                    className="btn-cancel-staking"
+                                    onClick={() =>
+                                      teamStakingNftId.includes(
+                                        parseInt(item.id)
+                                      )
+                                        ? handleMoveTeamModal(
+                                            item.image,
+                                            item.id,
+                                            item.name,
+                                            teamStakingNftData
+                                          )
+                                        : handleCancelStakingModal(
+                                            item.image,
+                                            item.id,
+                                            item.name
+                                          )
+                                    }
+                                  >
+                                    Cancel Staking
+                                  </button>
+                                </div>
+                              }
+                            </li>
+                          ))}
+                      </ul>
+                    ))) ||
                   ((selectedState === "Ready for staking" ||
-                    selectedState === "未Staking") && (
+                    selectedState === "未Staking") &&
+                  isLoading ? (
+                    <div className="loading">Now loading...</div>
+                  ) : stakingData.length !== 0 ? (
+                    <div className="empty-nft">
+                      There are no NFTs in possession.
+                    </div>
+                  ) : (
                     <ul className="main__tmhc-list">
                       {nftData
                         .filter((item) => {

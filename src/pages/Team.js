@@ -180,17 +180,9 @@ const Team = ({ language }) => {
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
-  const [tmhcStakingData, setTmhcStakingData] = useState([]);
-  const [momoStakingData, setMomoStakingData] = useState([]);
   const [newTeamStakingData, setNewTeamStakingData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 로딩 상태 조건
-  useEffect(() => {
-    if (teamStakingData.length > 0) {
-      setIsLoading(false);
-    }
-  }, [teamStakingData]);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   // ========== 값을 가져왔나 확인 =============
@@ -208,6 +200,7 @@ const Team = ({ language }) => {
     // 팀스테이킹 데이터 가져오기
     const getTeamStakingData = async () => {
       // setDataStatus(false);
+
       try {
         const res = await axios.get(
           `https://mongz-api.sevenlinelabs.app/getStakedTEAMWithVrify?address=${walletAddress}`
@@ -235,7 +228,6 @@ const Team = ({ language }) => {
         // setDataStatus(true);
       }
     };
-
     // 모모 데이터 가져오기
     const getTeamStakingMomoData = async (
       momoNftIds,
@@ -287,9 +279,7 @@ const Team = ({ language }) => {
           name: item.name,
           image: item.image,
         }));
-
         console.log("%뉴데이터", newData);
-
         console.log(changeMomoData);
 
         const finalStakingNftData = changeMomoData.map((item) => {
@@ -301,11 +291,14 @@ const Team = ({ language }) => {
           };
         });
         //
-        console.log("%파이널 데이터", finalStakingNftData);
         setTeamStakingData(newData); //tmhc의 정보들을 저장하며 이정보로 tmhc.id와팀스테이킹리더를 비교하는데 사용됩니다.
         setNewTeamStakingData(finalStakingNftData);
+        setIsLoading(false);
       } catch (err) {
         console.log("도쿄에러", err);
+        setIsLoading(false);
+      } finally {
+        // setIsLoading(false);
       }
     };
 
@@ -326,14 +319,11 @@ const Team = ({ language }) => {
     };
     getTeamStakingData();
     getReward();
+    // setIsLoading(false);
   }, [walletAddress]);
 
-  useEffect(() => {
-    console.log("!!!뿌려줄 배열", newTeamStakingData);
-  }, [newTeamStakingData]);
-
-  console.log("teamStakingData==================", teamStakingData);
-  console.log("소유한 nft 개수 =============", teamStakingData.length);
+  console.log("이즈로딩상태3", isLoading);
+  console.log("뉴팀스테이킹상태4", newTeamStakingData.length);
 
   const [reward, setReward] = useState("");
   console.log(reward);
@@ -539,13 +529,13 @@ const Team = ({ language }) => {
               </span>
             </div>
             <div className="nft__main">
-              {walletAddress === undefined ||
-              newTeamStakingData.length === 0 ? (
+              {isLoading ? (
+                <div className="loading">Now loading...</div>
+              ) : walletAddress === undefined ||
+                newTeamStakingData.length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
-              ) : isLoading || newTeamStakingData.length === 0 ? (
-                <div className="loading">Now loading...</div>
               ) : // 만약 지갑이 연결되있고,NFT 1개이상 보유하고있다면 팀스테이킹 데이터를 출력합니다.
               newTeamStakingData && newTeamStakingData.length > 0 ? (
                 <>

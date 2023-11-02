@@ -62,7 +62,7 @@ const TeamStakingConfirmModal = ({
               the team staking?
             </>
           ) : (
-            `シングルステークスをご希望ですか？`
+            `チームステーキングをご希望ですか？`
           )}
         </div>
         <div className="confirm-modal__btn-box">

@@ -14,6 +14,7 @@ import { STAKING_TMHC_CONTRACT } from "../contract/contractAddress";
 import axios from "axios";
 
 const ClaimModal = ({ language, reward, claimType }) => {
+  console.log(claimType, "클레임타입");
   const dispatch = useDispatch();
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleCloseModal = () => {
@@ -57,7 +58,7 @@ const ClaimModal = ({ language, reward, claimType }) => {
                   receive the reward MZC assigned to the NFT.
                 </li>
                 <li>
-                  <span>-</span> IThe MZC that is currently displayed in your
+                  <span>-</span> The MZC that is currently displayed in your
                   wallet is not confirmed. It will be recalculated during the
                   claim process.
                 </li>
@@ -133,6 +134,7 @@ const ClaimConfirm = ({
   claimType,
 }) => {
   const walletAddress = useAddress();
+  console.log("지갑주소", walletAddress);
 
   const { contract } = useContract(STAKING_TMHC_CONTRACT);
   const { mutateAsync: claimAll, isLoading } = useContractWrite(
@@ -187,6 +189,7 @@ const ClaimConfirm = ({
         );
         setErrMsg(res.data[1]);
         setFailModalControl(true);
+        console.log("클레임 에러 확인", res);
       }
 
       // window.location.reload();
@@ -244,7 +247,7 @@ const ClaimConfirm = ({
               </button> */}
               <button
                 className="btn-claim-confirm"
-                onClick={handleClaim}
+                onClick={() => handleClaim(claimType)}
                 disabled={claimIsLoading}
               >
                 {claimIsLoading ? "Loading..." : "Claim"}
@@ -266,7 +269,7 @@ const ClaimConfirm = ({
 };
 
 const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
-  console.log(errMsg);
+  console.log("메시지===========", errMsg);
   if (language === "JP") {
     if (errMsg.includes("모든 Claim 트렌젝션 등록 완료")) {
       errMsg = errMsg
@@ -274,6 +277,10 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
         .replace(
           "의 모든 Claim 트렌젝션 등록 완료",
           "のすべてのClaimリクエストが完了しました。"
+        )
+        .replace(
+          "모든 Claim 트렌젝션 등록 완료",
+          "すべてのClaimリクエストが完了しました。"
         )
         .replace(".", "");
     }

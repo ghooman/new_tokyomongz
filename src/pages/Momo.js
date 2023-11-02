@@ -780,6 +780,7 @@ const Momo = ({ language }) => {
                             <input
                               type="checkbox"
                               className="momo-check"
+                              checked={isChecked.includes(item.id)}
                               onClick={(e) =>
                                 handleChecked(e, item.id, item.image, item.name)
                               }

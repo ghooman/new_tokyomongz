@@ -1045,7 +1045,7 @@ const Main = ({ language }) => {
                     selectedState === "未Staking") &&
                   isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : nftData.length === 0 && stakingData.length !== 0 ? (
+                  ) : stakingData.length !== 0 ? (
                     <div className="empty-nft">
                       There are no NFTs in possession.
                     </div>

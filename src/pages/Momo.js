@@ -228,8 +228,6 @@ const Momo = ({ language }) => {
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
-  console.log("스테이킹 nft 목록 ==========", stakingData.length);
-  console.log("팀스테이킹 nft 목록 ==========", teamStakingData.length);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json

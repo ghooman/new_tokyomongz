@@ -192,6 +192,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   // ================== 스테이킹 리스트 ===============
   console.log("스테이킹 nft 목록 ==========", singleStakingMomoIds);
   console.log("팀 스테이킹 nft 목록 ==========", teamStakingMomoData);
+  console.log("팀 스테이킹 nft ids ==========", teamStakingMomoIds);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -750,7 +751,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               {isLoading ? (
                 <div className="loading">Now loading...</div>
               ) : walletAddress === undefined ||
-                teamStakingMomoData.length === 0 ? (
+                teamStakingMomoData.length === 0 ||
+                teamStakingMomoData.length ===
+                  singleStakingMomoIds.length + teamStakingMomoIds.length ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>

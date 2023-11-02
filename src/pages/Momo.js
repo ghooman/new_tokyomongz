@@ -228,7 +228,8 @@ const Momo = ({ language }) => {
   // ================== 스테이킹 리스트 ===============
   const [stakingData, setStakingData] = useState([]);
   const [teamStakingData, setTeamStakingData] = useState([]);
-  console.log("스테이킹 nft 목록 ==========", stakingData);
+  console.log("스테이킹 nft 목록 ==========", stakingData.length);
+  console.log("팀스테이킹 nft 목록 ==========", teamStakingData.length);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -755,8 +756,8 @@ const Momo = ({ language }) => {
                   selectedState === "未Staking") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length !== 0 &&
-                    teamStakingData.length !== 0 ? (
+                  ) : stakingData.length + teamStakingData.length ===
+                    momoNftData.length ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>

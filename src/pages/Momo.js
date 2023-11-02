@@ -354,7 +354,6 @@ const Momo = ({ language }) => {
   }, [walletAddress]);
 
   console.log("nftData==================", momoNftData);
-  console.log("소유한 nft 개수 =============", momoNftData.length);
 
   const [reward, setReward] = useState("");
 

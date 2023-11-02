@@ -252,8 +252,6 @@ const Team = ({ language }) => {
             ),
           };
         });
-        console.log("%모모nft", res);
-        console.log("%모모데이타 체인지", changeMomoData);
         await getTeamStakingTmhcData(tmhcNftIds, changeMomoData);
       } catch (err) {
         console.log(err);
@@ -272,14 +270,14 @@ const Team = ({ language }) => {
           }
         );
 
-        console.log("%겟도쿄", res);
+        console.log("겟도쿄", res);
 
         const newData = res.data.map((item, index) => ({
           id: parseInt(item.name.slice(5)),
           name: item.name,
           image: item.image,
         }));
-        console.log("%뉴데이터", newData);
+        console.log("뉴데이터", newData);
         console.log(changeMomoData);
 
         const finalStakingNftData = changeMomoData.map((item) => {

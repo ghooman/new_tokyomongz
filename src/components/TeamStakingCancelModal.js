@@ -8,7 +8,6 @@ const TeamStakingCancelModal = ({
   setTeamStakingCancelConfirmModal,
   selectData,
 }) => {
-  console.log("팀캔슬모달", selectData);
   // 모모 등급 표시
   const getGradeNameForValue = (value) => {
     switch (value) {

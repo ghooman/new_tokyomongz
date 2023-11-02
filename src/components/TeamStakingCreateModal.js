@@ -9,8 +9,6 @@ const TeamStakingCreateModal = ({
   getGradeNameForPercent,
   getGradeNameForValue,
 }) => {
-  console.log("팀크리모달 몽즈", teamStakingMongzData);
-  console.log("팀크리모달 모모", teamStakingMomoData);
   // 모모를 등록하면 총 부스트가 몇이될지 추측
   // let totalBoost = 0;
   // teamStakingMomoData.forEach((item) => {

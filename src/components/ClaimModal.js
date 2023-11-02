@@ -25,9 +25,15 @@ const ClaimModal = ({ language, reward, claimType }) => {
   const handleConfirmModal = () => {
     setClaimConfirmModal(!claimConfirmModal);
   };
+
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         {language === "EN" ? (
           <div className="claim">
             <div className="claim__header">

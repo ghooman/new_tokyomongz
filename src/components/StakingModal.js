@@ -45,9 +45,15 @@ const StakingModal = ({
   console.log(selectData);
   console.log(isChecked);
 
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+      handleConfirmModal();
+    }
+  };
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         <div className="staking-modal">
           {/* <div className="staking__count">Total: {selectData.length}</div> */}
           {selectData && selectData.length > 0 ? (
@@ -137,6 +143,7 @@ const StakingModal = ({
           language={language}
           setIsChecked={setIsChecked}
           isChecked={isChecked}
+          handleModalBackground={handleModalBackground}
         />
       )}
     </>
@@ -153,6 +160,7 @@ const StakingConfirmModal = ({
   language,
   setIsChecked,
   isChecked,
+  handleModalBackground,
 }) => {
   // address
   const walletAddress = useAddress();
@@ -336,7 +344,7 @@ const StakingConfirmModal = ({
   return (
     <>
       {language === "EN" ? (
-        <div className="modal-background">
+        <div className="modal-background" onClick={handleModalBackground}>
           <div className="staking-confirm">
             <span className="staking-confirm__title">
               Would you like to apply for a single Staking?
@@ -368,7 +376,7 @@ const StakingConfirmModal = ({
           </div>
         </div>
       ) : (
-        <div className="modal-background">
+        <div className="modal-background" onClick={handleModalBackground}>
           <div className="staking-confirm">
             <span className="staking-confirm__title">
               シングルステーキングを適用しますか？
@@ -400,13 +408,20 @@ const StakingConfirmModal = ({
           errMsg={errMsg}
           language={language}
           data={data}
+          handleModalBackground={handleModalBackground}
         />
       )}
     </>
   );
 };
 
-const StakingFailModal = ({ setFailModalControl, errMsg, language, data }) => {
+const StakingFailModal = ({
+  setFailModalControl,
+  errMsg,
+  language,
+  data,
+  handleModalBackground,
+}) => {
   if (language === "JP") {
     if (errMsg === "시스템 에러") {
       errMsg = "一時的なエラーが発生しました。 もう一度お試しください。";
@@ -456,7 +471,7 @@ const StakingFailModal = ({ setFailModalControl, errMsg, language, data }) => {
 
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         <div className="staking-fail">
           <p className="staking-fail__text">{errMsg}</p>
           <button className="btn-confirm" onClick={modalClose}>

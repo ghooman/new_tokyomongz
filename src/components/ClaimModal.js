@@ -20,7 +20,6 @@ const ClaimModal = ({ language, reward, claimType }) => {
     dispatch(setClaimModal(!claimModal));
     document.body.style.overflow = "";
   };
-  console.log("@@@", claimType);
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 
   const handleConfirmModal = () => {
@@ -127,7 +126,6 @@ const ClaimConfirm = ({
   language,
   claimType,
 }) => {
-  console.log("클레임모달", claimType);
   const walletAddress = useAddress();
 
   const { contract } = useContract(STAKING_TMHC_CONTRACT);
@@ -135,7 +133,6 @@ const ClaimConfirm = ({
     contract,
     "claimAll"
   );
-  console.log(isLoading);
 
   const call = async () => {
     try {
@@ -167,7 +164,6 @@ const ClaimConfirm = ({
 
     try {
       if (claimType === "tmhcClaim") {
-        console.log("!!실패1");
         const res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/ClaimTMHCAll?address=${walletAddress}`
         );
@@ -183,12 +179,10 @@ const ClaimConfirm = ({
         const res = await axios.post(
           `https://mongz-api.sevenlinelabs.app/ClaimTeamAll?address=${walletAddress}`
         );
-        console.log("!!실패2");
         setErrMsg(res.data[1]);
         setFailModalControl(true);
       }
 
-      // console.log("클레임=================", res);
       // window.location.reload();
     } catch (err) {
       console.log("클레임 에러===========", err);
@@ -199,7 +193,6 @@ const ClaimConfirm = ({
 
   // =========== 클레임 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);
-  console.log(failModalControl);
 
   return (
     <>

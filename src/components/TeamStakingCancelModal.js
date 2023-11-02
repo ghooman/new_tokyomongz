@@ -38,8 +38,14 @@ const TeamStakingCancelModal = ({
         return "";
     }
   };
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setTeamStakingCancelModal((prev) => !prev);
+      document.body.style.overflow = "";
+    }
+  };
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleModalBackground}>
       <div className="team-staking-cancel__background">
         <div className="team-staking-cancel__mongz-info-box">
           <div className="team-staking-cancel__mongz-img">

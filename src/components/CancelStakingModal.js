@@ -168,6 +168,7 @@ const CancelStakingModal = ({
           cancelStakingConfirm={cancelStakingConfirm}
           setCancelStakingConfirm={setCancelStakingConfirm}
           language={language}
+          handleModalBackground={handleModalBackground}
         />
       )}
     </>
@@ -182,6 +183,7 @@ const CancelStakingConfirmModal = ({
   cancelStakingConfirm,
   setCancelStakingConfirm,
   language,
+  handleModalBackground,
 }) => {
   const walletAddress = useAddress();
 
@@ -266,7 +268,7 @@ const CancelStakingConfirmModal = ({
   console.log(failModalControl);
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         {language === "EN" ? (
           <div className="cancel-staking-confirm">
             <span className="cancel-staking-confirm__title">

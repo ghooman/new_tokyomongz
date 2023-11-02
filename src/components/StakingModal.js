@@ -291,9 +291,6 @@ const StakingConfirmModal = ({
 
   console.log("포스트데이터", data);
 
-  console.log("포스트데이터", data);
-
-  console.log("셀렉트데이터", momoSelectData);
   const handleStaking = async () => {
     setStakingIsLoading(true);
 

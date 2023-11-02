@@ -16,8 +16,14 @@ const TeamStakingCreateModal = ({
   //     item.attributes[item.attributes.length - 1].value
   //   );
   // });
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setTeamStakingModal((prev) => !prev);
+      document.body.style.overflow = "";
+    }
+  };
   return (
-    <div className="create-modal-background">
+    <div className="create-modal-background" onClick={handleModalBackground}>
       <div className="create-modal-body">
         <div>
           <div className="create-modal-mongz-img">

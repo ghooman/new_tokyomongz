@@ -36,8 +36,13 @@ const TeamStakingCancelConfirmModal = ({
       console.log("스테이킹 리스트 에러 정보 ==========", err);
     }
   };
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setTeamStakingCancelConfirmModal((prev) => !prev);
+    }
+  };
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleModalBackground}>
       <div className="cancel-confirm-modal-background">
         <div className="cancel-confirm-modal__text">
           {language === "EN" ? (

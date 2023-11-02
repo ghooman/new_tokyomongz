@@ -267,6 +267,7 @@ const ClaimConfirm = ({
 };
 
 const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
+  console.log(errMsg);
   if (language === "JP") {
     if (errMsg.includes("모든 Claim 트렌젝션 등록 완료")) {
       errMsg = errMsg

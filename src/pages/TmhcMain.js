@@ -236,7 +236,7 @@ const Main = ({ language }) => {
     new Web3.providers.HttpProvider("https://goerli.rpc.thirdweb.com")
   );
   // const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력. 메인넷
-  const contractAddress = "0x9b4871A3f69634d37780601BF39D24AEcAb88d63"; // 테스트넷 goerli
+  const contractAddress = IMPORT_TMHC_CONTRACT; // 테스트넷 goerli
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
   // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력.
   const tokenIds = Array(10000)

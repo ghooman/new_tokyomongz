@@ -24,6 +24,7 @@ import {
   IMPORT_TMHC_CONTRACT,
   STAKING_TMHC_CONTRACT,
   MONGS_COIN,
+  IMPORT_MOMO_CONTRACT,
 } from "../contract/contractAddress";
 
 import {
@@ -207,7 +208,7 @@ const Momo = ({ language }) => {
   );
   const [momoNfts, setMomoNfts] = useState([]);
 
-  const contractAddress = "0xDFCf6a53243aA7c6F72b7a1cD126fe728D50Ef46"; // ERC-1155 컨트랙트 주소를 입력.
+  const contractAddress = IMPORT_MOMO_CONTRACT; // ERC-1155 컨트랙트 주소를 입력.
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
   // const tokenIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 잔액을 조회할 자산 ID 배열을 입력.
   const tokenIds = Array(10000)

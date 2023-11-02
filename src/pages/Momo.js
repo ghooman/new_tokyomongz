@@ -105,6 +105,12 @@ const Momo = ({ language }) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
     setIsSingleStaking(false); // 멀티 스테이킹일 경우
+    // 체크한 것들만 selected에 다시담아 보내줍니다.
+    const newSelectData = isChecked.map((id) => {
+      const item = momoNftData.find((nftItem) => nftItem.id === id);
+      return { image: item.image, name: item.name, id: item.id };
+    });
+    setMomoSelectData(newSelectData);
   };
 
   // 스테이킹 취소 모달

@@ -46,9 +46,13 @@ const TeamStakingConfirmModal = ({
       console.log("스테이킹 리스트 에러 정보 ==========", err);
     }
   };
-
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setTeamStakingConfirmModal((prev) => !prev);
+    }
+  };
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleModalBackground}>
       <div className="confirm-modal-background">
         <div className="confirm-modal__text">
           {language === "EN" ? (
@@ -58,7 +62,7 @@ const TeamStakingConfirmModal = ({
               the team staking?
             </>
           ) : (
-            `シングルステークスをご希望ですか？`
+            `チームステーキングをご希望ですか？`
           )}
         </div>
         <div className="confirm-modal__btn-box">

@@ -8,7 +8,6 @@ const TeamStakingCancelModal = ({
   setTeamStakingCancelConfirmModal,
   selectData,
 }) => {
-  console.log("팀캔슬모달", selectData);
   // 모모 등급 표시
   const getGradeNameForValue = (value) => {
     switch (value) {
@@ -39,8 +38,14 @@ const TeamStakingCancelModal = ({
         return "";
     }
   };
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setTeamStakingCancelModal((prev) => !prev);
+      document.body.style.overflow = "";
+    }
+  };
   return (
-    <div className="modal-background">
+    <div className="modal-background" onClick={handleModalBackground}>
       <div className="team-staking-cancel__background">
         <div className="team-staking-cancel__mongz-info-box">
           <div className="team-staking-cancel__mongz-img">

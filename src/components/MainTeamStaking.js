@@ -189,16 +189,12 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
 
   // const nftData2 = [{}];
 
+  // ================== 스테이킹 리스트 ===============
   const [teamStakingMomoData, setTeamStakingMomoData] = useState([]);
   const [singleStakingMomoIds, setSingleStakingMomoIds] = useState([]);
   const [teamStakingMomoIds, setTeamStakingMomoIds] = useState([]);
-  const [teamStaking, setTeamStaking] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // ================== 스테이킹 리스트 ===============
-  console.log("스테이킹 nft 목록 ==========", singleStakingMomoIds);
-  console.log("팀 스테이킹 nft 목록 ==========", teamStakingMomoData);
-  console.log("팀 스테이킹 nft ids ==========", teamStakingMomoIds);
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
 
   //https://jp.object.ncloudstorage.com/tmhc-meta/106.json
@@ -300,8 +296,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     getStakingNftList();
     getTeamStakingNftList();
   }, [walletAddress]);
-
-  // console.log(stakingMomoIds);
 
   const [reward, setReward] = useState("");
   console.log(reward);

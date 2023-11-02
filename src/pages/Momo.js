@@ -354,7 +354,6 @@ const Momo = ({ language }) => {
   }, [walletAddress]);
 
   console.log("nftData==================", momoNftData);
-  console.log("소유한 nft 개수 =============", momoNftData.length);
 
   const [reward, setReward] = useState("");
 
@@ -781,6 +780,7 @@ const Momo = ({ language }) => {
                             <input
                               type="checkbox"
                               className="momo-check"
+                              checked={isChecked.includes(item.id)}
                               onClick={(e) =>
                                 handleChecked(e, item.id, item.image, item.name)
                               }

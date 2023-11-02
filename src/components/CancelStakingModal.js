@@ -264,9 +264,15 @@ const CancelStakingConfirmModal = ({
   // =========== 언스테이킹 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);
   console.log(failModalControl);
+
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setCancelStakingConfirm(!cancelStakingConfirm);
+    }
+  };
   return (
     <>
-      <div className="modal-background">
+      <div className="modal-background" onClick={handleModalBackground}>
         {language === "EN" ? (
           <div className="cancel-staking-confirm">
             <span className="cancel-staking-confirm__title">

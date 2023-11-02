@@ -48,7 +48,6 @@ const StakingModal = ({
   const handleModalBackground = (e) => {
     if (e.target === e.currentTarget) {
       handleCloseModal();
-      handleConfirmModal();
     }
   };
   return (
@@ -143,7 +142,6 @@ const StakingModal = ({
           language={language}
           setIsChecked={setIsChecked}
           isChecked={isChecked}
-          handleModalBackground={handleModalBackground}
         />
       )}
     </>
@@ -160,7 +158,6 @@ const StakingConfirmModal = ({
   language,
   setIsChecked,
   isChecked,
-  handleModalBackground,
 }) => {
   // address
   const walletAddress = useAddress();
@@ -291,9 +288,6 @@ const StakingConfirmModal = ({
 
   console.log("포스트데이터", data);
 
-  console.log("포스트데이터", data);
-
-  console.log("셀렉트데이터", momoSelectData);
   const handleStaking = async () => {
     setStakingIsLoading(true);
 
@@ -341,6 +335,12 @@ const StakingConfirmModal = ({
   // =========== 스테이킹 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);
   console.log(failModalControl);
+
+  const handleModalBackground = (e) => {
+    if (e.target === e.currentTarget) {
+      setStakingConfirm(!stakingConfirm);
+    }
+  };
   return (
     <>
       {language === "EN" ? (

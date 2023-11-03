@@ -322,6 +322,7 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
           "스테이킹 중인 ",
           "All claim transition registration has been completed for "
         )
+        .replace("모든 Claim 트렌젝션 등록 완료", " that is being staked.")
         .replace("의 모든 Claim 트렌젝션 등록 완료", " that is being staked.");
     }
     if (errMsg === "현재 받을 수 있는 리워드가 없습니다.") {

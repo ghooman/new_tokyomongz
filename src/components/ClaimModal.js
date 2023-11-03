@@ -356,6 +356,7 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
     if (
       errMsg.includes("のすべてのClaimリクエストが完了しました。") ||
       errMsg.includes("のClaimリクエストを受け付けました。") ||
+      errMsg.includes("すべてのClaimリクエストが完了しました。") ||
       errMsg.includes(
         "All claim transition registration has been completed for"
       ) ||

@@ -16,7 +16,8 @@
   width: 460px;
   top: 50%;
   left: 50%;
-  height: 900px;
+  min-height: 900px;
+  height: auto;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -47,10 +48,10 @@
     }
   }
   .team-staking-cancel__momo-box {
-    margin-top: 24px;
+    margin-top: 12px;
     display: flex;
     border-bottom: 1px solid #545454;
-    padding-bottom: 24px;
+    padding-bottom: 12px;
     overflow: auto;
     &::-webkit-scrollbar-thumb {
       background-color: #545454;
@@ -118,7 +119,7 @@
     }
   }
   .team-staking-cancel__text {
-    margin-top: 24px;
+    margin-top: 12px;
     margin-bottom: 30px;
   }
   .team-staking-cancel__btn-box {

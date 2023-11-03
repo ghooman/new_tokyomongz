@@ -661,6 +661,7 @@ const Team = ({ language }) => {
         {/* 팀 스테이킹 취소 모달 */}
         {teamStakingCancelModal && (
           <TeamStakingCancelModal
+            language={language}
             setTeamStakingCancelModal={setTeamStakingCancelModal}
             setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
             selectData={selectData}

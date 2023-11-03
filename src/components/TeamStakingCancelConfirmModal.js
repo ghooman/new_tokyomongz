@@ -52,7 +52,8 @@ const TeamStakingCancelConfirmModal = ({
               team staking?
             </>
           ) : (
-            `シングルステークスをご希望ですか？`
+            `Team Stakingを解除してもよろしいですか`
+            // 임시 피그마 없어서 이전 문구 사용했습니다.
           )}
         </div>
         <div className="cancel-confirm-modal__btn-box">

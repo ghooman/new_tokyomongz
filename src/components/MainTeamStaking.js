@@ -959,6 +959,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       </div>
       {teamStakingModal && (
         <TeamStakingCreateModal
+          language={language}
           teamStakingMongzData={clickStakingMongzData}
           selectData={selectData}
           setTeamStakingModal={setTeamStakingModal}

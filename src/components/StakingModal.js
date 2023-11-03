@@ -102,9 +102,10 @@ const StakingModal = ({
                 [注意]
                 <br />
                 <br />
+                ·
                 各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
                 <br />
-                <br />.
+                <br />·
                 Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
               </p>
             </div>

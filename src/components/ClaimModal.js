@@ -61,6 +61,10 @@ const ClaimModal = ({ language, reward, claimType }) => {
                   <span>-</span> The MZC that is currently displayed in your
                   wallet is not confirmed. It will be recalculated during the
                   claim process.
+                  <br />
+                  <br />
+                  Holders can only claim the reward if they have at least 1 MZC
+                  per each NFT being staked.
                 </li>
               </ul>
             </div>
@@ -354,7 +358,8 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
       errMsg.includes("のClaimリクエストを受け付けました。") ||
       errMsg.includes(
         "All claim transition registration has been completed for"
-      )
+      ) ||
+      errMsg.includes("that is being staked.")
     ) {
       dispatch(setClaimModal(!claimModal));
       window.location.reload();

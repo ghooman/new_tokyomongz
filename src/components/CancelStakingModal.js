@@ -70,14 +70,17 @@ const CancelStakingModal = ({
 
             <div className="cancel__text">
               <p>
-                Are you sure you want to cancel staking? ETH is required to
-                cancel staking.
+                Are you sure you want to cancel the staking? You will
+                automatically receive the MZC earned by NFT when the staking is
+                canceled.
                 <br />
                 <br />
                 [Caution]
                 <br />
-                If the wallet of NFT changes due to sale, wallet transfer, etc.,
-                MZC generated from applicable NFT will not be distributed.
+                If the NFT being staked is manually moved to another wallet due
+                to the NFT being sold, transferred, etc. before being claimed,
+                the MZC earned from the NFT will be canceled.If the claimable
+                amount is less than 1 MZC per NFT, the MZC cannot be claimed.
                 {/* <br />
                 You will automatically receive the MZC acquired by NFT when you
                 cancel

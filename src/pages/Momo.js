@@ -125,9 +125,10 @@ const Momo = ({ language }) => {
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
-  const handleMoveTeamModal = () => {
+  const handleMoveTeamModal = (id, name) => {
     document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
+    setMomoSelectData([{ name: name, id: id }]);
   };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
@@ -669,7 +670,7 @@ const Momo = ({ language }) => {
                               className="momo-btn-cancel-staking"
                               onClick={() =>
                                 teamStakingData.includes(parseInt(item.id))
-                                  ? handleMoveTeamModal()
+                                  ? handleMoveTeamModal(item.id, item.name)
                                   : handleCancelStakingModal(
                                       item.image,
                                       item.id,
@@ -741,7 +742,7 @@ const Momo = ({ language }) => {
                                 className="momo-btn-cancel-staking"
                                 onClick={() =>
                                   teamStakingData.includes(parseInt(item.id))
-                                    ? handleMoveTeamModal()
+                                    ? handleMoveTeamModal(item.id, item.name)
                                     : handleCancelStakingModal(
                                         item.image,
                                         item.id,
@@ -893,6 +894,7 @@ const Momo = ({ language }) => {
           language={language}
           handleMoveTeamModal={handleMoveTeamModal}
           setOpenMoveTeamModal={setOpenMoveTeamModal}
+          momoSelectData={momoSelectData}
         />
       )}
     </>

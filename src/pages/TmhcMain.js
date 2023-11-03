@@ -150,10 +150,12 @@ const Main = ({ language }) => {
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
-  const handleMoveTeamModal = () => {
+  const handleMoveTeamModal = (image, id, name) => {
     document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
+    setSelectData([{ image: image, name: name, id: id }]);
   };
+
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
@@ -1186,6 +1188,7 @@ const Main = ({ language }) => {
           language={language}
           handleMoveTeamModal={handleMoveTeamModal}
           setOpenMoveTeamModal={setOpenMoveTeamModal}
+          selectData={selectData}
         />
       )}
     </>

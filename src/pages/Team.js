@@ -601,8 +601,9 @@ const Team = ({ language }) => {
                               <span className="main__team-item-momo-title">
                                 {member.name}
                               </span>
-                              {/* 임시로 고정 값으로 두겠습니다. */}
-                              <span>300%</span>
+                              <span>
+                                +{getGradeNameForPercent(member.rank)}%
+                              </span>
                             </div>
                           ))}
                         </div>

@@ -135,7 +135,7 @@ const CancelStakingModal = ({
             <div className="cancel__text">
               <p>
                 Stakingを解除してもよろしいですか？
-                {/* <br />
+                <br />
                 解除時にNFTが獲得したMZCを自動で受け取ります。
                 <br />
                 <br />
@@ -143,7 +143,7 @@ const CancelStakingModal = ({
                 <br />
                 Staking中のNFTを、Claimする前に売却・譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
                 <br />
-                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。 */}
+                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
               </p>
             </div>
             <div className="cancel__btn">

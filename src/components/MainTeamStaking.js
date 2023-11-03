@@ -93,12 +93,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
 
   // 스테이킹 모달
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
-  const handleStakingModal = (image, name, id, attributes) => {
+  const handleStakingModal = (image, name, id, rank) => {
     dispatch(setStakingModal(!stakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([
-      { image: image, name: name, id: id, attributes: attributes },
-    ]);
+    setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
   // 스테이킹 모달 여러개
@@ -111,18 +109,16 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const cancelStakingModal = useSelector(
     (state) => state.cancelStakingModal.cancelStakingModal
   );
-  const handleCancelStakingModal = (image, id, name, attributes) => {
+  const handleCancelStakingModal = (image, id, name, rank) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
     document.body.style.overflow = "hidden";
-    setSelectData([
-      { image: image, name: name, id: id, attributes: attributes },
-    ]);
+    setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
-  const handleChecked = (e, id, image, name, attributes) => {
+  const handleChecked = (e, id, image, name, rank) => {
     e.stopPropagation();
     console.log("check", e.target.checked);
     console.log("select data", selectData);
@@ -151,12 +147,11 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       setIsChecked([...isChecked, id]);
       const newData = selectData.filter((el) => el.id !== id);
       setSelectData(
-        [
-          ...newData,
-          { image: image, name: name, id: id, attributes: attributes },
-        ].sort((a, b) => {
-          return a.id - b.id;
-        })
+        [...newData, { image: image, name: name, id: id, rank: rank }].sort(
+          (a, b) => {
+            return a.id - b.id;
+          }
+        )
       );
     } else {
       setIsChecked(isChecked.filter((el) => el !== id));
@@ -238,6 +233,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
         const nonEmptyObjects = res.data.filter(
           (obj) => Object.keys(obj).length > 0
         );
+        console.log(nonEmptyObjects);
         setTeamStakingMomoData(nonEmptyObjects);
         setIsLoading(false);
       } catch (err) {
@@ -751,9 +747,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               {isLoading ? (
                 <div className="loading">Now loading...</div>
               ) : walletAddress === undefined ||
-                teamStakingMomoData.length === 0 ||
-                teamStakingMomoData.length ===
-                  singleStakingMomoIds.length + teamStakingMomoIds.length ? (
+                (teamStakingMomoData?.length ?? 0) ===
+                  (singleStakingMomoIds?.length ?? 0) +
+                    (teamStakingMomoIds?.length ?? 0) ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
@@ -767,10 +763,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         <li className="tmhc-item" key={item.id}>
                           <div
                             className={`momo-rating ${getGradeNameForValue(
-                              item.attributes[item.attributes.length - 1].value
+                              item.rank
                             )}`}
                           >
-                            {item.attributes[item.attributes.length - 1].value}
+                            {item.rank}
                           </div>
 
                           <input
@@ -783,7 +779,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 item.id,
                                 item.image,
                                 item.name,
-                                item.attributes
+                                item.rank
                               )
                             }
                           />
@@ -806,14 +802,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                           <div className="tmhc-info">
                             <span className="tmhc-name">{item.name}</span>
                             <span className="mongz-team-staking-text">
-                              <span>
-                                +
-                                {getGradeNameForPercent(
-                                  item.attributes[item.attributes.length - 1]
-                                    .value
-                                )}
-                                %
-                              </span>
+                              <span>+{getGradeNameForPercent(item.rank)}%</span>
                             </span>
                           </div>
                         </li>
@@ -832,10 +821,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         <li className="tmhc-item" key={item.id}>
                           <div
                             className={`momo-rating ${getGradeNameForValue(
-                              item.attributes[item.attributes.length - 1].value
+                              item.rank
                             )}`}
                           >
-                            {item.attributes[item.attributes.length - 1].value}
+                            {item.rank}
                           </div>
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
@@ -853,7 +842,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                   item.image,
                                   item.id,
                                   item.name,
-                                  item.attributes
+                                  item.rank
                                 )
                               }
                             >
@@ -879,10 +868,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         <li className="tmhc-item" key={item.id}>
                           <div
                             className={`momo-rating ${getGradeNameForValue(
-                              item.attributes[item.attributes.length - 1].value
+                              item.rank
                             )}`}
                           >
-                            {item.attributes[item.attributes.length - 1].value}
+                            {item.rank}
                           </div>
                           <input
                             type="checkbox"
@@ -893,7 +882,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                 item.id,
                                 item.image,
                                 item.name,
-                                item.attributes
+                                item.rank
                               )
                             }
                           />
@@ -913,7 +902,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                                   item.image,
                                   item.name,
                                   item.id,
-                                  item.attributes
+                                  item.rank
                                 )
                               }
                             >
@@ -971,7 +960,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
       {teamStakingModal && (
         <TeamStakingCreateModal
           teamStakingMongzData={clickStakingMongzData}
-          teamStakingMomoData={selectData}
+          selectData={selectData}
           setTeamStakingModal={setTeamStakingModal}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
           getGradeNameForPercent={getGradeNameForPercent}
@@ -983,7 +972,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
           language={language}
           setTeamStakingConfirmModal={setTeamStakingConfirmModal}
           teamStakingMongzData={clickStakingMongzData}
-          teamStakingMomoData={selectData}
+          selectData={selectData}
           getGradeNameForPercent={getGradeNameForPercent}
           getGradeNameForValue={getGradeNameForValue}
         />

@@ -3,7 +3,7 @@ import "./TeamStakingCreateModal.scss";
 
 const TeamStakingCreateModal = ({
   teamStakingMongzData,
-  teamStakingMomoData,
+  selectData,
   setTeamStakingModal,
   setTeamStakingConfirmModal,
   getGradeNameForPercent,
@@ -11,9 +11,9 @@ const TeamStakingCreateModal = ({
 }) => {
   // 모모를 등록하면 총 부스트가 몇이될지 추측
   // let totalBoost = 0;
-  // teamStakingMomoData.forEach((item) => {
+  // selectData.forEach((item) => {
   //   totalBoost += getGradeNameForPercent(
-  //     item.attributes[item.attributes.length - 1].value
+  //     item.rank
   //   );
   // });
   const handleModalBackground = (e) => {
@@ -44,27 +44,19 @@ const TeamStakingCreateModal = ({
         </div>
         <div className="create-modal-momo-box">
           {/* 팀 스테이킹 할 momo 데이터를 가지고 와서 뿌리기 */}
-          {teamStakingMomoData.map((item) => {
+          {selectData.map((item) => {
             return (
               <div className="momo-box__item">
                 <div className="momo-item__img">
                   <div
-                    className={`momo-rating ${getGradeNameForValue(
-                      item.attributes[item.attributes.length - 1].value
-                    )}`}
+                    className={`momo-rating ${getGradeNameForValue(item.rank)}`}
                   >
-                    {item.attributes[item.attributes.length - 1].value}
+                    {item.rank}
                   </div>
                   <img src={item.image} alt="momoImg" />
                 </div>
                 <span className="momo-item__name">{item.name}</span>
-                <span>
-                  Boost{" "}
-                  {getGradeNameForPercent(
-                    item.attributes[item.attributes.length - 1].value
-                  )}
-                  %
-                </span>
+                <span>Boost {getGradeNameForPercent(item.rank)}%</span>
               </div>
             );
           })}
@@ -104,7 +96,7 @@ const TeamStakingCreateModal = ({
               setTeamStakingConfirmModal(
                 (prev) => !prev,
                 teamStakingMongzData,
-                teamStakingMomoData
+                selectData
               )
             }
           >

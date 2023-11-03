@@ -378,6 +378,7 @@ const Team = ({ language }) => {
   };
 
   console.log(language);
+  console.log("@", newTeamStakingData);
   return (
     <>
       <Nav />
@@ -590,16 +591,10 @@ const Team = ({ language }) => {
                               <div className="main__team-item-momo-img">
                                 <div
                                   className={`momo-rating ${getGradeNameForValue(
-                                    member.attributes[
-                                      member.attributes.length - 1
-                                    ].value
+                                    member.rank
                                   )}`}
                                 >
-                                  {
-                                    member.attributes[
-                                      member.attributes.length - 1
-                                    ].value
-                                  }
+                                  {member.rank}
                                 </div>
                                 <img src={member.image} alt="momoImg" />
                               </div>

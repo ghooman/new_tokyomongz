@@ -6,12 +6,12 @@ const TeamStakingConfirmModal = ({
   language,
   setTeamStakingConfirmModal,
   teamStakingMongzData,
-  teamStakingMomoData,
+  selectData,
 }) => {
   // 팀 스테이킹 등록할때 필요한 정보입니다.
   const walletAddress = useAddress();
   const tmhcIds = teamStakingMongzData.id;
-  const momoIds = teamStakingMomoData.map((momo) => momo.id);
+  const momoIds = selectData.map((momo) => momo.id);
   // =========== 언스테이킹 실패 모달 컨트롤 =============
   const [failModalControl, setFailModalControl] = useState(false);
   // ================ 실패 메시지 ==============
@@ -44,6 +44,8 @@ const TeamStakingConfirmModal = ({
       setFailModalControl(true);
     } catch (err) {
       console.log("스테이킹 리스트 에러 정보 ==========", err);
+      setErrMsg("Server Error");
+      setFailModalControl(true);
     }
   };
   const handleModalBackground = (e) => {
@@ -90,6 +92,8 @@ const TeamStakingConfirmModal = ({
     </div>
   );
 };
+
+//////////////////////////////////////////////
 // 컴펀클릭후 뜨는모달
 const TeamStakingFailModal = ({
   setFailModalControl,

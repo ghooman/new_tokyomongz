@@ -61,11 +61,9 @@ const TeamStakingCancelModal = ({
               <div className="team-staking-cancel__momo-item">
                 <div className="team-staking-cancel__momo-img">
                   <div
-                    className={`momo-rating ${getGradeNameForValue(
-                      item.attributes[item.attributes.length - 1].value
-                    )}`}
+                    className={`momo-rating ${getGradeNameForValue(item.rank)}`}
                   >
-                    {item.attributes[item.attributes.length - 1].value}
+                    {item.rank}
                   </div>
                   <img src={item.image} alt="momoImg" />
                 </div>

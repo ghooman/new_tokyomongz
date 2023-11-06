@@ -789,8 +789,7 @@ const Momo = ({ language }) => {
                   selectedState === "Staking中") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length + teamStakingData.length ===
-                      momoNftData.length ||
+                  ) : filteredMomoNftData.length === 0 ||
                     (stakingData.length === 0 &&
                       teamStakingData.length === 0) ? (
                     <div className="momo-empty-nft">

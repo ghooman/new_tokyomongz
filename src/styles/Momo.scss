@@ -580,13 +580,16 @@
 
       .momo-container__nft {
         margin-top: 80px;
-        .mom-nft__header {
+        .momo-nft__header {
           .momo-header__title {
             font-size: 16px;
           }
           > div {
             .momo-left__menu {
               margin-top: 16px;
+              .momo-grade-select-box {
+                width: 30%;
+              }
             }
           }
         }

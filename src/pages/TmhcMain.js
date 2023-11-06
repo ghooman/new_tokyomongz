@@ -852,16 +852,10 @@ const Main = ({ language }) => {
                                         >
                                           <div
                                             className={`momo-rating ${getGradeNameForValue(
-                                              memberItem.attributes[
-                                                memberItem.attributes.length - 1
-                                              ].value
+                                              memberItem.rank
                                             )}`}
                                           >
-                                            {
-                                              memberItem.attributes[
-                                                memberItem.attributes.length - 1
-                                              ].value
-                                            }
+                                            {memberItem.rank}
                                           </div>
                                           <img
                                             src={memberItem.image}
@@ -982,18 +976,10 @@ const Main = ({ language }) => {
                                             >
                                               <div
                                                 className={`momo-rating ${getGradeNameForValue(
-                                                  memberItem.attributes[
-                                                    memberItem.attributes
-                                                      .length - 1
-                                                  ].value
+                                                  memberItem.rank
                                                 )}`}
                                               >
-                                                {
-                                                  memberItem.attributes[
-                                                    memberItem.attributes
-                                                      .length - 1
-                                                  ].value
-                                                }
+                                                {memberItem.rank}
                                               </div>
                                               <img
                                                 src={memberItem.image}

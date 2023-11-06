@@ -54,7 +54,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">Utility</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="Mint" onClick={() => dispatch(setActiveTab(1))}>
+              <Link to="https://mint.tokyomongzhillsclub.com/" target="_blank">
                 Mint
               </Link>
             </li>
@@ -143,7 +143,11 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               </Link>
             </li>
             <li>
-              <Link to="" onClick={handleWaitingModal}>
+              <Link
+                to="https://mint.tokyomongzhillsclub.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 PEACHz.MOMO
               </Link>
             </li>

@@ -276,9 +276,11 @@
                 }
               }
             }
-
+            .main-item__bonus {
+              margin-bottom: 42px;
+            }
             .main__team-item-and-icon {
-              margin: 0 20px;
+              // margin: 0 20px;
               min-width: 55px;
               height: 55px;
               // margin: 0 20px;
@@ -296,7 +298,7 @@
                   display: flex;
                   flex-direction: column;
                   align-items: center;
-                  margin-right: 20px;
+                  margin-right: 10px;
                   border-radius: 8px;
                   &:nth-child(6) {
                     margin-right: 0;
@@ -369,6 +371,7 @@
                 }
               }
               .momo-item__bonus {
+                margin-top: 8px;
                 width: 100%;
                 text-align: center;
                 font-size: 30px;

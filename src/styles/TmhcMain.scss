@@ -425,7 +425,9 @@
               padding: 16px;
               .tmhc-name {
                 font-family: "mplus1p500";
-                font-size: 20px;
+                font-size: 19px;
+                height: 56px;
+                text-align: center;
                 color: #b3b3b3;
               }
 
@@ -641,6 +643,11 @@
             grid-template-columns: repeat(2, 1fr);
             .tmhc-item {
               width: auto;
+              .tmhc-info {
+                .tmhc-name {
+                  height: fit-content;
+                }
+              }
               &:nth-child(1n + 3) {
                 margin-top: 24px;
               }

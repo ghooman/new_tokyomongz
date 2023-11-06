@@ -124,7 +124,7 @@ const Copyright = ({ language }) => {
               二次創作のガイドライン
             </span>
             <p className="terms-text">
-              株式会社HashLink（以下、「当社」といいます）は、提供するTokyoMongzHillsClubの
+              株式会社HashLink（以下、「当社」といいます）は、提供するMongzUniverseの
               NFT（以下、「当社発行のNFT」といいます）を多くの方々に楽しんでいただけるよう、当社発行のNFTに関する二次創作のガイドライン（以下、「本ガイドライン」といいます）を制定いたしました。本ガイドラインは、当社が個別のプロジェクトで定める利用規約やガイドライン、その他ルール等（以下、総称して「規約等」といいます）と重畳的に適用され、規約等の一部を構成します。
             </p>
             <span className="terms-sub-title">二次創作</span>
@@ -137,7 +137,7 @@ const Copyright = ({ language }) => {
             </p>
             <span className="terms-sub-title">ロゴや商標の利用</span>
             <p className="terms-text">
-              非営利目的の場合に限り、ホルダーは公開された『TokyoMongzHillsClub』のロゴを二次創作物に利用することができます。営利目的で『TokyoMongzHillsClub』のロゴや商標を利用する場合については、原則許可制とさせていただいておりますので、
+              非営利目的の場合に限り、ホルダーは公開された『MongzUniverse』のロゴを二次創作物に利用することができます。営利目的で『MongzUniverse』のロゴや商標を利用する場合については、原則許可制とさせていただいておりますので、
               <a href="mailto:tmhc_support@hashlink.jp">
                 tmhc_support@hashlink.jp
               </a>
@@ -152,12 +152,11 @@ const Copyright = ({ language }) => {
               以下のいずれかにあたる二次創作物の制作は禁止とします。
             </p>
             <p className="terms-text">
-              • 『Tokyo Mongz Hills
-              Club』のイメージを損なう内容、またはそのおそれのある内容のもの
+              •
+              『MongzUniverse』のイメージを損なう内容、またはそのおそれのある内容のもの
             </p>
             <p className="terms-text">
-              • 『Tokyo Mongz Hills
-              Club』の公式コンテンツであると誤解をまねく内容のもの
+              • 『MongzUniverse』の公式コンテンツであると誤解をまねく内容のもの
             </p>
             <p className="terms-text">
               • 他者の権利を侵害する、または侵害するおそれのある内容のもの

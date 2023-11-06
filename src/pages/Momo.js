@@ -43,7 +43,7 @@ const Momo = ({ language }) => {
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
 
-  // 드랍다운 보이기 / 안보이기
+  // 스테이킹 상태 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);
   const handleDropdownClick = () => {
@@ -51,7 +51,7 @@ const Momo = ({ language }) => {
     rotateRef.current.style.transform = isOpen ? "" : "rotate(-180deg)";
   };
 
-  // 드랍다운 아이템 선택시 글자변경
+  // 스테이킹 상태 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
@@ -60,6 +60,25 @@ const Momo = ({ language }) => {
     setIsChecked([]);
     setMomoSelectData([]);
     rotateRef.current.style.transform = "";
+  };
+  // 등급 드롭다운 보이기
+  const gradeRef = useRef();
+  const [gradeIsOpen, setGradeIsOpen] = useState(false);
+  const [gradeState, setGradeState] = useState("All");
+  console.log("그레이드상태", gradeState);
+  // 등급 필터링 목록 드랍다운 보이기 / 안보이기
+  const handleGradeDropdownClick = () => {
+    setGradeIsOpen(!gradeIsOpen);
+    gradeRef.current.style.transform = gradeIsOpen ? "" : "rotate(-180deg)";
+  };
+  // 등급 클릭했을경우
+  const handleSelectedGrade = (text) => {
+    setPage(1);
+    setIsChecked([]);
+    setMomoSelectData([]);
+    setGradeState(text);
+    setGradeIsOpen(!gradeIsOpen);
+    gradeRef.current.style.transform = gradeIsOpen ? "" : "rotate(-180deg)";
   };
 
   // 언어 변경시 셀렉트 박스 영어 또는 일본어 변경
@@ -125,9 +144,10 @@ const Momo = ({ language }) => {
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
-  const handleMoveTeamModal = () => {
+  const handleMoveTeamModal = (id, name) => {
     document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
+    setMomoSelectData([{ name: name, id: id }]);
   };
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
@@ -356,7 +376,16 @@ const Momo = ({ language }) => {
   console.log("nftData==================", momoNftData);
 
   const [reward, setReward] = useState("");
-
+  // 클릭한 등급에 따른 모모 리스트
+  const filteredMomoNftData = momoNftData.filter((item) => {
+    console.log("@@@@그레이드상태", gradeState);
+    console.log("아이템랭크", item.rank);
+    if (gradeState === "All") {
+      return true;
+    }
+    return item.rank === gradeState;
+  });
+  console.log("필터링목록", filteredMomoNftData);
   return (
     <>
       <Nav />
@@ -490,6 +519,57 @@ const Momo = ({ language }) => {
               <span className="momo-header__title">NFT List</span>
               <div>
                 <div className="momo-left__menu">
+                  {/* 등급 필터링  드롭다운*/}
+                  <div className="momo-state-select-box momo-grade-select-box">
+                    <button
+                      className="momo-btn--state-select"
+                      onClick={handleGradeDropdownClick}
+                    >
+                      {gradeState}
+                    </button>
+                    <span
+                      className="material-symbols-outlined"
+                      ref={gradeRef}
+                      onClick={handleGradeDropdownClick}
+                    >
+                      expand_more
+                    </span>
+                    {gradeIsOpen ? (
+                      <ul className="momo-state-select-list">
+                        <li
+                          className="momo-state-item all"
+                          onClick={() => handleSelectedGrade("All")}
+                        >
+                          All
+                        </li>
+                        <li
+                          className="momo-state-item all"
+                          onClick={() => handleSelectedGrade("UR")}
+                        >
+                          UR
+                        </li>
+                        <li
+                          className="momo-state-item staking"
+                          onClick={() => handleSelectedGrade("SR")}
+                        >
+                          SR
+                        </li>
+                        <li
+                          className="momo-state-item before-staking"
+                          onClick={() => handleSelectedGrade("R")}
+                        >
+                          R
+                        </li>
+                        <li
+                          className="momo-state-item before-staking"
+                          onClick={() => handleSelectedGrade("C")}
+                        >
+                          C
+                        </li>
+                      </ul>
+                    ) : null}
+                  </div>
+                  {/* 스테이킹 상태 드롭다운 메뉴 */}
                   <div className="momo-state-select-box">
                     <button
                       className="momo-btn--state-select"
@@ -558,14 +638,14 @@ const Momo = ({ language }) => {
                     {(selectedState === "All" ||
                       selectedState === "すべて") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData ? momoNftData.length : 0}
+                        {filteredMomoNftData ? filteredMomoNftData.length : 0}
                       </span>
                     )}
                     {(selectedState === "Staking" ||
                       selectedState === "Staking中") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
+                        {filteredMomoNftData
+                          ? filteredMomoNftData.filter((item) => {
                               return (
                                 stakingData.includes(parseInt(item.id)) ||
                                 teamStakingData.includes(parseInt(item.id))
@@ -577,8 +657,8 @@ const Momo = ({ language }) => {
                     {(selectedState === "Ready for staking" ||
                       selectedState === "未Staking") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
+                        {filteredMomoNftData
+                          ? filteredMomoNftData.filter((item) => {
                               return (
                                 !stakingData.includes(parseInt(item.id)) &&
                                 !teamStakingData.includes(parseInt(item.id))
@@ -630,14 +710,15 @@ const Momo = ({ language }) => {
             <div className="momo-nft__main">
               {isLoading ? (
                 <div className="loading">Now loading...</div>
-              ) : walletAddress === undefined || momoNftData.length === 0 ? (
+              ) : walletAddress === undefined ||
+                filteredMomoNftData.length === 0 ? (
                 <div className="momo-empty-nft">
                   There are no NFTs in possession.
                 </div>
               ) : momoNftData.length > 0 && dataStatus ? (
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__momo-list">
-                    {momoNftData.slice(start, end).map((item) => (
+                    {filteredMomoNftData.slice(start, end).map((item) => (
                       <li className="momo-item" key={item.id}>
                         {stakingData.includes(parseInt(item.id)) ||
                         teamStakingData.includes(parseInt(item.id)) ? null : (
@@ -669,7 +750,7 @@ const Momo = ({ language }) => {
                               className="momo-btn-cancel-staking"
                               onClick={() =>
                                 teamStakingData.includes(parseInt(item.id))
-                                  ? handleMoveTeamModal()
+                                  ? handleMoveTeamModal(item.id, item.name)
                                   : handleCancelStakingModal(
                                       item.image,
                                       item.id,
@@ -708,14 +789,15 @@ const Momo = ({ language }) => {
                   selectedState === "Staking中") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length === 0 &&
-                    teamStakingData.length === 0 ? (
+                  ) : filteredMomoNftData.length === 0 ||
+                    (stakingData.length === 0 &&
+                      teamStakingData.length === 0) ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {momoNftData
+                      {filteredMomoNftData
                         .filter((item) => {
                           return (
                             stakingData.includes(parseInt(item.id)) ||
@@ -741,7 +823,7 @@ const Momo = ({ language }) => {
                                 className="momo-btn-cancel-staking"
                                 onClick={() =>
                                   teamStakingData.includes(parseInt(item.id))
-                                    ? handleMoveTeamModal()
+                                    ? handleMoveTeamModal(item.id, item.name)
                                     : handleCancelStakingModal(
                                         item.image,
                                         item.id,
@@ -767,7 +849,7 @@ const Momo = ({ language }) => {
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {momoNftData
+                      {filteredMomoNftData
                         .filter((item) => {
                           return (
                             !stakingData.includes(parseInt(item.id)) &&
@@ -826,7 +908,7 @@ const Momo = ({ language }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? momoNftData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return (
                               stakingData.includes(parseInt(item.id)) ||
                               teamStakingData.includes(parseInt(item.id))
@@ -834,14 +916,14 @@ const Momo = ({ language }) => {
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? momoNftData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return (
                               !stakingData.includes(parseInt(item.id)) &&
                               !teamStakingData.includes(parseInt(item.id))
                             );
                           }).length
-                        : momoNftData
-                        ? momoNftData.length
+                        : filteredMomoNftData
+                        ? filteredMomoNftData.length
                         : 0
                     }
                     // 표시할 페이지수
@@ -893,6 +975,7 @@ const Momo = ({ language }) => {
           language={language}
           handleMoveTeamModal={handleMoveTeamModal}
           setOpenMoveTeamModal={setOpenMoveTeamModal}
+          momoSelectData={momoSelectData}
         />
       )}
     </>

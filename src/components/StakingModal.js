@@ -81,17 +81,22 @@ const StakingModal = ({
 
           {language === "EN" ? (
             <div className="staking__text">
-              <p>
-                Would you like to apply the staking?
+              <p>Would you like to apply the staking?</p>
+              <ul className="staking__text-box">
                 <br />
                 <br />
-                - Holders can only claim the reward if they have at least 1 MZC
-                per each NFT being staked.
+                <li className="staking__text-box-li">
+                  - Holders can only claim the reward if they have at least 1
+                  MZC per each NFT being staked.
+                </li>
                 <br />
-                <br />- If the holder sells an NFT that is currently being
-                staked, or moves it to a different wallet, they will not receive
-                the reward MZC assigned to the NFT.
-              </p>
+                <br />
+                <li className="staking__text-box-li">
+                  - If the holder sells an NFT that is currently being staked,
+                  or moves it to a different wallet, they will not receive the
+                  reward MZC assigned to the NFT.
+                </li>
+              </ul>
             </div>
           ) : (
             <div className="staking__text">
@@ -102,9 +107,10 @@ const StakingModal = ({
                 [注意]
                 <br />
                 <br />
+                ·
                 各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
                 <br />
-                <br />.
+                <br />·
                 Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
               </p>
             </div>

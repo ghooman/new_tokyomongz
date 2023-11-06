@@ -494,7 +494,7 @@ const Team = ({ language }) => {
           <div className="container__nft">
             <div className="nft__header">
               <span className="header__title">
-                Tokyo Mongz Hills Club X MOMO Team Boosting
+                Tokyo Mongz Hills Club X MOMO Team Staking
               </span>
 
               <span className="header__text">
@@ -580,7 +580,7 @@ const Team = ({ language }) => {
                             {team.leader.name}
                           </span>
                           {/* 임시로 고정 값으로 두겠습니다. */}
-                          <span>560%</span>
+                          <span>100%</span>
                         </div>
                         <div className="main__team-item-and-icon">
                           <img src={AndIcon} alt="andIcon" />
@@ -601,8 +601,9 @@ const Team = ({ language }) => {
                               <span className="main__team-item-momo-title">
                                 {member.name}
                               </span>
-                              {/* 임시로 고정 값으로 두겠습니다. */}
-                              <span>300%</span>
+                              <span>
+                                +{getGradeNameForPercent(member.rank)}%
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -660,6 +661,7 @@ const Team = ({ language }) => {
         {/* 팀 스테이킹 취소 모달 */}
         {teamStakingCancelModal && (
           <TeamStakingCancelModal
+            language={language}
             setTeamStakingCancelModal={setTeamStakingCancelModal}
             setTeamStakingCancelConfirmModal={setTeamStakingCancelConfirmModal}
             selectData={selectData}

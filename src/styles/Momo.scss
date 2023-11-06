@@ -188,7 +188,6 @@
 
             .momo-state-select-box {
               position: relative;
-
               .momo-btn--state-select {
                 position: relative;
                 width: 170px;
@@ -207,7 +206,6 @@
                 transition: 0.3s;
                 cursor: pointer;
               }
-
               .momo-state-select-list {
                 width: 100%;
                 position: absolute;
@@ -217,7 +215,6 @@
                 overflow: hidden;
                 z-index: 2;
                 background-color: #000;
-
                 .momo-state-item {
                   padding: 12px 8px;
                   font-family: "500";
@@ -231,6 +228,9 @@
                   }
                 }
               }
+            }
+            .momo-grade-select-box {
+              margin-right: 12px;
             }
           }
           .momo-right-menu {
@@ -330,8 +330,11 @@
               align-items: center;
               padding: 16px;
               .momo-name {
+                text-align: center;
                 font-family: "mplus1p500";
-                font-size: 20px;
+                font-size: 19px;
+                height: 56px;
+                // white-space: nowrap;
                 color: #b3b3b3;
               }
               .momo-staking-state {
@@ -498,7 +501,11 @@
             grid-template-columns: repeat(2, 1fr);
             .momo-item {
               width: auto;
-
+              .momo-info{
+              .momo-name {
+                height: fit-content;
+              }
+            }
               .momo-images {
                 width: 100%;
                 img {
@@ -579,13 +586,16 @@
 
       .momo-container__nft {
         margin-top: 80px;
-        .mom-nft__header {
+        .momo-nft__header {
           .momo-header__title {
             font-size: 16px;
           }
           > div {
             .momo-left__menu {
               margin-top: 16px;
+              .momo-grade-select-box {
+                width: 30%;
+              }
             }
           }
         }

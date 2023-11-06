@@ -270,7 +270,8 @@ const Policy = ({ language }) => {
               </span>
               HashLink Co., Ltd.
               <br />
-              2-3 Kanda Surugadai, Chiyoda-ku, Tokyo
+              2nd Floor, Video Focus Building, 2-7 Wakaba, Shinjuku-ku, Tokyo,
+              Japan
               <br />
               Representative Director Hyunwoo Lee
             </p>
@@ -464,7 +465,7 @@ const Policy = ({ language }) => {
               </span>
               株式会社HashLink
               <br />
-              東京都千代田区神田駿河台三丁目2番地
+              東京都新宿区若葉2丁目7番地 ビデオフォーカスビル2階
               <br />
               代表取締役　　李　炫雨
             </p>

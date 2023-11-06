@@ -633,9 +633,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {teamStakingMomoData
-                            ? teamStakingMomoData.length -
-                              finalStakingMomoIds.length
+                          {filteredMomoNftData
+                            ? filteredMomoNftData.filter(
+                                (item) => !finalStakingMomoIds.includes(item.id)
+                              ).length
                             : 0}
                         </span>
                       )}
@@ -671,10 +672,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {filteredMomoNftData
-                            ? teamStakingMomoData.length -
-                              finalStakingMomoIds.length
-                            : 0}
+                          {filteredMomoNftData ? filteredMomoNftData.length : 0}
                         </span>
                       )}
                       {(selectedState === "Staking" ||

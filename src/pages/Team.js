@@ -585,27 +585,32 @@ const Team = ({ language }) => {
                         <div className="main__team-item-and-icon">
                           <img src={AndIcon} alt="andIcon" />
                         </div>
-                        <div className="main__team-item-momo-box-container">
-                          {team.member.map((member) => (
-                            <div className="main__team-item-momo-box">
-                              <div className="main__team-item-momo-img">
-                                <div
-                                  className={`momo-rating ${getGradeNameForValue(
-                                    member.rank
-                                  )}`}
-                                >
-                                  {member.rank}
+                        <div className="main__team-item-momo-box">
+                          <div className="main__team-item-momo-box-container">
+                            {team.member.map((member) => (
+                              <div className="main__team-item-momo-box">
+                                <div className="main__team-item-momo-img">
+                                  <div
+                                    className={`momo-rating ${getGradeNameForValue(
+                                      member.rank
+                                    )}`}
+                                  >
+                                    {member.rank}
+                                  </div>
+                                  <img src={member.image} alt="momoImg" />
                                 </div>
-                                <img src={member.image} alt="momoImg" />
+                                <span className="main__team-item-momo-title">
+                                  {member.name}
+                                </span>
+                                <span>
+                                  +{getGradeNameForPercent(member.rank)}%
+                                </span>
                               </div>
-                              <span className="main__team-item-momo-title">
-                                {member.name}
-                              </span>
-                              <span>
-                                +{getGradeNameForPercent(member.rank)}%
-                              </span>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
+                          {team.member.length >= 4 ? (
+                            <p className="momo-item__bonus"> Bonus Boost 20%</p>
+                          ) : null}
                         </div>
                       </div>
                     </div>

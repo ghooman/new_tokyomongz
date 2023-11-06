@@ -333,7 +333,12 @@ const Header = () => {
                   <Link to="/about-tmhc" onClick={handleMenuClicked}>
                     #001 Tokyo Mongz Hills Club
                   </Link>
-                  <Link to="/about-momo" onClick={handleMenuClicked}>
+                  <Link
+                    to="https://opensea.io/collection/peachz-momo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleMenuClicked}
+                  >
                     #002 PEACHz.MOMO
                   </Link>
                   <Link
@@ -445,7 +450,7 @@ const Header = () => {
                     Tokyo Mongs Hills Club
                   </Link>
                   <Link
-                    to="https://mint.tokyomongzhillsclub.com/"
+                    to="https://opensea.io/collection/peachz-momo"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

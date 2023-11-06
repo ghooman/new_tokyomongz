@@ -154,7 +154,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
             </li>
             <li>
               <Link
-                to="https://mint.tokyomongzhillsclub.com/"
+                to="https://opensea.io/collection/peachz-momo"
                 target="_blank"
                 rel="noopener noreferrer"
               >

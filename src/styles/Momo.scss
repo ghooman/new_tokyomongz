@@ -294,6 +294,16 @@
             border: 1px solid #545454;
             border-radius: 8px;
             overflow: hidden;
+            .momo-reward {
+              position: absolute;
+              top: 5px;
+              left: 5px;
+              z-index: 1;
+              font-family: "mplus1p500";
+              font-size: 18px;
+              text-align: center;
+              color: black;
+            }
             .momo-check {
               position: absolute;
               top: 16px;

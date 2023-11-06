@@ -313,6 +313,7 @@ const Main = ({ language }) => {
           id: parseInt(item.name.slice(5)),
           name: item.name,
           image: item.image,
+          reward: item.reward,
         }));
 
         console.log(newData);
@@ -835,6 +836,11 @@ const Main = ({ language }) => {
                               }
                             />
                           )}
+                          {item.reward !== 0 ? (
+                            <span className="tmhc-reward">
+                              {Number(item.reward).toFixed(3)}
+                            </span>
+                          ) : null}
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
                             {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
@@ -960,6 +966,11 @@ const Main = ({ language }) => {
                           .slice(start, end)
                           .map((item) => (
                             <li className="tmhc-item" key={item.id}>
+                              {item.reward !== 0 ? (
+                                <span className="tmhc-reward">
+                                  {Number(item.reward).toFixed(3)}
+                                </span>
+                              ) : null}
                               <div className="tmhc-images">
                                 <img src={item.image} alt="nft" />
                                 {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
@@ -1076,6 +1087,11 @@ const Main = ({ language }) => {
                                 }
                               />
                             )}
+                            {item.reward !== 0 ? (
+                              <span className="tmhc-reward">
+                                {Number(item.reward).toFixed(3)}
+                              </span>
+                            ) : null}
                             <div className="tmhc-images">
                               <img src={item.image} alt="nft" />
                             </div>

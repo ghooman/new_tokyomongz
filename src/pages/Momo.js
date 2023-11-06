@@ -731,6 +731,11 @@ const Momo = ({ language }) => {
                             }
                           />
                         )}
+                        {item.reward !== 0 ? (
+                          <span className="momo-reward">
+                            {Number(item.reward).toFixed(3)}
+                          </span>
+                        ) : null}
                         <div className="momo-images">
                           <img src={item.image} alt="nft" />
                         </div>
@@ -807,6 +812,11 @@ const Momo = ({ language }) => {
                         .slice(start, end)
                         .map((item) => (
                           <li className="momo-item" key={item.id}>
+                            {item.reward !== 0 ? (
+                              <span className="momo-reward">
+                                {Number(item.reward).toFixed(3)}
+                              </span>
+                            ) : null}
                             <div className="momo-images">
                               <img src={item.image} alt="nft" />
                             </div>
@@ -867,6 +877,11 @@ const Momo = ({ language }) => {
                                 handleChecked(e, item.id, item.image, item.name)
                               }
                             />
+                            {item.reward !== 0 ? (
+                              <span className="momo-reward">
+                                {Number(item.reward).toFixed(3)}
+                              </span>
+                            ) : null}
                             <div className="momo-images">
                               <img src={item.image} alt="nft" />
                             </div>

@@ -385,7 +385,7 @@ const Momo = ({ language }) => {
     }
     return item.rank === gradeState;
   });
-  console.log("필터링목록");
+  console.log("필터링목록", filteredMomoNftData);
   return (
     <>
       <Nav />
@@ -638,14 +638,14 @@ const Momo = ({ language }) => {
                     {(selectedState === "All" ||
                       selectedState === "すべて") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData ? momoNftData.length : 0}
+                        {filteredMomoNftData ? filteredMomoNftData.length : 0}
                       </span>
                     )}
                     {(selectedState === "Staking" ||
                       selectedState === "Staking中") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
+                        {filteredMomoNftData
+                          ? filteredMomoNftData.filter((item) => {
                               return (
                                 stakingData.includes(parseInt(item.id)) ||
                                 teamStakingData.includes(parseInt(item.id))
@@ -657,8 +657,8 @@ const Momo = ({ language }) => {
                     {(selectedState === "Ready for staking" ||
                       selectedState === "未Staking") && (
                       <span className="momo-header__text--qtt">
-                        {momoNftData
-                          ? momoNftData.filter((item) => {
+                        {filteredMomoNftData
+                          ? filteredMomoNftData.filter((item) => {
                               return (
                                 !stakingData.includes(parseInt(item.id)) &&
                                 !teamStakingData.includes(parseInt(item.id))
@@ -710,7 +710,8 @@ const Momo = ({ language }) => {
             <div className="momo-nft__main">
               {isLoading ? (
                 <div className="loading">Now loading...</div>
-              ) : walletAddress === undefined || momoNftData.length === 0 ? (
+              ) : walletAddress === undefined ||
+                filteredMomoNftData.length === 0 ? (
                 <div className="momo-empty-nft">
                   There are no NFTs in possession.
                 </div>
@@ -795,7 +796,7 @@ const Momo = ({ language }) => {
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {momoNftData
+                      {filteredMomoNftData
                         .filter((item) => {
                           return (
                             stakingData.includes(parseInt(item.id)) ||
@@ -847,7 +848,7 @@ const Momo = ({ language }) => {
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {momoNftData
+                      {filteredMomoNftData
                         .filter((item) => {
                           return (
                             !stakingData.includes(parseInt(item.id)) &&
@@ -906,7 +907,7 @@ const Momo = ({ language }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? momoNftData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return (
                               stakingData.includes(parseInt(item.id)) ||
                               teamStakingData.includes(parseInt(item.id))
@@ -914,14 +915,14 @@ const Momo = ({ language }) => {
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? momoNftData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return (
                               !stakingData.includes(parseInt(item.id)) &&
                               !teamStakingData.includes(parseInt(item.id))
                             );
                           }).length
-                        : momoNftData
-                        ? momoNftData.length
+                        : filteredMomoNftData
+                        ? filteredMomoNftData.length
                         : 0
                     }
                     // 표시할 페이지수

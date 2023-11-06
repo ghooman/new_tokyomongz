@@ -296,7 +296,7 @@ const Main = ({ language }) => {
           }
         }
         const jsonPromise = JSON.stringify(promises);
-        console.log(jsonPromise);
+        console.log("제이슨아이디값", jsonPromise);
         //////////////////////////////////////////////////////////////////////////////////
         const res = await axios.get(
           "https://mongz-api.sevenlinelabs.app/get_metadata_tmhc",

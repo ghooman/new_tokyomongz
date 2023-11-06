@@ -188,7 +188,6 @@
 
             .momo-state-select-box {
               position: relative;
-
               .momo-btn--state-select {
                 position: relative;
                 width: 170px;
@@ -207,7 +206,6 @@
                 transition: 0.3s;
                 cursor: pointer;
               }
-
               .momo-state-select-list {
                 width: 100%;
                 position: absolute;
@@ -217,7 +215,6 @@
                 overflow: hidden;
                 z-index: 2;
                 background-color: #000;
-
                 .momo-state-item {
                   padding: 12px 8px;
                   font-family: "500";
@@ -231,6 +228,9 @@
                   }
                 }
               }
+            }
+            .momo-grade-select-box {
+              margin-right: 12px;
             }
           }
           .momo-right-menu {

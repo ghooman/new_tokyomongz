@@ -25,6 +25,7 @@ const AboutMomo = ({ language }) => {
             autoPlay
             muted
             loop
+            playsinline
             className="about-momo__video"
           ></video>
         </div>

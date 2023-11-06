@@ -306,6 +306,16 @@
             border: 1px solid #545454;
             border-radius: 8px;
             overflow: hidden;
+            .tmhc-reward {
+              position: absolute;
+              top: 5px;
+              left: 5px;
+              z-index: 1;
+              font-family: "mplus1p500";
+              font-size: 18px;
+              text-align: center;
+              color: #b3b3b3;
+            }
             .momo-rating {
               z-index: 1;
               font-size: 16px;
@@ -425,7 +435,9 @@
               padding: 16px;
               .tmhc-name {
                 font-family: "mplus1p500";
-                font-size: 20px;
+                font-size: 19px;
+                height: 56px;
+                text-align: center;
                 color: #b3b3b3;
               }
 
@@ -641,6 +653,11 @@
             grid-template-columns: repeat(2, 1fr);
             .tmhc-item {
               width: auto;
+              .tmhc-info {
+                .tmhc-name {
+                  height: fit-content;
+                }
+              }
               &:nth-child(1n + 3) {
                 margin-top: 24px;
               }

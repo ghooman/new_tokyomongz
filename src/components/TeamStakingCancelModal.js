@@ -7,6 +7,7 @@ const TeamStakingCancelModal = ({
   setTeamStakingCancelModal,
   setTeamStakingCancelConfirmModal,
   selectData,
+  language,
 }) => {
   // 모모 등급 표시
   const getGradeNameForValue = (value) => {
@@ -74,15 +75,26 @@ const TeamStakingCancelModal = ({
             );
           })}
         </div>
-        <div className="team-staking-cancel__text">
-          Are you sure you want to cancel team staking? ETH is required to
-          cancel staking.
-          <br />
-          <br />
-          [Caution] <br />
-          If the wallet of NFT changes due to sale, wallet transfer, etc., you
-          cannot receive MZC generated from the NFT
-        </div>
+        {language === "EN" ? (
+          <div className="team-staking-cancel__text">
+            Are you sure you want to cancel team staking? ETH is required to
+            cancel staking.
+            <br />
+            <br />
+            [Caution] <br />
+            If the status of a NFT changes due to the NFT being sold,
+            transferred, etc., you cannot receive MZC generated from the NFT.
+          </div>
+        ) : (
+          <div className="team-staking-cancel__text">
+            Team Stakingを解除してもよろしいですか？
+            <br />
+            <br />
+            [注意] <br />
+            売却、譲渡等によりStaking中のNFTを保有するウォレットの情報が変更された場合、該当NFTから生成されたMZCは受け取れません。
+          </div>
+        )}
+
         <div className="team-staking-cancel__btn-box">
           <button
             className="team-staking-cancel__back-btn"

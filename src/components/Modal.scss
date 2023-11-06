@@ -63,7 +63,7 @@
   }
 }
 .claim__btn {
-  margin-top: 24px;
+  margin-top: 40px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -181,11 +181,12 @@
 }
 
 .staking__text {
-  // height: 70px;
-  // overflow: auto;
   p {
     font-size: 16px;
-    font-family: "mplus1p400";
+    // font-family: "mplus1p400";
+  }
+  ul {
+    list-style: disc;
   }
 }
 
@@ -358,6 +359,7 @@
 @media (max-width: 768px) {
   .modal-background {
     padding: 16px;
+    overflow: auto;
   }
   .claim {
     width: 280px;

@@ -20,17 +20,21 @@ const Main = ({ language }) => {
         </div>
         <Footer language={language} />
       </div>
-      <Link to="/about-momo" className="main-link" onClick={handlePage}>
+
+      {/* <Link
+        to="https://mint.tokyomongzhillsclub.com/"
+        target="_blank"
+        className="main-link"
+        onClick={handlePage}
+        rel="noopener noreferrer"
+      >
         <div className="main-link__img">
           <img src={mainLinkImg} alt="link-img" />
         </div>
         <div className="main-link__text-box">
-          <p className="main-link__text">
-            #002 PEACHz.MOMO Project
-            <br /> Coming Soon
-          </p>
+          <p className="main-link__text">PEACHz.MOMO Mint Site</p>
         </div>
-      </Link>
+      </Link> */}
     </>
   );
 };

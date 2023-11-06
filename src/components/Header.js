@@ -2,7 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import "./Header.scss";
-import headerLogo from "../assets/images/mongz-universe-logo.svg";
+// import headerLogo from "../assets/images/mongz-universe-logo.svg";
+// import headerLogo from "../assets/images/TokyoMongzHillsClub_Logo_Gold.png";
+import headerLogo from "../assets/images/TMHC_logo.svg";
 import linkIcon from "../assets/images/link-icon.svg";
 import twitterIcon from "../assets/images/twitter-icon.svg";
 import discordIcon from "../assets/images/discord-icon.svg";
@@ -320,17 +322,31 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Mongz Universe</span>
-                  <Link to="/roadmap" onClick={handleMenuClicked}>
-                    Universe Roadmap
+                  <Link
+                    to="/roadmap"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleMenuClicked}
+                  >
+                    Mongz Universe Roadmap
                   </Link>
                   <Link to="/about-tmhc" onClick={handleMenuClicked}>
                     #001 Tokyo Mongz Hills Club
                   </Link>
-                  <Link to="/about-momo" onClick={handleMenuClicked}>
+                  <Link
+                    to="https://opensea.io/collection/peachz-momo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleMenuClicked}
+                  >
                     #002 PEACHz.MOMO
                   </Link>
-                  <Link to="" onClick={handleMWaitingModal}>
-                    #003 INU PROJECT
+                  <Link
+                    to="https://universalstallion.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    #003 Universal Stallion
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
                     #004 KIJI PROJECT
@@ -338,7 +354,11 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Utility</span>
-                  <Link to="" onClick={handleMWaitingModal}>
+                  <Link
+                    to="https://mint.tokyomongzhillsclub.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Mint
                   </Link>
                   <Link to="/tmhc" onClick={handleMenuClicked}>
@@ -347,6 +367,7 @@ const Header = () => {
                   <Link
                     to="https://bridge.tokyomongzhillsclub.com/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     Bridge (PLT TO ETH)
@@ -360,6 +381,7 @@ const Header = () => {
                   <Link
                     to="https://multiuniversecentral.io/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     MUC Eco System
@@ -367,6 +389,7 @@ const Header = () => {
                   <Link
                     to="https://multi-universe-coin.gitbook.io/muc-white-paper"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     MUC Whitepaper
@@ -380,6 +403,7 @@ const Header = () => {
                   <Link
                     to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     How to
@@ -388,6 +412,7 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                       target="_blank"
+                      rel="noopener noreferrer"
                       onClick={handleMenuClicked}
                     >
                       Help
@@ -396,6 +421,7 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/tmhc-7eb0250de5f14d408bdadf7a0ea921c3"
                       target="_blank"
+                      rel="noopener noreferrer"
                       onClick={handleMenuClicked}
                     >
                       Help
@@ -404,6 +430,7 @@ const Header = () => {
                   <Link
                     to="https://www.hashlink.jp/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     About Us
@@ -417,12 +444,17 @@ const Header = () => {
                   <Link
                     to="https://opensea.io/ja/collection/tmhc"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     Tokyo Mongs Hills Club
                   </Link>
-                  <Link to="/about-momo" onClick={handleMenuClicked}>
-                    Peachz.MOMO
+                  <Link
+                    to="https://opensea.io/collection/peachz-momo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    PEACHz.MOMO
                   </Link>
                 </li>
                 <li className="m-main-menu__items">

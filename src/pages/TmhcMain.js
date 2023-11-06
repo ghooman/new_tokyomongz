@@ -150,10 +150,12 @@ const Main = ({ language }) => {
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
-  const handleMoveTeamModal = () => {
+  const handleMoveTeamModal = (image, id, name) => {
     document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
+    setSelectData([{ image: image, name: name, id: id }]);
   };
+
   // ===================== 체크 확인
   const [isChecked, setIsChecked] = useState([]);
   // =============== 체크박스 관리
@@ -311,6 +313,7 @@ const Main = ({ language }) => {
           id: parseInt(item.name.slice(5)),
           name: item.name,
           image: item.image,
+          reward: item.reward,
         }));
 
         console.log(newData);
@@ -833,6 +836,11 @@ const Main = ({ language }) => {
                               }
                             />
                           )}
+                          {item.reward !== 0 ? (
+                            <span className="tmhc-reward">
+                              {Number(item.reward).toFixed(3)}
+                            </span>
+                          ) : null}
                           <div className="tmhc-images">
                             <img src={item.image} alt="nft" />
                             {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
@@ -917,7 +925,7 @@ const Main = ({ language }) => {
                                   setClickStakingMongzData(item);
                                 }}
                               >
-                                TMHC X MOMO Team <br /> Boost Staking
+                                TMHC X MOMO <br /> Team Boost Staking
                               </button>
                               <button
                                 className="btn--staking"
@@ -941,7 +949,8 @@ const Main = ({ language }) => {
                     selectedState === "Staking中") &&
                     (isLoading ? (
                       <div className="loading">Now loading...</div>
-                    ) : stakingData.length === 0 ? (
+                    ) : stakingData.length === 0 &&
+                      teamStakingNftData.length === 0 ? (
                       <div className="empty-nft">
                         There are no NFTs in possession.
                       </div>
@@ -957,6 +966,11 @@ const Main = ({ language }) => {
                           .slice(start, end)
                           .map((item) => (
                             <li className="tmhc-item" key={item.id}>
+                              {item.reward !== 0 ? (
+                                <span className="tmhc-reward">
+                                  {Number(item.reward).toFixed(3)}
+                                </span>
+                              ) : null}
                               <div className="tmhc-images">
                                 <img src={item.image} alt="nft" />
                                 {/* 아래에 있는 모모 박스는 싱글 스테이킹인지 팀 스테이킹인지 판단해야함. 팀 스테이킹 이라면 보여주고 아니라면 보여줄 필요 없음  */}
@@ -1073,6 +1087,11 @@ const Main = ({ language }) => {
                                 }
                               />
                             )}
+                            {item.reward !== 0 ? (
+                              <span className="tmhc-reward">
+                                {Number(item.reward).toFixed(3)}
+                              </span>
+                            ) : null}
                             <div className="tmhc-images">
                               <img src={item.image} alt="nft" />
                             </div>
@@ -1186,6 +1205,7 @@ const Main = ({ language }) => {
           language={language}
           handleMoveTeamModal={handleMoveTeamModal}
           setOpenMoveTeamModal={setOpenMoveTeamModal}
+          selectData={selectData}
         />
       )}
     </>

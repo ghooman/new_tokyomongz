@@ -12,7 +12,8 @@
   .create-modal-body {
     position: relative;
     width: 460px;
-    height: 685px;
+    min-height: 685px;
+    height: auto;
     border-radius: 8px;
     border: 1px solid #545454;
     background: #000;
@@ -92,7 +93,7 @@
       display: flex;
       justify-content: flex-start;
       border-bottom: 1px solid #545454;
-      padding-bottom: 24px;
+      padding-bottom: 12px;
       &::-webkit-scrollbar-thumb {
         background-color: #545454;
         border-radius: 10px;
@@ -174,13 +175,23 @@
         }
       }
     }
+    .momo-item__bonus {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+      padding-bottom: 10px;
+      color: red;
+      border-bottom: 1px solid #4c4c4c;
+    }
     .create-modal-text-box {
       display: flex;
+      margin-top: 12px;
       // padding: 0 24px;
       flex-direction: column;
       ul {
         &:nth-child(1) {
-          padding: 24px 0 0 20px;
+          // 임시로 주석 처리했습니다.
+          // padding: 24px 0 0 20px;
           margin-bottom: 10px;
         }
         &:nth-child(3) {
@@ -221,6 +232,7 @@
 
 @media screen and (max-width: 768px) {
   .create-modal-background {
+    overflow: auto;
     .create-modal-body {
       width: 320px;
       height: auto;

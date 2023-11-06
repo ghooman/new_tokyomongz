@@ -33,14 +33,14 @@
     display: flex;
     align-items: center;
     background-color: black;
-    padding: 20px 40px;
+    padding: 40px 40px;
     bottom: 0;
     left: 80px;
     .main-link__text {
       white-space: nowrap;
       font-family: "mplus1p400";
       font-size: 26px;
-      margin-right: 12px;
+      margin-left: 12px;
       text-align: center;
     }
   }
@@ -65,7 +65,7 @@
     }
     .main-link__text-box {
       left: 50px;
-      padding: 10px 12px;
+      padding: 24px 12px;
       .main-link__text {
         font-family: "mplus1p400";
         font-size: 12px;

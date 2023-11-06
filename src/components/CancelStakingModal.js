@@ -70,14 +70,15 @@ const CancelStakingModal = ({
 
             <div className="cancel__text">
               <p>
-                Are you sure you want to cancel staking? ETH is required to
-                cancel staking.
+              Are you sure you want to cancel Staking? 
+              <br/>
+              You will automatically receive the MZC acquired by NFT when you cancel
                 <br />
                 <br />
-                [Caution]
+                [Note]
                 <br />
-                If the wallet of NFT changes due to sale, wallet transfer, etc.,
-                MZC generated from applicable NFT will not be distributed.
+                If the NFT in Staking is moved to another wallet by selling, transferring, etc. before claiming, the MZC that the NFT has acquired so far will disappear.
+                If the claim amount is less than 1 MZC for each NFT, MZC cannot be claimed.
                 {/* <br />
                 You will automatically receive the MZC acquired by NFT when you
                 cancel
@@ -135,7 +136,7 @@ const CancelStakingModal = ({
             <div className="cancel__text">
               <p>
                 Stakingを解除してもよろしいですか？
-                {/* <br />
+                <br />
                 解除時にNFTが獲得したMZCを自動で受け取ります。
                 <br />
                 <br />
@@ -143,7 +144,7 @@ const CancelStakingModal = ({
                 <br />
                 Staking中のNFTを、Claimする前に売却・譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
                 <br />
-                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。 */}
+                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
               </p>
             </div>
             <div className="cancel__btn">
@@ -277,9 +278,7 @@ const CancelStakingConfirmModal = ({
         {language === "EN" ? (
           <div className="cancel-staking-confirm">
             <span className="cancel-staking-confirm__title">
-              Are you sure you want to cancel
-              <br />
-              your single staking?
+              Are you sure you want to cancel staking?
             </span>
             <div className="cancel-staking-confirm__btn">
               <button

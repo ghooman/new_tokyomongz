@@ -370,15 +370,40 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     }
   };
 
-  console.log("싱글 스테이킹중인 아이디", singleStakingMomoIds);
-  console.log("팀스테이킹중인 아이디", teamStakingMomoIds);
   const [teamStakingModal, setTeamStakingModal] = useState(false);
   const [teamStakingConfirmModal, setTeamStakingConfirmModal] = useState(false);
 
+  // 등급 드롭다운 보이기
+  const gradeRef = useRef();
+  const [gradeIsOpen, setGradeIsOpen] = useState(false);
+  const [gradeState, setGradeState] = useState("All");
+  console.log("그레이드상태", gradeState);
+  // 등급 필터링 목록 드랍다운 보이기 / 안보이기
+  const handleGradeDropdownClick = () => {
+    setGradeIsOpen(!gradeIsOpen);
+    gradeRef.current.style.transform = gradeIsOpen ? "" : "rotate(-180deg)";
+  };
+  // 등급 클릭했을경우
+  const handleSelectedGrade = (text) => {
+    setPage(1);
+    setIsChecked([]);
+    setSelectData([]);
+    setGradeState(text);
+    setGradeIsOpen(!gradeIsOpen);
+    gradeRef.current.style.transform = gradeIsOpen ? "" : "rotate(-180deg)";
+  };
+  // 클릭한 등급에 따른 모모 리스트
+  const filteredMomoNftData = teamStakingMomoData.filter((item) => {
+    console.log("@@@@그레이드상태", gradeState);
+    console.log("아이템랭크", item.rank);
+    if (gradeState === "All") {
+      return true;
+    }
+    return item.rank === gradeState;
+  });
+  console.log("필터링목록", filteredMomoNftData);
   // 싱글스테이킹, 팀스테이킹 id값 합친 변수
   const finalStakingMomoIds = [...singleStakingMomoIds, ...teamStakingMomoIds];
-
-  console.log("스테이킹된 모모아이디들", finalStakingMomoIds);
   return (
     <>
       <div className="tmhc-main-background">
@@ -552,69 +577,56 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               </span>
               <div>
                 <div className="left__menu">
-                  {/* <div className="state-select-box">
+                  {/* 등급 필터링  드롭다운*/}
+                  <div className="state-select-box grade-select-box">
                     <button
                       className="btn--state-select"
-                      onClick={handleDropdownClick}
+                      onClick={handleGradeDropdownClick}
                     >
-                      {selectedState}
+                      {gradeState}
                     </button>
                     <span
                       className="material-symbols-outlined"
-                      ref={rotateRef}
-                      onClick={handleDropdownClick}
+                      ref={gradeRef}
+                      onClick={handleGradeDropdownClick}
                     >
                       expand_more
                     </span>
-                    {isOpen && language === "EN" && (
+                    {gradeIsOpen ? (
                       <ul className="state-select-list">
                         <li
                           className="state-item all"
-                          onClick={() => handleSelectedItem("All")}
+                          onClick={() => handleSelectedGrade("All")}
                         >
                           All
                         </li>
                         <li
-                          className="state-item staking"
-                          onClick={() => handleSelectedItem("Staking")}
-                        >
-                          Staking
-                        </li>
-                        <li
-                          className="state-item before-staking"
-                          onClick={() =>
-                            handleSelectedItem("Ready for staking")
-                          }
-                        >
-                          Ready for staking
-                        </li>
-                      </ul>
-                    )}
-
-                    {isOpen && language === "JP" && (
-                      <ul className="state-select-list">
-                        <li
                           className="state-item all"
-                          onClick={() => handleSelectedItem("すべて")}
+                          onClick={() => handleSelectedGrade("UR")}
                         >
-                          すべて
+                          UR
                         </li>
                         <li
                           className="state-item staking"
-                          onClick={() => handleSelectedItem("Staking中")}
+                          onClick={() => handleSelectedGrade("SR")}
                         >
-                          Staking中
+                          SR
                         </li>
                         <li
                           className="state-item before-staking"
-                          onClick={() => handleSelectedItem("未Staking")}
+                          onClick={() => handleSelectedGrade("R")}
                         >
-                          未Staking
+                          R
+                        </li>
+                        <li
+                          className="state-item before-staking"
+                          onClick={() => handleSelectedGrade("C")}
+                        >
+                          C
                         </li>
                       </ul>
-                    )}
-                  </div> */}
-
+                    ) : null}
+                  </div>
                   {language === "EN" ? (
                     <span className="header__text">
                       Total :&nbsp;
@@ -659,7 +671,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {teamStakingMomoData
+                          {filteredMomoNftData
                             ? teamStakingMomoData.length -
                               finalStakingMomoIds.length
                             : 0}
@@ -756,7 +768,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && momoNftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">
-                    {teamStakingMomoData
+                    {filteredMomoNftData
                       .filter((item) => !finalStakingMomoIds.includes(item.id))
                       .slice(start, end)
                       .map((item) => (
@@ -928,20 +940,20 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                     totalItemsCount={
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
-                        ? teamStakingMomoData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return singleStakingMomoIds.includes(
                               parseInt(item.id)
                             );
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
-                        ? teamStakingMomoData.filter((item) => {
+                        ? filteredMomoNftData.filter((item) => {
                             return !singleStakingMomoIds.includes(
                               parseInt(item.id)
                             );
                           }).length
-                        : teamStakingMomoData
-                        ? teamStakingMomoData.length
+                        : filteredMomoNftData
+                        ? filteredMomoNftData.length
                         : 0
                     }
                     // 표시할 페이지수

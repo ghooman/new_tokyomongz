@@ -919,7 +919,7 @@ const Main = ({ language }) => {
                                   setClickStakingMongzData(item);
                                 }}
                               >
-                                TMHC X MOMO Team <br /> Boost Staking
+                                TMHC X MOMO <br /> Team Boost Staking
                               </button>
                               <button
                                 className="btn--staking"

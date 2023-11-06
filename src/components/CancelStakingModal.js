@@ -280,9 +280,7 @@ const CancelStakingConfirmModal = ({
         {language === "EN" ? (
           <div className="cancel-staking-confirm">
             <span className="cancel-staking-confirm__title">
-              Are you sure you want to cancel
-              <br />
-              your single staking?
+              Are you sure you want to cancel staking?
             </span>
             <div className="cancel-staking-confirm__btn">
               <button

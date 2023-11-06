@@ -26,9 +26,9 @@ const MoveTeamPageModal = ({
           <div className="modal-text-box">
             <p className="move__text">
               {selectData
-                ? `${selectData[0]?.name.slice(4)} is being team-staked.`
+                ? `${selectData[0]?.name.slice(4)}`
                 : momoSelectData
-                ? `${momoSelectData[0].name.slice(-5)} is being team-staked.`
+                ? `${momoSelectData[0].name.slice(-5)}`
                 : null}
               is being team-staked.
             </p>
@@ -40,9 +40,9 @@ const MoveTeamPageModal = ({
           <div className="modal-text-box">
             <p className="move__text">
               {selectData
-                ? `${selectData[0]?.name.slice(4)} is being team-staked.`
+                ? `${selectData[0]?.name.slice(4)}`
                 : momoSelectData
-                ? `${momoSelectData[0].name.slice(-5)} is being team-staked.`
+                ? `${momoSelectData[0].name.slice(-5)}`
                 : null}
               は今チームステーキング中です。
             </p>

@@ -216,7 +216,7 @@
           .main__team-item-bottom {
             display: flex;
             align-items: center;
-            // justify-content: space-between;
+            justify-content: space-between;
             width: 100%;
             // height: 238px;
             margin-top: 24px;
@@ -243,14 +243,16 @@
               background-color: #000;
               width: 258px;
               .main__team-item-mongz-img {
-                width: 258px;
+                width: 100%;
                 height: 238px;
-                object-fit: cover;
+                overflow: hidden;
+                display: flex;
                 img {
                   width: 100%;
                   height: 100%;
                   border-radius: 8px 8px 0 0;
                   object-fit: cover;
+                  display: block;
                 }
               }
               .main__team-item-mongz-title {
@@ -276,9 +278,11 @@
                 }
               }
             }
-
+            .main-item__bonus {
+              margin-bottom: 42px;
+            }
             .main__team-item-and-icon {
-              margin: 0 20px;
+              // margin: 0 20px;
               min-width: 55px;
               height: 55px;
               // margin: 0 20px;
@@ -290,15 +294,16 @@
             .main__team-item-momo-box {
               .main__team-item-momo-box-container {
                 display: flex;
+                width: 1062px;
                 .main__team-item-momo-box {
                   border: 1px solid #545454;
                   width: 258px;
                   display: flex;
                   flex-direction: column;
                   align-items: center;
-                  margin-right: 20px;
+                  margin-right: 10px;
                   border-radius: 8px;
-                  &:nth-child(6) {
+                  &:last-child {
                     margin-right: 0;
                   }
                   .main__team-item-momo-img {
@@ -369,6 +374,7 @@
                 }
               }
               .momo-item__bonus {
+                margin-top: 8px;
                 width: 100%;
                 text-align: center;
                 font-size: 30px;

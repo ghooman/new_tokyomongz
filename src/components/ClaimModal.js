@@ -49,22 +49,21 @@ const ClaimModal = ({ language, reward, claimType }) => {
               <span> [Notice] </span>
               <ul>
                 <li>
-                  <span>-</span> Holders can only claim the reward if they have
-                  at least 1 MZC per each NFT being staked.
+                  <span>-</span> ETH is required in order to receive MZC.
                 </li>
                 <li>
-                  <span>-</span> If the holder sells an NFT that is currently
-                  being staked, or moves it to a different wallet, they will not
-                  receive the reward MZC assigned to the NFT.
-                </li>
-                <li>
-                  <span>-</span> The MZC that is currently displayed in your
-                  wallet is not confirmed. It will be recalculated during the
+                  <span>-</span> Claimable MZC will be recalculated during the
                   claim process.
+                </li>
+                <li>
+                  <span>-</span> MZC will be paid only for the applicable NFTs
+                  from the holder's wallet.
                   <br />
-                  <br />
-                  Holders can only claim the reward if they have at least 1 MZC
-                  per each NFT being staked.
+                </li>
+                <li>
+                  <span>-</span> If NFT can not be found in the holder’s wallet,
+                  the applicable MZC for the NFT will be excluded from the total
+                  amount of MZC received.
                 </li>
               </ul>
             </div>
@@ -360,7 +359,7 @@ const ClaimFailModal = ({ setFailModalControl, errMsg, language }) => {
       errMsg.includes(
         "All claim transition registration has been completed for"
       ) ||
-      errMsg.includes("that is being staked.")
+      errMsg.includes("claim requests have been completed.")
     ) {
       dispatch(setClaimModal(!claimModal));
       window.location.reload();

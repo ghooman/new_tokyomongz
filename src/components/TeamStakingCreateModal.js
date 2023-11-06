@@ -63,6 +63,9 @@ const TeamStakingCreateModal = ({
             );
           })}
         </div>
+        {selectData.length >= 4 ? (
+          <p className="momo-item__bonus"> Bonus Boost 20%</p>
+        ) : null}
         {language === "EN" ? (
           <div className="create-modal-text-box">
             <ul>

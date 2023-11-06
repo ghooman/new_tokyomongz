@@ -359,6 +359,7 @@
 @media (max-width: 768px) {
   .modal-background {
     padding: 16px;
+    overflow: auto;
   }
   .claim {
     width: 280px;

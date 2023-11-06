@@ -21,7 +21,7 @@ const Main = ({ language }) => {
         <Footer language={language} />
       </div>
 
-      <Link
+      {/* <Link
         to="https://mint.tokyomongzhillsclub.com/"
         target="_blank"
         className="main-link"
@@ -34,7 +34,7 @@ const Main = ({ language }) => {
         <div className="main-link__text-box">
           <p className="main-link__text">PEACHz.MOMO Mint Site</p>
         </div>
-      </Link>
+      </Link> */}
     </>
   );
 };

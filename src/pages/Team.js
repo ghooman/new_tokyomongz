@@ -378,7 +378,7 @@ const Team = ({ language }) => {
   };
 
   console.log(language);
-  console.log("@", newTeamStakingData);
+  console.log("@ 팀 데이터", newTeamStakingData);
   return (
     <>
       <Nav />
@@ -546,13 +546,12 @@ const Team = ({ language }) => {
                             {team.leader.name}
                           </span>
                           <span>
-                            {/* 정확한 수치가 들어오면 고정값을 풀어줍니다. */}
-                            BOOST <span>560%</span>
+                            BOOST <span>{team.reward[1] * 100}%</span>
                           </span>
-                          {/* 정확한 수치가 들어오면 고정값(임시)을 풀어줍니다. */}
                           <span>
-                            Default 8.92MZC/Day + BOOST 41.032MZC/Day =
-                            <span>49.952 MZC / DAY</span>
+                            Default {team.rewardPerDay[0]}MZC/Day + BOOST{" "}
+                            {team.rewardPerDay[1]}/Day =
+                            <span> {team.rewardPerDay[2]} / DAY</span>
                           </span>
                         </div>
                         <div className="main__team-item-btn-box">
@@ -579,33 +578,37 @@ const Team = ({ language }) => {
                           <span className="main__team-item-mongz-title">
                             {team.leader.name}
                           </span>
-                          {/* 임시로 고정 값으로 두겠습니다. */}
-                          <span>100%</span>
+                          <span>{team.reward[1] * 100}%</span>
                         </div>
                         <div className="main__team-item-and-icon">
                           <img src={AndIcon} alt="andIcon" />
                         </div>
-                        <div className="main__team-item-momo-box-container">
-                          {team.member.map((member) => (
-                            <div className="main__team-item-momo-box">
-                              <div className="main__team-item-momo-img">
-                                <div
-                                  className={`momo-rating ${getGradeNameForValue(
-                                    member.rank
-                                  )}`}
-                                >
-                                  {member.rank}
+                        <div className="main__team-item-momo-box">
+                          <div className="main__team-item-momo-box-container">
+                            {team.member.map((member) => (
+                              <div className="main__team-item-momo-box">
+                                <div className="main__team-item-momo-img">
+                                  <div
+                                    className={`momo-rating ${getGradeNameForValue(
+                                      member.rank
+                                    )}`}
+                                  >
+                                    {member.rank}
+                                  </div>
+                                  <img src={member.image} alt="momoImg" />
                                 </div>
-                                <img src={member.image} alt="momoImg" />
+                                <span className="main__team-item-momo-title">
+                                  {member.name}
+                                </span>
+                                <span>
+                                  +{getGradeNameForPercent(member.rank)}%
+                                </span>
                               </div>
-                              <span className="main__team-item-momo-title">
-                                {member.name}
-                              </span>
-                              <span>
-                                +{getGradeNameForPercent(member.rank)}%
-                              </span>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
+                          {team.member.length >= 4 ? (
+                            <p className="momo-item__bonus"> Bonus Boost 20%</p>
+                          ) : null}
                         </div>
                       </div>
                     </div>

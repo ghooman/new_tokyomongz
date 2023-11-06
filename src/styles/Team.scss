@@ -7,6 +7,7 @@
   background-color: #000;
   height: auto;
   padding-bottom: 80px;
+  // z-index: 5;
   .team-main-container {
     width: 100%;
     max-width: 1605px;
@@ -286,84 +287,93 @@
                 height: 100%;
               }
             }
-            .main__team-item-momo-box-container {
-              display: flex;
-              .main__team-item-momo-box {
-                border: 1px solid #545454;
-                width: 258px;
+            .main__team-item-momo-box {
+              .main__team-item-momo-box-container {
                 display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-right: 20px;
-                border-radius: 8px;
-                &:nth-child(6) {
-                  margin-right: 0;
-                }
-                .main__team-item-momo-img {
-                  width: 256px;
-                  height: 238px;
-                  position: relative;
-                  .momo-rating {
-                    z-index: 1;
-                    font-size: 12px;
-                    color: white;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 8px;
-                    width: 28px;
-                    height: 15px;
-                    border-radius: 10px;
-                    position: absolute;
-                    top: 5px;
-                    left: 5px;
-                    border: 1px solid white;
-                    // font-family: "poppins400"; 주면 글자가 상단으로 위치합니다.
+                .main__team-item-momo-box {
+                  border: 1px solid #545454;
+                  width: 258px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  margin-right: 20px;
+                  border-radius: 8px;
+                  &:nth-child(6) {
+                    margin-right: 0;
                   }
-                  // 등급에 따른 색변경
-                  .grade-UR {
-                    background-color: #be75ff;
+                  .main__team-item-momo-img {
+                    width: 256px;
+                    height: 238px;
+                    position: relative;
+                    .momo-rating {
+                      z-index: 1;
+                      font-size: 12px;
+                      color: white;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      padding: 8px;
+                      width: 28px;
+                      height: 15px;
+                      border-radius: 10px;
+                      position: absolute;
+                      top: 5px;
+                      left: 5px;
+                      border: 1px solid white;
+                      // font-family: "poppins400"; 주면 글자가 상단으로 위치합니다.
+                    }
+                    // 등급에 따른 색변경
+                    .grade-UR {
+                      background-color: #be75ff;
+                    }
+                    .grade-SR {
+                      background-color: #7593ff;
+                    }
+                    .grade-R {
+                      background-color: #4c4c4c;
+                    }
+                    .grade-C {
+                      background-color: #ff7575;
+                    }
+                    img {
+                      border-radius: 8px 8px 0 0;
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                    }
                   }
-                  .grade-SR {
-                    background-color: #7593ff;
+                  .main__team-item-momo-title {
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #b3b3b3;
+                    margin-top: 16px;
                   }
-                  .grade-R {
-                    background-color: #4c4c4c;
-                  }
-                  .grade-C {
-                    background-color: #ff7575;
-                  }
-                  img {
-                    border-radius: 8px 8px 0 0;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                  }
-                }
-                .main__team-item-momo-title {
-                  font-size: 18px;
-                  font-weight: 400;
-                  color: #b3b3b3;
-                  margin-top: 16px;
-                }
-                span {
-                  &:nth-child(3) {
-                    font-size: 22px;
-                    margin: 16px 0;
-                    font-weight: 500;
-                    background: linear-gradient(
-                      180deg,
-                      #ffe68c 0%,
-                      #c5a844 31.25%,
-                      #ffe68c 66.67%,
-                      #c5a844 100%
-                    );
+                  span {
+                    &:nth-child(3) {
+                      font-size: 22px;
+                      margin: 16px 0;
+                      font-weight: 500;
+                      background: linear-gradient(
+                        180deg,
+                        #ffe68c 0%,
+                        #c5a844 31.25%,
+                        #ffe68c 66.67%,
+                        #c5a844 100%
+                      );
 
-                    background-clip: text;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
+                      background-clip: text;
+                      -webkit-background-clip: text;
+                      -webkit-text-fill-color: transparent;
+                    }
                   }
                 }
+              }
+              .momo-item__bonus {
+                width: 100%;
+                text-align: center;
+                font-size: 30px;
+                color: red;
+                align-self: flex-end;
               }
             }
           }

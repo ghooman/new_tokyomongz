@@ -148,30 +148,33 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .team-staking-cancel__background {
-    width: 320px;
-    height: 800px;
-    .team-staking-cancel__mongz-info-box {
-      margin: 0;
-      .team-staking-cancel__mongz-img {
-        width: 272px;
-        height: 262px;
+  .modal-background {
+    overflow: auto;
+    .team-staking-cancel__background {
+      width: 320px;
+      height: 800px;
+      .team-staking-cancel__mongz-info-box {
+        margin: 0;
+        .team-staking-cancel__mongz-img {
+          width: 272px;
+          height: 262px;
+        }
       }
-    }
-    .team-staking-cancel__text {
-      font-size: 12px;
-      // margin: 0;
-    }
-    .team-staking-cancel__btn-box {
-      flex-direction: column;
-      .team-staking-cancel__back-btn {
-        width: 100%;
-        height: 48px;
-        margin-bottom: 16px;
+      .team-staking-cancel__text {
+        font-size: 12px;
+        // margin: 0;
       }
-      .team-staking-cancel__cancel-btn {
-        width: 100%;
-        height: 48px;
+      .team-staking-cancel__btn-box {
+        flex-direction: column;
+        .team-staking-cancel__back-btn {
+          width: 100%;
+          height: 48px;
+          margin-bottom: 16px;
+        }
+        .team-staking-cancel__cancel-btn {
+          width: 100%;
+          height: 48px;
+        }
       }
     }
   }

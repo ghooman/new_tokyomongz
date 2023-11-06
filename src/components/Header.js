@@ -322,7 +322,12 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Mongz Universe</span>
-                  <Link to="/roadmap" onClick={handleMenuClicked}>
+                  <Link
+                    to="/roadmap"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleMenuClicked}
+                  >
                     Mongz Universe Roadmap
                   </Link>
                   <Link to="/about-tmhc" onClick={handleMenuClicked}>
@@ -331,7 +336,11 @@ const Header = () => {
                   <Link to="/about-momo" onClick={handleMenuClicked}>
                     #002 PEACHz.MOMO
                   </Link>
-                  <Link to="" onClick={handleMWaitingModal}>
+                  <Link
+                    to="https://universalstallion.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     #003 Universal Stallion
                   </Link>
                   <Link to="" onClick={handleMWaitingModal}>
@@ -343,6 +352,7 @@ const Header = () => {
                   <Link
                     to="https://mint.tokyomongzhillsclub.com/"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Mint
                   </Link>
@@ -352,6 +362,7 @@ const Header = () => {
                   <Link
                     to="https://bridge.tokyomongzhillsclub.com/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     Bridge (PLT TO ETH)
@@ -365,6 +376,7 @@ const Header = () => {
                   <Link
                     to="https://multiuniversecentral.io/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     MUC Eco System
@@ -372,6 +384,7 @@ const Header = () => {
                   <Link
                     to="https://multi-universe-coin.gitbook.io/muc-white-paper"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     MUC Whitepaper
@@ -385,6 +398,7 @@ const Header = () => {
                   <Link
                     to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     How to
@@ -393,6 +407,7 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/TMHC-SUPPORT-8aac60df925d444891a8f7a083195b90"
                       target="_blank"
+                      rel="noopener noreferrer"
                       onClick={handleMenuClicked}
                     >
                       Help
@@ -401,6 +416,7 @@ const Header = () => {
                     <Link
                       to="https://tmhc-support.notion.site/tmhc-7eb0250de5f14d408bdadf7a0ea921c3"
                       target="_blank"
+                      rel="noopener noreferrer"
                       onClick={handleMenuClicked}
                     >
                       Help
@@ -409,6 +425,7 @@ const Header = () => {
                   <Link
                     to="https://www.hashlink.jp/"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     About Us
@@ -422,6 +439,7 @@ const Header = () => {
                   <Link
                     to="https://opensea.io/ja/collection/tmhc"
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     Tokyo Mongs Hills Club

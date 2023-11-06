@@ -29,7 +29,9 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">MONGz.UNIVERSE</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="/roadmap">Mongz Universe Roadmap</Link>
+              <Link to="/roadmap" target="_blank" rel="noopener noreferrer">
+                Mongz Universe Roadmap
+              </Link>
             </li>
             <li>
               <Link to="/about-tmhc">#001 Tokyo Mongz Hills Club</Link>
@@ -38,7 +40,11 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               <Link to="/about-momo">#002 PEACHz.MOMO</Link>
             </li>
             <li>
-              <Link to="https://universalstallion.io/" target="_blank">
+              <Link
+                to="https://universalstallion.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 #003 Universal Stallion
               </Link>
             </li>
@@ -54,7 +60,11 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">Utility</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="https://mint.tokyomongzhillsclub.com/" target="_blank">
+              <Link
+                to="https://mint.tokyomongzhillsclub.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Mint
               </Link>
             </li>

@@ -9,6 +9,7 @@ const TeamStakingCancelModal = ({
   selectData,
   language,
 }) => {
+  console.log("selectData", selectData);
   // 모모 등급 표시
   const getGradeNameForValue = (value) => {
     switch (value) {
@@ -42,7 +43,7 @@ const TeamStakingCancelModal = ({
   const handleModalBackground = (e) => {
     if (e.target === e.currentTarget) {
       setTeamStakingCancelModal((prev) => !prev);
-      document.body.style.overflow = "";
+      // document.body.style.overflow = "";
     }
   };
   return (
@@ -57,24 +58,29 @@ const TeamStakingCancelModal = ({
           </span>
         </div>
         <div className="team-staking-cancel__momo-box">
-          {selectData[0].teamStakingNftData[0].member.map((item) => {
-            return (
-              <div className="team-staking-cancel__momo-item">
-                <div className="team-staking-cancel__momo-img">
-                  <div
-                    className={`momo-rating ${getGradeNameForValue(item.rank)}`}
-                  >
-                    {item.rank}
+          {selectData[0].teamStakingNftData.map(
+            (team) =>
+              team.leader.id === selectData[0].id &&
+              team.member.map((item) => (
+                <div className="team-staking-cancel__momo-item" key={item.id}>
+                  <div className="team-staking-cancel__momo-img">
+                    <div
+                      className={`momo-rating ${getGradeNameForValue(
+                        item.rank
+                      )}`}
+                    >
+                      {item.rank}
+                    </div>
+                    <img src={item.image} alt="momoImg" />
                   </div>
-                  <img src={item.image} alt="momoImg" />
+                  <span className="team-staking-cancel__momo-name">
+                    {item.name}
+                  </span>
                 </div>
-                <span className="team-staking-cancel__momo-name">
-                  {item.name}
-                </span>
-              </div>
-            );
-          })}
+              ))
+          )}
         </div>
+
         {language === "EN" ? (
           <div className="team-staking-cancel__text">
             Are you sure you want to cancel team staking? ETH is required to
@@ -91,7 +97,8 @@ const TeamStakingCancelModal = ({
             <br />
             <br />
             [注意] <br />
-            売却、譲渡等によりStaking中のNFTを保有するウォレットの情報が変更された場合、該当NFTから生成されたMZCは受け取れません。
+            Team Stakingを解除すると、自動的にMZCがClaimされます。
+            各NFTごとにClaim額が１MZCに満たない場合は解除することはできません。
           </div>
         )}
 
@@ -100,7 +107,7 @@ const TeamStakingCancelModal = ({
             className="team-staking-cancel__back-btn"
             onClick={() => {
               setTeamStakingCancelModal((prev) => !prev);
-              document.body.style.overflow = "";
+              // document.body.style.overflow = "";
             }}
           >
             Back

@@ -9,7 +9,7 @@ const MoveTeamPageModal = ({
 }) => {
   console.log("momoSelectData", momoSelectData);
   const handleCloseModal = () => {
-    document.body.style.overflow = "";
+    // document.body.style.overflow = "";
     setOpenMoveTeamModal((prev) => !prev);
   };
 
@@ -30,7 +30,7 @@ const MoveTeamPageModal = ({
                 : momoSelectData
                 ? `${momoSelectData[0].name.slice(-5)}`
                 : null}
-              is being team-staked.
+              &nbsp;These NFTs are being Team-staked.
             </p>
             <p className="move__text">
               The cancellation is available on the Team-staking page.

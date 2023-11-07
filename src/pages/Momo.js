@@ -65,7 +65,6 @@ const Momo = ({ language }) => {
   const gradeRef = useRef();
   const [gradeIsOpen, setGradeIsOpen] = useState(false);
   const [gradeState, setGradeState] = useState("All");
-  console.log("그레이드상태", gradeState);
   // 등급 필터링 목록 드랍다운 보이기 / 안보이기
   const handleGradeDropdownClick = () => {
     setGradeIsOpen(!gradeIsOpen);
@@ -94,7 +93,7 @@ const Momo = ({ language }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -114,7 +113,7 @@ const Momo = ({ language }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
     setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setMomoSelectData([{ image: image, name: name, id: id }]);
@@ -123,7 +122,7 @@ const Momo = ({ language }) => {
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setIsSingleStaking(false); // 멀티 스테이킹일 경우
     // 체크한 것들만 selected에 다시담아 보내줍니다.
     const newSelectData = isChecked.map((id) => {
@@ -139,13 +138,13 @@ const Momo = ({ language }) => {
   );
   const handleCancelStakingModal = (image, id, name) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setMomoSelectData([{ image: image, name: name, id: id }]);
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
   const handleMoveTeamModal = (id, name) => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
     setMomoSelectData([{ name: name, id: id }]);
   };
@@ -378,14 +377,12 @@ const Momo = ({ language }) => {
   const [reward, setReward] = useState("");
   // 클릭한 등급에 따른 모모 리스트
   const filteredMomoNftData = momoNftData.filter((item) => {
-    console.log("@@@@그레이드상태", gradeState);
-    console.log("아이템랭크", item.rank);
     if (gradeState === "All") {
       return true;
     }
     return item.rank === gradeState;
   });
-  console.log("필터링목록", filteredMomoNftData);
+
   return (
     <>
       <Nav />
@@ -795,8 +792,11 @@ const Momo = ({ language }) => {
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
                   ) : filteredMomoNftData.length === 0 ||
-                    (stakingData.length === 0 &&
-                      teamStakingData.length === 0) ? (
+                    filteredMomoNftData.every(
+                      (item) =>
+                        !stakingData.includes(item.id) &&
+                        !teamStakingData.includes(item.id)
+                    ) ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>
@@ -852,8 +852,12 @@ const Momo = ({ language }) => {
                   selectedState === "未Staking") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length + teamStakingData.length ===
-                    momoNftData.length ? (
+                  ) : filteredMomoNftData.length === 0 ||
+                    filteredMomoNftData.every(
+                      (item) =>
+                        stakingData.includes(item.id) ||
+                        teamStakingData.includes(item.id)
+                    ) ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>

@@ -385,7 +385,10 @@ const Momo = ({ language }) => {
     }
     return item.rank === gradeState;
   });
-  console.log("필터링목록", filteredMomoNftData);
+  console.log("상태1", filteredMomoNftData);
+  console.log("상태2", stakingData);
+  console.log("상태3", teamStakingData);
+
   return (
     <>
       <Nav />
@@ -795,8 +798,11 @@ const Momo = ({ language }) => {
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
                   ) : filteredMomoNftData.length === 0 ||
-                    (stakingData.length === 0 &&
-                      teamStakingData.length === 0) ? (
+                    filteredMomoNftData.every(
+                      (item) =>
+                        !stakingData.includes(item.id) &&
+                        !teamStakingData.includes(item.id)
+                    ) ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>

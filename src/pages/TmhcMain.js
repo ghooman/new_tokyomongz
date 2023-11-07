@@ -79,7 +79,7 @@ const Main = ({ language }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -119,7 +119,7 @@ const Main = ({ language }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
     setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setSelectData([{ image: image, name: name, id: id }]);
@@ -128,7 +128,7 @@ const Main = ({ language }) => {
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setIsSingleStaking(false); // 멀티 스테이킹일 경우
     // 체크한 것들만 selected에 다시담아 보내줍니다.
     const newSelectData = isChecked.map((id) => {
@@ -145,13 +145,13 @@ const Main = ({ language }) => {
   );
   const handleCancelStakingModal = (image, id, name) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
   const handleMoveTeamModal = (image, id, name) => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
     setSelectData([{ image: image, name: name, id: id }]);
   };

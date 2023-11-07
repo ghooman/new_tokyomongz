@@ -43,7 +43,7 @@ const TeamStakingCancelModal = ({
   const handleModalBackground = (e) => {
     if (e.target === e.currentTarget) {
       setTeamStakingCancelModal((prev) => !prev);
-      document.body.style.overflow = "";
+      // document.body.style.overflow = "";
     }
   };
   return (
@@ -107,7 +107,7 @@ const TeamStakingCancelModal = ({
             className="team-staking-cancel__back-btn"
             onClick={() => {
               setTeamStakingCancelModal((prev) => !prev);
-              document.body.style.overflow = "";
+              // document.body.style.overflow = "";
             }}
           >
             Back

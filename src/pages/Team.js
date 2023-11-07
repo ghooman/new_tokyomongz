@@ -74,7 +74,7 @@ const Team = ({ language }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -93,14 +93,14 @@ const Team = ({ language }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 스테이킹 취소 모달
@@ -109,7 +109,7 @@ const Team = ({ language }) => {
   );
   const handleCancelStakingModal = (image, id, name) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id }]);
   };
 
@@ -335,7 +335,7 @@ const Team = ({ language }) => {
     name,
     teamStakingNftData
   ) => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setTeamStakingCancelModal((prev) => !prev);
     setSelectData([
       {

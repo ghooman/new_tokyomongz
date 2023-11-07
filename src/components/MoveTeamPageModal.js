@@ -9,7 +9,7 @@ const MoveTeamPageModal = ({
 }) => {
   console.log("momoSelectData", momoSelectData);
   const handleCloseModal = () => {
-    document.body.style.overflow = "";
+    // document.body.style.overflow = "";
     setOpenMoveTeamModal((prev) => !prev);
   };
 

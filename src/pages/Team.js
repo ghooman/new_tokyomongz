@@ -571,7 +571,11 @@ const Team = ({ language }) => {
                         </div>
                       </div>
                       <div className="main__team-item-bottom">
-                        <div className="main__team-item-mongz-box">
+                        <div
+                          className={`main__team-item-mongz-box ${
+                            team.member.length >= 4 ? "main-item__bonus" : ""
+                          }`}
+                        >
                           <div className="main__team-item-mongz-img">
                             <img src={team.leader.image} alt="mongzImg" />
                           </div>

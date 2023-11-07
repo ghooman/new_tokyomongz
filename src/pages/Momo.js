@@ -858,8 +858,12 @@ const Momo = ({ language }) => {
                   selectedState === "未Staking") &&
                   (isLoading ? (
                     <div className="loading">Now loading...</div>
-                  ) : stakingData.length + teamStakingData.length ===
-                    momoNftData.length ? (
+                  ) : filteredMomoNftData.length === 0 ||
+                    filteredMomoNftData.every(
+                      (item) =>
+                        stakingData.includes(item.id) ||
+                        teamStakingData.includes(item.id)
+                    ) ? (
                     <div className="momo-empty-nft">
                       There are no NFTs in possession.
                     </div>

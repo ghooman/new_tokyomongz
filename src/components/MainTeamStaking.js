@@ -759,13 +759,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                 <div className="loading">Now loading...</div>
               ) : // empty가 뜨는조건 지갑이 연결되있지 않거나
               walletAddress === undefined ||
+                // 필터링된 모모 데이터가 없거나
+                filteredMomoNftData.length === 0 ||
                 // 보유 모모가 (싱글+팀스테이킹) 전부되어있을경우
-                (teamStakingMomoData?.length ?? 0) ===
-                  (singleStakingMomoIds?.length ?? 0) +
-                    (teamStakingMomoIds?.length ?? 0) ||
+                (filteredMomoNftData?.length ?? 0) ===
+                  finalStakingMomoIds.length ||
                 // 필터링된 모모에서 스테이킹중인 모모를 제외하고 NFT가 없다면
                 filteredMomoNftData.filter((item) => {
-                  return finalStakingMomoIds.includes(parseInt(item.id));
+                  return !finalStakingMomoIds.includes(parseInt(item.id));
                 }).length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.

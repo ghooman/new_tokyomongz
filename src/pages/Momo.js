@@ -65,7 +65,6 @@ const Momo = ({ language }) => {
   const gradeRef = useRef();
   const [gradeIsOpen, setGradeIsOpen] = useState(false);
   const [gradeState, setGradeState] = useState("All");
-  console.log("그레이드상태", gradeState);
   // 등급 필터링 목록 드랍다운 보이기 / 안보이기
   const handleGradeDropdownClick = () => {
     setGradeIsOpen(!gradeIsOpen);
@@ -378,16 +377,11 @@ const Momo = ({ language }) => {
   const [reward, setReward] = useState("");
   // 클릭한 등급에 따른 모모 리스트
   const filteredMomoNftData = momoNftData.filter((item) => {
-    console.log("@@@@그레이드상태", gradeState);
-    console.log("아이템랭크", item.rank);
     if (gradeState === "All") {
       return true;
     }
     return item.rank === gradeState;
   });
-  console.log("상태1", filteredMomoNftData);
-  console.log("상태2", stakingData);
-  console.log("상태3", teamStakingData);
 
   return (
     <>

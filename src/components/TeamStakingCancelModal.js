@@ -97,7 +97,8 @@ const TeamStakingCancelModal = ({
             <br />
             <br />
             [注意] <br />
-            売却、譲渡等によりStaking中のNFTを保有するウォレットの情報が変更された場合、該当NFTから生成されたMZCは受け取れません。
+            Team Stakingを解除すると、自動的にMZCがClaimされます。
+            各NFTごとにClaim額が１MZCに満たない場合は解除することはできません。
           </div>
         )}
 

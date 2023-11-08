@@ -76,7 +76,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -95,14 +95,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id, rank) => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
   };
 
   // 스테이킹 취소 모달
@@ -111,7 +111,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   );
   const handleCancelStakingModal = (image, id, name, rank) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
@@ -394,14 +394,11 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   };
   // 클릭한 등급에 따른 모모 리스트
   const filteredMomoNftData = teamStakingMomoData.filter((item) => {
-    console.log("@@@@그레이드상태", gradeState);
-    console.log("아이템랭크", item.rank);
     if (gradeState === "All") {
       return true;
     }
     return item.rank === gradeState;
   });
-  console.log("필터링목록", filteredMomoNftData);
   // 싱글스테이킹, 팀스테이킹 id값 합친 변수
   const finalStakingMomoIds = [...singleStakingMomoIds, ...teamStakingMomoIds];
   return (
@@ -633,9 +630,10 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       {(selectedState === "All" ||
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
-                          {teamStakingMomoData
-                            ? teamStakingMomoData.length -
-                              finalStakingMomoIds.length
+                          {filteredMomoNftData
+                            ? filteredMomoNftData.filter(
+                                (item) => !finalStakingMomoIds.includes(item.id)
+                              ).length
                             : 0}
                         </span>
                       )}
@@ -672,8 +670,9 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         selectedState === "すべて") && (
                         <span className="header__text--qtt">
                           {filteredMomoNftData
-                            ? teamStakingMomoData.length -
-                              finalStakingMomoIds.length
+                            ? filteredMomoNftData.filter(
+                                (item) => !finalStakingMomoIds.includes(item.id)
+                              ).length
                             : 0}
                         </span>
                       )}
@@ -729,7 +728,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         className="btn--all-staking checked"
                         onClick={() => {
                           setTeamStakingModal((prev) => !prev);
-                          document.body.style.overflow = "hidden";
+                          // document.body.style.overflow = "hidden";
                         }}
                       >
                         {teamStakingMomoData.length > 0
@@ -746,7 +745,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       className="btn--all-staking checked"
                       onClick={() => {
                         setTeamStakingModal((prev) => !prev);
-                        document.body.style.overflow = "hidden";
+                        // document.body.style.overflow = "hidden";
                       }}
                     >
                       選択したNFTをStaking
@@ -758,10 +757,17 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
             <div className="nft__main">
               {isLoading ? (
                 <div className="loading">Now loading...</div>
-              ) : walletAddress === undefined ||
-                (teamStakingMomoData?.length ?? 0) ===
-                  (singleStakingMomoIds?.length ?? 0) +
-                    (teamStakingMomoIds?.length ?? 0) ? (
+              ) : // empty가 뜨는조건 지갑이 연결되있지 않거나
+              walletAddress === undefined ||
+                // 필터링된 모모 데이터가 없거나
+                filteredMomoNftData.length === 0 ||
+                // 보유 모모가 (싱글+팀스테이킹) 전부되어있을경우
+                (filteredMomoNftData?.length ?? 0) ===
+                  finalStakingMomoIds.length ||
+                // 필터링된 모모에서 스테이킹중인 모모를 제외하고 NFT가 없다면
+                filteredMomoNftData.filter((item) => {
+                  return !finalStakingMomoIds.includes(parseInt(item.id));
+                }).length === 0 ? (
                 <div className="empty-nft">
                   There are no NFTs in possession.
                 </div>
@@ -869,7 +875,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                   selectedState === "未Staking") && (
                   <ul className="main__tmhc-list">
                     {teamStakingMomoData
-
                       .filter((item) => {
                         return !singleStakingMomoIds.includes(
                           parseInt(item.id)
@@ -941,14 +946,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       selectedState === "Staking" ||
                       selectedState === "Staking中"
                         ? filteredMomoNftData.filter((item) => {
-                            return singleStakingMomoIds.includes(
+                            return finalStakingMomoIds.includes(
                               parseInt(item.id)
                             );
                           }).length
                         : selectedState === "Ready for staking" ||
                           selectedState === "未Staking"
                         ? filteredMomoNftData.filter((item) => {
-                            return !singleStakingMomoIds.includes(
+                            return !finalStakingMomoIds.includes(
                               parseInt(item.id)
                             );
                           }).length

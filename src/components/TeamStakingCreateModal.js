@@ -18,12 +18,23 @@ const TeamStakingCreateModal = ({
   //     item.rank
   //   );
   // });
+
   const handleModalBackground = (e) => {
     if (e.target === e.currentTarget) {
       setTeamStakingModal((prev) => !prev);
-      document.body.style.overflow = "";
+      // document.body.style.overflow = "";
     }
   };
+  // 등급에 따라 점수를 부여합니다.
+  const rankScore = {
+    UR: 4,
+    SR: 3,
+    R: 2,
+    C: 1,
+  };
+  const sortedData = selectData.sort(
+    (a, b) => rankScore[b.rank] - rankScore[a.rank]
+  );
 
   // let boostPercent;
   // switch (selectData.length) {
@@ -54,7 +65,7 @@ const TeamStakingCreateModal = ({
         </div>
         <div className="create-modal-momo-box">
           {/* 팀 스테이킹 할 momo 데이터를 가지고 와서 뿌리기 */}
-          {selectData.map((item) => {
+          {sortedData.map((item) => {
             return (
               <div className="momo-box__item">
                 <div className="momo-item__img">
@@ -125,7 +136,7 @@ const TeamStakingCreateModal = ({
             className="create-modal__back-btn"
             onClick={() => {
               setTeamStakingModal((prev) => !prev);
-              document.body.style.overflow = "";
+              // document.body.style.overflow = "";
             }}
           >
             Back

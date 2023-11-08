@@ -20,7 +20,10 @@ const MoveTeamPageModal = ({
   };
 
   return (
-    <div className="modal-background" onClick={handleModalBackground}>
+    <div
+      className="move-team-page-modal-background"
+      onClick={handleModalBackground}
+    >
       <div className="move-team__modal">
         {language === "EN" ? (
           <div className="modal-text-box">

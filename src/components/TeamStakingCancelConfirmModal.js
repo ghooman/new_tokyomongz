@@ -42,7 +42,10 @@ const TeamStakingCancelConfirmModal = ({
     }
   };
   return (
-    <div className="modal-background" onClick={handleModalBackground}>
+    <div
+      className="team-staking-cancel-confirm-modal-background"
+      onClick={handleModalBackground}
+    >
       <div className="cancel-confirm-modal-background">
         <div className="cancel-confirm-modal__text">
           {language === "EN" ? (

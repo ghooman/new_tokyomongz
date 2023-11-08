@@ -10,9 +10,9 @@
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 10;
   .create-modal-body {
-    position: relative;
+    position: absolute;
     width: 460px;
-    min-height: 685px;
+    // min-height: 685px;
     height: auto;
     border-radius: 8px;
     border: 1px solid #545454;
@@ -234,6 +234,7 @@
 @media screen and (max-width: 768px) {
   .create-modal-background {
     overflow: auto;
+    align-items: baseline;
     .create-modal-body {
       width: 320px;
       height: auto;

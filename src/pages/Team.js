@@ -545,13 +545,25 @@ const Team = ({ language }) => {
                           <span className="main__team-item-title">
                             {team.leader.name}
                           </span>
-                          <span>
-                            BOOST <span>{team.reward[1] * 100}%</span>
+                          {/* 임시 이벤트 기간에는 텍스트출력이 다릅니다. */}
+                          <span className="main__team-item-total-percent">
+                            EVENT (DEFAULT
+                            <span className="main__team-item-percent">
+                              &nbsp;100%&nbsp;
+                            </span>
+                            + BOOST&nbsp;
+                            <span className="main__team-item-percent">
+                              {Math.round(team.reward[1] * 100)}%
+                            </span>
+                            ) X 2
                           </span>
-                          <span>
+                          <span className="main__team-item-day-percent">
                             Default {team.rewardPerDay[0]}MZC/Day + BOOST{" "}
-                            {team.rewardPerDay[1]}/Day =
-                            <span> {team.rewardPerDay[2]} / DAY</span>
+                            {team.rewardPerDay[1]}/Day =&nbsp;
+                            <span className="main__team-item-percent">
+                              {team.rewardPerDay[2]} / DAY
+                            </span>{" "}
+                            * 2(EVENT)
                           </span>
                         </div>
                         <div className="main__team-item-btn-box">
@@ -582,7 +594,7 @@ const Team = ({ language }) => {
                           <span className="main__team-item-mongz-title">
                             {team.leader.name}
                           </span>
-                          <span>{team.reward[1] * 100}%</span>
+                          <span>100%</span>
                         </div>
                         <div className="main__team-item-and-icon">
                           <img src={AndIcon} alt="andIcon" />

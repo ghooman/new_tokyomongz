@@ -160,46 +160,49 @@
                 font-weight: 500;
                 margin-bottom: 16px;
               }
-              span {
-                &:nth-child(2) {
-                  color: #fff;
+              .main__team-item-total-percent {
+                color: #fff;
+                font-size: 24px;
+                font-weight: 500;
+                margin-bottom: 16px;
+                .main__team-item-percent {
                   font-size: 24px;
                   font-weight: 500;
-                  margin-bottom: 16px;
-                  span {
-                    font-size: 24px;
-                    font-weight: 500;
-                    background: linear-gradient(
-                      180deg,
-                      #ffe68c 0%,
-                      #c5a844 31.25%,
-                      #ffe68c 66.67%,
-                      #c5a844 100%
-                    );
-                    background-clip: text;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                  }
+                  background: linear-gradient(
+                    180deg,
+                    #ffe68c 0%,
+                    #c5a844 31.25%,
+                    #ffe68c 66.67%,
+                    #c5a844 100%
+                  );
+                  background-clip: text;
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
                 }
-                &:nth-child(3) {
-                  color: #fff;
-                  font-size: 16px;
-                  font-weight: 400;
-                  span {
-                    font-size: 16px;
-                    font-weight: 400;
-                    background: linear-gradient(
-                      180deg,
-                      #ffe68c 0%,
-                      #c5a844 31.25%,
-                      #ffe68c 66.67%,
-                      #c5a844 100%
-                    );
-                    background-clip: text;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                  }
+              }
+              .main__team-item-day-percent {
+                color: red;
+                font-size: 16px;
+                font-weight: 400;
+                // 임시 이벤트 기간용 컬러 2023年11月22日18:00 까지
+                .main__team-item-percent {
+                  color: red;
                 }
+                // 임시 이벤트 기간까지 스타일 주석처리했습니다. 2023年11月22日18:00 까지
+                // .main__team-item-percent {
+                //   font-size: 16px;
+                //   font-weight: 400;
+                //   background: linear-gradient(
+                //     180deg,
+                //     #ffe68c 0%,
+                //     #c5a844 31.25%,
+                //     #ffe68c 66.67%,
+                //     #c5a844 100%
+                //   );
+                //   background-clip: text;
+                //   -webkit-background-clip: text;
+                //   -webkit-text-fill-color: transparent;
+                // }
               }
             }
             .main__team-item-btn-box {

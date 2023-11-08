@@ -47,38 +47,43 @@ const TeamStakingCancelModal = ({
     }
   };
   return (
-    <div className="modal-background" onClick={handleModalBackground}>
+    <div
+      className="team-staking-canecel-modal-background"
+      onClick={handleModalBackground}
+    >
       <div className="team-staking-cancel__background">
-        <div className="team-staking-cancel__mongz-info-box">
-          <div className="team-staking-cancel__mongz-img">
-            <img src={selectData[0].image} alt="mongzImg" />
+        <div className="team-staking-cancel__scroll">
+          <div className="team-staking-cancel__mongz-info-box">
+            <div className="team-staking-cancel__mongz-img">
+              <img src={selectData[0].image} alt="mongzImg" />
+            </div>
+            <span className="team-staking-cancel__mongz-name">
+              {selectData[0].name}
+            </span>
           </div>
-          <span className="team-staking-cancel__mongz-name">
-            {selectData[0].name}
-          </span>
-        </div>
-        <div className="team-staking-cancel__momo-box">
-          {selectData[0].teamStakingNftData.map(
-            (team) =>
-              team.leader.id === selectData[0].id &&
-              team.member.map((item) => (
-                <div className="team-staking-cancel__momo-item" key={item.id}>
-                  <div className="team-staking-cancel__momo-img">
-                    <div
-                      className={`momo-rating ${getGradeNameForValue(
-                        item.rank
-                      )}`}
-                    >
-                      {item.rank}
+          <div className="team-staking-cancel__momo-box">
+            {selectData[0].teamStakingNftData.map(
+              (team) =>
+                team.leader.id === selectData[0].id &&
+                team.member.map((item) => (
+                  <div className="team-staking-cancel__momo-item" key={item.id}>
+                    <div className="team-staking-cancel__momo-img">
+                      <div
+                        className={`momo-rating ${getGradeNameForValue(
+                          item.rank
+                        )}`}
+                      >
+                        {item.rank}
+                      </div>
+                      <img src={item.image} alt="momoImg" />
                     </div>
-                    <img src={item.image} alt="momoImg" />
+                    <span className="team-staking-cancel__momo-name">
+                      {item.name}
+                    </span>
                   </div>
-                  <span className="team-staking-cancel__momo-name">
-                    {item.name}
-                  </span>
-                </div>
-              ))
-          )}
+                ))
+            )}
+          </div>
         </div>
 
         {language === "EN" ? (

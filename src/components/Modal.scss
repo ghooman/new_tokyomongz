@@ -127,6 +127,7 @@
 
 // 스테이킹 모달
 .staking-modal {
+  position: absolute;
   display: flex;
   flex-direction: column;
   width: 460px;
@@ -362,8 +363,9 @@
 
 @media (max-width: 768px) {
   .modal-background {
-    padding: 16px;
+    // padding: 16px;
     overflow: auto;
+    align-items: baseline;
   }
   .claim {
     width: 280px;

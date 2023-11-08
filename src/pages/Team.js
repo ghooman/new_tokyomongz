@@ -453,9 +453,9 @@ const Team = ({ language }) => {
 
           <div className="container__claim">
             {language === "EN" ? (
-              <span className="claim__title">Claimable MZC</span>
+              <span className="claim__title">TMHC Staking Claimable MZC</span>
             ) : (
-              <span className="claim__title">現在のClaim額</span>
+              <span className="claim__title">TMHC StakingのClaim可能額</span>
             )}
             <div className="claim__coin">
               <div>

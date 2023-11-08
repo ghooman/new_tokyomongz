@@ -469,9 +469,13 @@ const Momo = ({ language }) => {
 
           <div className="momo-container__claim">
             {language === "EN" ? (
-              <span className="momo-claim__title">Claimable MZC</span>
+              <span className="momo-claim__title">
+                TMHC Single Staking Claimable MZC
+              </span>
             ) : (
-              <span className="momo-claim__title">現在のClaim額</span>
+              <span className="momo-claim__title">
+                TMHC Single StakingのClaim可能額
+              </span>
             )}
             <div className="momo-claim__coin">
               <div>

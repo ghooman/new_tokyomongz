@@ -101,9 +101,9 @@ const TeamStakingCreateModal = ({
             <br />
             <ul>
               <li>UR Rating PEACHz.MOMO NFT 300% Boost</li>
-              <li> SR Rating PEACHz.MOMO NFT 100% Boost</li>
-              <li> R Rating PEACHz.MOMO NFT 30% Boost</li>
-              <li> C Rating PEACHz.MOMO NFT 10% Boost</li>
+              <li>SR Rating PEACHz.MOMO NFT 100% Boost</li>
+              <li>R Rating PEACHz.MOMO NFT 30% Boost</li>
+              <li>C Rating PEACHz.MOMO NFT 10% Boost</li>
             </ul>
           </div>
         ) : (
@@ -126,7 +126,7 @@ const TeamStakingCreateModal = ({
               <li>URグレード PEACHz.MOMO NFT 300% Boost</li>
               <li>SRグレード PEACHz.MOMO NFT 100% Boost</li>
               <li>Rグレード PEACHz.MOMO NFT 30% Boost</li>
-              <li>CRグレード PEACHz.MOMO NFT 10% Boost</li>
+              <li>Cグレード PEACHz.MOMO NFT 10% Boost</li>
             </ul>
           </div>
         )}

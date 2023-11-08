@@ -56,38 +56,37 @@
         margin-top: 24px;
       }
     }
-
-    // .current-balance {
-    //   display: flex;
-    //   flex-direction: column;
-    //   align-items: center;
-    //   margin-top: 56px;
-    //   .current-balance__title {
-    //     font-family: "mplus1p400";
-    //     font-size: 30px;
-    //   }
-    //   .current-balance__mzc {
-    //     margin-top: 16px;
-    //     font-family: "mplus1p500";
-    //     font-size: 30px;
-    //     color: #a8a8a8;
-    //     .mzc {
-    //       font-family: "mplus1p500";
-    //       font-size: 30px;
-    //       color: #a8a8a8;
-    //     }
-    //   }
-    //   .btn-mzc {
-    //     margin-top: 24px;
-    //     font-family: "mplus1p400";
-    //     font-size: 20px;
-    //     width: 256px;
-    //     padding: 11.5px 0;
-    //     background-color: transparent;
-    //     border: 1px solid #b3b3b3;
-    //     border-radius: 8px;
-    //   }
-    // }
+    .current-balance {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 56px;
+      .current-balance__title {
+        font-family: "mplus1p400";
+        font-size: 30px;
+      }
+      .current-balance__mzc {
+        margin-top: 16px;
+        font-family: "mplus1p500";
+        font-size: 30px;
+        color: #a8a8a8;
+        .mzc {
+          font-family: "mplus1p500";
+          font-size: 30px;
+          color: #a8a8a8;
+        }
+      }
+      .btn-mzc {
+        margin-top: 24px;
+        font-family: "mplus1p400";
+        font-size: 20px;
+        width: 256px;
+        padding: 11.5px 0;
+        background-color: transparent;
+        border: 1px solid #b3b3b3;
+        border-radius: 8px;
+      }
+    }
 
     .momo-container__claim {
       margin-top: 56px;
@@ -511,11 +510,11 @@
             grid-template-columns: repeat(2, 1fr);
             .momo-item {
               width: auto;
-              .momo-info{
-              .momo-name {
-                height: fit-content;
+              .momo-info {
+                .momo-name {
+                  height: fit-content;
+                }
               }
-            }
               .momo-images {
                 width: 100%;
                 img {
@@ -556,7 +555,23 @@
           }
         }
       }
-
+      .current-balance {
+        margin-top: 40px;
+        width: 100%;
+        .current-balance__title {
+          font-size: 20px;
+        }
+        .current-balance__mzc {
+          font-size: 20px;
+          .mzc {
+            font-size: 20px;
+          }
+        }
+        .btn-mzc {
+          width: 100%;
+          font-size: 16px;
+        }
+      }
       .momo-container__claim {
         margin-top: 80px;
         width: 100%;
@@ -636,6 +651,7 @@
                 .momo-btn--staking,
                 .momo-btn-cancel-staking {
                   font-size: 10px;
+                  padding: 8px;
                 }
                 .momo-btn--staking {
                   padding: 8px;

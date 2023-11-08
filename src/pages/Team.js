@@ -184,7 +184,9 @@ const Team = ({ language }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   // ============== nft 목록 불러오기 / 스테이킹 목록 불러오기 ==========================
-
+  // nft가져오기
+  const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
+  const { contract: mongzContract } = useContract(MONGS_COIN, MzcAbi);
   // ========== 값을 가져왔나 확인 =============
   const [dataStatus, setDataStatus] = useState(false);
 
@@ -325,6 +327,47 @@ const Team = ({ language }) => {
 
   const [reward, setReward] = useState("");
   console.log(reward);
+  // add mzc
+  const addTokenToWallet = async () => {
+    try {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const tokenContract = new ethers.Contract(
+          MONGS_COIN,
+          ["function symbol() view returns (string)"],
+          signer
+        );
+        const symbol = await tokenContract.symbol();
+        await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: MONGS_COIN,
+              symbol: "MZC",
+              decimals: 18,
+              // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
+            },
+          },
+        });
+      } else {
+        console.error("MetaMask is not installed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // mongz coin balance
+  const { data: mzcBalanceData, isLoading: mczBalance } = useContractRead(
+    mongzContract,
+    "balanceOf",
+    walletAddress
+  );
+
+  const mzcBalance = mzcBalanceData
+    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
+    : undefined;
   // 팀 스테이킹 취소,컨펌 상태 / 함수 입니다.
   const [teamStakingCancelModal, setTeamStakingCancelModal] = useState(false);
   const [teamStakingCancelConfirmModal, setTeamStakingCancelConfirmModal] =
@@ -377,8 +420,6 @@ const Team = ({ language }) => {
     }
   };
 
-  console.log(language);
-  console.log("@ 팀 데이터", newTeamStakingData);
   return (
     <>
       <Nav />
@@ -450,12 +491,21 @@ const Team = ({ language }) => {
               </Link>
             )}
           </div>
-
+          <div className="current-balance">
+            <span className="current-balance__title">Your Balance</span>
+            <span className="current-balance__mzc">
+              {mzcBalance}
+              <span className="mzc">&nbsp;MZC</span>
+            </span>
+            <button className="btn-mzc" onClick={addTokenToWallet}>
+              Add MZC MetaMask
+            </button>
+          </div>
           <div className="container__claim">
             {language === "EN" ? (
-              <span className="claim__title">Claimable MZC</span>
+              <span className="claim__title">TMHC Staking Claimable MZC</span>
             ) : (
-              <span className="claim__title">現在のClaim額</span>
+              <span className="claim__title">TMHC StakingのClaim可能額</span>
             )}
             <div className="claim__coin">
               <div>

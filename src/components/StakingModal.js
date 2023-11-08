@@ -80,39 +80,36 @@ const StakingModal = ({
           )}
 
           {language === "EN" ? (
-            <div className="staking__text">
-              <p>Would you like to apply the staking?</p>
-              <ul className="staking__text-box">
-                <br />
-                <br />
-                <li className="staking__text-box-li">
-                  - Holders can only claim the reward if they have at least 1
-                  MZC per each NFT being staked.
+            <div className="staking__info">
+              <p className="staking__info-title">
+                Would you like to apply the staking?
+              </p>
+              <br />
+              <ul className="staking__info-list">
+                <li className="staking__info-list-item">
+                  Holders can only claim the reward if they have at least 1 MZC
+                  per each NFT being staked.
                 </li>
-                <br />
-                <br />
-                <li className="staking__text-box-li">
-                  - If the holder sells an NFT that is currently being staked,
-                  or moves it to a different wallet, they will not receive the
+                <li className="staking__info-list-item">
+                  If the holder sells an NFT that is currently being staked, or
+                  moves it to a different wallet, they will not receive the
                   reward MZC assigned to the NFT.
                 </li>
               </ul>
             </div>
           ) : (
-            <div className="staking__text">
-              <p>
-                Stakingを申請しますか？
-                <br />
-                <br />
-                [注意]
-                <br />
-                <br />
-                -
-                各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
-                <br />
-                <br />-
-                Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
-              </p>
+            <div className="staking__info">
+              <p className="staking__info-title">Stakingを申請しますか？</p>
+              <p className="staking__info-title">[注意]</p>
+              <br />
+              <ul className="staking__info-list">
+                <li className="staking__info-list-item">
+                  各NFTごとにClaim額が1MZCに満たない場合はMZCをClaimすることができません。
+                </li>
+                <li className="staking__info-list-item">
+                  Staking中のNFTをClaimする前に売却、譲渡等により別のウォレットに移動させた場合、そのNFTがそれまでに獲得したMZCは消滅します。
+                </li>
+              </ul>
             </div>
           )}
           {language === "EN" ? (

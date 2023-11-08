@@ -645,7 +645,9 @@ const Main = ({ language }) => {
 
             <div className="container__claim">
               <span className="claim__title">
-                {language === "EN" ? "Claimable MZC" : "現在のClaim額"}
+                {language === "EN"
+                  ? "TMHC Single Staking Claimable MZC"
+                  : "TMHC Single StakingのClaim可能額"}
               </span>
               <div className="claim__coin">
                 <div>

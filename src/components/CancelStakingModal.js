@@ -67,7 +67,6 @@ const CancelStakingModal = ({
                 ))}
               </>
             )}
-
             <div className="cancel__text">
               <p>
                 Are you sure you want to cancel Staking?
@@ -76,24 +75,12 @@ const CancelStakingModal = ({
                 cancel
                 <br />
                 <br />
-                [Note]
+                [Caution]
                 <br />
                 If the NFT in Staking is moved to another wallet by selling,
                 transferring, etc. before claiming, the MZC that the NFT has
                 acquired so far will disappear. If the claim amount is less than
                 1 MZC for each NFT, MZC cannot be claimed.
-                {/* <br />
-                You will automatically receive the MZC acquired by NFT when you
-                cancel
-                <br />
-                <br />
-                [Note] <br />
-                If the NFT in Staking is moved to another wallet by selling,
-                transferring, etc. before claiming, the MZC that the NFT has
-                acquired so far will disappear.
-                <br />
-                If the claim amount is less than 1 MZC for each NFT, MZC cannot
-                be claimed. */}
               </p>
             </div>
             <div className="cancel__btn">

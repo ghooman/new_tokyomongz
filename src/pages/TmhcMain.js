@@ -1019,7 +1019,7 @@ const Main = ({ language }) => {
                                       : "Now Staking"}
                                   </span>
                                   <span className="team-staking-text">
-                                    BOOST <span>560%</span>
+                                    {/* BOOST <span>560%</span> */}
                                   </span>
                                   {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                                   <button

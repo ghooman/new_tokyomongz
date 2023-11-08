@@ -106,7 +106,7 @@ const TeamStakingFailModal = ({
     }
     if (errMsg.includes("언스테이킹 실패")) {
       errMsg =
-        "ステーキングの解除が失敗しました。保有していない、またはステーキング中でないNFTが含まれています。";
+        "ステーキングの解除が失敗しました。保有していない、またはステーキング中でないNFTが含まれています。 1MZC未満はキャンセルできません。";
     }
 
     if (errMsg.includes("언스테이킹 완료")) {
@@ -121,7 +121,7 @@ const TeamStakingFailModal = ({
     }
     if (errMsg.includes("언스테이킹 실패")) {
       errMsg =
-        "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking.";
+        "Unstaking failed. It contains NFTs that you do not own or are not in the process of staking. Anything less than 1MZC cannot be cancelled.";
     }
     if (errMsg.includes("청구 할 수 없습니다.")) {
       errMsg = errMsg

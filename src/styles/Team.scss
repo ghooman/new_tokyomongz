@@ -160,46 +160,49 @@
                 font-weight: 500;
                 margin-bottom: 16px;
               }
-              span {
-                &:nth-child(2) {
-                  color: #fff;
+              .main__team-item-total-percent {
+                color: #fff;
+                font-size: 24px;
+                font-weight: 500;
+                margin-bottom: 16px;
+                .main__team-item-percent {
                   font-size: 24px;
                   font-weight: 500;
-                  margin-bottom: 16px;
-                  span {
-                    font-size: 24px;
-                    font-weight: 500;
-                    background: linear-gradient(
-                      180deg,
-                      #ffe68c 0%,
-                      #c5a844 31.25%,
-                      #ffe68c 66.67%,
-                      #c5a844 100%
-                    );
-                    background-clip: text;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                  }
+                  background: linear-gradient(
+                    180deg,
+                    #ffe68c 0%,
+                    #c5a844 31.25%,
+                    #ffe68c 66.67%,
+                    #c5a844 100%
+                  );
+                  background-clip: text;
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
                 }
-                &:nth-child(3) {
-                  color: #fff;
-                  font-size: 16px;
-                  font-weight: 400;
-                  span {
-                    font-size: 16px;
-                    font-weight: 400;
-                    background: linear-gradient(
-                      180deg,
-                      #ffe68c 0%,
-                      #c5a844 31.25%,
-                      #ffe68c 66.67%,
-                      #c5a844 100%
-                    );
-                    background-clip: text;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                  }
+              }
+              .main__team-item-day-percent {
+                color: red;
+                font-size: 16px;
+                font-weight: 400;
+                // 임시 이벤트 기간용 컬러 2023年11月22日18:00 까지
+                .main__team-item-percent {
+                  color: red;
                 }
+                // 임시 이벤트 기간까지 스타일 주석처리했습니다. 2023年11月22日18:00 까지
+                // .main__team-item-percent {
+                //   font-size: 16px;
+                //   font-weight: 400;
+                //   background: linear-gradient(
+                //     180deg,
+                //     #ffe68c 0%,
+                //     #c5a844 31.25%,
+                //     #ffe68c 66.67%,
+                //     #c5a844 100%
+                //   );
+                //   background-clip: text;
+                //   -webkit-background-clip: text;
+                //   -webkit-text-fill-color: transparent;
+                // }
               }
             }
             .main__team-item-btn-box {
@@ -291,7 +294,7 @@
                 height: 100%;
               }
             }
-            .main__team-item-momo-box {
+            .main__team-item-momo-box-top {
               .main__team-item-momo-box-container {
                 display: flex;
                 width: 1062px;
@@ -624,24 +627,26 @@
         .nft__main {
           .main__team-item-box {
             .main__team-item-bottom {
-              .main__team-item-momo-box-container {
-                .main__team-item-momo-box {
-                  .main__team-item-momo-img {
-                    .momo-rating {
-                      z-index: 1;
-                      font-size: 12px;
-                      color: white;
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      padding: 8px;
-                      width: 28px;
-                      height: 15px;
-                      border-radius: 10px;
-                      position: absolute;
-                      top: 5px;
-                      left: 5px;
-                      border: 1px solid white;
+              .main__team-item-momo-box-top {
+                .main__team-item-momo-box-container {
+                  .main__team-item-momo-box {
+                    .main__team-item-momo-img {
+                      .momo-rating {
+                        z-index: 1;
+                        font-size: 12px;
+                        color: white;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 8px;
+                        width: 28px;
+                        height: 15px;
+                        border-radius: 10px;
+                        position: absolute;
+                        top: 5px;
+                        left: 5px;
+                        border: 1px solid white;
+                      }
                     }
                   }
                 }

@@ -44,7 +44,7 @@ const MoveTeamPageModal = ({
                 : momoSelectData
                 ? `${momoSelectData[0].name.slice(-5)}`
                 : null}
-              は今チームステーキング中です。
+              はチームステーキング中です。
             </p>
             <p className="move__text">
               はチームステーキング中です。

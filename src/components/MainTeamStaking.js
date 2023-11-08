@@ -76,7 +76,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -95,14 +95,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id, rank) => {
     dispatch(setStakingModal(!stakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   };
 
   // 스테이킹 취소 모달
@@ -111,7 +111,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   );
   const handleCancelStakingModal = (image, id, name, rank) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setSelectData([{ image: image, name: name, id: id, rank: rank }]);
   };
 
@@ -729,7 +729,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                         className="btn--all-staking checked"
                         onClick={() => {
                           setTeamStakingModal((prev) => !prev);
-                          // document.body.style.overflow = "hidden";
+                          document.body.style.overflow = "hidden";
                         }}
                       >
                         {teamStakingMomoData.length > 0
@@ -746,7 +746,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                       className="btn--all-staking checked"
                       onClick={() => {
                         setTeamStakingModal((prev) => !prev);
-                        // document.body.style.overflow = "hidden";
+                        document.body.style.overflow = "hidden";
                       }}
                     >
                       選択したNFTをStaking

@@ -180,13 +180,17 @@
   }
 }
 
-.staking__text {
-  p {
+.staking__info {
+  .staking__info-title {
     font-size: 16px;
-    // font-family: "mplus1p400";
+    margin-top: 12px;
   }
-  ul {
-    list-style: none;
+  .staking__info-list {
+    margin: 0 12px;
+    .staking__info-list-item {
+      list-style-type: "\2d\20";
+      margin-bottom: 12px;
+    }
   }
 }
 
@@ -247,7 +251,7 @@
   }
 }
 .cancel__text {
-  @extend .staking__text;
+  @extend .staking__info;
   display: flex;
 }
 
@@ -443,7 +447,7 @@
         }
       }
     }
-    .staking__text {
+    .staking__info {
       height: 280px;
     }
     p {

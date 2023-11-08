@@ -116,8 +116,8 @@ const TeamStakingCreateModal = ({
               </li>
               <br />
               <li>
-                4つのMOMO NFTでTeam
-                Stakingを行うと、追加20％のボーナスMZCを受けることができます。
+                4つのMOMO NFTでTeam Stakingを行うと、追加20％のボ
+                ーナスMZCを受けることができます。
               </li>
             </ul>
             <span> [参考]</span>

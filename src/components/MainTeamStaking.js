@@ -401,6 +401,7 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   });
   // 싱글스테이킹, 팀스테이킹 id값 합친 변수
   const finalStakingMomoIds = [...singleStakingMomoIds, ...teamStakingMomoIds];
+
   return (
     <>
       <div className="tmhc-main-background">
@@ -761,9 +762,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               walletAddress === undefined ||
                 // 필터링된 모모 데이터가 없거나
                 filteredMomoNftData.length === 0 ||
-                // 보유 모모가 (싱글+팀스테이킹) 전부되어있을경우
-                (filteredMomoNftData?.length ?? 0) ===
-                  finalStakingMomoIds.length ||
                 // 필터링된 모모에서 스테이킹중인 모모를 제외하고 NFT가 없다면
                 filteredMomoNftData.filter((item) => {
                   return !finalStakingMomoIds.includes(parseInt(item.id));

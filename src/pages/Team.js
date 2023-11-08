@@ -587,7 +587,7 @@ const Team = ({ language }) => {
                         <div className="main__team-item-and-icon">
                           <img src={AndIcon} alt="andIcon" />
                         </div>
-                        <div className="main__team-item-momo-box">
+                        <div className="main__team-item-momo-box-top">
                           <div className="main__team-item-momo-box-container">
                             {team.member.map((member) => (
                               <div className="main__team-item-momo-box">

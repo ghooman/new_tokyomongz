@@ -35,6 +35,14 @@ const TeamStakingCreateModal = ({
   const sortedData = selectData.sort(
     (a, b) => rankScore[b.rank] - rankScore[a.rank]
   );
+
+  // let boostPercent;
+  // switch (selectData.length) {
+  //   case 4 :
+  //   boostPercent = selectData.reduce((acc, cur) => )
+  // }
+
+  console.log("모모 셀렉트데이터", selectData);
   return (
     <div className="create-modal-background" onClick={handleModalBackground}>
       <div className="create-modal-body">
@@ -46,13 +54,13 @@ const TeamStakingCreateModal = ({
             <span className="create-modal-mongz-title">
               {teamStakingMongzData.name}
             </span>
-            <span>
+            {/* <span>
               Estimated BOOST <span>560%</span>
             </span>
             <span>
               (Default 10.81MZC/Day + BOOST 41.032MZC/Day =
               <span>49.952 MZC / DAY</span>)
-            </span>
+            </span> */}
           </div>
         </div>
         <div className="create-modal-momo-box">

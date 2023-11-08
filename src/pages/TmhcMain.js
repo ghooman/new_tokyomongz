@@ -235,7 +235,10 @@ const Main = ({ language }) => {
   //
 
   const web3 = new Web3(
-    new Web3.providers.HttpProvider("https://goerli.rpc.thirdweb.com")
+    new Web3.providers.HttpProvider(
+      "https://eth-mainnet.g.alchemy.com/v2/BOAhDrANEa71VO57mlTETHDhd-PMHDct" // 메인넷
+      // "https://goerli.rpc.thirdweb.com" //테스트넷
+    )
   );
   // const contractAddress = "0xa4057dadA9217A8E64Ee7d469A5A7e7c40B7380f"; // ERC-1155 컨트랙트 주소를 입력. 메인넷
   const contractAddress = IMPORT_TMHC_CONTRACT; // 테스트넷 goerli
@@ -887,9 +890,7 @@ const Main = ({ language }) => {
                                   : "Now Staking"}
                               </span>
                               <span className="team-staking-text">
-                                <>
-                                  BOOST <span>560%</span>
-                                </>
+                                <>{/* BOOST <span>560%</span> */}</>
                               </span>
                               {/* 팀 스테이킹에선 cancelTeamSTaking,싱글 스테이킹에선 cancelStaking */}
                               <button

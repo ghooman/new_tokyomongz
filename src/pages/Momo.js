@@ -232,7 +232,8 @@ const Momo = ({ language }) => {
 
   const [web3] = useState(
     new Web3(
-      "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj"
+      "https://polygon-mainnet.g.alchemy.com/v2/gk-cmwgamUvtg5t8_YCe5oMR8wdPP7Fn" // 메인넷
+      // "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj" // 테스트넷
     )
   );
   const [momoNfts, setMomoNfts] = useState([]);

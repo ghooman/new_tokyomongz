@@ -23,7 +23,7 @@ import {
 import {
   IMPORT_TMHC_CONTRACT,
   STAKING_TMHC_CONTRACT,
-  MONGS_COIN,
+  MONGZ_COIN,
   IMPORT_MOMO_CONTRACT,
 } from "../contract/contractAddress";
 
@@ -212,7 +212,7 @@ const Momo = ({ language }) => {
 
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
-  const { contract: mongzContract } = useContract(MONGS_COIN, MzcAbi);
+  const { contract: mongzContract } = useContract(MONGZ_COIN, MzcAbi);
 
   const walletAddress = useAddress();
   console.log(walletAddress);
@@ -381,7 +381,7 @@ const Momo = ({ language }) => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const tokenContract = new ethers.Contract(
-          MONGS_COIN,
+          MONGZ_COIN,
           ["function symbol() view returns (string)"],
           signer
         );
@@ -391,7 +391,7 @@ const Momo = ({ language }) => {
           params: {
             type: "ERC20",
             options: {
-              address: MONGS_COIN,
+              address: MONGZ_COIN,
               symbol: "MZC",
               decimals: 18,
               // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',

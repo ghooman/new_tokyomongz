@@ -47,7 +47,6 @@ const MoveTeamPageModal = ({
               はチームステーキング中です。
             </p>
             <p className="move__text">
-              はチームステーキング中です。
               チームステーキングのキャンセルはチームステーキングページで可能です。
             </p>
           </div>

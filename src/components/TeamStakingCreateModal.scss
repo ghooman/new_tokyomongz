@@ -189,20 +189,18 @@
     .create-modal-text-box {
       display: flex;
       margin-top: 12px;
-      // padding: 0 24px;
       flex-direction: column;
-      ul {
-        &:nth-child(1) {
-          // 임시로 주석 처리했습니다.
-          // padding: 24px 0 0 20px;
-          margin-bottom: 10px;
-        }
-        &:nth-child(3) {
-          // padding: 0 24px;
-        }
-        li {
+      .create-modal-text-box-list {
+        margin: 0 12px;
+        .create-modal-text-box-list-item {
           list-style-type: "\2d\20";
         }
+        .en {
+          list-style-type: disc;
+        }
+      }
+      .create-modal-text-box-notice {
+        margin-top: 12px;
       }
     }
     .create-modal-button-box {

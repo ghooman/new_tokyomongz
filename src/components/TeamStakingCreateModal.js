@@ -87,46 +87,62 @@ const TeamStakingCreateModal = ({
         ) : null}
         {language === "EN" ? (
           <div className="create-modal-text-box">
-            <ul>
-              <li>
+            <ul className="create-modal-text-box-list">
+              <li className="create-modal-text-box-list-item en">
                 Up to 4 MOMO NFTs can be team-staked with a single TMHC NFT.
               </li>
               <br />
-              <li>
+              <li className="create-modal-text-box-list-item en">
                 If a holder team-stakes 4 MOMO NFT, they will receive a 20%
                 bonus MZC.
               </li>
             </ul>
-            <span> [Note]</span>
+            <span className="create-modal-text-box-notice"> [Note]</span>
             <br />
-            <ul>
-              <li>UR Rating PEACHz.MOMO NFT 300% Boost</li>
-              <li>SR Rating PEACHz.MOMO NFT 100% Boost</li>
-              <li>R Rating PEACHz.MOMO NFT 30% Boost</li>
-              <li>C Rating PEACHz.MOMO NFT 10% Boost</li>
+            <ul className="create-modal-text-box-list">
+              <li className="create-modal-text-box-list-item en">
+                UR Rating PEACHz.MOMO NFT 300% Boost
+              </li>
+              <li className="create-modal-text-box-list-item en">
+                SR Rating PEACHz.MOMO NFT 100% Boost
+              </li>
+              <li className="create-modal-text-box-list-item en">
+                R Rating PEACHz.MOMO NFT 30% Boost
+              </li>
+              <li className="create-modal-text-box-list-item en">
+                C Rating PEACHz.MOMO NFT 10% Boost
+              </li>
             </ul>
           </div>
         ) : (
           <div className="create-modal-text-box">
-            <span> [注意]</span>
+            <span className="create-modal-text-box-notice"> [注意]</span>
             <br />
-            <ul>
-              <li>
+            <ul className="create-modal-text-box-list">
+              <li className="create-modal-text-box-list-item">
                 1つのTMHC NFTあたり最大4つのMOMO NFTとTeam Stakingできます。
               </li>
               <br />
-              <li>
+              <li className="create-modal-text-box-list-item">
                 4つのMOMO NFTでTeam Stakingを行うと、追加20％のボ
                 ーナスMZCを受けることができます。
               </li>
             </ul>
-            <span> [参考]</span>
+            <span className="create-modal-text-box-notice"> [参考]</span>
             <br />
-            <ul>
-              <li>URグレード PEACHz.MOMO NFT 300% Boost</li>
-              <li>SRグレード PEACHz.MOMO NFT 100% Boost</li>
-              <li>Rグレード PEACHz.MOMO NFT 30% Boost</li>
-              <li>Cグレード PEACHz.MOMO NFT 10% Boost</li>
+            <ul className="create-modal-text-box-list">
+              <li className="create-modal-text-box-list-item">
+                URグレード PEACHz.MOMO NFT 300% Boost
+              </li>
+              <li className="create-modal-text-box-list-item">
+                SRグレード PEACHz.MOMO NFT 100% Boost
+              </li>
+              <li className="create-modal-text-box-list-item">
+                Rグレード PEACHz.MOMO NFT 30% Boost
+              </li>
+              <li className="create-modal-text-box-list-item">
+                Cグレード PEACHz.MOMO NFT 10% Boost
+              </li>
             </ul>
           </div>
         )}

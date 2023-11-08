@@ -374,7 +374,48 @@ const Momo = ({ language }) => {
   }, [walletAddress]);
 
   console.log("nftData==================", momoNftData);
+  // add mzc
+  const addTokenToWallet = async () => {
+    try {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const tokenContract = new ethers.Contract(
+          MONGS_COIN,
+          ["function symbol() view returns (string)"],
+          signer
+        );
+        const symbol = await tokenContract.symbol();
+        await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: MONGS_COIN,
+              symbol: "MZC",
+              decimals: 18,
+              // image: 'https://gateway.ipfscdn.io/ipfs/QmZEaxyuHz8bTMfh8f5FD2TAm65Q7DxaycN4vcQEovCyxM/slg-logo.png',
+            },
+          },
+        });
+      } else {
+        console.error("MetaMask is not installed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // mongz coin balance
+  const { data: mzcBalanceData, isLoading: mczBalance } = useContractRead(
+    mongzContract,
+    "balanceOf",
+    walletAddress
+  );
 
+  const mzcBalance = mzcBalanceData
+    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
+    : undefined;
+  // 리워드 상태
   const [reward, setReward] = useState("");
   // 클릭한 등급에 따른 모모 리스트
   const filteredMomoNftData = momoNftData.filter((item) => {
@@ -456,7 +497,7 @@ const Momo = ({ language }) => {
             )}
           </div>
 
-          {/* <div className="current-balance">
+          <div className="current-balance">
             <span className="current-balance__title">Your Balance</span>
             <span className="current-balance__mzc">
               {mzcBalance}
@@ -465,7 +506,7 @@ const Momo = ({ language }) => {
             <button className="btn-mzc" onClick={addTokenToWallet}>
               Add MZC MetaMask
             </button>
-          </div> */}
+          </div>
 
           <div className="momo-container__claim">
             {language === "EN" ? (

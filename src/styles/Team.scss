@@ -55,7 +55,37 @@
         margin-top: 24px;
       }
     }
-
+    .current-balance {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 56px;
+      .current-balance__title {
+        font-family: "mplus1p400";
+        font-size: 30px;
+      }
+      .current-balance__mzc {
+        margin-top: 16px;
+        font-family: "mplus1p500";
+        font-size: 30px;
+        color: #a8a8a8;
+        .mzc {
+          font-family: "mplus1p500";
+          font-size: 30px;
+          color: #a8a8a8;
+        }
+      }
+      .btn-mzc {
+        margin-top: 24px;
+        font-family: "mplus1p400";
+        font-size: 20px;
+        width: 256px;
+        padding: 11.5px 0;
+        background-color: transparent;
+        border: 1px solid #b3b3b3;
+        border-radius: 8px;
+      }
+    }
     .container__claim {
       margin-top: 56px;
       padding: 24px;

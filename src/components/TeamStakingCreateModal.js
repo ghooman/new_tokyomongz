@@ -22,7 +22,7 @@ const TeamStakingCreateModal = ({
   const handleModalBackground = (e) => {
     if (e.target === e.currentTarget) {
       setTeamStakingModal((prev) => !prev);
-      // document.body.style.overflow = "";
+      document.body.style.overflow = "";
     }
   };
   // 등급에 따라 점수를 부여합니다.
@@ -152,7 +152,7 @@ const TeamStakingCreateModal = ({
             className="create-modal__back-btn"
             onClick={() => {
               setTeamStakingModal((prev) => !prev);
-              // document.body.style.overflow = "";
+              document.body.style.overflow = "";
             }}
           >
             Back

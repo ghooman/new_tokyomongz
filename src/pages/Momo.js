@@ -93,7 +93,7 @@ const Momo = ({ language }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleClaimModal = () => {
     dispatch(setClaimModal(!claimModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   };
 
   // 페이지네이션
@@ -102,8 +102,8 @@ const Momo = ({ language }) => {
     setPage(page);
   };
   // 데이터 15개씩 보이기
-  const start = (page - 1) * 15;
-  const end = start + 15;
+  const start = (page - 1) * 5;
+  const end = start + 5;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
@@ -113,7 +113,7 @@ const Momo = ({ language }) => {
   const stakingModal = useSelector((state) => state.stakingModal.stakingModal);
   const handleStakingModal = (image, name, id) => {
     dispatch(setStakingModal(!stakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setIsSingleStaking(true); // 싱글 스테이킹인지 확인하고
     setIsChecked([]); // 체크드 선택된걸 다 풀어버립니다.
     setMomoSelectData([{ image: image, name: name, id: id }]);
@@ -122,7 +122,7 @@ const Momo = ({ language }) => {
   // 스테이킹 모달 여러개
   const handleAllStakingModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setIsSingleStaking(false); // 멀티 스테이킹일 경우
     // 체크한 것들만 selected에 다시담아 보내줍니다.
     const newSelectData = isChecked.map((id) => {
@@ -138,13 +138,13 @@ const Momo = ({ language }) => {
   );
   const handleCancelStakingModal = (image, id, name) => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setMomoSelectData([{ image: image, name: name, id: id }]);
   };
   // 팀 스테이킹 이동 안내 모달
   const [openMoveTeamModal, setOpenMoveTeamModal] = useState(false);
   const handleMoveTeamModal = (id, name) => {
-    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     setOpenMoveTeamModal((prev) => !prev);
     setMomoSelectData([{ name: name, id: id }]);
   };
@@ -236,7 +236,6 @@ const Momo = ({ language }) => {
       // "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj" // 테스트넷
     )
   );
-  const [momoNfts, setMomoNfts] = useState([]);
 
   const contractAddress = IMPORT_MOMO_CONTRACT; // ERC-1155 컨트랙트 주소를 입력.
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
@@ -968,7 +967,7 @@ const Momo = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={15}
+                    itemsCountPerPage={1}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||
@@ -992,7 +991,7 @@ const Momo = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={8}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

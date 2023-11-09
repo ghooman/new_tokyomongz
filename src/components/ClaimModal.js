@@ -19,7 +19,7 @@ const ClaimModal = ({ language, reward, claimType }) => {
   const claimModal = useSelector((state) => state.claimModal.showClaim);
   const handleCloseModal = () => {
     dispatch(setClaimModal(!claimModal));
-    // document.body.style.overflow = "";
+    document.body.style.overflow = "";
   };
   const [claimConfirmModal, setClaimConfirmModal] = useState(false);
 

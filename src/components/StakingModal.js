@@ -33,7 +33,7 @@ const StakingModal = ({
 
   const handleCloseModal = () => {
     dispatch(setStakingModal(!stakingModal));
-    // document.body.style.overflow = "";
+    document.body.style.overflow = "";
   };
 
   const [stakingConfirm, setStakingConfirm] = useState(false);
@@ -171,7 +171,7 @@ const StakingConfirmModal = ({
     call();
     setSelectData((prev) => []);
     setMomoSelectData((prev) => []);
-    // document.body.style.overflow = "";
+    document.body.style.overflow = "";
     setIsChecked((prev) => []);
   };
 

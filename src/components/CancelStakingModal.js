@@ -26,7 +26,7 @@ const CancelStakingModal = ({
   );
   const handleCloseModal = () => {
     dispatch(setCancelStakingModal(!cancelStakingModal));
-    // document.body.style.overflow = "";
+    document.body.style.overflow = "";
   };
   const [cancelStakingConfirm, setCancelStakingConfirm] = useState(false);
   const handleConfirmModal = () => {

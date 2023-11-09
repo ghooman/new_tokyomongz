@@ -11,7 +11,19 @@
   backdrop-filter: blur(4px);
   z-index: 10;
 }
-
+.claim-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
 // 클레임 모달
 .claim {
   background-color: #000;
@@ -124,7 +136,19 @@
     font-family: "mplus1p400";
   }
 }
-
+.claim-confirm-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
 // 스테이킹 모달
 .staking-modal {
   position: absolute;
@@ -337,7 +361,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   max-width: 500px;
   background-color: #000;
   border: 1px solid #545454;
@@ -364,8 +389,8 @@
 @media (max-width: 768px) {
   .modal-background {
     // padding: 16px;
+    // align-items: baseline;
     overflow: auto;
-    align-items: baseline;
   }
   .claim {
     width: 280px;

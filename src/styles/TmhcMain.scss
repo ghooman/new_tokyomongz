@@ -308,7 +308,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            //특정 사이즈에서 남는 공간을 채우지 못하여 flex속성을 사용하게 되었습니다. 
+            //특정 사이즈에서 남는 공간을 채우지 못하여 flex속성을 사용하게 되었습니다.
             //flex 속성을 사용하기 위해서 display:flex를 사용했습니다.
             .tmhc-reward {
               position: absolute;
@@ -480,7 +480,7 @@
                 flex: 1;
                 //==============================================
                 //남은 공간을 채워야 하므로 해당 속성과 태그는 꼭 필요합니다.
-                //만약, 해당 스타일이 적용된 태그의 내용이 필요하시 않으시다면, 
+                //만약, 해당 스타일이 적용된 태그의 내용이 필요하시 않으시다면,
                 //아래의 속성을 적용해주시길 바랍니다.
                 // visibility: hidden;
                 //==============================================
@@ -572,20 +572,18 @@
               }
               &:nth-child(2) a {
                 font-size: 24px;
-                margin-right: 12px;
               }
               &:nth-last-child(2) a {
                 font-size: 24px;
-                margin-left: 12px;
               }
               > a {
                 display: block;
-                width: 30px;
-                height: 30px;
+                width: 24px;
+                height: 24px;
                 border-radius: 50%;
                 // margin: 0 10px;
                 text-align: center;
-                line-height: 30px;
+                line-height: 24px;
               }
             }
             li.active a {

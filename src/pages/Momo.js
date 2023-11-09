@@ -102,8 +102,8 @@ const Momo = ({ language }) => {
     setPage(page);
   };
   // 데이터 15개씩 보이기
-  const start = (page - 1) * 15;
-  const end = start + 15;
+  const start = (page - 1) * 5;
+  const end = start + 5;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
@@ -236,7 +236,6 @@ const Momo = ({ language }) => {
       // "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj" // 테스트넷
     )
   );
-  const [momoNfts, setMomoNfts] = useState([]);
 
   const contractAddress = IMPORT_MOMO_CONTRACT; // ERC-1155 컨트랙트 주소를 입력.
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
@@ -968,7 +967,7 @@ const Momo = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={15}
+                    itemsCountPerPage={1}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||
@@ -992,7 +991,7 @@ const Momo = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={8}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

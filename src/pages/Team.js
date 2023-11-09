@@ -712,7 +712,7 @@ const Team = ({ language }) => {
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={8}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

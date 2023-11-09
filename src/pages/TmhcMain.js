@@ -90,26 +90,26 @@ const Main = ({ language }) => {
   const start = (page - 1) * 15;
   const end = start + 15;
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [pageRangeDisplayed, setPageRangeDisplayed] = useState(5);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // const [pageRangeDisplayed, setPageRangeDisplayed] = useState(5);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    if (windowWidth <= 768) {
-      setPageRangeDisplayed(4);
-    } else {
-      setPageRangeDisplayed(5);
-    }
-  }, [windowWidth]);
+  // useEffect(() => {
+  //   if (windowWidth <= 768) {
+  //     setPageRangeDisplayed(4);
+  //   } else {
+  //     setPageRangeDisplayed(5);
+  //   }
+  // }, [windowWidth]);
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
@@ -1163,7 +1163,7 @@ const Main = ({ language }) => {
                           : 0
                       }
                       // 표시할 페이지수
-                      pageRangeDisplayed={pageRangeDisplayed}
+                      pageRangeDisplayed={8}
                       prevPageText={"‹"}
                       nextPageText={"›"}
                       // 함수

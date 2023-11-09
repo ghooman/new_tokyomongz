@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Team.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
@@ -78,10 +78,16 @@ const Team = ({ language }) => {
   };
 
   // 페이지네이션
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const queryPage = searchParams.get("page");
+  const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
+  const navigate = useNavigate();
   const handlePageChange = (page) => {
     setPage(page);
+    navigate(`?page=${page}`);
   };
+
   // 임시 5개씩 보이기
   const start = (page - 1) * 5;
   const end = start + 5;

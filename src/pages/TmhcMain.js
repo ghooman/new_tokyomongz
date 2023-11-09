@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/TmhcMain.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
@@ -46,7 +46,7 @@ const Main = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   // 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);
@@ -83,9 +83,14 @@ const Main = ({ language }) => {
   };
 
   // 페이지네이션
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const queryPage = searchParams.get("page");
+  const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
+
   const handlePageChange = (page) => {
     setPage(page);
+    navigate(`?page=${page}`);
   };
   const start = (page - 1) * 15;
   const end = start + 15;

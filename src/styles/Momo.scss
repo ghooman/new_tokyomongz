@@ -617,7 +617,15 @@
             .momo-left__menu {
               margin-top: 16px;
               .momo-grade-select-box {
-                width: 30%;
+                width: 40%;
+                .momo-btn--state-select {
+                  font-size: 12px;
+                }
+              }
+              .momo-state-select-box {
+                .momo-btn--state-select {
+                  font-size: 12px;
+                }
               }
             }
           }

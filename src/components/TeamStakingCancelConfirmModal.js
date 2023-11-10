@@ -153,7 +153,7 @@ const TeamStakingFailModal = ({
 
   return (
     <>
-      <div className="modal-background">
+      <div className="cancel-fail-modal-background">
         <div className="staking-fail">
           <p className="staking-fail__text">{errMsg}</p>
           <button className="btn-confirm" onClick={modalClose}>

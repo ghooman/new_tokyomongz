@@ -401,7 +401,6 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
   });
   // 싱글스테이킹, 팀스테이킹 id값 합친 변수
   const finalStakingMomoIds = [...singleStakingMomoIds, ...teamStakingMomoIds];
-
   return (
     <>
       <div className="tmhc-main-background">
@@ -955,12 +954,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               parseInt(item.id)
                             );
                           }).length
-                        : filteredMomoNftData
-                        ? filteredMomoNftData.length
+                        : finalStakingMomoIds
+                        ? filteredMomoNftData.filter(
+                            (item) => !finalStakingMomoIds.includes(item.id)
+                          ).length
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={8}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

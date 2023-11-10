@@ -146,9 +146,8 @@ const Momo = ({ language }) => {
     navigate(`?${searchParams.toString()}`);
   };
 
-  // 현재 테스트를 위해 1개씩만 출력 시키고있습니다.
-  const start = (page - 1) * 1;
-  const end = start + 1;
+  const start = (page - 1) * 15;
+  const end = start + 15;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
@@ -995,53 +994,59 @@ const Momo = ({ language }) => {
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {filteredMomoNftData
-                        .filter((item) => {
-                          return (
-                            !stakingData.includes(parseInt(item.id)) &&
-                            !teamStakingData.includes(parseInt(item.id))
-                          );
-                        })
-                        .slice(start, end)
-                        .map((item) => (
-                          <li className="momo-item" key={item.id}>
-                            <input
-                              type="checkbox"
-                              className="momo-check"
-                              checked={isChecked.includes(item.id)}
-                              onClick={(e) =>
-                                handleChecked(e, item.id, item.image, item.name)
-                              }
-                            />
-                            {item.reward !== 0 ? (
-                              <span className="momo-reward">
-                                {Number(item.reward).toFixed(3)}
-                              </span>
-                            ) : null}
-                            <div className="momo-images">
-                              <img src={item.image} alt="nft" />
-                            </div>
-                            <div className="momo-info">
-                              <span className="momo-name">{item.name}</span>
-                              <span className="momo-staking-state">
-                                Ready for Staking
-                              </span>
-
-                              <button
-                                className="momo-btn--staking"
-                                onClick={() =>
-                                  handleStakingModal(
+                      {filteredMomoNftData &&
+                        filteredMomoNftData
+                          .filter((item) => {
+                            return (
+                              !stakingData.includes(parseInt(item.id)) &&
+                              !teamStakingData.includes(parseInt(item.id))
+                            );
+                          })
+                          .slice(start, end)
+                          .map((item) => (
+                            <li className="momo-item" key={item.id}>
+                              <input
+                                type="checkbox"
+                                className="momo-check"
+                                checked={isChecked.includes(item.id)}
+                                onClick={(e) =>
+                                  handleChecked(
+                                    e,
+                                    item.id,
                                     item.image,
-                                    item.name,
-                                    item.id
+                                    item.name
                                   )
                                 }
-                              >
-                                Single Staking
-                              </button>
-                            </div>
-                          </li>
-                        ))}
+                              />
+                              {item.reward !== 0 ? (
+                                <span className="momo-reward">
+                                  {Number(item.reward).toFixed(3)}
+                                </span>
+                              ) : null}
+                              <div className="momo-images">
+                                <img src={item.image} alt="nft" />
+                              </div>
+                              <div className="momo-info">
+                                <span className="momo-name">{item.name}</span>
+                                <span className="momo-staking-state">
+                                  Ready for Staking
+                                </span>
+
+                                <button
+                                  className="momo-btn--staking"
+                                  onClick={() =>
+                                    handleStakingModal(
+                                      item.image,
+                                      item.name,
+                                      item.id
+                                    )
+                                  }
+                                >
+                                  Single Staking
+                                </button>
+                              </div>
+                            </li>
+                          ))}
                     </ul>
                   )))
               ) : (
@@ -1054,7 +1059,7 @@ const Momo = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={1}
+                    itemsCountPerPage={15}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||

@@ -43,6 +43,9 @@ const Momo = ({ language }) => {
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   // 스테이킹 상태 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);
@@ -50,11 +53,22 @@ const Momo = ({ language }) => {
     dispatch(setIsOpen(!isOpen));
     rotateRef.current.style.transform = isOpen ? "" : "rotate(-180deg)";
   };
-
   // 스테이킹 상태 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
+
+  // 컴포넌트가 그려질때 쿼리에서 상태를 가져와 store에 업데이트 시킵니다.
+  useEffect(() => {
+    const stateFromQueryParam = searchParams.get("state") || "All";
+    dispatch(setSelectedState(stateFromQueryParam));
+  }, [dispatch, searchParams]);
+
+  // 스테이킹 상태 선택시
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.set("state", text);
+    navigate(`?${newSearchParams.toString()}`);
+    setSelectedState(text);
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);
@@ -64,7 +78,9 @@ const Momo = ({ language }) => {
   // 등급 드롭다운 보이기
   const gradeRef = useRef();
   const [gradeIsOpen, setGradeIsOpen] = useState(false);
-  const [gradeState, setGradeState] = useState("All");
+  const [gradeState, setGradeState] = useState(
+    searchParams.get("grade") || "All"
+  );
   // 등급 필터링 목록 드랍다운 보이기 / 안보이기
   const handleGradeDropdownClick = () => {
     setGradeIsOpen(!gradeIsOpen);
@@ -97,18 +113,43 @@ const Momo = ({ language }) => {
   };
 
   // 페이지네이션
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
   const queryPage = searchParams.get("page");
   const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
-
-  const handlePageChange = (page) => {
-    setPage(page);
-    navigate(`?page=${page}`);
+  // 페이지 및 필터 변경 시 URL 업데이트
+  const updateUrl = () => {
+    const searchParams = new URLSearchParams();
+    // 'All'을 포함하여 'grade' 파라미터를 설정합니다.
+    searchParams.set("grade", gradeState);
+    // 'All' 혹은 'すべて'도 'state' 파라미터에 포함합니다.
+    searchParams.set("state", selectedState);
+    // 마지막으로 'page' 파라미터를 추가합니다.
+    searchParams.set("page", page.toString());
+    navigate(`?${searchParams.toString()}`);
   };
-  // 데이터 15개씩 보이기
-  const start = (page - 1) * 15;
-  const end = start + 15;
+
+  // 필터링 및 페이지 상태 변경 시 URL 업데이트
+  useEffect(() => {
+    updateUrl();
+  }, [gradeState, selectedState, page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // 페이지 상태 업데이트
+
+    if (gradeState !== "All") {
+      searchParams.set("grade", gradeState);
+    }
+
+    if (selectedState !== "All" && selectedState !== "すべて") {
+      searchParams.set("state", selectedState);
+    }
+
+    searchParams.set("page", newPage.toString());
+    navigate(`?${searchParams.toString()}`);
+  };
+
+  // 현재 테스트를 위해 1개씩만 출력 시키고있습니다.
+  const start = (page - 1) * 1;
+  const end = start + 1;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
@@ -973,7 +1014,7 @@ const Momo = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={15}
+                    itemsCountPerPage={1}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||

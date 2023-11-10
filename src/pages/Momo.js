@@ -56,7 +56,7 @@ const Momo = ({ language }) => {
   // 스테이킹 상태 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
 
-  // 컴포넌트가 그려질때 쿼리에서 상태를 가져와 store에 업데이트 시킵니다.
+  // 스테이킹 상태를 쿼리에서 가져와 store에 업데이트 시킵니다.
   useEffect(() => {
     const stateFromQueryParam = searchParams.get("state") || "All";
     dispatch(setSelectedState(stateFromQueryParam));
@@ -68,7 +68,6 @@ const Momo = ({ language }) => {
     const newSearchParams = new URLSearchParams(window.location.search);
     newSearchParams.set("state", text);
     navigate(`?${newSearchParams.toString()}`);
-    setSelectedState(text);
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);

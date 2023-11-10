@@ -89,8 +89,8 @@ const Team = ({ language }) => {
   };
 
   // 임시 5개씩 보이기
-  const start = (page - 1) * 5;
-  const end = start + 5;
+  const start = (page - 1) * 1;
+  const end = start + 1;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
@@ -700,7 +700,7 @@ const Team = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={5}
+                    itemsCountPerPage={1}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||

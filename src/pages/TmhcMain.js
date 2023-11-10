@@ -47,6 +47,9 @@ const Main = ({ language }) => {
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
   // 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
   const isOpen = useSelector((state) => state.isOpen.isOpen);
@@ -57,8 +60,19 @@ const Main = ({ language }) => {
 
   // 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
+
+  // 스테이킹 상태를 쿼리에서 가져와 store에 업데이트 시킵니다.
+  useEffect(() => {
+    const stateFromQueryParam = searchParams.get("state") || "All";
+    dispatch(setSelectedState(stateFromQueryParam));
+  }, [dispatch, searchParams]);
+
+  // 스테이킹 상태 선택시
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.set("state", text);
+    navigate(`?${newSearchParams.toString()}`);
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);
@@ -83,38 +97,36 @@ const Main = ({ language }) => {
   };
 
   // 페이지네이션
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
   const queryPage = searchParams.get("page");
   const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
-
-  const handlePageChange = (page) => {
-    setPage(page);
-    navigate(`?page=${page}`);
+  // 페이지 및 필터 변경 시 URL 업데이트
+  const updateUrl = () => {
+    const searchParams = new URLSearchParams();
+    // 'All' 혹은 'すべて'도 'state' 파라미터에 포함합니다.
+    searchParams.set("state", selectedState);
+    // 마지막으로 'page' 파라미터를 추가합니다.
+    searchParams.set("page", page.toString());
+    navigate(`?${searchParams.toString()}`);
   };
+
+  // 필터링 및 페이지 상태 변경 시 URL 업데이트
+  useEffect(() => {
+    updateUrl();
+  }, [selectedState, page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // 페이지 상태 업데이트
+    if (selectedState !== "All" && selectedState !== "すべて") {
+      searchParams.set("state", selectedState);
+    }
+
+    searchParams.set("page", newPage.toString());
+    navigate(`?${searchParams.toString()}`);
+  };
+
+  // 현재 테스트를 위해 1개씩만 출력 시키고있습니다.
   const start = (page - 1) * 1;
   const end = start + 1;
-
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // const [pageRangeDisplayed, setPageRangeDisplayed] = useState(5);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener("resize", handleResize);
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (windowWidth <= 768) {
-  //     setPageRangeDisplayed(4);
-  //   } else {
-  //     setPageRangeDisplayed(5);
-  //   }
-  // }, [windowWidth]);
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);

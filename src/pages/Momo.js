@@ -102,8 +102,8 @@ const Momo = ({ language }) => {
     setPage(page);
   };
   // 데이터 15개씩 보이기
-  const start = (page - 1) * 5;
-  const end = start + 5;
+  const start = (page - 1) * 15;
+  const end = start + 15;
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [momoSelectData, setMomoSelectData] = useState([]);
@@ -967,7 +967,7 @@ const Momo = ({ language }) => {
                     // 현재 보고있는 페이지
                     activePage={page}
                     // 한페이지에 출력할 아이템수
-                    itemsCountPerPage={1}
+                    itemsCountPerPage={15}
                     // 총 아이템수
                     totalItemsCount={
                       selectedState === "Staking" ||

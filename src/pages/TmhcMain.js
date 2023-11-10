@@ -568,9 +568,9 @@ const Main = ({ language }) => {
         return "";
     }
   };
-
+  // 팀 스테이킹 정보에서 몽즈 id(leader)로 새로운 배열을 만듭니다.
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-  // 스테이킹 처리로 momo-item갯수가 0일때 page 숫자를 이전페이지로 이동시킵니다.
+  // 스테이킹 처리로 보여지는 몽즈 갯수가 0되었다면 page 숫자를 이전페이지로 이동시킵니다.
   useEffect(() => {
     if (isLoading || nftData.length === 0) return;
     let renderableItems;
@@ -593,9 +593,9 @@ const Main = ({ language }) => {
           !stakingData.includes(item.id) && !teamStakingNftId.includes(item.id)
       );
     }
-    // 필터링모모리스트에서 현재 상태에 따라 출력되는 momo-item을 파악합니다.
+    // 현재 상태와 페이지에 출력되는 몽즈들을 파악합니다.
     const itemsInCurrentPage = renderableItems.slice(start, end);
-    // 현재 페이지에 momo-item이 없을 경우
+    // 현재 페이지에 몽즈가 없을 경우
     if (page > 1 && itemsInCurrentPage.length === 0) {
       const newPage = page - 1;
       setPage(newPage);

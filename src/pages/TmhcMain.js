@@ -570,7 +570,48 @@ const Main = ({ language }) => {
   };
 
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-
+  // 스테이킹 처리로 momo-item갯수가 0일때 page 숫자를 이전페이지로 이동시킵니다.
+  useEffect(() => {
+    if (isLoading || nftData.length === 0) return;
+    let renderableItems;
+    // All 인 상태
+    if (selectedState === "All" || selectedState === "すべて") {
+      renderableItems = nftData;
+      // 스테이킹 중인 상태
+    } else if (selectedState === "Staking" || selectedState === "Staking中") {
+      renderableItems = nftData.filter(
+        (item) =>
+          stakingData.includes(item.id) || teamStakingNftId.includes(item.id)
+      );
+      // 스테이킹 전인 상태
+    } else if (
+      selectedState === "Ready for staking" ||
+      selectedState === "未Staking"
+    ) {
+      renderableItems = nftData.filter(
+        (item) =>
+          !stakingData.includes(item.id) && !teamStakingNftId.includes(item.id)
+      );
+    }
+    // 필터링모모리스트에서 현재 상태에 따라 출력되는 momo-item을 파악합니다.
+    const itemsInCurrentPage = renderableItems.slice(start, end);
+    // 현재 페이지에 momo-item이 없을 경우
+    if (page > 1 && itemsInCurrentPage.length === 0) {
+      const newPage = page - 1;
+      setPage(newPage);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", newPage.toString());
+      navigate(`?${searchParams.toString()}`, { replace: true });
+    }
+    console.log("현재 페이지에 출력되는 아이템", itemsInCurrentPage);
+  }, [
+    page,
+    selectedState,
+    stakingData,
+    teamStakingNftId,
+    navigate,
+    location.search,
+  ]);
   return (
     <>
       <Nav />

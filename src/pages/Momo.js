@@ -226,34 +226,33 @@ const Momo = ({ language }) => {
   console.log("체크된 nft===========", isChecked);
 
   // =============== 전체 선택 ====================
-  const [selectAll, setSelectAll] = useState(false);
+  // const [selectAll, setSelectAll] = useState(false);
 
-  const handleAllChecked = () => {
-    // setIsChecked
-    if (isChecked.length === 0) {
-      let allIds = momoNftData
-        .slice(start, end)
-        .filter((item) => {
-          return !stakingData.includes(item.id);
-        })
-        .map((item) => item.id);
-      setIsChecked(allIds);
+  // const handleAllChecked = () => {
+  //   // setIsChecked
+  //   if (isChecked.length === 0) {
+  //     let allIds = momoNftData
+  //       .slice(start, end)
+  //       .filter((item) => {
+  //         return !stakingData.includes(item.id);
+  //       })
+  //       .map((item) => item.id);
+  //     setIsChecked(allIds);
 
-      let allDatas = momoNftData
-        .slice(start, end)
-        .filter((item) => {
-          return !stakingData.includes(item.id);
-        })
-        .map((item) => {
-          return { image: item.image, name: item.name, id: item.id };
-        });
+  //     let allDatas = momoNftData
+  //       .slice(start, end)
+  //       .filter((item) => {
+  //         return !stakingData.includes(item.id);
+  //       })
+  //       .map((item) => {
+  //         return { image: item.image, name: item.name, id: item.id };
+  //       });
 
-      setMomoSelectData(allDatas);
-    } else {
-      setIsChecked([]);
-    }
-  };
-  ///////////////////////////////////////////////////////////////////////////////
+  //     setMomoSelectData(allDatas);
+  //   } else {
+  //     setIsChecked([]);
+  //   }
+  // };
 
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
@@ -469,7 +468,7 @@ const Momo = ({ language }) => {
     }
     return item.rank === gradeState;
   });
-  // 필터링
+  // 스테이킹 처리로 momo-item갯수가 0일때 page 숫자를 이전페이지로 이동시킵니다.
   useEffect(() => {
     if (isLoading || filteredMomoNftData.length === 0) return;
     let renderableItems;
@@ -511,7 +510,7 @@ const Momo = ({ language }) => {
     navigate,
     location.search,
   ]);
-  console.log("안녕", filteredMomoNftData);
+  console.log("등급 필터링된 모모 데이터", filteredMomoNftData);
   return (
     <>
       <Nav />

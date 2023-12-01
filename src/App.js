@@ -10,7 +10,7 @@ function App() {
       <Header />
       {/* <NewsDetail /> */}
       {/* <NewGetNft /> */}
-      {/* <Inspection />  */}
+      {/* <Inspection /> */}
     </>
   );
 }

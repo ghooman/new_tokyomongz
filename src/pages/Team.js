@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Team.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
@@ -78,10 +78,16 @@ const Team = ({ language }) => {
   };
 
   // 페이지네이션
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const queryPage = searchParams.get("page");
+  const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
+  const navigate = useNavigate();
   const handlePageChange = (page) => {
     setPage(page);
+    navigate(`?page=${page}`);
   };
+
   // 임시 5개씩 보이기
   const start = (page - 1) * 5;
   const end = start + 5;
@@ -322,9 +328,6 @@ const Team = ({ language }) => {
     // setIsLoading(false);
   }, [walletAddress]);
 
-  console.log("이즈로딩상태3", isLoading);
-  console.log("뉴팀스테이킹상태4", newTeamStakingData.length);
-
   const [reward, setReward] = useState("");
   console.log(reward);
   // add mzc
@@ -419,7 +422,28 @@ const Team = ({ language }) => {
         return "";
     }
   };
-
+  // 스테이킹 처리로 보여지는 팀스테이킹 갯수가 0되었다면 page 숫자를 이전페이지로 이동시킵니다.
+  useEffect(() => {
+    if (isLoading || newTeamStakingData.length === 0) return;
+    // 현재 상태와 페이지에 출력되는 몽즈들을 파악합니다.
+    const itemsInCurrentPage = newTeamStakingData.slice(start, end);
+    // 현재 페이지에 몽즈가 없을 경우
+    if (page > 1 && itemsInCurrentPage.length === 0) {
+      const newPage = page - 1;
+      setPage(newPage);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", newPage.toString());
+      navigate(`?${searchParams.toString()}`, { replace: true });
+    }
+    console.log("현재 페이지에 출력되는 아이템", itemsInCurrentPage);
+  }, [
+    page,
+    selectedState,
+    stakingData,
+    newTeamStakingData,
+    navigate,
+    location.search,
+  ]);
   return (
     <>
       <Nav />
@@ -597,7 +621,7 @@ const Team = ({ language }) => {
                           </span>
                           {/* 임시 이벤트 기간에는 텍스트출력이 다릅니다. */}
                           <span className="main__team-item-total-percent">
-                            EVENT (DEFAULT
+                            EVENT DEFAULT
                             <span className="main__team-item-percent">
                               &nbsp;100%&nbsp;
                             </span>
@@ -605,15 +629,13 @@ const Team = ({ language }) => {
                             <span className="main__team-item-percent">
                               {Math.round(team.reward[1] * 100)}%
                             </span>
-                            ) X 2
                           </span>
                           <span className="main__team-item-day-percent">
                             Default {team.rewardPerDay[0]}MZC/Day + BOOST{" "}
                             {team.rewardPerDay[1]}/Day =&nbsp;
                             <span className="main__team-item-percent">
                               {team.rewardPerDay[2]} / DAY
-                            </span>{" "}
-                            * 2(EVENT)
+                            </span>
                           </span>
                         </div>
                         <div className="main__team-item-btn-box">

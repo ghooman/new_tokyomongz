@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/TmhcMain.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
@@ -46,6 +46,9 @@ const Main = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   // 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
@@ -57,8 +60,19 @@ const Main = ({ language }) => {
 
   // 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
+
+  // 스테이킹 상태를 쿼리에서 가져와 store에 업데이트 시킵니다.
+  useEffect(() => {
+    const stateFromQueryParam = searchParams.get("state") || "All";
+    dispatch(setSelectedState(stateFromQueryParam));
+  }, [dispatch, searchParams]);
+
+  // 스테이킹 상태 선택시
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.set("state", text);
+    navigate(`?${newSearchParams.toString()}`);
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);
@@ -83,33 +97,36 @@ const Main = ({ language }) => {
   };
 
   // 페이지네이션
-  const [page, setPage] = useState(1);
-  const handlePageChange = (page) => {
-    setPage(page);
+  const queryPage = searchParams.get("page");
+  const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
+  // 페이지 및 필터 변경 시 URL 업데이트
+  const updateUrl = () => {
+    const searchParams = new URLSearchParams();
+    // 'All' 혹은 'すべて'도 'state' 파라미터에 포함합니다.
+    searchParams.set("state", selectedState);
+    // 마지막으로 'page' 파라미터를 추가합니다.
+    searchParams.set("page", page.toString());
+    navigate(`?${searchParams.toString()}`);
   };
+
+  // 필터링 및 페이지 상태 변경 시 URL 업데이트
+  useEffect(() => {
+    updateUrl();
+  }, [selectedState, page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // 페이지 상태 업데이트
+    if (selectedState !== "All" && selectedState !== "すべて") {
+      searchParams.set("state", selectedState);
+    }
+
+    searchParams.set("page", newPage.toString());
+    navigate(`?${searchParams.toString()}`);
+  };
+
+  // 현재 테스트를 위해 1개씩만 출력 시키고있습니다.
   const start = (page - 1) * 15;
   const end = start + 15;
-
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // const [pageRangeDisplayed, setPageRangeDisplayed] = useState(5);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener("resize", handleResize);
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (windowWidth <= 768) {
-  //     setPageRangeDisplayed(4);
-  //   } else {
-  //     setPageRangeDisplayed(5);
-  //   }
-  // }, [windowWidth]);
 
   // 스테이킹 버튼 클릭시 데이터 저장하는 state
   const [selectData, setSelectData] = useState([]);
@@ -551,9 +568,50 @@ const Main = ({ language }) => {
         return "";
     }
   };
-
+  // 팀 스테이킹 정보에서 몽즈 id(leader)로 새로운 배열을 만듭니다.
   const teamStakingNftId = teamStakingNftData.map((item) => item.leader);
-
+  // 스테이킹 처리로 보여지는 몽즈 갯수가 0되었다면 page 숫자를 이전페이지로 이동시킵니다.
+  useEffect(() => {
+    if (isLoading || nftData.length === 0) return;
+    let renderableItems;
+    // All 인 상태
+    if (selectedState === "All" || selectedState === "すべて") {
+      renderableItems = nftData;
+      // 스테이킹 중인 상태
+    } else if (selectedState === "Staking" || selectedState === "Staking中") {
+      renderableItems = nftData.filter(
+        (item) =>
+          stakingData.includes(item.id) || teamStakingNftId.includes(item.id)
+      );
+      // 스테이킹 전인 상태
+    } else if (
+      selectedState === "Ready for staking" ||
+      selectedState === "未Staking"
+    ) {
+      renderableItems = nftData.filter(
+        (item) =>
+          !stakingData.includes(item.id) && !teamStakingNftId.includes(item.id)
+      );
+    }
+    // 현재 상태와 페이지에 출력되는 몽즈들을 파악합니다.
+    const itemsInCurrentPage = renderableItems.slice(start, end);
+    // 현재 페이지에 몽즈가 없을 경우
+    if (page > 1 && itemsInCurrentPage.length === 0) {
+      const newPage = page - 1;
+      setPage(newPage);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", newPage.toString());
+      navigate(`?${searchParams.toString()}`, { replace: true });
+    }
+    console.log("현재 페이지에 출력되는 아이템", itemsInCurrentPage);
+  }, [
+    page,
+    selectedState,
+    stakingData,
+    teamStakingNftId,
+    navigate,
+    location.search,
+  ]);
   return (
     <>
       <Nav />

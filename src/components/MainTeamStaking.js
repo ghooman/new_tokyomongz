@@ -399,9 +399,16 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
     }
     return item.rank === gradeState;
   });
+  console.log("팀스테이킹 모모데이터", teamStakingMomoData);
   // 싱글스테이킹, 팀스테이킹 id값 합친 변수
   const finalStakingMomoIds = [...singleStakingMomoIds, ...teamStakingMomoIds];
 
+  // 팀스테이킹시 모모 필터 끝낸 데이터 뿌려주는 변수
+  const finalFilteredMomoNftData = filteredMomoNftData.filter(
+    (item) => !finalStakingMomoIds.includes(item.id)
+  );
+
+  console.log("최종 팀 모모 데이터", finalFilteredMomoNftData);
   return (
     <>
       <div className="tmhc-main-background">
@@ -772,38 +779,35 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
               ) : teamStakingMomoData.length > 0 && dataStatus ? ( // isLoading === false && momoNftData.length > 0
                 ((selectedState === "All" || selectedState === "すべて") && (
                   <ul className="main__tmhc-list">
-                    {filteredMomoNftData
-                      .filter((item) => !finalStakingMomoIds.includes(item.id))
-                      .slice(start, end)
-                      .map((item) => (
-                        <li className="tmhc-item" key={item.id}>
-                          <div
-                            className={`momo-rating ${getGradeNameForValue(
+                    {finalFilteredMomoNftData.slice(start, end).map((item) => (
+                      <li className="tmhc-item" key={item.id}>
+                        <div
+                          className={`momo-rating ${getGradeNameForValue(
+                            item.rank
+                          )}`}
+                        >
+                          {item.rank}
+                        </div>
+
+                        <input
+                          type="checkbox"
+                          className="tmhc-check"
+                          checked={isChecked.includes(item.id)}
+                          onClick={(e) =>
+                            handleChecked(
+                              e,
+                              item.id,
+                              item.image,
+                              item.name,
                               item.rank
-                            )}`}
-                          >
-                            {item.rank}
-                          </div>
+                            )
+                          }
+                        />
 
-                          <input
-                            type="checkbox"
-                            className="tmhc-check"
-                            checked={isChecked.includes(item.id)}
-                            onClick={(e) =>
-                              handleChecked(
-                                e,
-                                item.id,
-                                item.image,
-                                item.name,
-                                item.rank
-                              )
-                            }
-                          />
-
-                          <div className="tmhc-images">
-                            <img src={item.image} alt="nft" />
-                            <div className="team-staking-momo-box">
-                              {/* {teamStakingMomoData.slice(0, 4).map((item) => {
+                        <div className="tmhc-images">
+                          <img src={item.image} alt="nft" />
+                          <div className="team-staking-momo-box">
+                            {/* {teamStakingMomoData.slice(0, 4).map((item) => {
                             return (
                               <div className="team-staking-momo-img">
                                 <div className="momo-rating">UR</div>
@@ -811,18 +815,18 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               </div>
                             );
                           })} */}
-                            </div>
                           </div>
-                          {/* singleStakingMomoIds.includes(parseInt(item.id) */}
+                        </div>
+                        {/* singleStakingMomoIds.includes(parseInt(item.id) */}
 
-                          <div className="tmhc-info">
-                            <span className="tmhc-name">{item.name}</span>
-                            <span className="mongz-team-staking-text">
-                              <span>+{getGradeNameForPercent(item.rank)}%</span>
-                            </span>
-                          </div>
-                        </li>
-                      ))}
+                        <div className="tmhc-info">
+                          <span className="tmhc-name">{item.name}</span>
+                          <span className="mongz-team-staking-text">
+                            <span>+{getGradeNameForPercent(item.rank)}%</span>
+                          </span>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 )) ||
                 ((selectedState === "Staking" ||
@@ -955,12 +959,14 @@ const MainTeamStaking = ({ language, clickStakingMongzData }) => {
                               parseInt(item.id)
                             );
                           }).length
-                        : filteredMomoNftData
-                        ? filteredMomoNftData.length
+                        : finalStakingMomoIds
+                        ? filteredMomoNftData.filter(
+                            (item) => !finalStakingMomoIds.includes(item.id)
+                          ).length
                         : 0
                     }
                     // 표시할 페이지수
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={8}
                     prevPageText={"‹"}
                     nextPageText={"›"}
                     // 함수

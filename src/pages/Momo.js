@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Momo.scss";
 import coinIcon from "../assets/images/mzc-coin-icon.png";
 import ClaimModal from "../components/ClaimModal";
@@ -42,6 +42,9 @@ const Momo = ({ language }) => {
   axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.xsrfHeaderName = "X-CSRFToken";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   // 스테이킹 상태 드랍다운 보이기 / 안보이기
   const rotateRef = useRef();
@@ -50,11 +53,21 @@ const Momo = ({ language }) => {
     dispatch(setIsOpen(!isOpen));
     rotateRef.current.style.transform = isOpen ? "" : "rotate(-180deg)";
   };
-
   // 스테이킹 상태 드랍다운 아이템 선택시 글자변경
   const selectedState = useSelector((state) => state.selectedState.title);
+
+  // 스테이킹 상태를 쿼리에서 가져와 store에 업데이트 시킵니다.
+  useEffect(() => {
+    const stateFromQueryParam = searchParams.get("state") || "All";
+    dispatch(setSelectedState(stateFromQueryParam));
+  }, [dispatch, searchParams]);
+
+  // 스테이킹 상태 선택시
   const handleSelectedItem = (text) => {
     dispatch(setSelectedState(text));
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.set("state", text);
+    navigate(`?${newSearchParams.toString()}`);
     dispatch(setIsOpen(!isOpen));
     setPage(1);
     setIsChecked([]);
@@ -64,7 +77,9 @@ const Momo = ({ language }) => {
   // 등급 드롭다운 보이기
   const gradeRef = useRef();
   const [gradeIsOpen, setGradeIsOpen] = useState(false);
-  const [gradeState, setGradeState] = useState("All");
+  const [gradeState, setGradeState] = useState(
+    searchParams.get("grade") || "All"
+  );
   // 등급 필터링 목록 드랍다운 보이기 / 안보이기
   const handleGradeDropdownClick = () => {
     setGradeIsOpen(!gradeIsOpen);
@@ -97,11 +112,40 @@ const Momo = ({ language }) => {
   };
 
   // 페이지네이션
-  const [page, setPage] = useState(1);
-  const handlePageChange = (page) => {
-    setPage(page);
+  const queryPage = searchParams.get("page");
+  const [page, setPage] = useState(queryPage ? parseInt(queryPage, 10) : 1);
+  // 페이지 및 필터 변경 시 URL 업데이트
+  const updateUrl = () => {
+    const searchParams = new URLSearchParams();
+    // 'All'을 포함하여 'grade' 파라미터를 설정합니다.
+    searchParams.set("grade", gradeState);
+    // 'All' 혹은 'すべて'도 'state' 파라미터에 포함합니다.
+    searchParams.set("state", selectedState);
+    // 마지막으로 'page' 파라미터를 추가합니다.
+    searchParams.set("page", page.toString());
+    navigate(`?${searchParams.toString()}`);
   };
-  // 데이터 15개씩 보이기
+
+  // 필터링 및 페이지 상태 변경 시 URL 업데이트
+  useEffect(() => {
+    updateUrl();
+  }, [gradeState, selectedState, page]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // 페이지 상태 업데이트
+
+    if (gradeState !== "All") {
+      searchParams.set("grade", gradeState);
+    }
+
+    if (selectedState !== "All" && selectedState !== "すべて") {
+      searchParams.set("state", selectedState);
+    }
+
+    searchParams.set("page", newPage.toString());
+    navigate(`?${searchParams.toString()}`);
+  };
+
   const start = (page - 1) * 15;
   const end = start + 15;
 
@@ -181,34 +225,33 @@ const Momo = ({ language }) => {
   console.log("체크된 nft===========", isChecked);
 
   // =============== 전체 선택 ====================
-  const [selectAll, setSelectAll] = useState(false);
+  // const [selectAll, setSelectAll] = useState(false);
 
-  const handleAllChecked = () => {
-    // setIsChecked
-    if (isChecked.length === 0) {
-      let allIds = momoNftData
-        .slice(start, end)
-        .filter((item) => {
-          return !stakingData.includes(item.id);
-        })
-        .map((item) => item.id);
-      setIsChecked(allIds);
+  // const handleAllChecked = () => {
+  //   // setIsChecked
+  //   if (isChecked.length === 0) {
+  //     let allIds = momoNftData
+  //       .slice(start, end)
+  //       .filter((item) => {
+  //         return !stakingData.includes(item.id);
+  //       })
+  //       .map((item) => item.id);
+  //     setIsChecked(allIds);
 
-      let allDatas = momoNftData
-        .slice(start, end)
-        .filter((item) => {
-          return !stakingData.includes(item.id);
-        })
-        .map((item) => {
-          return { image: item.image, name: item.name, id: item.id };
-        });
+  //     let allDatas = momoNftData
+  //       .slice(start, end)
+  //       .filter((item) => {
+  //         return !stakingData.includes(item.id);
+  //       })
+  //       .map((item) => {
+  //         return { image: item.image, name: item.name, id: item.id };
+  //       });
 
-      setMomoSelectData(allDatas);
-    } else {
-      setIsChecked([]);
-    }
-  };
-  ///////////////////////////////////////////////////////////////////////////////
+  //     setMomoSelectData(allDatas);
+  //   } else {
+  //     setIsChecked([]);
+  //   }
+  // };
 
   // nft가져오기
   const { contract: importTmhc } = useContract(IMPORT_TMHC_CONTRACT);
@@ -236,6 +279,7 @@ const Momo = ({ language }) => {
       // "https://polygon-mumbai.g.alchemy.com/v2/Aw34ElrsBekaC9bb92GToq__ySCNKoSj" // 테스트넷
     )
   );
+  const [momoNfts, setMomoNfts] = useState([]);
 
   const contractAddress = IMPORT_MOMO_CONTRACT; // ERC-1155 컨트랙트 주소를 입력.
   // const walletAddress = "0xC25E8566d0E493681fBFF114ff29642feA68b8Ac"; // 지갑 주소를 입력.
@@ -423,7 +467,49 @@ const Momo = ({ language }) => {
     }
     return item.rank === gradeState;
   });
-
+  // 스테이킹 처리로 momo-item갯수가 0일때 page 숫자를 이전페이지로 이동시킵니다.
+  useEffect(() => {
+    if (isLoading || filteredMomoNftData.length === 0) return;
+    let renderableItems;
+    // All 인 상태
+    if (selectedState === "All" || selectedState === "すべて") {
+      renderableItems = filteredMomoNftData;
+      // 스테이킹 중인 상태
+    } else if (selectedState === "Staking" || selectedState === "Staking中") {
+      renderableItems = filteredMomoNftData.filter(
+        (item) =>
+          stakingData.includes(item.id) || teamStakingData.includes(item.id)
+      );
+      // 스테이킹 전인 상태
+    } else if (
+      selectedState === "Ready for staking" ||
+      selectedState === "未Staking"
+    ) {
+      renderableItems = filteredMomoNftData.filter(
+        (item) =>
+          !stakingData.includes(item.id) && !teamStakingData.includes(item.id)
+      );
+    }
+    // 필터링모모리스트에서 현재 상태에 따라 출력되는 momo-item을 파악합니다.
+    const itemsInCurrentPage = renderableItems.slice(start, end);
+    // 현재 페이지에 momo-item이 없을 경우
+    if (page > 1 && itemsInCurrentPage.length === 0) {
+      const newPage = page - 1;
+      setPage(newPage);
+      const searchParams = new URLSearchParams(location.search);
+      searchParams.set("page", newPage.toString());
+      navigate(`?${searchParams.toString()}`, { replace: true });
+    }
+    console.log("현재 페이지에 출력되는 아이템", itemsInCurrentPage);
+  }, [
+    page,
+    selectedState,
+    stakingData,
+    teamStakingData,
+    navigate,
+    location.search,
+  ]);
+  console.log("등급 필터링된 모모 데이터", filteredMomoNftData);
   return (
     <>
       <Nav />
@@ -908,53 +994,59 @@ const Momo = ({ language }) => {
                     </div>
                   ) : (
                     <ul className="main__momo-list">
-                      {filteredMomoNftData
-                        .filter((item) => {
-                          return (
-                            !stakingData.includes(parseInt(item.id)) &&
-                            !teamStakingData.includes(parseInt(item.id))
-                          );
-                        })
-                        .slice(start, end)
-                        .map((item) => (
-                          <li className="momo-item" key={item.id}>
-                            <input
-                              type="checkbox"
-                              className="momo-check"
-                              checked={isChecked.includes(item.id)}
-                              onClick={(e) =>
-                                handleChecked(e, item.id, item.image, item.name)
-                              }
-                            />
-                            {item.reward !== 0 ? (
-                              <span className="momo-reward">
-                                {Number(item.reward).toFixed(3)}
-                              </span>
-                            ) : null}
-                            <div className="momo-images">
-                              <img src={item.image} alt="nft" />
-                            </div>
-                            <div className="momo-info">
-                              <span className="momo-name">{item.name}</span>
-                              <span className="momo-staking-state">
-                                Ready for Staking
-                              </span>
-
-                              <button
-                                className="momo-btn--staking"
-                                onClick={() =>
-                                  handleStakingModal(
+                      {filteredMomoNftData &&
+                        filteredMomoNftData
+                          .filter((item) => {
+                            return (
+                              !stakingData.includes(parseInt(item.id)) &&
+                              !teamStakingData.includes(parseInt(item.id))
+                            );
+                          })
+                          .slice(start, end)
+                          .map((item) => (
+                            <li className="momo-item" key={item.id}>
+                              <input
+                                type="checkbox"
+                                className="momo-check"
+                                checked={isChecked.includes(item.id)}
+                                onClick={(e) =>
+                                  handleChecked(
+                                    e,
+                                    item.id,
                                     item.image,
-                                    item.name,
-                                    item.id
+                                    item.name
                                   )
                                 }
-                              >
-                                Single Staking
-                              </button>
-                            </div>
-                          </li>
-                        ))}
+                              />
+                              {item.reward !== 0 ? (
+                                <span className="momo-reward">
+                                  {Number(item.reward).toFixed(3)}
+                                </span>
+                              ) : null}
+                              <div className="momo-images">
+                                <img src={item.image} alt="nft" />
+                              </div>
+                              <div className="momo-info">
+                                <span className="momo-name">{item.name}</span>
+                                <span className="momo-staking-state">
+                                  Ready for Staking
+                                </span>
+
+                                <button
+                                  className="momo-btn--staking"
+                                  onClick={() =>
+                                    handleStakingModal(
+                                      item.image,
+                                      item.name,
+                                      item.id
+                                    )
+                                  }
+                                >
+                                  Single Staking
+                                </button>
+                              </div>
+                            </li>
+                          ))}
                     </ul>
                   )))
               ) : (

@@ -30,6 +30,7 @@ import Copyright from "../pages/Copyright";
 import Transaction from "../pages/Transaction";
 import Tbd from "../pages/Tbd";
 import Team from "../pages/Team";
+import Swap from "../pages/Swap";
 
 const Header = () => {
   const socialMenu = [
@@ -364,6 +365,9 @@ const Header = () => {
                   <Link to="/tmhc" onClick={handleMenuClicked}>
                     Reward
                   </Link>
+                  <Link to="/swap" onClick={handleMenuClicked}>
+                    MZC-MUC SWAP
+                  </Link>
                   <Link
                     to="https://bridge.tokyomongzhillsclub.com/"
                     target="_blank"
@@ -494,6 +498,7 @@ const Header = () => {
         {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/tmhc" element={<Tbd />} /> */}
         <Route path="/tmhc" element={<TmhcMain language={language} />} />
+        <Route path="/swap" element={<Swap language={language} />} />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />
         <Route path="/partners" element={<Partners />} />

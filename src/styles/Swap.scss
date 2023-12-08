@@ -136,6 +136,10 @@
             #00ffd1 48.08%,
             #ff5bf8 100%
           );
+          &:hover {
+            opacity: 0.8;
+            transition: 0.3s;
+          }
         }
       }
       .content__form__arrow-box {
@@ -208,6 +212,10 @@
           #00ffd1 48.08%,
           #ff5bf8 100%
         );
+        &:hover {
+          opacity: 0.8;
+          transition: 0.3s;
+        }
       }
     }
   }
@@ -226,40 +234,20 @@
       padding-top: 54px;
       text-align: center;
       .swap__header__title {
-        color: #fff;
-        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.53);
-        font-family: Noto Sans;
         font-size: 30px;
-        font-style: normal;
-        font-weight: 800;
-        line-height: normal;
         letter-spacing: 1.8px;
       }
       .swap__header__sub-title {
-        margin: 0 auto;
-        color: #fff;
-        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.7);
-        font-family: Noto Sans;
         font-size: 10px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
         letter-spacing: 0.24px;
-        text-transform: uppercase;
         padding-bottom: 14px;
-        border-bottom: 1px solid #fff;
         margin-bottom: 14px;
       }
       .swap__header__description {
         text-align: left;
-        max-width: calc(100% - 2em); // Adjust this value as needed
         width: 305px;
         color: #fff;
-        font-family: Noto Sans;
         font-size: 10px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
         letter-spacing: 0.7px;
         margin: 0 auto;
       }
@@ -271,27 +259,13 @@
       width: 300px;
       min-height: 430px;
       height: auto;
-      border: 1px solid #fff;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
       .swap__content__my-amount {
-        color: #fff;
-        font-family: Noto Sans;
         font-size: 13px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
         letter-spacing: 1.68px;
         margin-bottom: 20px;
         .my-amount {
-          color: #fff;
-          font-family: Noto Sans;
           font-size: 13px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: normal;
           letter-spacing: 1.68px;
-          text-decoration-line: underline;
         }
       }
       .content__form {
@@ -301,7 +275,6 @@
         .content__form__input-box {
           width: 300px;
           height: 50px;
-          border-radius: 5px;
           display: flex;
           align-items: center;
           .input-container {

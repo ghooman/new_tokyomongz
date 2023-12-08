@@ -74,6 +74,9 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
               </Link>
             </li>
             <li>
+              <Link to="/swap">MZC-MUC SWAP</Link>
+            </li>
+            <li>
               <Link to="https://bridge.tokyomongzhillsclub.com" target="_blank">
                 Bridge (PLT TO ETH)
               </Link>

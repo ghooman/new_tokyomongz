@@ -156,7 +156,7 @@ const Team = ({ language }) => {
 
   const handleAllChecked = () => {
     // setIsChecked
-    if (isChecked.length === 0) {
+    if (isChecked.length === 0) {11
       let allIds = teamStakingData
         .slice(start, end)
         .filter((item) => {

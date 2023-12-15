@@ -1,10 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/Swap.scss";
 import DonwArrow from "../assets/images/SwapArrow.svg";
+import {
+  useAddress,
+  useContract,
+  useContractRead,
+  useContractWrite,
+} from "@thirdweb-dev/react";
+import {
+  MZC_ADDRESS,
+  SWAP_CONTRACT_ADDRESS,
+} from "../contract/contractAddress";
+import { mzcTestAbi } from "../contract/mzcTestAbi";
+import { swapAbi } from "../contract/swapAbi";
 
 const Swap = ({ language }) => {
   // 바꾸고 싶은 코인 수
   const [coinAmount, setCoinAmount] = useState("");
+  console.log("입력코인수", coinAmount);
   // 보유한 코인 수
   const [coinBalance, setCoinBalance] = useState(1000);
   // 보유한 코인 수보다 많은 코인을 입력했을 때
@@ -17,16 +30,7 @@ const Swap = ({ language }) => {
 
   const handleMaxButton = (e) => {
     e.preventDefault();
-    setCoinAmount(coinBalance);
-  };
-  const handleSwapButton = (e) => {
-    e.preventDefault();
-    if (coinAmount > coinBalance) {
-      setOverBalance(true);
-    } else {
-      setOverBalance(false);
-    }
-    console.log(`환전할 코인 수: ${coinAmount}`);
+    setCoinAmount(mzcBalance);
   };
 
   // 환전 금액 입력시 오른쪽 끝으로 스크롤 이동 합니다.
@@ -38,6 +42,92 @@ const Swap = ({ language }) => {
       inputElement.scrollLeft = inputElement.scrollWidth;
     }
   }, [coinAmount]);
+
+  // < ============================= 서드웹 코드 ================================ >
+  const walletAddress = useAddress();
+  // 컨트랙트
+  const { contract: mzcContract } = useContract(MZC_ADDRESS, mzcTestAbi);
+  const { contract: swapContract } = useContract(
+    SWAP_CONTRACT_ADDRESS,
+    swapAbi
+  );
+
+  // mzc 수량 확인
+  const { data: mzcBalanceData, isLoading: mzcBalanceIsLoading } =
+    useContractRead(mzcContract, "balanceOf", walletAddress);
+
+  const mzcBalance = mzcBalanceData
+    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
+    : undefined;
+
+  console.log("mzc수량", mzcBalanceData);
+
+  // ============= 스왑 코드 ================
+
+  // allowance 함수
+  const { data: allowanceData, isLoading: allowanceIsLoading } =
+    useContractRead(
+      mzcContract,
+      "allowance",
+      walletAddress,
+      SWAP_CONTRACT_ADDRESS
+    );
+  // console.log("allowanceData값", allowanceData);
+
+  const allowanceBalance = allowanceData
+    ? parseInt(allowanceData._hex, 16) / 10 ** 18
+    : 0;
+  console.log("allowance값", allowanceBalance);
+
+  // approve 함수
+  const { mutateAsync: approve, isLoading } = useContractWrite(
+    mzcContract,
+    "approve"
+  );
+
+  const approveCall = async () => {
+    try {
+      const data = await approve(
+        [SWAP_CONTRACT_ADDRESS, "10000000000000000000000000000"] //[spender, amount] 넣어야됨
+      );
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+
+  // swap 함수
+  const { mutateAsync: swapMZCForMUC, isLoading: swapIsLoading } =
+    useContractWrite(swapContract, "swapMZCForMUC");
+
+  const swapCall = async () => {
+    try {
+      const data = await swapMZCForMUC([
+        (parseInt(coinAmount) * 10 ** 18).toString(),
+      ]); // [amount] 넣어야됨   유저입력값의 10의 18승
+      console.info("contract call successs", data);
+    } catch (err) {
+      console.error("contract call failure", err);
+    }
+  };
+  // swap handler
+  const handleSwap = async (e) => {
+    e.preventDefault();
+    if (coinAmount > mzcBalance) {
+      setOverBalance(true);
+    } else {
+      setOverBalance(false);
+    }
+    console.log(`환전할 코인 수: ${coinAmount}`);
+
+    if (coinAmount > allowanceData) {
+      await approveCall();
+      await swapCall();
+      // await swapCall()
+    } else {
+      swapCall();
+    }
+  };
 
   return (
     <div className="swap-background">
@@ -72,12 +162,12 @@ const Swap = ({ language }) => {
         <p className="swap__content__my-amount">
           {language === "EN" ? (
             <>
-              Your Balance is <span className="my-amount">{coinBalance}</span>{" "}
+              Your Balance is <span className="my-amount">{mzcBalance}</span>{" "}
               MZC
             </>
           ) : (
             <>
-              あなたのMZC残高は <span className="my-amount">{coinBalance}</span>{" "}
+              あなたのMZC残高は <span className="my-amount">{mzcBalance}</span>{" "}
               MZCです
             </>
           )}
@@ -124,10 +214,7 @@ const Swap = ({ language }) => {
                   : "入力された数字は正しくありません。ご確認のうえ再度入力してください.")}
             </p>
           </div>
-          <button
-            className="content__form__swap-button"
-            onClick={handleSwapButton}
-          >
+          <button className="content__form__swap-button" onClick={handleSwap}>
             EXCHANGE
           </button>
         </form>

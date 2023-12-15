@@ -235,7 +235,11 @@ const Swap = ({ language }) => {
                   : "入力された数字は正しくありません。ご確認のうえ再度入力してください.")}
             </p>
           </div> */}
-          <button className="content__form__swap-button" onClick={handleSwap}>
+          <button
+            className="content__form__swap-button"
+            onClick={handleSwap}
+            disabled={swapIsLoading}
+          >
             {swapIsLoading ? "Loading..." : "EXCHANGE"}
           </button>
         </form>

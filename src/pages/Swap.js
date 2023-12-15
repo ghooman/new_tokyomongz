@@ -8,6 +8,7 @@ import {
   useContractWrite,
 } from "@thirdweb-dev/react";
 import {
+  MUC_ADDRESS,
   MZC_ADDRESS,
   SWAP_CONTRACT_ADDRESS,
 } from "../contract/contractAddress";
@@ -46,7 +47,8 @@ const Swap = ({ language }) => {
   // < ============================= 서드웹 코드 ================================ >
   const walletAddress = useAddress();
   // 컨트랙트
-  const { contract: mzcContract } = useContract(MZC_ADDRESS, mzcTestAbi);
+  const { contract: mzcContract } = useContract(MZC_ADDRESS);
+  const { contract: mucContract } = useContract(MUC_ADDRESS);
   const { contract: swapContract } = useContract(
     SWAP_CONTRACT_ADDRESS,
     swapAbi
@@ -59,8 +61,15 @@ const Swap = ({ language }) => {
   const mzcBalance = mzcBalanceData
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
+  // muc 수량 확인
+  const { data: mucBalanceData, isLoading: mucBalanceIsLoading } =
+    useContractRead(mucContract, "balanceOf", walletAddress);
 
-  console.log("mzc수량", mzcBalanceData);
+  const mucBalance = mucBalanceData
+    ? (parseInt(mucBalanceData._hex, 16) / 10 ** 18).toFixed(2)
+    : undefined;
+
+  console.log("muc수량", mucBalanceData && mucBalanceData._hex);
 
   // ============= 스왑 코드 ================
 
@@ -172,6 +181,7 @@ const Swap = ({ language }) => {
             </>
           )}
         </p>
+        <p>{mucBalance}</p>
         <form className="content__form">
           <div className="content__form__input-box">
             <div className="input-container">

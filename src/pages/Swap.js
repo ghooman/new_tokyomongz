@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../styles/Swap.scss";
-import DonwArrow from "../assets/images/SwapArrow.svg";
+import downArrow from "../assets/images/SwapArrow.svg";
 import {
   useAddress,
   useContract,
@@ -113,23 +113,21 @@ const Swap = ({ language }) => {
   const { mutateAsync: swapMZCForMUC, isLoading: swapIsLoading } =
     useContractWrite(swapContract, "swapMZCForMUC");
   console.log("로딩", swapIsLoading);
+
   const swapCall = async () => {
     try {
-      const coinAmountBigInt = BigInt(coinAmount); // coinAmount를 BigInt로 변환
-      const amount = coinAmountBigInt * 10n ** 18n; // 10의 18승을 BigInt로 계산
+      const largeNumber = parseInt(coinAmount) * 10 ** 18;
+      const formattedNumber = largeNumber.toLocaleString("fullwide", {
+        useGrouping: false,
+      });
 
-      const data = await swapMZCForMUC([
-        amount.toString(), // BigInt를 문자열로 변환
-      ]);
+      const data = await swapMZCForMUC([formattedNumber]); // [amount] 넣어야됨   유저입력값의 10의 18승
       console.info("contract call successs", data);
-      location.reload(true);
     } catch (err) {
       console.error("contract call failure", err);
     }
   };
 
-  console.log("coinAmountBig", BigInt(coinAmount));
-  console.log("coinAmount", BigInt(coinAmount));
   // swap handler
   const handleSwap = async (e) => {
     e.preventDefault();
@@ -212,9 +210,9 @@ const Swap = ({ language }) => {
             </button>
           </div>
           <div className="content__form__arrow-box">
-            <img className="arrow" src={DonwArrow} alt="arrow" />
-            <img className="arrow" src={DonwArrow} alt="arrow" />
-            <img className="arrow" src={DonwArrow} alt="arrow" />
+            <img className="arrow" src={downArrow} alt="arrow" />
+            <img className="arrow" src={downArrow} alt="arrow" />
+            <img className="arrow" src={downArrow} alt="arrow" />
           </div>
 
           <div className="content__preview-box">

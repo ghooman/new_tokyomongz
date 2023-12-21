@@ -38,7 +38,7 @@ const Swap = ({ language }) => {
         }
       }
     }
-    console.log("coinAmount", value);
+    console.log("coinAmount", value * 10 ** 18);
     console.log("coinAmountMzc", mzcBalance);
   }
 
@@ -72,8 +72,14 @@ const Swap = ({ language }) => {
     useContractRead(mzcContract, "balanceOf", walletAddress);
 
   const mzcBalance = mzcBalanceData
-    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed()
+    ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
+  const mzcBalance2 = mzcBalanceData
+    ? parseInt(mzcBalanceData._hex, 16)
+    : undefined;
+
+  console.log("mzcBalance2", mzcBalance2);
+  console.log("mzcBalance", mzcBalanceData && (mzcBalanceData._hex, 16));
 
   // ============= 스왑 코드 ================
 

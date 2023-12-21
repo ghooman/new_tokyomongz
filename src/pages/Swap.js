@@ -24,22 +24,22 @@ const Swap = ({ language }) => {
   function handleInputChange(e) {
     let value = e.target.value;
     // 숫자만 입력 가능하도록 설정
-    value = value.replace(/[^0-9]/g, "");
+    value = value.replace(/[^0-9.]/g, "");
     if (value === "") {
       setCoinAmount("0");
-    } else {
-      const numValue = parseInt(value, 10);
-      if (!isNaN(numValue)) {
-        // 입력값이 mzcBalance보다 크면 mzcBalance로 설정
-        if (numValue > mzcBalance) {
-          setCoinAmount(mzcBalance.toString());
-        } else {
-          setCoinAmount(numValue.toString()); // Convert the number back to a string
-        }
-      }
     }
-    console.log("coinAmount", value * 10 ** 18);
-    console.log("coinAmountMzc", mzcBalance);
+
+    // 입력값이 mzcBalance보다 크면 mzcBalance로 설정
+
+    if (value > mzcBalance) {
+      setCoinAmount(mzcBalance);
+    } else {
+      setCoinAmount(value); // Convert the number back to a string
+      // }
+    }
+
+    console.log("coinAmount", coinAmount);
+    // console.log("coinAmountMzc", mzcBalance);
   }
 
   const handleMaxButton = (e) => {
@@ -74,12 +74,6 @@ const Swap = ({ language }) => {
   const mzcBalance = mzcBalanceData
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
-  const mzcBalance2 = mzcBalanceData
-    ? parseInt(mzcBalanceData._hex, 16)
-    : undefined;
-
-  console.log("mzcBalance2", mzcBalance2);
-  console.log("mzcBalance", mzcBalanceData && (mzcBalanceData._hex, 16));
 
   // ============= 스왑 코드 ================
 
@@ -122,12 +116,13 @@ const Swap = ({ language }) => {
 
   const swapCall = async () => {
     try {
-      const largeNumber = parseInt(coinAmount) * 10 ** 18;
+      const largeNumber = parseFloat(coinAmount) * 10 ** 18;
       const formattedNumber = largeNumber.toLocaleString("fullwide", {
         useGrouping: false,
       });
 
       const data = await swapMZCForMUC([formattedNumber]); // [amount] 넣어야됨   유저입력값의 10의 18승
+      window.location.reload();
       console.info("contract call successs", data);
     } catch (err) {
       console.error("contract call failure", err);
@@ -163,21 +158,30 @@ const Swap = ({ language }) => {
         <p className="swap__header__description">
           {language === "EN" ? (
             <>
-              On this page you can exchange your MZC (MongZ Coin) for MUC (Multi
-              Universe Coin). Enter the amount you wish to exchange in the white
-              box and press the exchange button.
+              On this page, you can exchange your MZC (MongZ Coin) for MUC
+              (Multi Universe Coin). Enter the amount you wish to exchange in
+              the white box and press the exchange button.
               <br />
-              -You cannot enter an amount that exceeds your balance.
+              - You cannot enter an amount that exceeds your balance.
               <br />
-              -The operation cannot be canceled after the exchange is completed.
+              - The operation cannot be canceled after the completion of the
+              exchange.
+              <br />
+              - You can exchange MZC for MUC, but it can't be exchanged the
+              other way around.
+              <br />- The user will be in charge of the gas fee (MATIC) that
+              occurs from the exchange.
             </>
           ) : (
             <>
-              このページではMZCをMUCに交換することができます。交換したいMZCの額を白いボックスに入力し、EXCHANGEボタンを押してください。
+              このページではMZCをMUCに交換することができます。
+              交換したいMZCの額を白いボックスに入力し、EXCHANGEボタンを押してください。
               <br />
               ※所持残高を超える額は入力できません
               <br />
               ※交換を行ったあとに操作をキャンセルすることはできません
+              <br />
+              ※交換にはガス代(MATIC)が発生します
             </>
           )}
         </p>

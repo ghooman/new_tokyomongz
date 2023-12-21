@@ -24,22 +24,25 @@ const Swap = ({ language }) => {
   function handleInputChange(e) {
     let value = e.target.value;
     // 숫자만 입력 가능하도록 설정
-    value = value.replace(/[^0-9.]/g, "");
-    if (value === "") {
+    const numValue = value.replace(/[^0-9.]/g, "");
+
+    // 소수점 이하 자릿수를 2자리로 제한
+    const decimalIndex = numValue.indexOf(".");
+    if (decimalIndex !== -1 && numValue.length - decimalIndex - 1 > 2) {
+      numValue = numValue.slice(0, decimalIndex + 3);
+    }
+    // 입력값이 빈칸이면 0으로 설정
+    if (numValue === "") {
       setCoinAmount("0");
     }
-
     // 입력값이 mzcBalance보다 크면 mzcBalance로 설정
-
-    if (value > mzcBalance) {
+    if (Number(numValue) > Number(mzcBalance)) {
       setCoinAmount(mzcBalance);
     } else {
-      setCoinAmount(value); // Convert the number back to a string
-      // }
+      setCoinAmount(numValue);
     }
-
     console.log("coinAmount", coinAmount);
-    // console.log("coinAmountMzc", mzcBalance);
+    console.log("coinAmountMzc", mzcBalance);
   }
 
   const handleMaxButton = (e) => {
@@ -93,10 +96,8 @@ const Swap = ({ language }) => {
   console.log("allowance값", allowanceBalance);
 
   // approve 함수
-  const { mutateAsync: approve, isLoading } = useContractWrite(
-    mzcContract,
-    "approve"
-  );
+  const { mutateAsync: approve, isLoading: approveIsLoading } =
+    useContractWrite(mzcContract, "approve");
 
   const approveCall = async () => {
     try {
@@ -147,6 +148,7 @@ const Swap = ({ language }) => {
       swapCall();
     }
   };
+  console.log("approveIsLoading", approveIsLoading);
 
   return (
     <div className="swap-background">
@@ -246,9 +248,9 @@ const Swap = ({ language }) => {
           <button
             className="content__form__swap-button"
             onClick={handleSwap}
-            disabled={swapIsLoading}
+            disabled={swapIsLoading || approveIsLoading}
           >
-            {swapIsLoading ? "Loading..." : "EXCHANGE"}
+            {swapIsLoading || approveIsLoading ? "Loading..." : "EXCHANGE"}
           </button>
         </form>
       </div>

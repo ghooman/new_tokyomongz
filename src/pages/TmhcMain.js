@@ -31,6 +31,7 @@ import {
   useOwnedNFTs,
   useAddress,
   useContractRead,
+  useBalance,
 } from "@thirdweb-dev/react";
 import Web3 from "web3";
 import axios from "axios";
@@ -499,6 +500,12 @@ const Main = ({ language }) => {
   const mzcBalance = mzcBalanceData
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
+
+  // const { data: mzcBalanceData, isLoading: mzcBalanceIsLoading } =
+  //   useBalance(MONGZ_COIN);
+  // console.log("mzcBalabceData", mzcBalanceData);
+  // const mzcBalance =
+  //   mzcBalanceData && parseFloat(mzcBalanceData.displayValue).toFixed(2);
 
   // ==================== 스테이킹 ======================
   // const handleStaking = async () => {

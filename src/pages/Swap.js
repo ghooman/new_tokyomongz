@@ -3,6 +3,7 @@ import "../styles/Swap.scss";
 import downArrow from "../assets/images/SwapArrow.svg";
 import {
   useAddress,
+  useBalance,
   useContract,
   useContractRead,
   useContractWrite,
@@ -62,6 +63,7 @@ const Swap = ({ language }) => {
 
   // < ============================= 서드웹 코드 ================================ >
   const walletAddress = useAddress();
+
   // 컨트랙트
   const { contract: mzcContract } = useContract(MZC_ADDRESS);
 
@@ -71,6 +73,11 @@ const Swap = ({ language }) => {
   );
 
   // mzc 수량 확인
+  // const { data: mzcBalanceData, isLoading } = useBalance(MZC_ADDRESS);
+  // console.log("mzcBalabceData", mzcBalanceData);
+  // const mzcBalance =
+  //   mzcBalanceData && parseFloat(mzcBalanceData.displayValue).toFixed(2);
+
   const { data: mzcBalanceData, isLoading: mzcBalanceIsLoading } =
     useContractRead(mzcContract, "balanceOf", walletAddress);
 

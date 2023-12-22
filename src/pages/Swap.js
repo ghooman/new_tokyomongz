@@ -140,6 +140,12 @@ const Swap = ({ language }) => {
   // swap handler
   const handleSwap = async (e) => {
     e.preventDefault();
+    if (coinAmount == 0 && language === "EN") {
+      alert("Please enter the quantity of MZC you wish to exchange.");
+    }
+    if (coinAmount == 0 && language === "JP") {
+      alert("交換するMZCの数量を入力してください。");
+    }
     if (coinAmount > mzcBalance) {
       setOverBalance(true);
     } else {

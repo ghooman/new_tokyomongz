@@ -14,6 +14,7 @@ import {
 } from "../contract/contractAddress";
 import { mzcTestAbi } from "../contract/mzcTestAbi";
 import { swapAbi } from "../contract/swapAbi";
+import MzcAbi from "../contract/MzcAbi";
 
 const Swap = ({ language }) => {
   // 바꾸고 싶은 코인 수
@@ -65,7 +66,7 @@ const Swap = ({ language }) => {
   const walletAddress = useAddress();
 
   // 컨트랙트
-  const { contract: mzcContract } = useContract(MZC_ADDRESS);
+  const { contract: mzcContract } = useContract(MZC_ADDRESS, MzcAbi);
 
   const { contract: swapContract } = useContract(
     SWAP_CONTRACT_ADDRESS,
@@ -80,7 +81,8 @@ const Swap = ({ language }) => {
 
   const { data: mzcBalanceData, isLoading: mzcBalanceIsLoading } =
     useContractRead(mzcContract, "balanceOf", walletAddress);
-
+  console.log("mzcBalanceData", mzcBalanceData);
+  console.log("mzcContract", mzcContract);
   const mzcBalance = mzcBalanceData
     ? (parseInt(mzcBalanceData._hex, 16) / 10 ** 18).toFixed(2)
     : undefined;
@@ -142,9 +144,11 @@ const Swap = ({ language }) => {
     e.preventDefault();
     if (coinAmount == 0 && language === "EN") {
       alert("Please enter the quantity of MZC you wish to exchange.");
+      return;
     }
     if (coinAmount == 0 && language === "JP") {
       alert("交換するMZCの数量を入力してください。");
+      return;
     }
     if (coinAmount > mzcBalance) {
       setOverBalance(true);
@@ -158,6 +162,7 @@ const Swap = ({ language }) => {
       await swapCall();
       // await swapCall()
     } else {
+      console.log("스왑콜실행");
       swapCall();
     }
   };

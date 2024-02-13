@@ -1,0 +1,230 @@
+.create-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.create-modal-background .create-modal-body {
+  position: absolute;
+  width: 460px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #545454;
+  background: #000;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.create-modal-background .create-modal-body div {
+  display: flex;
+  justify-content: space-between;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-img {
+  min-width: 100px;
+  height: 100px;
+  margin-right: 16px;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-img img {
+  width: 100%;
+  height: 100%;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info {
+  display: flex;
+  flex-direction: column;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info .creat-modal-mongz-title {
+  color: #b3b3b3;
+  font-size: 24px;
+  font-weight: 500;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info span:nth-child(2) {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info span:nth-child(2) span {
+  background: linear-gradient(180deg, #ffe68c 0%, #c5a844 31.25%, #ffe68c 66.67%, #c5a844 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 100%;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info span:nth-child(3) {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+}
+.create-modal-background .create-modal-body div .create-modal-mongz-info span:nth-child(3) span {
+  background: linear-gradient(180deg, #ffe68c 0%, #c5a844 31.25%, #ffe68c 66.67%, #c5a844 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 12px;
+  font-weight: 400;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box {
+  margin-top: 24px;
+  overflow: auto;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px solid #545454;
+  padding-bottom: 12px;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box::-webkit-scrollbar-thumb {
+  background-color: #545454;
+  border-radius: 10px;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box::-webkit-scrollbar {
+  border-radius: 10px;
+  height: 8px;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 4px;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item:last-child {
+  margin-right: 0;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img {
+  width: 100px;
+  height: 100px;
+  border: 1px solid white;
+  position: relative;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img .momo-rating {
+  z-index: 1;
+  font-size: 12px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  width: 28px;
+  height: 15px;
+  border-radius: 10px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border: 1px solid white;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img .grade-UR {
+  background-color: #be75ff;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img .grade-SR {
+  background-color: #7593ff;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img .grade-R {
+  background-color: #4c4c4c;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img .grade-C {
+  background-color: #ff7575;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__img img {
+  width: 100%;
+  height: 100%;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item .momo-item__name {
+  text-align: center;
+  width: 100px;
+  color: #fff;
+  font-size: 12px;
+  font-family: "poppins400";
+  margin: 8px 0;
+  white-space: normal;
+}
+.create-modal-background .create-modal-body .create-modal-momo-box .momo-box__item span:nth-child(3) {
+  font-size: 12px;
+  font-family: "poppins500";
+  background: linear-gradient(180deg, #ffe68c 0%, #c5a844 31.25%, #ffe68c 66.67%, #c5a844 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.create-modal-background .create-modal-body .momo-item__bonus {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  color: red;
+  border-bottom: 1px solid #4c4c4c;
+}
+.create-modal-background .create-modal-body .create-modal-text-box {
+  display: flex;
+  margin-top: 12px;
+  flex-direction: column;
+}
+.create-modal-background .create-modal-body .create-modal-text-box .create-modal-text-box-list {
+  margin: 0 12px;
+}
+.create-modal-background .create-modal-body .create-modal-text-box .create-modal-text-box-list .create-modal-text-box-list-item {
+  list-style-type: "- ";
+}
+.create-modal-background .create-modal-body .create-modal-text-box .create-modal-text-box-list .en {
+  list-style-type: disc;
+}
+.create-modal-background .create-modal-body .create-modal-text-box .create-modal-text-box-notice {
+  margin-top: 12px;
+}
+.create-modal-background .create-modal-body .create-modal-button-box {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.create-modal-background .create-modal-body .create-modal-button-box .create-modal__back-btn {
+  width: 194px;
+  display: flex;
+  padding: 16px 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #fbca77;
+  background-color: transparent;
+}
+.create-modal-background .create-modal-body .create-modal-button-box .create-modal__staking-btn {
+  width: 194px;
+  display: flex;
+  padding: 16px 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #fbca77;
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .create-modal-background {
+    overflow: auto;
+    align-items: baseline;
+  }
+  .create-modal-background .create-modal-body {
+    width: 320px;
+    height: auto;
+  }
+  .create-modal-background .create-modal-body .create-modal-text-box ul li {
+    font-size: 12px;
+  }
+  .create-modal-background .create-modal-body .create-modal-button-box {
+    flex-direction: column;
+  }
+  .create-modal-background .create-modal-body .create-modal-button-box .create-modal__back-btn {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+  .create-modal-background .create-modal-body .create-modal-button-box .create-modal__staking-btn {
+    width: 100%;
+    height: 48px;
+  }
+}/*# sourceMappingURL=TeamStakingCreateModal.css.map */

@@ -29,9 +29,7 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
           <span className="main-menu__title">MONGz.UNIVERSE</span>
           <ul className="main-menu__sub">
             <li>
-              <Link to="/roadmap" target="_blank" rel="noopener noreferrer">
-                Mongz Universe Roadmap
-              </Link>
+              <Link to="/roadmap">Mongz Universe Roadmap</Link>
             </li>
             <li>
               <Link to="/about-tmhc">#001 Tokyo Mongz Hills Club</Link>
@@ -76,11 +74,11 @@ const MainMenu = ({ language, showWaitingModal, setShowWaitingModal }) => {
             <li>
               <Link to="/swap">MZC-MUC SWAP</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="https://bridge.tokyomongzhillsclub.com" target="_blank">
                 Bridge (PLT TO ETH)
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to="" onClick={handleWaitingModal}>

@@ -323,12 +323,7 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Mongz Universe</span>
-                  <Link
-                    to="/roadmap"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={handleMenuClicked}
-                  >
+                  <Link to="/roadmap" onClick={handleMenuClicked}>
                     Mongz Universe Roadmap
                   </Link>
                   <Link to="/about-tmhc" onClick={handleMenuClicked}>
@@ -368,14 +363,14 @@ const Header = () => {
                   <Link to="/swap" onClick={handleMenuClicked}>
                     MZC-MUC SWAP
                   </Link>
-                  <Link
+                  {/* <Link
                     to="https://bridge.tokyomongzhillsclub.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     Bridge (PLT TO ETH)
-                  </Link>
+                  </Link> */}
                   <Link to="" onClick={handleMWaitingModal}>
                     Governance
                   </Link>

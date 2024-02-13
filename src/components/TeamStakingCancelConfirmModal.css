@@ -1,0 +1,101 @@
+.team-staking-cancel-confirm-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  z-index: 11;
+}
+
+.cancel-confirm-modal-background {
+  position: fixed;
+  width: 460px;
+  top: 50%;
+  left: 50%;
+  height: 196px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid #545454;
+  background: #000;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+.cancel-confirm-modal-background .cancel-confirm-modal__text {
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+.cancel-confirm-modal-background .cancel-confirm-modal__btn-box {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.cancel-confirm-modal-background .cancel-confirm-modal__btn-box .cancel-confirm-modal__back-btn {
+  width: 194px;
+  display: flex;
+  padding: 16px 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #fbca77;
+  background-color: transparent;
+}
+.cancel-confirm-modal-background .cancel-confirm-modal__btn-box .cancel-confirm-modal__confirm-btn {
+  width: 194px;
+  display: flex;
+  padding: 16px 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #ff2121;
+  color: white;
+}
+
+.cancel-fail-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+@media screen and (max-width: 768px) {
+  .cancel-confirm-modal-background {
+    width: 320px;
+    height: 238px;
+  }
+  .cancel-confirm-modal-background .cancel-confirm-modal__text {
+    font-size: 16px;
+  }
+  .cancel-confirm-modal-background .cancel-confirm-modal__btn-box {
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+  .cancel-confirm-modal-background .cancel-confirm-modal__btn-box .cancel-confirm-modal__back-btn {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+  .cancel-confirm-modal-background .cancel-confirm-modal__btn-box .cancel-confirm-modal__confirm-btn {
+    width: 100%;
+    height: 48px;
+  }
+}/*# sourceMappingURL=TeamStakingCancelConfirmModal.css.map */

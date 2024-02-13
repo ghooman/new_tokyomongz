@@ -1,0 +1,523 @@
+.modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.claim-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.claim, .waiting {
+  background-color: #000;
+  border: 1px solid #545454;
+  padding: 24px;
+  border-radius: 8px;
+  width: 460px;
+}
+.claim .claim__header, .waiting .claim__header {
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #545454;
+}
+.claim .claim__header .claim__header-title, .waiting .claim__header .claim__header-title {
+  font-size: 20px;
+  font-family: "mplus1p400";
+}
+.claim .claim__header .claim__header-mzc, .waiting .claim__header .claim__header-mzc {
+  font-family: "mplus1p500";
+  font-size: 24px;
+}
+.claim .claim__header .claim__header-mzc .claim__header-coin, .waiting .claim__header .claim__header-mzc .claim__header-coin {
+  font-family: "mplus1p500";
+  font-size: 24px;
+}
+
+.claim__main {
+  margin-top: 24px;
+}
+.claim__main ul {
+  margin-top: 16px;
+}
+.claim__main span {
+  font-size: 14px;
+  font-family: "mplus1p400";
+}
+.claim__main li {
+  font-size: 14px;
+  display: flex;
+  font-family: "mplus1p400";
+}
+.claim__main li:not(:last-child) {
+  margin-bottom: 16px;
+}
+.claim__main li span {
+  margin-right: 8px;
+  font-family: "mplus1p400";
+}
+
+.claim__btn, .staking__btn, .cancel__btn {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.claim__btn .btn--cancel, .staking__btn .btn--cancel, .cancel__btn .btn--cancel {
+  width: 49%;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+}
+.claim__btn .btn--claim, .staking__btn .btn--claim, .cancel__btn .btn--claim, .staking__btn .btn--staking, .cancel__btn .btn--staking {
+  width: 49%;
+  height: 50px;
+  color: #000;
+  background-color: #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+}
+
+.claim-confirm, .cancel-staking-confirm, .staking-confirm {
+  width: 460px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+  border: 1px solid #545454;
+  border-radius: 8px;
+}
+
+.claim-confirm__title {
+  font-size: 20px;
+  font-family: "mplus1p400";
+}
+
+.claim-confirm__btn, .cancel-staking-confirm__btn, .staking-confirm__btn {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.claim-confirm__btn .btn--cancel, .cancel-staking-confirm__btn .btn--cancel, .staking-confirm__btn .btn--cancel {
+  width: 49%;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+}
+.claim-confirm__btn .btn-claim-confirm, .cancel-staking-confirm__btn .btn-claim-confirm, .staking-confirm__btn .btn-claim-confirm {
+  width: 49%;
+  height: 50px;
+  color: #000;
+  background-color: #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+}
+
+.claim-confirm-modal-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.staking-modal, .cancel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 460px;
+  padding: 24px;
+  background-color: #000;
+  border: 1px solid #545454;
+  border-radius: 8px;
+}
+
+.staking__count {
+  text-align: center;
+  font-family: "mplus1p400";
+}
+
+.staking__img-box {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  margin: 8px 0;
+  border-bottom: 1px solid #545454;
+}
+.staking__img-box::-webkit-scrollbar-thumb {
+  background-color: #fbca77;
+  border-radius: 10px;
+}
+.staking__img-box::-webkit-scrollbar {
+  background-color: #545454;
+  border-radius: 10px;
+  height: 8px;
+}
+
+.staking__img-contents, .cancel__img-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.staking__img-contents:not(:first-child), .cancel__img-contents:not(:first-child) {
+  margin-left: 16px;
+}
+.staking__img-contents .staking__img, .cancel__img-contents .staking__img, .cancel__img-contents .cancel__img {
+  width: 100%;
+  min-width: 280px;
+}
+.staking__img-contents .staking__img img, .cancel__img-contents .staking__img img, .cancel__img-contents .cancel__img img {
+  width: 100%;
+}
+.staking__img-contents .staking__img-title, .cancel__img-contents .staking__img-title, .cancel__img-contents .cancel__img-title {
+  margin: 24px 0;
+  font-family: "mplus1p500";
+  font-size: 20px;
+}
+
+.staking__info .staking__info-title, .cancel__text .staking__info-title {
+  font-size: 16px;
+  margin-top: 12px;
+}
+.staking__info .staking__info-list, .cancel__text .staking__info-list {
+  margin: 0 12px;
+}
+.staking__info .staking__info-list .staking__info-list-item, .cancel__text .staking__info-list .staking__info-list-item {
+  list-style-type: "- ";
+  margin-bottom: 12px;
+}
+
+.staking-confirm__title {
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
+}
+
+.staking-confirm__btn .btn--cancel {
+  padding: 16px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.staking-confirm__btn .btn-staking-confirm {
+  padding: 16px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-staking-confirm {
+  width: 49%;
+  height: 50px;
+  color: #000;
+  background-color: #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+}
+
+.cancel__img-contents {
+  border-bottom: 1px solid #545454;
+  margin-bottom: 24px;
+}
+.cancel__text {
+  display: flex;
+}
+
+.btn-unstaking-confirm {
+  width: 49%;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #ff2121;
+  color: #fff;
+  font-family: "mplus1p400";
+}
+
+.btn--cancel-staking, .btn--cancel-staking-confirm {
+  width: 49%;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #ff2121;
+  color: #fff;
+  font-family: "mplus1p400";
+}
+
+.cancel-staking-confirm__title {
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
+}
+
+.waiting__title {
+  width: 100%;
+  font-family: "mplus1p400";
+  font-size: 20px;
+  text-align: center;
+}
+
+.back-btn {
+  margin-top: 40px;
+  font-family: "mplus1p400";
+  width: 100%;
+  padding: 16px 0;
+  border: 1px solid #fbca77;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-modal h1 {
+  font-family: "mplus1p500";
+  font-size: 50px;
+}
+
+.staking-fail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  max-width: 500px;
+  background-color: #000;
+  border: 1px solid #545454;
+  padding: 24px;
+  border-radius: 8px;
+}
+.staking-fail .staking-fail__text {
+  word-break: break-all;
+  width: 100%;
+  font-size: 20px;
+  font-family: "mplus1p400";
+  text-align: center;
+}
+.staking-fail .btn-confirm {
+  width: 50%;
+  height: 50px;
+  color: #000;
+  background-color: #fbca77;
+  border-radius: 8px;
+  font-family: "mplus1p400";
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .modal-background {
+    overflow: auto;
+  }
+  .claim, .waiting {
+    width: 280px;
+    padding: 24px;
+  }
+  .claim .claim__header .claim__header-title, .waiting .claim__header .claim__header-title {
+    font-size: 16px;
+  }
+  .claim .claim__header .claim__header-mzc, .waiting .claim__header .claim__header-mzc {
+    font-size: 20px;
+  }
+  .claim .claim__header .claim__header-mzc .claim__header-coin, .waiting .claim__header .claim__header-mzc .claim__header-coin {
+    font-size: 20px;
+  }
+  .claim__main span,
+  .claim__main li {
+    font-size: 12px;
+  }
+  .staking__btn, .cancel__btn {
+    margin-top: 16px;
+  }
+  .claim__btn, .staking__btn, .cancel__btn,
+  .claim-confirm__btn,
+  .staking-confirm__btn,
+  .cancel-staking-confirm__btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .claim__btn .btn--cancel, .staking__btn .btn--cancel, .cancel__btn .btn--cancel,
+  .claim__btn .btn--claim,
+  .staking__btn .btn--claim,
+  .cancel__btn .btn--claim,
+  .staking__btn .btn--staking,
+  .cancel__btn .btn--staking,
+  .claim__btn .btn--claim-confirm,
+  .staking__btn .btn--claim-confirm,
+  .cancel__btn .btn--claim-confirm,
+  .claim__btn .btn--cancel-staking,
+  .staking__btn .btn--cancel-staking,
+  .cancel__btn .btn--cancel-staking,
+  .claim__btn .btn--cancel-staking-confirm,
+  .staking__btn .btn--cancel-staking-confirm,
+  .cancel__btn .btn--cancel-staking-confirm,
+  .claim__btn .btn-claim-confirm,
+  .staking__btn .btn-claim-confirm,
+  .cancel__btn .btn-claim-confirm,
+  .claim__btn .btn-unstaking-confirm,
+  .staking__btn .btn-unstaking-confirm,
+  .cancel__btn .btn-unstaking-confirm,
+  .claim__btn .btn-staking-confirm,
+  .staking__btn .btn-staking-confirm,
+  .cancel__btn .btn-staking-confirm,
+  .claim-confirm__btn .btn--cancel,
+  .staking-confirm__btn .btn--cancel,
+  .cancel-staking-confirm__btn .btn--cancel,
+  .claim-confirm__btn .btn--claim,
+  .staking-confirm__btn .btn--claim,
+  .cancel-staking-confirm__btn .btn--claim,
+  .claim-confirm__btn .btn--claim-confirm,
+  .staking-confirm__btn .btn--claim-confirm,
+  .cancel-staking-confirm__btn .btn--claim-confirm,
+  .claim-confirm__btn .btn--cancel-staking,
+  .staking-confirm__btn .btn--cancel-staking,
+  .cancel-staking-confirm__btn .btn--cancel-staking,
+  .claim-confirm__btn .btn--cancel-staking-confirm,
+  .staking-confirm__btn .btn--cancel-staking-confirm,
+  .cancel-staking-confirm__btn .btn--cancel-staking-confirm,
+  .claim-confirm__btn .btn-claim-confirm,
+  .staking-confirm__btn .btn-claim-confirm,
+  .cancel-staking-confirm__btn .btn-claim-confirm,
+  .claim-confirm__btn .btn-unstaking-confirm,
+  .staking-confirm__btn .btn-unstaking-confirm,
+  .cancel-staking-confirm__btn .btn-unstaking-confirm,
+  .claim-confirm__btn .btn-staking-confirm,
+  .staking-confirm__btn .btn-staking-confirm,
+  .cancel-staking-confirm__btn .btn-staking-confirm {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 16px;
+  }
+  .claim__btn .btn--claim, .staking__btn .btn--claim, .cancel__btn .btn--claim, .staking__btn .btn--staking, .cancel__btn .btn--staking,
+  .claim__btn .btn--claim-confirm,
+  .staking__btn .btn--claim-confirm,
+  .cancel__btn .btn--claim-confirm,
+  .claim__btn .btn--cancel-staking,
+  .staking__btn .btn--cancel-staking,
+  .cancel__btn .btn--cancel-staking,
+  .claim__btn .btn--cancel-staking-confirm,
+  .staking__btn .btn--cancel-staking-confirm,
+  .cancel__btn .btn--cancel-staking-confirm,
+  .claim__btn .btn-claim-confirm,
+  .staking__btn .btn-claim-confirm,
+  .cancel__btn .btn-claim-confirm,
+  .claim__btn .btn-unstaking-confirm,
+  .staking__btn .btn-unstaking-confirm,
+  .cancel__btn .btn-unstaking-confirm,
+  .claim__btn .btn-staking-confirm,
+  .staking__btn .btn-staking-confirm,
+  .cancel__btn .btn-staking-confirm,
+  .claim-confirm__btn .btn--claim,
+  .staking-confirm__btn .btn--claim,
+  .cancel-staking-confirm__btn .btn--claim,
+  .claim-confirm__btn .btn--claim-confirm,
+  .staking-confirm__btn .btn--claim-confirm,
+  .cancel-staking-confirm__btn .btn--claim-confirm,
+  .claim-confirm__btn .btn--cancel-staking,
+  .staking-confirm__btn .btn--cancel-staking,
+  .cancel-staking-confirm__btn .btn--cancel-staking,
+  .claim-confirm__btn .btn--cancel-staking-confirm,
+  .staking-confirm__btn .btn--cancel-staking-confirm,
+  .cancel-staking-confirm__btn .btn--cancel-staking-confirm,
+  .claim-confirm__btn .btn-claim-confirm,
+  .staking-confirm__btn .btn-claim-confirm,
+  .cancel-staking-confirm__btn .btn-claim-confirm,
+  .claim-confirm__btn .btn-unstaking-confirm,
+  .staking-confirm__btn .btn-unstaking-confirm,
+  .cancel-staking-confirm__btn .btn-unstaking-confirm,
+  .claim-confirm__btn .btn-staking-confirm,
+  .staking-confirm__btn .btn-staking-confirm,
+  .cancel-staking-confirm__btn .btn-staking-confirm {
+    margin-top: 16px;
+    padding: 12px 0;
+    font-size: 16px;
+  }
+  .claim-confirm, .staking-confirm, .cancel-staking-confirm {
+    width: 280px;
+  }
+  .claim-confirm__title {
+    font-size: 16px;
+    text-align: center;
+  }
+  .staking-confirm__title,
+  .cancel-staking-confirm__title {
+    text-align: center;
+    font-size: 16px;
+  }
+  .staking-modal, .cancel {
+    max-width: 320px;
+    top: 10px;
+  }
+  .staking-modal .staking__img-box .staking__img-contents, .cancel .staking__img-box .staking__img-contents, .staking-modal .staking__img-box .cancel__img-contents, .cancel .staking__img-box .cancel__img-contents {
+    min-width: 180px;
+  }
+  .staking-modal .staking__img-box .staking__img-contents .staking__img, .cancel .staking__img-box .staking__img-contents .staking__img, .staking-modal .staking__img-box .cancel__img-contents .staking__img, .cancel .staking__img-box .cancel__img-contents .staking__img, .cancel__img-contents .staking-modal .staking__img-box .staking__img-contents .cancel__img, .cancel__img-contents .cancel .staking__img-box .staking__img-contents .cancel__img, .staking-modal .staking__img-box .cancel__img-contents .cancel__img, .cancel .staking__img-box .cancel__img-contents .cancel__img {
+    min-width: auto;
+  }
+  .staking-modal .staking__img-box .staking__img-contents .staking__img-title, .cancel .staking__img-box .staking__img-contents .staking__img-title, .staking-modal .staking__img-box .cancel__img-contents .staking__img-title, .cancel .staking__img-box .cancel__img-contents .staking__img-title, .cancel__img-contents .staking-modal .staking__img-box .staking__img-contents .cancel__img-title, .cancel__img-contents .cancel .staking__img-box .staking__img-contents .cancel__img-title, .staking-modal .staking__img-box .cancel__img-contents .cancel__img-title, .cancel .staking__img-box .cancel__img-contents .cancel__img-title {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+  .staking-modal .staking__info, .cancel .staking__info, .staking-modal .cancel__text, .cancel .cancel__text {
+    height: 280px;
+  }
+  .staking-modal p, .cancel p {
+    font-size: 16px;
+  }
+  .text-red20 {
+    color: red;
+    font-size: 20px;
+    font-family: "mplus1p400";
+  }
+}
+.text-red {
+  color: red;
+  font-size: 14px;
+  font-family: "mplus1p400";
+}
+
+.text-red20 {
+  color: red;
+  font-size: 16px;
+  font-family: "mplus1p400";
+}/*# sourceMappingURL=Modal.css.map */

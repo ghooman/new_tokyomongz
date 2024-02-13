@@ -190,7 +190,7 @@ const Terms = ({ language }) => {
           <div className="terms-inner">
             <span className="terms-title">MongzUniverse利用規約</span>
             <p className="terms-text">
-              MongzUniverse(TMHC)はブロックチェーン上のデジタルアートコレクションを基盤に進められているプロジェクトです。
+              MongzUniverseはブロックチェーン上のデジタルアートコレクションを基盤に進められているプロジェクトです。
               当社発行のNFTを購入し保有している利用者は、下記の事項に同意したものとみなし、本利用規約に従って当社発行のNFTを利用することができます。
             </p>
             <span className="terms-sub-title">1.定義</span>
@@ -207,7 +207,7 @@ const Terms = ({ language }) => {
               ④「二次的著作物」とは、原著作物を翻訳·編曲·変形·脚色·映像制作その他の方法で作成した創作物を意味します。
               <br />
               <br />
-              ⑤「当社」とはMongzUniverse(TMHC)を運営する主体である株式会社HashLinkをいいます。
+              ⑤「当社」とはMongzUniverseを運営する主体である株式会社HashLinkをいいます。
             </p>
             <span className="terms-sub-title">2. 著作権</span>
             <span className="terms-text">① デジタル作品の著作権帰属</span>

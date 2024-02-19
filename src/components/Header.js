@@ -330,9 +330,9 @@ const Header = () => {
                     #001 Tokyo Mongz Hills Club
                   </Link>
                   <Link
-                    to="https://opensea.io/collection/peachz-momo"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    to="/about-momo"
+                    // target="_blank"
+                    // rel="noopener noreferrer"
                     onClick={handleMenuClicked}
                   >
                     #002 PEACHz.MOMO

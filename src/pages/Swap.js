@@ -114,6 +114,7 @@ const Swap = ({ language }) => {
         [SWAP_CONTRACT_ADDRESS, "10000000000000000000000000000"] //[spender, amount] 넣어야됨
       );
       console.info("contract call successs", data);
+      await swapCall();
     } catch (err) {
       console.error("contract call failure", err);
     }
@@ -157,14 +158,14 @@ const Swap = ({ language }) => {
     }
     console.log(`환전할 코인 수: ${coinAmount}`);
 
-    if (coinAmount > allowanceData) {
-      await approveCall();
-      await swapCall();
-      // await swapCall()
-    } else {
-      console.log("스왑콜실행");
-      swapCall();
-    }
+    // if (coinAmount > allowanceData) {
+    await approveCall();
+
+    // await swapCall()
+    // } else {
+    //   console.log("스왑콜실행");
+    //   swapCall();
+    // }
   };
   console.log("approveIsLoading", approveIsLoading);
 

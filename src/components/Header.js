@@ -350,7 +350,7 @@ const Header = () => {
                 </li>
                 <li className="m-main-menu__items">
                   <span className="m-main-menu__sub-title">Utility</span>
-                  <Link
+                  {/* <Link
                     to="https://mint.tokyomongzhillsclub.com/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -359,7 +359,7 @@ const Header = () => {
                   </Link>
                   <Link to="/tmhc" onClick={handleMenuClicked}>
                     Reward
-                  </Link>
+                  </Link> */}
                   <Link to="/swap" onClick={handleMenuClicked}>
                     MZC-MUC SWAP
                   </Link>
@@ -492,7 +492,7 @@ const Header = () => {
         <Route path="/about-momo" element={<AboutMomo language={language} />} />
         {/* <Route path="/tmhc" element={<TmhcMain language={language} />} />
         <Route path="/tmhc" element={<Tbd />} /> */}
-        <Route path="/tmhc" element={<TmhcMain language={language} />} />
+        {/* <Route path="/tmhc" element={<TmhcMain language={language} />} /> */}
         <Route path="/swap" element={<Swap language={language} />} />
         <Route path="/muc-momo" element={<Momo language={language} />} />
         <Route path="/test" element={<Test />} />
